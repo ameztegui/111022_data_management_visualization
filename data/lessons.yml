@@ -1,0 +1,148 @@
+lessons:
+  - date: "Wed, Jan 10"
+    title: "Welcome. Course organization and warm-up"
+    slides: "lec-slides/00-welcome.html"
+    appex: "00-unvotes.html"
+  - date: "Part 1"
+    title: "Data Management"
+  - title: "Unit 1: Introduction"
+  - date: "Wed, Jan 10"
+    title: "The data pipeline: from acquisition to communication."
+    slides: "lec-slides/00-welcome.html"
+    appex: "00-unvotes.html"
+  - date: "Thur, Jan 11"
+    title: "The tidyverse and the concept of tidy data"
+    slides: "lab-slides/00-lab-deck.html"
+  - date: "Thur, Jan 11"
+    title: "Good coding practices. "
+    slides: "lab-slides/00-lab-deck.html"
+  - date: "Thur, Jan 11"
+    title: "Workflow. Projects in RStudio and RStudio Cloud "
+    slides: "lab-slides/00-lab-deck.html"
+    
+  - title: "Unit 2: Explore your data"
+  - date: "Thur, Jan 11"
+    title: "Basic data visualization with ggplot"
+  - date: "Rg"
+    title: "Data transformation: create new variables, filter, select and organize data"
+  - date: "Rg"
+    title: "Types of data: categorical and numerical, data transformation"
+  - date: "Rg"
+    title: "Working with factors"
+  - date: "·"
+    title: "Exploratory data analysis: use visualization and transformation to explore data in a systematic way"
+    lab: "lab-01-hello-r.html"
+    
+  - title: "Unit 3: Wrangle your data"
+  - date: "12,Jan"
+    title: "Data import and export: reading and writing different file types"
+  - date: "12, jan"
+    title: "Tidy data: modify your data frame"
+  - date: "s"
+    title: "Working with several data tables: relational data"
+    slides:
+    lab: 
+
+  - title: "Unit 4: Program in R within the tidyverse"
+  - date: "tbd"
+    title: "Pipes and pipelines"
+  - date: "tbd"
+    title: "Functions"
+  - date: "tbd"
+    title: "Vectors and iteration"
+  - date: "Wed, Feb 7"
+    title: "Review and recap"
+    slides: "lec-slides/04-review-recap.html"
+    hw: "hw-01.html"
+  - date: "Fri, Apr 6"
+    title: "Midterm 01 due (at noon)"
+    exam: "mt2.html"
+
+  - date: "Part 2"
+    title: "Data Visualization"
+
+  - title: "Unit 5: Fundamentals of data visualization"
+  - date: "tbd"
+    title: "Types of data and aesthetics"
+  - date: "tbd"
+    title: "Coordinate systems, axes and colour scales"
+  - date: "tbd"
+    title: "Principles of figure design"
+  - date: "tbd"
+    title: "How ggplot works"
+  - date: "tbd"
+    title: "Mapping aesthetics"
+  - date: "tbd"
+    title: "Directory of visualizations"
+
+  - title: "Unit 6: Visualizing amounts, proportions and distributions"
+  - date: "tbd"
+    title: "Visualizing amounts: bar plots, dot plots and heatmaps"
+  - date: "tbd"
+    title: "Visualizing proportions: pie charts, stacked bars, mosaic plots"
+  - date: "tbd"
+    title: "Visualizing distributions: histograms and density plots"
+  - date: "tbd"
+    title: "Percentiles, quartiles and boxplots, violin plots, ridgeline plots"
+
+  - title: "Unit7:	Revealing trends: visualization of time-series data"
+  - date: "tbd"
+    title: "Individual time series data"
+  - date: "tbd"
+    title: "Multiple time series data"
+    
+  - title: "Unit 8: Seeing relationships: correlation, scatterplots and regression"
+  - date: "tbd"
+    title: "Scatter plots, bubble charts"
+  - date: "tbd"
+    title: "Density plots, 2D bins, Hex bins, correlograms"
+  - date: "tbd"
+    title: "Slope graphs and parallel line plots"
+  - date: "tbd"
+    title: "Plot model residuals"
+  - date: "tbd"
+    title: "Plot model predictions and uncertainty"
+
+  - title: "Unit 9: Visualization of spatial information: maps"
+  - date: "tbd"
+    title: "Projections and coordinate systems"
+  - date: "tbd"
+    title: "Vectorial maps (I): Mapping residuals and predictions"
+  - date: "tbd"
+    title: "Vectorial maps (II): Contour maps"
+  - date: "tbd"
+    title: "Raster maps"
+
+  - title: "Unit 10: Graphics for communication using ggplot"
+  - date: "tbd"
+    title: "`Small multiples’ using facet"
+  - date: "tbd"
+    title: "Scales and zooming"
+  - date: "tbd"
+    title: "Change labels, axes and make annotations"
+  - date: "tbd"
+    title: "Themes"
+  - date: "tbd"
+    title: "Saving plots"
+    slides:
+    hw: "hw-01.html"
+    lab: "lab-03-viz-sp-data.html"
+
+  - date: "Fri, Apr 6"
+    title: "Midterm 01 due (at noon)"
+    exam: "mt2.html"
+    reading: "reading-03.html"
+    slides: "lec-slides/06b-formalizing-linear-models.html"
+ 
+
+
+
+
+
+
+
+
+
+
+
+

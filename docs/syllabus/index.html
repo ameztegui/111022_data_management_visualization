@@ -1,0 +1,2766 @@
+<!doctype html>
+<html lang="en">
+<head>
+	<meta charset="utf-8" />
+	<link rel="icon" sizes="76x76" href="../img/favicon.png">
+	<link rel="icon" type="image/png" href="../img/favicon.png">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+
+	<title>Data Management and Visualization</title>
+
+	<meta content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0' name='viewport' />
+
+	
+	<link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons" />
+  <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700" />
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/latest/css/font-awesome.min.css" />
+  <link rel="stylesheet" href="https://cdn.rawgit.com/gaborcsardi/r-font/master/rlogo.css">
+  <script defer src="https://use.fontawesome.com/releases/v5.0.0/js/all.js"></script>
+  <script defer src="https://use.fontawesome.com/releases/v5.0.0/js/v4-shims.js"></script>
+
+	
+    <link href="../css/bootstrap.min.css" rel="stylesheet" />
+    <link href="../css/material-kit.css" rel="stylesheet"/>
+</head>
+
+  
+<body class="profile-page">
+  	<nav class="navbar navbar-transparent navbar-fixed-top navbar-color-on-scroll">
+	    	<div class="container">
+        	
+        	<div class="navbar-header">
+        		<button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navigation-example">
+            		<span class="sr-only">Toggle navigation</span>
+		            <span class="icon-bar"></span>
+		            <span class="icon-bar"></span>
+		            <span class="icon-bar"></span>
+        		</button>
+        		<a class="navbar-brand" href="../">Data Management and Visualization</a>
+        	</div>
+
+        	<div class="collapse navbar-collapse" id="navigation-example">
+        		<ul class="nav navbar-nav navbar-right">
+      
+        
+
+        <li class="nav-item">
+          <a href="../">
+            <i class="sidebar-button-icon fa fa-lg fa-home"></i>
+            <span>Home</span>
+          </a>
+        </li>
+        
+      
+        
+
+        <li class="nav-item">
+          <a href="../syllabus">
+            <i class="material-icons">date_range</i>
+            <span>Syllabus</span>
+          </a>
+        </li>
+        
+      
+        
+
+        <li class="nav-item">
+          <a href="../policies">
+            <i class="material-icons">gavel</i>
+            <span>Policies</span>
+          </a>
+        </li>
+        
+      
+        
+
+        <li class="nav-item">
+          <a href="https://rstudio.cloud">
+            <i class="material-icons">cloud_queue</i>
+            <span>RStudio</span>
+          </a>
+        </li>
+        
+      
+        
+
+        <li class="nav-item">
+          <a href="https://github.com/Sta199-S18">
+            <i class='fab fa-github fa-lg'></i>
+            <span>GitHub</span>
+          </a>
+        </li>
+        
+      
+        
+
+        <li class="nav-item">
+          <a href="https://github.com/Sta199-S18/community/issues">
+            <i class="material-icons">help</i>
+            <span>Help</span>
+          </a>
+        </li>
+        
+      
+        		</ul>
+        	</div>
+    	</div>
+    </nav>
+  <div class="wrapper">
+    <div class="header header-filter" style="background-image: url('http://www2.stat.duke.edu/courses/Spring18/Sta199/img/mugesketch.png');">
+    </div>
+		<div class="main main-raised">
+			<div class="container">
+		  	<div class="section text-left">
+		  	  <h2 class="title"></h2>
+	            <p><b>Note:</b> Due dates of exams and project will not move, however the timeline of topics and smaller assignments might be updated throughout the semester.</p>
+
+<p><br><br></p>
+
+<table class="table" style="max-width:900px;margin-left:auto;margin-right:auto">
+  <tr>
+    <th style="width:15%;text-align:right">Date</th>
+    <th style="width:45%">Lesson</th>
+    <th style="width:5%;text-align:center">Slides</th>
+    <th style="width:5%;text-align:center">Reading</th>
+    <th style="width:5%;text-align:center">Lab</th>
+    <th style="width:5%;text-align:center">AE</th>
+    <th style="width:5%;text-align:center">HW</th>
+    <th style="width:5%;text-align:center">EC</th>
+    <th style="width:5%;text-align:center">Exam</th>
+    <th style="width:5%;text-align:center">Project</th>
+  </tr>
+
+  
+    
+    <tr>
+      <td align="right">Wed, Jan 10</td>
+      <td>Welcome. Course organization and warm-up</td>
+
+      
+      <td align="center"><a href="../slides/lec-slides/00-welcome.html">
+          <i class="fa fa-laptop  fa-lg"></i></a></td>
+      
+      
+      
+        <td align="center"><font color="f1f1f1">
+          <i class="fa fa-book fa-lg"></i></font></td>
+      
+
+      
+        <td align="center"><font color="f1f1f1">
+          <i class="fa fa-code fa-lg"></i></font></td>
+      
+      
+      
+      <td align="center"><a href="../appex/00-unvotes.html">
+          <i class="fa fa-users fa-lg"></i></a></td>
+      
+      
+      
+        <td align="center"><font color="f1f1f1">
+          <i class="fa fa-pencil-square-o fa-lg"></i></font></td>
+      
+
+      
+        <td align="center"><font color="f1f1f1">
+          <i class="fa fa-caret-up fa-lg"></i></font></td>
+      
+      
+      
+        <td align="center"><font color="f1f1f1">
+          <i class="fa fa-check-square fa-lg"></i></font></td>
+      
+      
+      
+        <td align="center"><font color="f1f1f1">
+          <i class="fa fa-file-powerpoint fa-lg"></i></font></td>
+      
+    </tr>
+    
+    <tr>
+      <td align="right">Part 1</td>
+      <td>Data Management</td>
+
+      
+        <td align="center"><font color="f1f1f1">
+          <i class="fa fa-laptop  fa-lg"></i></font></td>
+      
+      
+      
+        <td align="center"><font color="f1f1f1">
+          <i class="fa fa-book fa-lg"></i></font></td>
+      
+
+      
+        <td align="center"><font color="f1f1f1">
+          <i class="fa fa-code fa-lg"></i></font></td>
+      
+      
+      
+        <td align="center"><font color="f1f1f1">
+          <i class="fa fa-users fa-lg"></i></font></td>
+      
+      
+      
+        <td align="center"><font color="f1f1f1">
+          <i class="fa fa-pencil-square-o fa-lg"></i></font></td>
+      
+
+      
+        <td align="center"><font color="f1f1f1">
+          <i class="fa fa-caret-up fa-lg"></i></font></td>
+      
+      
+      
+        <td align="center"><font color="f1f1f1">
+          <i class="fa fa-check-square fa-lg"></i></font></td>
+      
+      
+      
+        <td align="center"><font color="f1f1f1">
+          <i class="fa fa-file-powerpoint fa-lg"></i></font></td>
+      
+    </tr>
+    
+    <tr>
+      <td align="right"></td>
+      <td>Unit 1: Introduction</td>
+
+      
+        <td align="center"><font color="f1f1f1">
+          <i class="fa fa-laptop  fa-lg"></i></font></td>
+      
+      
+      
+        <td align="center"><font color="f1f1f1">
+          <i class="fa fa-book fa-lg"></i></font></td>
+      
+
+      
+        <td align="center"><font color="f1f1f1">
+          <i class="fa fa-code fa-lg"></i></font></td>
+      
+      
+      
+        <td align="center"><font color="f1f1f1">
+          <i class="fa fa-users fa-lg"></i></font></td>
+      
+      
+      
+        <td align="center"><font color="f1f1f1">
+          <i class="fa fa-pencil-square-o fa-lg"></i></font></td>
+      
+
+      
+        <td align="center"><font color="f1f1f1">
+          <i class="fa fa-caret-up fa-lg"></i></font></td>
+      
+      
+      
+        <td align="center"><font color="f1f1f1">
+          <i class="fa fa-check-square fa-lg"></i></font></td>
+      
+      
+      
+        <td align="center"><font color="f1f1f1">
+          <i class="fa fa-file-powerpoint fa-lg"></i></font></td>
+      
+    </tr>
+    
+    <tr>
+      <td align="right">Wed, Jan 10</td>
+      <td>The data pipeline: from acquisition to communication.</td>
+
+      
+      <td align="center"><a href="../slides/lec-slides/00-welcome.html">
+          <i class="fa fa-laptop  fa-lg"></i></a></td>
+      
+      
+      
+        <td align="center"><font color="f1f1f1">
+          <i class="fa fa-book fa-lg"></i></font></td>
+      
+
+      
+        <td align="center"><font color="f1f1f1">
+          <i class="fa fa-code fa-lg"></i></font></td>
+      
+      
+      
+      <td align="center"><a href="../appex/00-unvotes.html">
+          <i class="fa fa-users fa-lg"></i></a></td>
+      
+      
+      
+        <td align="center"><font color="f1f1f1">
+          <i class="fa fa-pencil-square-o fa-lg"></i></font></td>
+      
+
+      
+        <td align="center"><font color="f1f1f1">
+          <i class="fa fa-caret-up fa-lg"></i></font></td>
+      
+      
+      
+        <td align="center"><font color="f1f1f1">
+          <i class="fa fa-check-square fa-lg"></i></font></td>
+      
+      
+      
+        <td align="center"><font color="f1f1f1">
+          <i class="fa fa-file-powerpoint fa-lg"></i></font></td>
+      
+    </tr>
+    
+    <tr>
+      <td align="right">Thur, Jan 11</td>
+      <td>The tidyverse and the concept of tidy data</td>
+
+      
+      <td align="center"><a href="../slides/lab-slides/00-lab-deck.html">
+          <i class="fa fa-laptop  fa-lg"></i></a></td>
+      
+      
+      
+        <td align="center"><font color="f1f1f1">
+          <i class="fa fa-book fa-lg"></i></font></td>
+      
+
+      
+        <td align="center"><font color="f1f1f1">
+          <i class="fa fa-code fa-lg"></i></font></td>
+      
+      
+      
+        <td align="center"><font color="f1f1f1">
+          <i class="fa fa-users fa-lg"></i></font></td>
+      
+      
+      
+        <td align="center"><font color="f1f1f1">
+          <i class="fa fa-pencil-square-o fa-lg"></i></font></td>
+      
+
+      
+        <td align="center"><font color="f1f1f1">
+          <i class="fa fa-caret-up fa-lg"></i></font></td>
+      
+      
+      
+        <td align="center"><font color="f1f1f1">
+          <i class="fa fa-check-square fa-lg"></i></font></td>
+      
+      
+      
+        <td align="center"><font color="f1f1f1">
+          <i class="fa fa-file-powerpoint fa-lg"></i></font></td>
+      
+    </tr>
+    
+    <tr>
+      <td align="right">Thur, Jan 11</td>
+      <td>Good coding practices. </td>
+
+      
+      <td align="center"><a href="../slides/lab-slides/00-lab-deck.html">
+          <i class="fa fa-laptop  fa-lg"></i></a></td>
+      
+      
+      
+        <td align="center"><font color="f1f1f1">
+          <i class="fa fa-book fa-lg"></i></font></td>
+      
+
+      
+        <td align="center"><font color="f1f1f1">
+          <i class="fa fa-code fa-lg"></i></font></td>
+      
+      
+      
+        <td align="center"><font color="f1f1f1">
+          <i class="fa fa-users fa-lg"></i></font></td>
+      
+      
+      
+        <td align="center"><font color="f1f1f1">
+          <i class="fa fa-pencil-square-o fa-lg"></i></font></td>
+      
+
+      
+        <td align="center"><font color="f1f1f1">
+          <i class="fa fa-caret-up fa-lg"></i></font></td>
+      
+      
+      
+        <td align="center"><font color="f1f1f1">
+          <i class="fa fa-check-square fa-lg"></i></font></td>
+      
+      
+      
+        <td align="center"><font color="f1f1f1">
+          <i class="fa fa-file-powerpoint fa-lg"></i></font></td>
+      
+    </tr>
+    
+    <tr>
+      <td align="right">Thur, Jan 11</td>
+      <td>Workflow. Projects in RStudio and RStudio Cloud </td>
+
+      
+      <td align="center"><a href="../slides/lab-slides/00-lab-deck.html">
+          <i class="fa fa-laptop  fa-lg"></i></a></td>
+      
+      
+      
+        <td align="center"><font color="f1f1f1">
+          <i class="fa fa-book fa-lg"></i></font></td>
+      
+
+      
+        <td align="center"><font color="f1f1f1">
+          <i class="fa fa-code fa-lg"></i></font></td>
+      
+      
+      
+        <td align="center"><font color="f1f1f1">
+          <i class="fa fa-users fa-lg"></i></font></td>
+      
+      
+      
+        <td align="center"><font color="f1f1f1">
+          <i class="fa fa-pencil-square-o fa-lg"></i></font></td>
+      
+
+      
+        <td align="center"><font color="f1f1f1">
+          <i class="fa fa-caret-up fa-lg"></i></font></td>
+      
+      
+      
+        <td align="center"><font color="f1f1f1">
+          <i class="fa fa-check-square fa-lg"></i></font></td>
+      
+      
+      
+        <td align="center"><font color="f1f1f1">
+          <i class="fa fa-file-powerpoint fa-lg"></i></font></td>
+      
+    </tr>
+    
+    <tr>
+      <td align="right"></td>
+      <td>Unit 2: Explore your data</td>
+
+      
+        <td align="center"><font color="f1f1f1">
+          <i class="fa fa-laptop  fa-lg"></i></font></td>
+      
+      
+      
+        <td align="center"><font color="f1f1f1">
+          <i class="fa fa-book fa-lg"></i></font></td>
+      
+
+      
+        <td align="center"><font color="f1f1f1">
+          <i class="fa fa-code fa-lg"></i></font></td>
+      
+      
+      
+        <td align="center"><font color="f1f1f1">
+          <i class="fa fa-users fa-lg"></i></font></td>
+      
+      
+      
+        <td align="center"><font color="f1f1f1">
+          <i class="fa fa-pencil-square-o fa-lg"></i></font></td>
+      
+
+      
+        <td align="center"><font color="f1f1f1">
+          <i class="fa fa-caret-up fa-lg"></i></font></td>
+      
+      
+      
+        <td align="center"><font color="f1f1f1">
+          <i class="fa fa-check-square fa-lg"></i></font></td>
+      
+      
+      
+        <td align="center"><font color="f1f1f1">
+          <i class="fa fa-file-powerpoint fa-lg"></i></font></td>
+      
+    </tr>
+    
+    <tr>
+      <td align="right">Thur, Jan 11</td>
+      <td>Basic data visualization with ggplot</td>
+
+      
+        <td align="center"><font color="f1f1f1">
+          <i class="fa fa-laptop  fa-lg"></i></font></td>
+      
+      
+      
+        <td align="center"><font color="f1f1f1">
+          <i class="fa fa-book fa-lg"></i></font></td>
+      
+
+      
+        <td align="center"><font color="f1f1f1">
+          <i class="fa fa-code fa-lg"></i></font></td>
+      
+      
+      
+        <td align="center"><font color="f1f1f1">
+          <i class="fa fa-users fa-lg"></i></font></td>
+      
+      
+      
+        <td align="center"><font color="f1f1f1">
+          <i class="fa fa-pencil-square-o fa-lg"></i></font></td>
+      
+
+      
+        <td align="center"><font color="f1f1f1">
+          <i class="fa fa-caret-up fa-lg"></i></font></td>
+      
+      
+      
+        <td align="center"><font color="f1f1f1">
+          <i class="fa fa-check-square fa-lg"></i></font></td>
+      
+      
+      
+        <td align="center"><font color="f1f1f1">
+          <i class="fa fa-file-powerpoint fa-lg"></i></font></td>
+      
+    </tr>
+    
+    <tr>
+      <td align="right">Rg</td>
+      <td>Data transformation: create new variables, filter, select and organize data</td>
+
+      
+        <td align="center"><font color="f1f1f1">
+          <i class="fa fa-laptop  fa-lg"></i></font></td>
+      
+      
+      
+        <td align="center"><font color="f1f1f1">
+          <i class="fa fa-book fa-lg"></i></font></td>
+      
+
+      
+        <td align="center"><font color="f1f1f1">
+          <i class="fa fa-code fa-lg"></i></font></td>
+      
+      
+      
+        <td align="center"><font color="f1f1f1">
+          <i class="fa fa-users fa-lg"></i></font></td>
+      
+      
+      
+        <td align="center"><font color="f1f1f1">
+          <i class="fa fa-pencil-square-o fa-lg"></i></font></td>
+      
+
+      
+        <td align="center"><font color="f1f1f1">
+          <i class="fa fa-caret-up fa-lg"></i></font></td>
+      
+      
+      
+        <td align="center"><font color="f1f1f1">
+          <i class="fa fa-check-square fa-lg"></i></font></td>
+      
+      
+      
+        <td align="center"><font color="f1f1f1">
+          <i class="fa fa-file-powerpoint fa-lg"></i></font></td>
+      
+    </tr>
+    
+    <tr>
+      <td align="right">Rg</td>
+      <td>Types of data: categorical and numerical, data transformation</td>
+
+      
+        <td align="center"><font color="f1f1f1">
+          <i class="fa fa-laptop  fa-lg"></i></font></td>
+      
+      
+      
+        <td align="center"><font color="f1f1f1">
+          <i class="fa fa-book fa-lg"></i></font></td>
+      
+
+      
+        <td align="center"><font color="f1f1f1">
+          <i class="fa fa-code fa-lg"></i></font></td>
+      
+      
+      
+        <td align="center"><font color="f1f1f1">
+          <i class="fa fa-users fa-lg"></i></font></td>
+      
+      
+      
+        <td align="center"><font color="f1f1f1">
+          <i class="fa fa-pencil-square-o fa-lg"></i></font></td>
+      
+
+      
+        <td align="center"><font color="f1f1f1">
+          <i class="fa fa-caret-up fa-lg"></i></font></td>
+      
+      
+      
+        <td align="center"><font color="f1f1f1">
+          <i class="fa fa-check-square fa-lg"></i></font></td>
+      
+      
+      
+        <td align="center"><font color="f1f1f1">
+          <i class="fa fa-file-powerpoint fa-lg"></i></font></td>
+      
+    </tr>
+    
+    <tr>
+      <td align="right">Rg</td>
+      <td>Working with factors</td>
+
+      
+        <td align="center"><font color="f1f1f1">
+          <i class="fa fa-laptop  fa-lg"></i></font></td>
+      
+      
+      
+        <td align="center"><font color="f1f1f1">
+          <i class="fa fa-book fa-lg"></i></font></td>
+      
+
+      
+        <td align="center"><font color="f1f1f1">
+          <i class="fa fa-code fa-lg"></i></font></td>
+      
+      
+      
+        <td align="center"><font color="f1f1f1">
+          <i class="fa fa-users fa-lg"></i></font></td>
+      
+      
+      
+        <td align="center"><font color="f1f1f1">
+          <i class="fa fa-pencil-square-o fa-lg"></i></font></td>
+      
+
+      
+        <td align="center"><font color="f1f1f1">
+          <i class="fa fa-caret-up fa-lg"></i></font></td>
+      
+      
+      
+        <td align="center"><font color="f1f1f1">
+          <i class="fa fa-check-square fa-lg"></i></font></td>
+      
+      
+      
+        <td align="center"><font color="f1f1f1">
+          <i class="fa fa-file-powerpoint fa-lg"></i></font></td>
+      
+    </tr>
+    
+    <tr>
+      <td align="right">·</td>
+      <td>Exploratory data analysis: use visualization and transformation to explore data in a systematic way</td>
+
+      
+        <td align="center"><font color="f1f1f1">
+          <i class="fa fa-laptop  fa-lg"></i></font></td>
+      
+      
+      
+        <td align="center"><font color="f1f1f1">
+          <i class="fa fa-book fa-lg"></i></font></td>
+      
+
+      
+      <td align="center"><a href="../labs/lab-01-hello-r.html">
+          <i class="fa fa-code fa-lg"></i></a></td>
+      
+      
+      
+        <td align="center"><font color="f1f1f1">
+          <i class="fa fa-users fa-lg"></i></font></td>
+      
+      
+      
+        <td align="center"><font color="f1f1f1">
+          <i class="fa fa-pencil-square-o fa-lg"></i></font></td>
+      
+
+      
+        <td align="center"><font color="f1f1f1">
+          <i class="fa fa-caret-up fa-lg"></i></font></td>
+      
+      
+      
+        <td align="center"><font color="f1f1f1">
+          <i class="fa fa-check-square fa-lg"></i></font></td>
+      
+      
+      
+        <td align="center"><font color="f1f1f1">
+          <i class="fa fa-file-powerpoint fa-lg"></i></font></td>
+      
+    </tr>
+    
+    <tr>
+      <td align="right"></td>
+      <td>Unit 3: Wrangle your data</td>
+
+      
+        <td align="center"><font color="f1f1f1">
+          <i class="fa fa-laptop  fa-lg"></i></font></td>
+      
+      
+      
+        <td align="center"><font color="f1f1f1">
+          <i class="fa fa-book fa-lg"></i></font></td>
+      
+
+      
+        <td align="center"><font color="f1f1f1">
+          <i class="fa fa-code fa-lg"></i></font></td>
+      
+      
+      
+        <td align="center"><font color="f1f1f1">
+          <i class="fa fa-users fa-lg"></i></font></td>
+      
+      
+      
+        <td align="center"><font color="f1f1f1">
+          <i class="fa fa-pencil-square-o fa-lg"></i></font></td>
+      
+
+      
+        <td align="center"><font color="f1f1f1">
+          <i class="fa fa-caret-up fa-lg"></i></font></td>
+      
+      
+      
+        <td align="center"><font color="f1f1f1">
+          <i class="fa fa-check-square fa-lg"></i></font></td>
+      
+      
+      
+        <td align="center"><font color="f1f1f1">
+          <i class="fa fa-file-powerpoint fa-lg"></i></font></td>
+      
+    </tr>
+    
+    <tr>
+      <td align="right">12,Jan</td>
+      <td>Data import and export: reading and writing different file types</td>
+
+      
+        <td align="center"><font color="f1f1f1">
+          <i class="fa fa-laptop  fa-lg"></i></font></td>
+      
+      
+      
+        <td align="center"><font color="f1f1f1">
+          <i class="fa fa-book fa-lg"></i></font></td>
+      
+
+      
+        <td align="center"><font color="f1f1f1">
+          <i class="fa fa-code fa-lg"></i></font></td>
+      
+      
+      
+        <td align="center"><font color="f1f1f1">
+          <i class="fa fa-users fa-lg"></i></font></td>
+      
+      
+      
+        <td align="center"><font color="f1f1f1">
+          <i class="fa fa-pencil-square-o fa-lg"></i></font></td>
+      
+
+      
+        <td align="center"><font color="f1f1f1">
+          <i class="fa fa-caret-up fa-lg"></i></font></td>
+      
+      
+      
+        <td align="center"><font color="f1f1f1">
+          <i class="fa fa-check-square fa-lg"></i></font></td>
+      
+      
+      
+        <td align="center"><font color="f1f1f1">
+          <i class="fa fa-file-powerpoint fa-lg"></i></font></td>
+      
+    </tr>
+    
+    <tr>
+      <td align="right">12, jan</td>
+      <td>Tidy data: modify your data frame</td>
+
+      
+        <td align="center"><font color="f1f1f1">
+          <i class="fa fa-laptop  fa-lg"></i></font></td>
+      
+      
+      
+        <td align="center"><font color="f1f1f1">
+          <i class="fa fa-book fa-lg"></i></font></td>
+      
+
+      
+        <td align="center"><font color="f1f1f1">
+          <i class="fa fa-code fa-lg"></i></font></td>
+      
+      
+      
+        <td align="center"><font color="f1f1f1">
+          <i class="fa fa-users fa-lg"></i></font></td>
+      
+      
+      
+        <td align="center"><font color="f1f1f1">
+          <i class="fa fa-pencil-square-o fa-lg"></i></font></td>
+      
+
+      
+        <td align="center"><font color="f1f1f1">
+          <i class="fa fa-caret-up fa-lg"></i></font></td>
+      
+      
+      
+        <td align="center"><font color="f1f1f1">
+          <i class="fa fa-check-square fa-lg"></i></font></td>
+      
+      
+      
+        <td align="center"><font color="f1f1f1">
+          <i class="fa fa-file-powerpoint fa-lg"></i></font></td>
+      
+    </tr>
+    
+    <tr>
+      <td align="right">s</td>
+      <td>Working with several data tables: relational data</td>
+
+      
+        <td align="center"><font color="f1f1f1">
+          <i class="fa fa-laptop  fa-lg"></i></font></td>
+      
+      
+      
+        <td align="center"><font color="f1f1f1">
+          <i class="fa fa-book fa-lg"></i></font></td>
+      
+
+      
+        <td align="center"><font color="f1f1f1">
+          <i class="fa fa-code fa-lg"></i></font></td>
+      
+      
+      
+        <td align="center"><font color="f1f1f1">
+          <i class="fa fa-users fa-lg"></i></font></td>
+      
+      
+      
+        <td align="center"><font color="f1f1f1">
+          <i class="fa fa-pencil-square-o fa-lg"></i></font></td>
+      
+
+      
+        <td align="center"><font color="f1f1f1">
+          <i class="fa fa-caret-up fa-lg"></i></font></td>
+      
+      
+      
+        <td align="center"><font color="f1f1f1">
+          <i class="fa fa-check-square fa-lg"></i></font></td>
+      
+      
+      
+        <td align="center"><font color="f1f1f1">
+          <i class="fa fa-file-powerpoint fa-lg"></i></font></td>
+      
+    </tr>
+    
+    <tr>
+      <td align="right"></td>
+      <td>Unit 4: Program in R within the tidyverse</td>
+
+      
+        <td align="center"><font color="f1f1f1">
+          <i class="fa fa-laptop  fa-lg"></i></font></td>
+      
+      
+      
+        <td align="center"><font color="f1f1f1">
+          <i class="fa fa-book fa-lg"></i></font></td>
+      
+
+      
+        <td align="center"><font color="f1f1f1">
+          <i class="fa fa-code fa-lg"></i></font></td>
+      
+      
+      
+        <td align="center"><font color="f1f1f1">
+          <i class="fa fa-users fa-lg"></i></font></td>
+      
+      
+      
+        <td align="center"><font color="f1f1f1">
+          <i class="fa fa-pencil-square-o fa-lg"></i></font></td>
+      
+
+      
+        <td align="center"><font color="f1f1f1">
+          <i class="fa fa-caret-up fa-lg"></i></font></td>
+      
+      
+      
+        <td align="center"><font color="f1f1f1">
+          <i class="fa fa-check-square fa-lg"></i></font></td>
+      
+      
+      
+        <td align="center"><font color="f1f1f1">
+          <i class="fa fa-file-powerpoint fa-lg"></i></font></td>
+      
+    </tr>
+    
+    <tr>
+      <td align="right">tbd</td>
+      <td>Pipes and pipelines</td>
+
+      
+        <td align="center"><font color="f1f1f1">
+          <i class="fa fa-laptop  fa-lg"></i></font></td>
+      
+      
+      
+        <td align="center"><font color="f1f1f1">
+          <i class="fa fa-book fa-lg"></i></font></td>
+      
+
+      
+        <td align="center"><font color="f1f1f1">
+          <i class="fa fa-code fa-lg"></i></font></td>
+      
+      
+      
+        <td align="center"><font color="f1f1f1">
+          <i class="fa fa-users fa-lg"></i></font></td>
+      
+      
+      
+        <td align="center"><font color="f1f1f1">
+          <i class="fa fa-pencil-square-o fa-lg"></i></font></td>
+      
+
+      
+        <td align="center"><font color="f1f1f1">
+          <i class="fa fa-caret-up fa-lg"></i></font></td>
+      
+      
+      
+        <td align="center"><font color="f1f1f1">
+          <i class="fa fa-check-square fa-lg"></i></font></td>
+      
+      
+      
+        <td align="center"><font color="f1f1f1">
+          <i class="fa fa-file-powerpoint fa-lg"></i></font></td>
+      
+    </tr>
+    
+    <tr>
+      <td align="right">tbd</td>
+      <td>Functions</td>
+
+      
+        <td align="center"><font color="f1f1f1">
+          <i class="fa fa-laptop  fa-lg"></i></font></td>
+      
+      
+      
+        <td align="center"><font color="f1f1f1">
+          <i class="fa fa-book fa-lg"></i></font></td>
+      
+
+      
+        <td align="center"><font color="f1f1f1">
+          <i class="fa fa-code fa-lg"></i></font></td>
+      
+      
+      
+        <td align="center"><font color="f1f1f1">
+          <i class="fa fa-users fa-lg"></i></font></td>
+      
+      
+      
+        <td align="center"><font color="f1f1f1">
+          <i class="fa fa-pencil-square-o fa-lg"></i></font></td>
+      
+
+      
+        <td align="center"><font color="f1f1f1">
+          <i class="fa fa-caret-up fa-lg"></i></font></td>
+      
+      
+      
+        <td align="center"><font color="f1f1f1">
+          <i class="fa fa-check-square fa-lg"></i></font></td>
+      
+      
+      
+        <td align="center"><font color="f1f1f1">
+          <i class="fa fa-file-powerpoint fa-lg"></i></font></td>
+      
+    </tr>
+    
+    <tr>
+      <td align="right">tbd</td>
+      <td>Vectors and iteration</td>
+
+      
+        <td align="center"><font color="f1f1f1">
+          <i class="fa fa-laptop  fa-lg"></i></font></td>
+      
+      
+      
+        <td align="center"><font color="f1f1f1">
+          <i class="fa fa-book fa-lg"></i></font></td>
+      
+
+      
+        <td align="center"><font color="f1f1f1">
+          <i class="fa fa-code fa-lg"></i></font></td>
+      
+      
+      
+        <td align="center"><font color="f1f1f1">
+          <i class="fa fa-users fa-lg"></i></font></td>
+      
+      
+      
+        <td align="center"><font color="f1f1f1">
+          <i class="fa fa-pencil-square-o fa-lg"></i></font></td>
+      
+
+      
+        <td align="center"><font color="f1f1f1">
+          <i class="fa fa-caret-up fa-lg"></i></font></td>
+      
+      
+      
+        <td align="center"><font color="f1f1f1">
+          <i class="fa fa-check-square fa-lg"></i></font></td>
+      
+      
+      
+        <td align="center"><font color="f1f1f1">
+          <i class="fa fa-file-powerpoint fa-lg"></i></font></td>
+      
+    </tr>
+    
+    <tr>
+      <td align="right">Wed, Feb 7</td>
+      <td>Review and recap</td>
+
+      
+      <td align="center"><a href="../slides/lec-slides/04-review-recap.html">
+          <i class="fa fa-laptop  fa-lg"></i></a></td>
+      
+      
+      
+        <td align="center"><font color="f1f1f1">
+          <i class="fa fa-book fa-lg"></i></font></td>
+      
+
+      
+        <td align="center"><font color="f1f1f1">
+          <i class="fa fa-code fa-lg"></i></font></td>
+      
+      
+      
+        <td align="center"><font color="f1f1f1">
+          <i class="fa fa-users fa-lg"></i></font></td>
+      
+      
+      
+      <td align="center"><a href="../hw/hw-01.html">
+          <i class="fa fa-pencil-square-o fa-lg"></i></a></td>
+      
+
+      
+        <td align="center"><font color="f1f1f1">
+          <i class="fa fa-caret-up fa-lg"></i></font></td>
+      
+      
+      
+        <td align="center"><font color="f1f1f1">
+          <i class="fa fa-check-square fa-lg"></i></font></td>
+      
+      
+      
+        <td align="center"><font color="f1f1f1">
+          <i class="fa fa-file-powerpoint fa-lg"></i></font></td>
+      
+    </tr>
+    
+    <tr>
+      <td align="right">Fri, Apr 6</td>
+      <td>Midterm 01 due (at noon)</td>
+
+      
+        <td align="center"><font color="f1f1f1">
+          <i class="fa fa-laptop  fa-lg"></i></font></td>
+      
+      
+      
+        <td align="center"><font color="f1f1f1">
+          <i class="fa fa-book fa-lg"></i></font></td>
+      
+
+      
+        <td align="center"><font color="f1f1f1">
+          <i class="fa fa-code fa-lg"></i></font></td>
+      
+      
+      
+        <td align="center"><font color="f1f1f1">
+          <i class="fa fa-users fa-lg"></i></font></td>
+      
+      
+      
+        <td align="center"><font color="f1f1f1">
+          <i class="fa fa-pencil-square-o fa-lg"></i></font></td>
+      
+
+      
+        <td align="center"><font color="f1f1f1">
+          <i class="fa fa-caret-up fa-lg"></i></font></td>
+      
+      
+      
+      <td align="center"><a href="../exam/mt2.html">
+          <i class="fa fa-check-square fa-lg"></i></a></td>
+      
+      
+      
+        <td align="center"><font color="f1f1f1">
+          <i class="fa fa-file-powerpoint fa-lg"></i></font></td>
+      
+    </tr>
+    
+    <tr>
+      <td align="right">Part 2</td>
+      <td>Data Visualization</td>
+
+      
+        <td align="center"><font color="f1f1f1">
+          <i class="fa fa-laptop  fa-lg"></i></font></td>
+      
+      
+      
+        <td align="center"><font color="f1f1f1">
+          <i class="fa fa-book fa-lg"></i></font></td>
+      
+
+      
+        <td align="center"><font color="f1f1f1">
+          <i class="fa fa-code fa-lg"></i></font></td>
+      
+      
+      
+        <td align="center"><font color="f1f1f1">
+          <i class="fa fa-users fa-lg"></i></font></td>
+      
+      
+      
+        <td align="center"><font color="f1f1f1">
+          <i class="fa fa-pencil-square-o fa-lg"></i></font></td>
+      
+
+      
+        <td align="center"><font color="f1f1f1">
+          <i class="fa fa-caret-up fa-lg"></i></font></td>
+      
+      
+      
+        <td align="center"><font color="f1f1f1">
+          <i class="fa fa-check-square fa-lg"></i></font></td>
+      
+      
+      
+        <td align="center"><font color="f1f1f1">
+          <i class="fa fa-file-powerpoint fa-lg"></i></font></td>
+      
+    </tr>
+    
+    <tr>
+      <td align="right"></td>
+      <td>Unit 5: Fundamentals of data visualization</td>
+
+      
+        <td align="center"><font color="f1f1f1">
+          <i class="fa fa-laptop  fa-lg"></i></font></td>
+      
+      
+      
+        <td align="center"><font color="f1f1f1">
+          <i class="fa fa-book fa-lg"></i></font></td>
+      
+
+      
+        <td align="center"><font color="f1f1f1">
+          <i class="fa fa-code fa-lg"></i></font></td>
+      
+      
+      
+        <td align="center"><font color="f1f1f1">
+          <i class="fa fa-users fa-lg"></i></font></td>
+      
+      
+      
+        <td align="center"><font color="f1f1f1">
+          <i class="fa fa-pencil-square-o fa-lg"></i></font></td>
+      
+
+      
+        <td align="center"><font color="f1f1f1">
+          <i class="fa fa-caret-up fa-lg"></i></font></td>
+      
+      
+      
+        <td align="center"><font color="f1f1f1">
+          <i class="fa fa-check-square fa-lg"></i></font></td>
+      
+      
+      
+        <td align="center"><font color="f1f1f1">
+          <i class="fa fa-file-powerpoint fa-lg"></i></font></td>
+      
+    </tr>
+    
+    <tr>
+      <td align="right">tbd</td>
+      <td>Types of data and aesthetics</td>
+
+      
+        <td align="center"><font color="f1f1f1">
+          <i class="fa fa-laptop  fa-lg"></i></font></td>
+      
+      
+      
+        <td align="center"><font color="f1f1f1">
+          <i class="fa fa-book fa-lg"></i></font></td>
+      
+
+      
+        <td align="center"><font color="f1f1f1">
+          <i class="fa fa-code fa-lg"></i></font></td>
+      
+      
+      
+        <td align="center"><font color="f1f1f1">
+          <i class="fa fa-users fa-lg"></i></font></td>
+      
+      
+      
+        <td align="center"><font color="f1f1f1">
+          <i class="fa fa-pencil-square-o fa-lg"></i></font></td>
+      
+
+      
+        <td align="center"><font color="f1f1f1">
+          <i class="fa fa-caret-up fa-lg"></i></font></td>
+      
+      
+      
+        <td align="center"><font color="f1f1f1">
+          <i class="fa fa-check-square fa-lg"></i></font></td>
+      
+      
+      
+        <td align="center"><font color="f1f1f1">
+          <i class="fa fa-file-powerpoint fa-lg"></i></font></td>
+      
+    </tr>
+    
+    <tr>
+      <td align="right">tbd</td>
+      <td>Coordinate systems, axes and colour scales</td>
+
+      
+        <td align="center"><font color="f1f1f1">
+          <i class="fa fa-laptop  fa-lg"></i></font></td>
+      
+      
+      
+        <td align="center"><font color="f1f1f1">
+          <i class="fa fa-book fa-lg"></i></font></td>
+      
+
+      
+        <td align="center"><font color="f1f1f1">
+          <i class="fa fa-code fa-lg"></i></font></td>
+      
+      
+      
+        <td align="center"><font color="f1f1f1">
+          <i class="fa fa-users fa-lg"></i></font></td>
+      
+      
+      
+        <td align="center"><font color="f1f1f1">
+          <i class="fa fa-pencil-square-o fa-lg"></i></font></td>
+      
+
+      
+        <td align="center"><font color="f1f1f1">
+          <i class="fa fa-caret-up fa-lg"></i></font></td>
+      
+      
+      
+        <td align="center"><font color="f1f1f1">
+          <i class="fa fa-check-square fa-lg"></i></font></td>
+      
+      
+      
+        <td align="center"><font color="f1f1f1">
+          <i class="fa fa-file-powerpoint fa-lg"></i></font></td>
+      
+    </tr>
+    
+    <tr>
+      <td align="right">tbd</td>
+      <td>Principles of figure design</td>
+
+      
+        <td align="center"><font color="f1f1f1">
+          <i class="fa fa-laptop  fa-lg"></i></font></td>
+      
+      
+      
+        <td align="center"><font color="f1f1f1">
+          <i class="fa fa-book fa-lg"></i></font></td>
+      
+
+      
+        <td align="center"><font color="f1f1f1">
+          <i class="fa fa-code fa-lg"></i></font></td>
+      
+      
+      
+        <td align="center"><font color="f1f1f1">
+          <i class="fa fa-users fa-lg"></i></font></td>
+      
+      
+      
+        <td align="center"><font color="f1f1f1">
+          <i class="fa fa-pencil-square-o fa-lg"></i></font></td>
+      
+
+      
+        <td align="center"><font color="f1f1f1">
+          <i class="fa fa-caret-up fa-lg"></i></font></td>
+      
+      
+      
+        <td align="center"><font color="f1f1f1">
+          <i class="fa fa-check-square fa-lg"></i></font></td>
+      
+      
+      
+        <td align="center"><font color="f1f1f1">
+          <i class="fa fa-file-powerpoint fa-lg"></i></font></td>
+      
+    </tr>
+    
+    <tr>
+      <td align="right">tbd</td>
+      <td>How ggplot works</td>
+
+      
+        <td align="center"><font color="f1f1f1">
+          <i class="fa fa-laptop  fa-lg"></i></font></td>
+      
+      
+      
+        <td align="center"><font color="f1f1f1">
+          <i class="fa fa-book fa-lg"></i></font></td>
+      
+
+      
+        <td align="center"><font color="f1f1f1">
+          <i class="fa fa-code fa-lg"></i></font></td>
+      
+      
+      
+        <td align="center"><font color="f1f1f1">
+          <i class="fa fa-users fa-lg"></i></font></td>
+      
+      
+      
+        <td align="center"><font color="f1f1f1">
+          <i class="fa fa-pencil-square-o fa-lg"></i></font></td>
+      
+
+      
+        <td align="center"><font color="f1f1f1">
+          <i class="fa fa-caret-up fa-lg"></i></font></td>
+      
+      
+      
+        <td align="center"><font color="f1f1f1">
+          <i class="fa fa-check-square fa-lg"></i></font></td>
+      
+      
+      
+        <td align="center"><font color="f1f1f1">
+          <i class="fa fa-file-powerpoint fa-lg"></i></font></td>
+      
+    </tr>
+    
+    <tr>
+      <td align="right">tbd</td>
+      <td>Mapping aesthetics</td>
+
+      
+        <td align="center"><font color="f1f1f1">
+          <i class="fa fa-laptop  fa-lg"></i></font></td>
+      
+      
+      
+        <td align="center"><font color="f1f1f1">
+          <i class="fa fa-book fa-lg"></i></font></td>
+      
+
+      
+        <td align="center"><font color="f1f1f1">
+          <i class="fa fa-code fa-lg"></i></font></td>
+      
+      
+      
+        <td align="center"><font color="f1f1f1">
+          <i class="fa fa-users fa-lg"></i></font></td>
+      
+      
+      
+        <td align="center"><font color="f1f1f1">
+          <i class="fa fa-pencil-square-o fa-lg"></i></font></td>
+      
+
+      
+        <td align="center"><font color="f1f1f1">
+          <i class="fa fa-caret-up fa-lg"></i></font></td>
+      
+      
+      
+        <td align="center"><font color="f1f1f1">
+          <i class="fa fa-check-square fa-lg"></i></font></td>
+      
+      
+      
+        <td align="center"><font color="f1f1f1">
+          <i class="fa fa-file-powerpoint fa-lg"></i></font></td>
+      
+    </tr>
+    
+    <tr>
+      <td align="right">tbd</td>
+      <td>Directory of visualizations</td>
+
+      
+        <td align="center"><font color="f1f1f1">
+          <i class="fa fa-laptop  fa-lg"></i></font></td>
+      
+      
+      
+        <td align="center"><font color="f1f1f1">
+          <i class="fa fa-book fa-lg"></i></font></td>
+      
+
+      
+        <td align="center"><font color="f1f1f1">
+          <i class="fa fa-code fa-lg"></i></font></td>
+      
+      
+      
+        <td align="center"><font color="f1f1f1">
+          <i class="fa fa-users fa-lg"></i></font></td>
+      
+      
+      
+        <td align="center"><font color="f1f1f1">
+          <i class="fa fa-pencil-square-o fa-lg"></i></font></td>
+      
+
+      
+        <td align="center"><font color="f1f1f1">
+          <i class="fa fa-caret-up fa-lg"></i></font></td>
+      
+      
+      
+        <td align="center"><font color="f1f1f1">
+          <i class="fa fa-check-square fa-lg"></i></font></td>
+      
+      
+      
+        <td align="center"><font color="f1f1f1">
+          <i class="fa fa-file-powerpoint fa-lg"></i></font></td>
+      
+    </tr>
+    
+    <tr>
+      <td align="right"></td>
+      <td>Unit 6: Visualizing amounts, proportions and distributions</td>
+
+      
+        <td align="center"><font color="f1f1f1">
+          <i class="fa fa-laptop  fa-lg"></i></font></td>
+      
+      
+      
+        <td align="center"><font color="f1f1f1">
+          <i class="fa fa-book fa-lg"></i></font></td>
+      
+
+      
+        <td align="center"><font color="f1f1f1">
+          <i class="fa fa-code fa-lg"></i></font></td>
+      
+      
+      
+        <td align="center"><font color="f1f1f1">
+          <i class="fa fa-users fa-lg"></i></font></td>
+      
+      
+      
+        <td align="center"><font color="f1f1f1">
+          <i class="fa fa-pencil-square-o fa-lg"></i></font></td>
+      
+
+      
+        <td align="center"><font color="f1f1f1">
+          <i class="fa fa-caret-up fa-lg"></i></font></td>
+      
+      
+      
+        <td align="center"><font color="f1f1f1">
+          <i class="fa fa-check-square fa-lg"></i></font></td>
+      
+      
+      
+        <td align="center"><font color="f1f1f1">
+          <i class="fa fa-file-powerpoint fa-lg"></i></font></td>
+      
+    </tr>
+    
+    <tr>
+      <td align="right">tbd</td>
+      <td>Visualizing amounts: bar plots, dot plots and heatmaps</td>
+
+      
+        <td align="center"><font color="f1f1f1">
+          <i class="fa fa-laptop  fa-lg"></i></font></td>
+      
+      
+      
+        <td align="center"><font color="f1f1f1">
+          <i class="fa fa-book fa-lg"></i></font></td>
+      
+
+      
+        <td align="center"><font color="f1f1f1">
+          <i class="fa fa-code fa-lg"></i></font></td>
+      
+      
+      
+        <td align="center"><font color="f1f1f1">
+          <i class="fa fa-users fa-lg"></i></font></td>
+      
+      
+      
+        <td align="center"><font color="f1f1f1">
+          <i class="fa fa-pencil-square-o fa-lg"></i></font></td>
+      
+
+      
+        <td align="center"><font color="f1f1f1">
+          <i class="fa fa-caret-up fa-lg"></i></font></td>
+      
+      
+      
+        <td align="center"><font color="f1f1f1">
+          <i class="fa fa-check-square fa-lg"></i></font></td>
+      
+      
+      
+        <td align="center"><font color="f1f1f1">
+          <i class="fa fa-file-powerpoint fa-lg"></i></font></td>
+      
+    </tr>
+    
+    <tr>
+      <td align="right">tbd</td>
+      <td>Visualizing proportions: pie charts, stacked bars, mosaic plots</td>
+
+      
+        <td align="center"><font color="f1f1f1">
+          <i class="fa fa-laptop  fa-lg"></i></font></td>
+      
+      
+      
+        <td align="center"><font color="f1f1f1">
+          <i class="fa fa-book fa-lg"></i></font></td>
+      
+
+      
+        <td align="center"><font color="f1f1f1">
+          <i class="fa fa-code fa-lg"></i></font></td>
+      
+      
+      
+        <td align="center"><font color="f1f1f1">
+          <i class="fa fa-users fa-lg"></i></font></td>
+      
+      
+      
+        <td align="center"><font color="f1f1f1">
+          <i class="fa fa-pencil-square-o fa-lg"></i></font></td>
+      
+
+      
+        <td align="center"><font color="f1f1f1">
+          <i class="fa fa-caret-up fa-lg"></i></font></td>
+      
+      
+      
+        <td align="center"><font color="f1f1f1">
+          <i class="fa fa-check-square fa-lg"></i></font></td>
+      
+      
+      
+        <td align="center"><font color="f1f1f1">
+          <i class="fa fa-file-powerpoint fa-lg"></i></font></td>
+      
+    </tr>
+    
+    <tr>
+      <td align="right">tbd</td>
+      <td>Visualizing distributions: histograms and density plots</td>
+
+      
+        <td align="center"><font color="f1f1f1">
+          <i class="fa fa-laptop  fa-lg"></i></font></td>
+      
+      
+      
+        <td align="center"><font color="f1f1f1">
+          <i class="fa fa-book fa-lg"></i></font></td>
+      
+
+      
+        <td align="center"><font color="f1f1f1">
+          <i class="fa fa-code fa-lg"></i></font></td>
+      
+      
+      
+        <td align="center"><font color="f1f1f1">
+          <i class="fa fa-users fa-lg"></i></font></td>
+      
+      
+      
+        <td align="center"><font color="f1f1f1">
+          <i class="fa fa-pencil-square-o fa-lg"></i></font></td>
+      
+
+      
+        <td align="center"><font color="f1f1f1">
+          <i class="fa fa-caret-up fa-lg"></i></font></td>
+      
+      
+      
+        <td align="center"><font color="f1f1f1">
+          <i class="fa fa-check-square fa-lg"></i></font></td>
+      
+      
+      
+        <td align="center"><font color="f1f1f1">
+          <i class="fa fa-file-powerpoint fa-lg"></i></font></td>
+      
+    </tr>
+    
+    <tr>
+      <td align="right">tbd</td>
+      <td>Percentiles, quartiles and boxplots, violin plots, ridgeline plots</td>
+
+      
+        <td align="center"><font color="f1f1f1">
+          <i class="fa fa-laptop  fa-lg"></i></font></td>
+      
+      
+      
+        <td align="center"><font color="f1f1f1">
+          <i class="fa fa-book fa-lg"></i></font></td>
+      
+
+      
+        <td align="center"><font color="f1f1f1">
+          <i class="fa fa-code fa-lg"></i></font></td>
+      
+      
+      
+        <td align="center"><font color="f1f1f1">
+          <i class="fa fa-users fa-lg"></i></font></td>
+      
+      
+      
+        <td align="center"><font color="f1f1f1">
+          <i class="fa fa-pencil-square-o fa-lg"></i></font></td>
+      
+
+      
+        <td align="center"><font color="f1f1f1">
+          <i class="fa fa-caret-up fa-lg"></i></font></td>
+      
+      
+      
+        <td align="center"><font color="f1f1f1">
+          <i class="fa fa-check-square fa-lg"></i></font></td>
+      
+      
+      
+        <td align="center"><font color="f1f1f1">
+          <i class="fa fa-file-powerpoint fa-lg"></i></font></td>
+      
+    </tr>
+    
+    <tr>
+      <td align="right"></td>
+      <td>Unit7:    Revealing trends: visualization of time-series data</td>
+
+      
+        <td align="center"><font color="f1f1f1">
+          <i class="fa fa-laptop  fa-lg"></i></font></td>
+      
+      
+      
+        <td align="center"><font color="f1f1f1">
+          <i class="fa fa-book fa-lg"></i></font></td>
+      
+
+      
+        <td align="center"><font color="f1f1f1">
+          <i class="fa fa-code fa-lg"></i></font></td>
+      
+      
+      
+        <td align="center"><font color="f1f1f1">
+          <i class="fa fa-users fa-lg"></i></font></td>
+      
+      
+      
+        <td align="center"><font color="f1f1f1">
+          <i class="fa fa-pencil-square-o fa-lg"></i></font></td>
+      
+
+      
+        <td align="center"><font color="f1f1f1">
+          <i class="fa fa-caret-up fa-lg"></i></font></td>
+      
+      
+      
+        <td align="center"><font color="f1f1f1">
+          <i class="fa fa-check-square fa-lg"></i></font></td>
+      
+      
+      
+        <td align="center"><font color="f1f1f1">
+          <i class="fa fa-file-powerpoint fa-lg"></i></font></td>
+      
+    </tr>
+    
+    <tr>
+      <td align="right">tbd</td>
+      <td>Individual time series data</td>
+
+      
+        <td align="center"><font color="f1f1f1">
+          <i class="fa fa-laptop  fa-lg"></i></font></td>
+      
+      
+      
+        <td align="center"><font color="f1f1f1">
+          <i class="fa fa-book fa-lg"></i></font></td>
+      
+
+      
+        <td align="center"><font color="f1f1f1">
+          <i class="fa fa-code fa-lg"></i></font></td>
+      
+      
+      
+        <td align="center"><font color="f1f1f1">
+          <i class="fa fa-users fa-lg"></i></font></td>
+      
+      
+      
+        <td align="center"><font color="f1f1f1">
+          <i class="fa fa-pencil-square-o fa-lg"></i></font></td>
+      
+
+      
+        <td align="center"><font color="f1f1f1">
+          <i class="fa fa-caret-up fa-lg"></i></font></td>
+      
+      
+      
+        <td align="center"><font color="f1f1f1">
+          <i class="fa fa-check-square fa-lg"></i></font></td>
+      
+      
+      
+        <td align="center"><font color="f1f1f1">
+          <i class="fa fa-file-powerpoint fa-lg"></i></font></td>
+      
+    </tr>
+    
+    <tr>
+      <td align="right">tbd</td>
+      <td>Multiple time series data</td>
+
+      
+        <td align="center"><font color="f1f1f1">
+          <i class="fa fa-laptop  fa-lg"></i></font></td>
+      
+      
+      
+        <td align="center"><font color="f1f1f1">
+          <i class="fa fa-book fa-lg"></i></font></td>
+      
+
+      
+        <td align="center"><font color="f1f1f1">
+          <i class="fa fa-code fa-lg"></i></font></td>
+      
+      
+      
+        <td align="center"><font color="f1f1f1">
+          <i class="fa fa-users fa-lg"></i></font></td>
+      
+      
+      
+        <td align="center"><font color="f1f1f1">
+          <i class="fa fa-pencil-square-o fa-lg"></i></font></td>
+      
+
+      
+        <td align="center"><font color="f1f1f1">
+          <i class="fa fa-caret-up fa-lg"></i></font></td>
+      
+      
+      
+        <td align="center"><font color="f1f1f1">
+          <i class="fa fa-check-square fa-lg"></i></font></td>
+      
+      
+      
+        <td align="center"><font color="f1f1f1">
+          <i class="fa fa-file-powerpoint fa-lg"></i></font></td>
+      
+    </tr>
+    
+    <tr>
+      <td align="right"></td>
+      <td>Unit 8: Seeing relationships: correlation, scatterplots and regression</td>
+
+      
+        <td align="center"><font color="f1f1f1">
+          <i class="fa fa-laptop  fa-lg"></i></font></td>
+      
+      
+      
+        <td align="center"><font color="f1f1f1">
+          <i class="fa fa-book fa-lg"></i></font></td>
+      
+
+      
+        <td align="center"><font color="f1f1f1">
+          <i class="fa fa-code fa-lg"></i></font></td>
+      
+      
+      
+        <td align="center"><font color="f1f1f1">
+          <i class="fa fa-users fa-lg"></i></font></td>
+      
+      
+      
+        <td align="center"><font color="f1f1f1">
+          <i class="fa fa-pencil-square-o fa-lg"></i></font></td>
+      
+
+      
+        <td align="center"><font color="f1f1f1">
+          <i class="fa fa-caret-up fa-lg"></i></font></td>
+      
+      
+      
+        <td align="center"><font color="f1f1f1">
+          <i class="fa fa-check-square fa-lg"></i></font></td>
+      
+      
+      
+        <td align="center"><font color="f1f1f1">
+          <i class="fa fa-file-powerpoint fa-lg"></i></font></td>
+      
+    </tr>
+    
+    <tr>
+      <td align="right">tbd</td>
+      <td>Scatter plots, bubble charts</td>
+
+      
+        <td align="center"><font color="f1f1f1">
+          <i class="fa fa-laptop  fa-lg"></i></font></td>
+      
+      
+      
+        <td align="center"><font color="f1f1f1">
+          <i class="fa fa-book fa-lg"></i></font></td>
+      
+
+      
+        <td align="center"><font color="f1f1f1">
+          <i class="fa fa-code fa-lg"></i></font></td>
+      
+      
+      
+        <td align="center"><font color="f1f1f1">
+          <i class="fa fa-users fa-lg"></i></font></td>
+      
+      
+      
+        <td align="center"><font color="f1f1f1">
+          <i class="fa fa-pencil-square-o fa-lg"></i></font></td>
+      
+
+      
+        <td align="center"><font color="f1f1f1">
+          <i class="fa fa-caret-up fa-lg"></i></font></td>
+      
+      
+      
+        <td align="center"><font color="f1f1f1">
+          <i class="fa fa-check-square fa-lg"></i></font></td>
+      
+      
+      
+        <td align="center"><font color="f1f1f1">
+          <i class="fa fa-file-powerpoint fa-lg"></i></font></td>
+      
+    </tr>
+    
+    <tr>
+      <td align="right">tbd</td>
+      <td>Density plots, 2D bins, Hex bins, correlograms</td>
+
+      
+        <td align="center"><font color="f1f1f1">
+          <i class="fa fa-laptop  fa-lg"></i></font></td>
+      
+      
+      
+        <td align="center"><font color="f1f1f1">
+          <i class="fa fa-book fa-lg"></i></font></td>
+      
+
+      
+        <td align="center"><font color="f1f1f1">
+          <i class="fa fa-code fa-lg"></i></font></td>
+      
+      
+      
+        <td align="center"><font color="f1f1f1">
+          <i class="fa fa-users fa-lg"></i></font></td>
+      
+      
+      
+        <td align="center"><font color="f1f1f1">
+          <i class="fa fa-pencil-square-o fa-lg"></i></font></td>
+      
+
+      
+        <td align="center"><font color="f1f1f1">
+          <i class="fa fa-caret-up fa-lg"></i></font></td>
+      
+      
+      
+        <td align="center"><font color="f1f1f1">
+          <i class="fa fa-check-square fa-lg"></i></font></td>
+      
+      
+      
+        <td align="center"><font color="f1f1f1">
+          <i class="fa fa-file-powerpoint fa-lg"></i></font></td>
+      
+    </tr>
+    
+    <tr>
+      <td align="right">tbd</td>
+      <td>Slope graphs and parallel line plots</td>
+
+      
+        <td align="center"><font color="f1f1f1">
+          <i class="fa fa-laptop  fa-lg"></i></font></td>
+      
+      
+      
+        <td align="center"><font color="f1f1f1">
+          <i class="fa fa-book fa-lg"></i></font></td>
+      
+
+      
+        <td align="center"><font color="f1f1f1">
+          <i class="fa fa-code fa-lg"></i></font></td>
+      
+      
+      
+        <td align="center"><font color="f1f1f1">
+          <i class="fa fa-users fa-lg"></i></font></td>
+      
+      
+      
+        <td align="center"><font color="f1f1f1">
+          <i class="fa fa-pencil-square-o fa-lg"></i></font></td>
+      
+
+      
+        <td align="center"><font color="f1f1f1">
+          <i class="fa fa-caret-up fa-lg"></i></font></td>
+      
+      
+      
+        <td align="center"><font color="f1f1f1">
+          <i class="fa fa-check-square fa-lg"></i></font></td>
+      
+      
+      
+        <td align="center"><font color="f1f1f1">
+          <i class="fa fa-file-powerpoint fa-lg"></i></font></td>
+      
+    </tr>
+    
+    <tr>
+      <td align="right">tbd</td>
+      <td>Plot model residuals</td>
+
+      
+        <td align="center"><font color="f1f1f1">
+          <i class="fa fa-laptop  fa-lg"></i></font></td>
+      
+      
+      
+        <td align="center"><font color="f1f1f1">
+          <i class="fa fa-book fa-lg"></i></font></td>
+      
+
+      
+        <td align="center"><font color="f1f1f1">
+          <i class="fa fa-code fa-lg"></i></font></td>
+      
+      
+      
+        <td align="center"><font color="f1f1f1">
+          <i class="fa fa-users fa-lg"></i></font></td>
+      
+      
+      
+        <td align="center"><font color="f1f1f1">
+          <i class="fa fa-pencil-square-o fa-lg"></i></font></td>
+      
+
+      
+        <td align="center"><font color="f1f1f1">
+          <i class="fa fa-caret-up fa-lg"></i></font></td>
+      
+      
+      
+        <td align="center"><font color="f1f1f1">
+          <i class="fa fa-check-square fa-lg"></i></font></td>
+      
+      
+      
+        <td align="center"><font color="f1f1f1">
+          <i class="fa fa-file-powerpoint fa-lg"></i></font></td>
+      
+    </tr>
+    
+    <tr>
+      <td align="right">tbd</td>
+      <td>Plot model predictions and uncertainty</td>
+
+      
+        <td align="center"><font color="f1f1f1">
+          <i class="fa fa-laptop  fa-lg"></i></font></td>
+      
+      
+      
+        <td align="center"><font color="f1f1f1">
+          <i class="fa fa-book fa-lg"></i></font></td>
+      
+
+      
+        <td align="center"><font color="f1f1f1">
+          <i class="fa fa-code fa-lg"></i></font></td>
+      
+      
+      
+        <td align="center"><font color="f1f1f1">
+          <i class="fa fa-users fa-lg"></i></font></td>
+      
+      
+      
+        <td align="center"><font color="f1f1f1">
+          <i class="fa fa-pencil-square-o fa-lg"></i></font></td>
+      
+
+      
+        <td align="center"><font color="f1f1f1">
+          <i class="fa fa-caret-up fa-lg"></i></font></td>
+      
+      
+      
+        <td align="center"><font color="f1f1f1">
+          <i class="fa fa-check-square fa-lg"></i></font></td>
+      
+      
+      
+        <td align="center"><font color="f1f1f1">
+          <i class="fa fa-file-powerpoint fa-lg"></i></font></td>
+      
+    </tr>
+    
+    <tr>
+      <td align="right"></td>
+      <td>Unit 9: Visualization of spatial information: maps</td>
+
+      
+        <td align="center"><font color="f1f1f1">
+          <i class="fa fa-laptop  fa-lg"></i></font></td>
+      
+      
+      
+        <td align="center"><font color="f1f1f1">
+          <i class="fa fa-book fa-lg"></i></font></td>
+      
+
+      
+        <td align="center"><font color="f1f1f1">
+          <i class="fa fa-code fa-lg"></i></font></td>
+      
+      
+      
+        <td align="center"><font color="f1f1f1">
+          <i class="fa fa-users fa-lg"></i></font></td>
+      
+      
+      
+        <td align="center"><font color="f1f1f1">
+          <i class="fa fa-pencil-square-o fa-lg"></i></font></td>
+      
+
+      
+        <td align="center"><font color="f1f1f1">
+          <i class="fa fa-caret-up fa-lg"></i></font></td>
+      
+      
+      
+        <td align="center"><font color="f1f1f1">
+          <i class="fa fa-check-square fa-lg"></i></font></td>
+      
+      
+      
+        <td align="center"><font color="f1f1f1">
+          <i class="fa fa-file-powerpoint fa-lg"></i></font></td>
+      
+    </tr>
+    
+    <tr>
+      <td align="right">tbd</td>
+      <td>Projections and coordinate systems</td>
+
+      
+        <td align="center"><font color="f1f1f1">
+          <i class="fa fa-laptop  fa-lg"></i></font></td>
+      
+      
+      
+        <td align="center"><font color="f1f1f1">
+          <i class="fa fa-book fa-lg"></i></font></td>
+      
+
+      
+        <td align="center"><font color="f1f1f1">
+          <i class="fa fa-code fa-lg"></i></font></td>
+      
+      
+      
+        <td align="center"><font color="f1f1f1">
+          <i class="fa fa-users fa-lg"></i></font></td>
+      
+      
+      
+        <td align="center"><font color="f1f1f1">
+          <i class="fa fa-pencil-square-o fa-lg"></i></font></td>
+      
+
+      
+        <td align="center"><font color="f1f1f1">
+          <i class="fa fa-caret-up fa-lg"></i></font></td>
+      
+      
+      
+        <td align="center"><font color="f1f1f1">
+          <i class="fa fa-check-square fa-lg"></i></font></td>
+      
+      
+      
+        <td align="center"><font color="f1f1f1">
+          <i class="fa fa-file-powerpoint fa-lg"></i></font></td>
+      
+    </tr>
+    
+    <tr>
+      <td align="right">tbd</td>
+      <td>Vectorial maps (I): Mapping residuals and predictions</td>
+
+      
+        <td align="center"><font color="f1f1f1">
+          <i class="fa fa-laptop  fa-lg"></i></font></td>
+      
+      
+      
+        <td align="center"><font color="f1f1f1">
+          <i class="fa fa-book fa-lg"></i></font></td>
+      
+
+      
+        <td align="center"><font color="f1f1f1">
+          <i class="fa fa-code fa-lg"></i></font></td>
+      
+      
+      
+        <td align="center"><font color="f1f1f1">
+          <i class="fa fa-users fa-lg"></i></font></td>
+      
+      
+      
+        <td align="center"><font color="f1f1f1">
+          <i class="fa fa-pencil-square-o fa-lg"></i></font></td>
+      
+
+      
+        <td align="center"><font color="f1f1f1">
+          <i class="fa fa-caret-up fa-lg"></i></font></td>
+      
+      
+      
+        <td align="center"><font color="f1f1f1">
+          <i class="fa fa-check-square fa-lg"></i></font></td>
+      
+      
+      
+        <td align="center"><font color="f1f1f1">
+          <i class="fa fa-file-powerpoint fa-lg"></i></font></td>
+      
+    </tr>
+    
+    <tr>
+      <td align="right">tbd</td>
+      <td>Vectorial maps (II): Contour maps</td>
+
+      
+        <td align="center"><font color="f1f1f1">
+          <i class="fa fa-laptop  fa-lg"></i></font></td>
+      
+      
+      
+        <td align="center"><font color="f1f1f1">
+          <i class="fa fa-book fa-lg"></i></font></td>
+      
+
+      
+        <td align="center"><font color="f1f1f1">
+          <i class="fa fa-code fa-lg"></i></font></td>
+      
+      
+      
+        <td align="center"><font color="f1f1f1">
+          <i class="fa fa-users fa-lg"></i></font></td>
+      
+      
+      
+        <td align="center"><font color="f1f1f1">
+          <i class="fa fa-pencil-square-o fa-lg"></i></font></td>
+      
+
+      
+        <td align="center"><font color="f1f1f1">
+          <i class="fa fa-caret-up fa-lg"></i></font></td>
+      
+      
+      
+        <td align="center"><font color="f1f1f1">
+          <i class="fa fa-check-square fa-lg"></i></font></td>
+      
+      
+      
+        <td align="center"><font color="f1f1f1">
+          <i class="fa fa-file-powerpoint fa-lg"></i></font></td>
+      
+    </tr>
+    
+    <tr>
+      <td align="right">tbd</td>
+      <td>Raster maps</td>
+
+      
+        <td align="center"><font color="f1f1f1">
+          <i class="fa fa-laptop  fa-lg"></i></font></td>
+      
+      
+      
+        <td align="center"><font color="f1f1f1">
+          <i class="fa fa-book fa-lg"></i></font></td>
+      
+
+      
+        <td align="center"><font color="f1f1f1">
+          <i class="fa fa-code fa-lg"></i></font></td>
+      
+      
+      
+        <td align="center"><font color="f1f1f1">
+          <i class="fa fa-users fa-lg"></i></font></td>
+      
+      
+      
+        <td align="center"><font color="f1f1f1">
+          <i class="fa fa-pencil-square-o fa-lg"></i></font></td>
+      
+
+      
+        <td align="center"><font color="f1f1f1">
+          <i class="fa fa-caret-up fa-lg"></i></font></td>
+      
+      
+      
+        <td align="center"><font color="f1f1f1">
+          <i class="fa fa-check-square fa-lg"></i></font></td>
+      
+      
+      
+        <td align="center"><font color="f1f1f1">
+          <i class="fa fa-file-powerpoint fa-lg"></i></font></td>
+      
+    </tr>
+    
+    <tr>
+      <td align="right"></td>
+      <td>Unit 10: Graphics for communication using ggplot</td>
+
+      
+        <td align="center"><font color="f1f1f1">
+          <i class="fa fa-laptop  fa-lg"></i></font></td>
+      
+      
+      
+        <td align="center"><font color="f1f1f1">
+          <i class="fa fa-book fa-lg"></i></font></td>
+      
+
+      
+        <td align="center"><font color="f1f1f1">
+          <i class="fa fa-code fa-lg"></i></font></td>
+      
+      
+      
+        <td align="center"><font color="f1f1f1">
+          <i class="fa fa-users fa-lg"></i></font></td>
+      
+      
+      
+        <td align="center"><font color="f1f1f1">
+          <i class="fa fa-pencil-square-o fa-lg"></i></font></td>
+      
+
+      
+        <td align="center"><font color="f1f1f1">
+          <i class="fa fa-caret-up fa-lg"></i></font></td>
+      
+      
+      
+        <td align="center"><font color="f1f1f1">
+          <i class="fa fa-check-square fa-lg"></i></font></td>
+      
+      
+      
+        <td align="center"><font color="f1f1f1">
+          <i class="fa fa-file-powerpoint fa-lg"></i></font></td>
+      
+    </tr>
+    
+    <tr>
+      <td align="right">tbd</td>
+      <td>`Small multiples’ using facet</td>
+
+      
+        <td align="center"><font color="f1f1f1">
+          <i class="fa fa-laptop  fa-lg"></i></font></td>
+      
+      
+      
+        <td align="center"><font color="f1f1f1">
+          <i class="fa fa-book fa-lg"></i></font></td>
+      
+
+      
+        <td align="center"><font color="f1f1f1">
+          <i class="fa fa-code fa-lg"></i></font></td>
+      
+      
+      
+        <td align="center"><font color="f1f1f1">
+          <i class="fa fa-users fa-lg"></i></font></td>
+      
+      
+      
+        <td align="center"><font color="f1f1f1">
+          <i class="fa fa-pencil-square-o fa-lg"></i></font></td>
+      
+
+      
+        <td align="center"><font color="f1f1f1">
+          <i class="fa fa-caret-up fa-lg"></i></font></td>
+      
+      
+      
+        <td align="center"><font color="f1f1f1">
+          <i class="fa fa-check-square fa-lg"></i></font></td>
+      
+      
+      
+        <td align="center"><font color="f1f1f1">
+          <i class="fa fa-file-powerpoint fa-lg"></i></font></td>
+      
+    </tr>
+    
+    <tr>
+      <td align="right">tbd</td>
+      <td>Scales and zooming</td>
+
+      
+        <td align="center"><font color="f1f1f1">
+          <i class="fa fa-laptop  fa-lg"></i></font></td>
+      
+      
+      
+        <td align="center"><font color="f1f1f1">
+          <i class="fa fa-book fa-lg"></i></font></td>
+      
+
+      
+        <td align="center"><font color="f1f1f1">
+          <i class="fa fa-code fa-lg"></i></font></td>
+      
+      
+      
+        <td align="center"><font color="f1f1f1">
+          <i class="fa fa-users fa-lg"></i></font></td>
+      
+      
+      
+        <td align="center"><font color="f1f1f1">
+          <i class="fa fa-pencil-square-o fa-lg"></i></font></td>
+      
+
+      
+        <td align="center"><font color="f1f1f1">
+          <i class="fa fa-caret-up fa-lg"></i></font></td>
+      
+      
+      
+        <td align="center"><font color="f1f1f1">
+          <i class="fa fa-check-square fa-lg"></i></font></td>
+      
+      
+      
+        <td align="center"><font color="f1f1f1">
+          <i class="fa fa-file-powerpoint fa-lg"></i></font></td>
+      
+    </tr>
+    
+    <tr>
+      <td align="right">tbd</td>
+      <td>Change labels, axes and make annotations</td>
+
+      
+        <td align="center"><font color="f1f1f1">
+          <i class="fa fa-laptop  fa-lg"></i></font></td>
+      
+      
+      
+        <td align="center"><font color="f1f1f1">
+          <i class="fa fa-book fa-lg"></i></font></td>
+      
+
+      
+        <td align="center"><font color="f1f1f1">
+          <i class="fa fa-code fa-lg"></i></font></td>
+      
+      
+      
+        <td align="center"><font color="f1f1f1">
+          <i class="fa fa-users fa-lg"></i></font></td>
+      
+      
+      
+        <td align="center"><font color="f1f1f1">
+          <i class="fa fa-pencil-square-o fa-lg"></i></font></td>
+      
+
+      
+        <td align="center"><font color="f1f1f1">
+          <i class="fa fa-caret-up fa-lg"></i></font></td>
+      
+      
+      
+        <td align="center"><font color="f1f1f1">
+          <i class="fa fa-check-square fa-lg"></i></font></td>
+      
+      
+      
+        <td align="center"><font color="f1f1f1">
+          <i class="fa fa-file-powerpoint fa-lg"></i></font></td>
+      
+    </tr>
+    
+    <tr>
+      <td align="right">tbd</td>
+      <td>Themes</td>
+
+      
+        <td align="center"><font color="f1f1f1">
+          <i class="fa fa-laptop  fa-lg"></i></font></td>
+      
+      
+      
+        <td align="center"><font color="f1f1f1">
+          <i class="fa fa-book fa-lg"></i></font></td>
+      
+
+      
+        <td align="center"><font color="f1f1f1">
+          <i class="fa fa-code fa-lg"></i></font></td>
+      
+      
+      
+        <td align="center"><font color="f1f1f1">
+          <i class="fa fa-users fa-lg"></i></font></td>
+      
+      
+      
+        <td align="center"><font color="f1f1f1">
+          <i class="fa fa-pencil-square-o fa-lg"></i></font></td>
+      
+
+      
+        <td align="center"><font color="f1f1f1">
+          <i class="fa fa-caret-up fa-lg"></i></font></td>
+      
+      
+      
+        <td align="center"><font color="f1f1f1">
+          <i class="fa fa-check-square fa-lg"></i></font></td>
+      
+      
+      
+        <td align="center"><font color="f1f1f1">
+          <i class="fa fa-file-powerpoint fa-lg"></i></font></td>
+      
+    </tr>
+    
+    <tr>
+      <td align="right">tbd</td>
+      <td>Saving plots</td>
+
+      
+        <td align="center"><font color="f1f1f1">
+          <i class="fa fa-laptop  fa-lg"></i></font></td>
+      
+      
+      
+        <td align="center"><font color="f1f1f1">
+          <i class="fa fa-book fa-lg"></i></font></td>
+      
+
+      
+      <td align="center"><a href="../labs/lab-03-viz-sp-data.html">
+          <i class="fa fa-code fa-lg"></i></a></td>
+      
+      
+      
+        <td align="center"><font color="f1f1f1">
+          <i class="fa fa-users fa-lg"></i></font></td>
+      
+      
+      
+      <td align="center"><a href="../hw/hw-01.html">
+          <i class="fa fa-pencil-square-o fa-lg"></i></a></td>
+      
+
+      
+        <td align="center"><font color="f1f1f1">
+          <i class="fa fa-caret-up fa-lg"></i></font></td>
+      
+      
+      
+        <td align="center"><font color="f1f1f1">
+          <i class="fa fa-check-square fa-lg"></i></font></td>
+      
+      
+      
+        <td align="center"><font color="f1f1f1">
+          <i class="fa fa-file-powerpoint fa-lg"></i></font></td>
+      
+    </tr>
+    
+    <tr>
+      <td align="right">Fri, Apr 6</td>
+      <td>Midterm 01 due (at noon)</td>
+
+      
+      <td align="center"><a href="../slides/lec-slides/06b-formalizing-linear-models.html">
+          <i class="fa fa-laptop  fa-lg"></i></a></td>
+      
+      
+      
+      <td align="center"><a href="../reading/reading-03.html">
+          <i class="fa fa-book fa-lg"></i></a></td>
+      
+
+      
+        <td align="center"><font color="f1f1f1">
+          <i class="fa fa-code fa-lg"></i></font></td>
+      
+      
+      
+        <td align="center"><font color="f1f1f1">
+          <i class="fa fa-users fa-lg"></i></font></td>
+      
+      
+      
+        <td align="center"><font color="f1f1f1">
+          <i class="fa fa-pencil-square-o fa-lg"></i></font></td>
+      
+
+      
+        <td align="center"><font color="f1f1f1">
+          <i class="fa fa-caret-up fa-lg"></i></font></td>
+      
+      
+      
+      <td align="center"><a href="../exam/mt2.html">
+          <i class="fa fa-check-square fa-lg"></i></a></td>
+      
+      
+      
+        <td align="center"><font color="f1f1f1">
+          <i class="fa fa-file-powerpoint fa-lg"></i></font></td>
+      
+    </tr>
+    
+  
+
+</table>
+
+	      </div>
+      </div>
+		</div>
+    <footer class="footer">
+  <div class="container">
+	  <nav class="pull-left">
+	    <ul>
+	    
+        
+
+        <li>
+          <a href="http://udl.cat/">img/Logo_UdL.svg.ico University of Lleida</a>
+        </li>
+        
+      
+        
+
+        <li>
+          <a href="https://rstudio.cloud/"><i class="icon-rlogo" style="font-size:150%"></i> RStudio</a>
+        </li>
+        
+      
+        
+
+        <li>
+          <a href="https://github.com/Sta199-S18/"><i class="button-icon fa fa-2x fa-github"></i> GitHub</a>
+        </li>
+        
+      
+        
+
+        <li>
+          <a href="../"> </a>
+        </li>
+        
+      
+      </ul>
+    </nav>
+	  <div class="copyright pull-right">
+	    <img src="../img/cc-by.svg"/>
+	  </div>
+  </div>
+</footer>
+	</div>
+</body>
+
+			
+
+	
+	<script src="../js/jquery.min.js" type="text/javascript"></script>
+	<script src="../js/bootstrap.min.js" type="text/javascript"></script>
+	<script src="../js/material.min.js"></script>
+
+	
+	<script src="../js/nouislider.min.js" type="text/javascript"></script>
+
+	
+	<script src="../js/bootstrap-datepicker.js" type="text/javascript"></script>
+
+	
+	<script src="../js/material-kit.js" type="text/javascript"></script>
+
+</html>

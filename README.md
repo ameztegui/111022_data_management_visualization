@@ -12,3 +12,4 @@ Course website is at http://www2.stat.duke.edu/courses/Spring18/Sta199/.
 - Colors: Pantone Spring 2018 - Little Boy Blue - #6CA0DC
   - To change, search & replace in `themes/material/static/css/material-kit.css`
 # 111022_data_management_visualization
+# 111022_data_management_visualization
