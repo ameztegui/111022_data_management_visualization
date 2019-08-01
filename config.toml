@@ -7,7 +7,7 @@ theme = "material"
 # googleAnalytics = ""
 paginate = 7
 relativeurls = true
-publishDir = "docs"
+publishDir = "public"
 ignoreFiles = ["\\.Rmd$", "\\.Rmarkdown$", "_files$", "_cache$"]
 
 
