@@ -1,7 +1,7 @@
 ---
 title: "Welcome to Data Science"
-author: "Dr. Çetinkaya-Rundel"
-date: "2018-01-10"
+author: "Dr. Aitor Ameztegui"
+date: "2019-09-15"
 output:
   xaringan::moon_reader:
     css: "slides.css"
@@ -49,19 +49,19 @@ class: center, middle
 
 ## What is data science?
 
-- <i class="fa fa-database fa-10x"></i> + <i class="fa fa-flask fa-10x"></i> = data science?
+- <i class="fa fa-database fa-10px"></i> + <i class="fa fa-flask fa-10px"></i> = data science?
 
 --
 
-- <i class="fa fa-database fa-10x"></i> + <i class="fa fa-code fa-10x"></i> = data science?
+- <i class="fa fa-database fa-10px"></i> + <i class="fa fa-code fa-10px"></i> = data science?
 
 --
 
-- <i class="fa fa-database fa-10x"></i> + <i class="fa fa-user fa-10x"></i> + <i class="fa fa-code fa-10x"></i> = data science?
+- <i class="fa fa-database fa-10px"></i> + <i class="fa fa-user fa-10px"></i> + <i class="fa fa-code fa-10px"></i> = data science?
 
 --
 
-- <i class="fa fa-database fa-10x"></i> + <i class="fa fa-users fa-10x"></i> + <i class="fa fa-code fa-10x"></i> = data science?
+- <i class="fa fa-database fa-10px"></i> + <i class="fa fa-users fa-10px"></i> + <i class="fa fa-code fa-10px"></i> = data science?
 
 --
 
@@ -71,50 +71,33 @@ Data science is an exciting discipline that allows you to turn raw data into und
 
 ---
 
-## Who am I?
+# Who are we?
 
-Mine Çetinkaya-Rundel
-
-<i class="fa fa-envelope"></i> &nbsp; [mine@stat.duke.edu](mailto:mine@stat.duke.edu) <br>
-<i class="fa fa-home"></i> &nbsp; [stat.duke.edu/~mc301](http://www2.stat.duke.edu/courses/Spring18/Sta199/) <br>
-<i class="fa fa-university"></i> &nbsp; [213 Old Chem](http://maps.duke.edu/map/?id=21#!s/key=old chemistry?m/2766) <br>
-<i class="fa fa-calendar"></i> &nbsp; Tue 11:00 - 12:30 and Thur 10:00 - 11:30
-
----
-
-## Who else is involved?
 
 .pull-left[
-[Peter Hase](https://www.linkedin.com/in/peter-hase-8092a6b9/) 
+ [Dr. Aitor Ameztegui](http://ameztegui.weebly.com/)<br>
 
-<i class="fa fa-envelope"></i> &nbsp; [peter.hase@duke.edu](mailto:peter.hase@duke.edu) <br>
-<i class="fa fa-university"></i> &nbsp; [211A Old Chem](http://maps.duke.edu/map/?id=21#!s/key=old chemistry?m/2766) <br>
-<i class="fa fa-calendar"></i> &nbsp; Tue Sun 1:00 - 3:00
-
-<br><br>
-
-[Walker Harrison](https://www.linkedin.com/in/walker-harrison-11a36b6b/)
-
-<i class="fa fa-envelope"></i> &nbsp; [walker.harrison@duke.edu](mailto:walker.harrison@duke.edu) <br>
-<i class="fa fa-university"></i> &nbsp; [211A Old Chem](http://maps.duke.edu/map/?id=21#!s/key=old chemistry?m/2766) <br>
-<i class="fa fa-calendar"></i> &nbsp; Tue 10:00 - 11:00 and 1:30-2:30
-]
+<i class="fa fa-envelope"></i> &nbsp; [aitor.ameztegui@eagrof.udl.cat](mailto:aitor.ameztegui@eagrof.udl.cat) <br>
+<i class="fa fa-university"></i> &nbsp; Building 4, Bureau 2.04.1 <br>
+<i class="fa fa-phone"></i> &nbsp; 973702540 <br> 
+<i class="fa fa-calendar"></i> &nbsp; Tue 11:00 - 12:30 <br> 
+&nbsp; &nbsp; &nbsp; Thur 15:00 - 16:00 or <br>
+&nbsp; &nbsp; &nbsp; upon request
+<br><br>]
 
 .pull-right[
-[Gary Larson](http://garylarson.weebly.com/)
+[Dr. Marcos Rodrigues](http://www.eagrof.udl.cat/es/personal/PDI/rodrigues.html) <br>
 
-<i class="fa fa-envelope"></i> &nbsp; [gary.larson@duke.edu](mailto:gary.larson@duke.edu) <br>
-<i class="fa fa-university"></i> &nbsp; [211A Old Chem](http://maps.duke.edu/map/?id=21#!s/key=old chemistry?m/2766) <br>
-<i class="fa fa-calendar"></i> &nbsp; Mon 12:00 - 2:00
+<i class="fa fa-envelope"></i> &nbsp; [rmarcos@eagrof.udl.cat](mailto:rmarcos@eagrof.udl.cat) <br>
+<i class="fa fa-phone"></i> &nbsp; 973702546 <br> 
+<i class="fa fa-university"></i> &nbsp; Building 4, Bureau 2.05.1 <br>
+<i class="fa fa-calendar"></i> &nbsp; Mon 12:00 - 2:00 or <br>
+&nbsp; &nbsp; &nbsp; upon request
+<br><br>]
 
-<br><br>
+<br><br>]
 
-[Sarah Sibley](https://www.linkedin.com/in/sarah-sibley-3bb171ba/)
 
-<i class="fa fa-envelope"></i> &nbsp; [sarah.sibley@duke.edu](mailto:sarah.sibley@duke.edu) <br>
-<i class="fa fa-university"></i> &nbsp; [211A Old Chem](http://maps.duke.edu/map/?id=21#!s/key=old chemistry?m/2766) <br>
-<i class="fa fa-calendar"></i> &nbsp; Sat 12:00 - 2:00
-]
 
 ---
 
@@ -183,7 +166,7 @@ class: center, middle
 
 ---
 
-## Create a GitHub account
+# Create a GitHub account
 
 Go to https://github.com/, and create an account (unless you already have one). Tips for selecting a username:<sup>1</sup>
 
@@ -203,7 +186,7 @@ Once done, place a green sticky on your laptop. If you have questions, place a p
 
 ---
 
-## Join RStudio.cloud
+# Join RStudio.cloud
 
 Go to [bit.ly/sta199-f18-rstudio-join](http://bit.ly/sta199-f18-rstudio-join), and log in with your GitHub credentials.
 
@@ -212,7 +195,7 @@ Once done, place a green sticky on your laptop. If you have questions, place a p
 </font>
 ---
 
-## Create your first data visualization
+# Create your first data visualization
 
 - Once you log on to RStudio Cloud, click on this course's workspace "STA 199 - Spring 18"
 - You should see a project called UN Votes, fork it by clicking on the <i class="fa fa-fork"></i> icon. This will create your copy of the project and launch it.
@@ -231,7 +214,7 @@ class: center, middle
 
 ---
 
-## Class meetings
+# Class meetings
 
 - Interactive
 
@@ -241,7 +224,7 @@ class: center, middle
 
 ---
 
-## Diversity & Inclusiveness:
+# Diversity & Inclusiveness:
 
 - Intent: Students from all diverse backgrounds and perspectives be well-served by this course, that students' learning needs be addressed both in and out of class, and that the diversity that the students bring to this class be viewed as a resource, strength and benefit. It is my intent to present materials and activities that are respectful of diversity: gender identity, sexuality, disability, age, socioeconomic status, ethnicity, race, nationality, religion, and culture. Let me know ways to improve the effectiveness of the course for you personally, or for other students or student groups.
 
@@ -253,7 +236,7 @@ class: center, middle
 
 ---
 
-## How to get help
+# How to get help
 
 - Course content, logistics, etc. discussion via GitHub on the [Sta199-S18/community](https://github.com/Sta199-S18/community) repository. Note that this is a public discussion forum, which means others outside of the course can stumble upon it and help you as well.
     - See course syllabus for tips on posting questions.
@@ -262,7 +245,7 @@ class: center, middle
 
 ---
 
-## Academic integrity
+# Academic integrity
 
 > To uphold the Duke Community Standard:
 
@@ -276,7 +259,7 @@ class: center, middle
 
 ---
 
-## Sharing/reusing code
+# Sharing/reusing code
 
 - I am well aware that a huge volume of code is available on the web to solve any number of problems.
 - Unless I explicitly tell you not to use something the course's policy is that you may make use of any online resources (e.g. StackOverflow) but you must explicitly cite where you obtained any code you directly use (or use as inspiration). 
@@ -287,7 +270,7 @@ class: center, middle
 
 ---
 
-## Course components:
+# Course components:
 
 - Teams: 3-4 person teams, based on survey and pretest results, consistent throughout the semester
 - Application exercises: Usually start in class and finish in teams by the next class period, check/no check
@@ -299,7 +282,7 @@ class: center, middle
 
 ---
 
-## Grading
+# Grading
 
 Component             | Weight
 ----------------------|----------------
@@ -322,7 +305,7 @@ more generous the curve will be.
 
 ---
 
-## Excused absences
+# Excused absences
 
 - Students who miss class due to a scheduled varsity trip, religious 
 holiday or short-term illness should fill out an online NOVAP, RHoliday or 
@@ -342,7 +325,7 @@ Your academic dean can also provide more information.
 
 ---
 
-## Late/missed work policy
+# Late/missed work policy
 
 - Late work policy for homework assignments:
     - late, but within 24 hours of due date/time: -20%
@@ -356,7 +339,7 @@ Your academic dean can also provide more information.
 
 ---
 
-## Other policies
+# Other policies
 
 - Please refrain from texting or using your computer for anything other than coursework during class.
 
@@ -372,7 +355,7 @@ class: center, middle
 
 ---
 
-## Some events on campus that might be of interest
+# Some events on campus that might be of interest
 
 - **Data+ 2018 Project Fair**: January 16, Ahmadieh Atrium of Gross Hall (3rd Fl), 3-5pm
 - **DataFest!**: April 6 - Sunday April 8 (will announce when registration opens)
