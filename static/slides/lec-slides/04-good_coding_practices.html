@@ -1,0 +1,670 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Good coding practices</title>
+    <meta charset="utf-8">
+    <meta name="author" content="Dr. Aitor Ameztegui" />
+    <meta name="date" content="2019-09-15" />
+    <link href="libs/font-awesome/css/all.css" rel="stylesheet" />
+    <link href="libs/font-awesome/css/v4-shims.css" rel="stylesheet" />
+    <link rel="stylesheet" href="slides.css" type="text/css" />
+  </head>
+  <body>
+    <textarea id="source">
+class: center, middle, inverse, title-slide
+
+# Good coding practices
+### Dr. Aitor Ameztegui
+### 2019-09-15
+
+---
+
+
+
+
+
+---
+
+# Good code vs. bad code
+
+* There is no such thing as inherently bad code
+
+* However, this does not mean we shouldn't judge our code, and try to improve our coding practices
+
+* Some decisions genuinely do make code easier to use (especially matching indenting to programming structure), but many decisions are arbitrary
+
+* Good coding style is like correct punctuation: you can manage without it, butitsuremakesthingseasiertoread
+
+---
+ # Good code vs. bad code
+
+* We're gonna cover some good coding practices
+* This includes style
+* But also bla bla bla
+* Some f the things you will not understand now, but it is important to see them before
+* It will act as a repository
+* Coding style recommendations will be fundamentaly based on the tidyverse style guide, by Wickham (https://style.tidyverse.org/)
+
+
+---
+
+# Good coding style: Files
+
+## File names
+
+File names should be meaningful and end in `.R`. Avoid using special characters in file names - stick with numbers, letters, `-`, and `_`.
+
+.pull-left[
+
+```r
+# Good
+fit_models.R
+utility_functions.R
+```
+]
+
+.pull-right[
+
+
+```r
+# Bad
+fit models.R
+foo.r
+stuff.r
+```
+]
+
+---
+
+# Good coding style: Files
+
+## File names
+
+If files should be run in a particular order, prefix them with numbers. If it seems likely you’ll have more than 10 files, left pad with zero:
+
+
+```r
+00_download.R
+01_explore.R
+...
+09_model.R
+10_visualize.R
+```
+
+Pay attention to capitalization. Prefer file names that are all lower case, and never have names that differ only in their capitalization.
+
+---
+# Good coding style: Files
+
+## RStudio set up
+
+---
+
+# Good coding style: Files
+
+## Internal structure
+
+Use commented lines of `-` to break up your file into easily readable chunks.
+
+
+```r
+# Load data ---------------------------
+
+some code
+some more code
+
+# Plot data ---------------------------
+
+still some more code
+```
+
+If your script uses add-on packages, load them all at once at the very beginning of the file. This is more transparent than sprinkling `library()` calls throughout your code
+
+---
+
+# Good coding style: Objects
+
+## Object names
+
+Variable and function names should use only lowercase letters, numbers, and `_`. Use underscores (`_`) (so called snake case) to separate words within a name.
+
+
+```r
+# Good
+day_one
+day_1
+
+# Bad
+DayOne
+dayone
+```
+
+Base R uses dots in function names (`contrib.url()`) and class names (`data.frame`), but it’s better to reserve dots exclusively for the S3 object system. In S3, methods are given the name `function.class`; if you also use `.` in function and class names, you end up with confusing methods like `as.data.frame.data.frame()`.
+
+If you find yourself attempting to cram data into variable names (e.g. `model_2018`, `model_2019`, `model_2020`), consider using a list or data frame instead.
+
+Generally, variable names should be nouns and function names should be verbs. Strive for names that are concise and meaningful (this is not easy!).
+
+
+```r
+# Good
+day_one
+
+# Bad
+first_day_of_the_month
+djm1
+```
+
+Where possible, avoid re-using names of common functions and variables. This will cause confusion for the readers of your code.
+
+```r
+# Bad
+T &lt;- FALSE
+c &lt;- 10
+mean &lt;- function(x) sum(x)
+```
+
+
+
+---
+# Good coding style: Objects
+
+## Spacing
+
+### Commas
+
+Always put a space after a comma, never before, just like in regular English.
+
+
+```r
+# Good
+x[, 1]
+
+# Bad
+x[,1]
+x[ ,1]
+x[ , 1]
+```
+
+---
+
+# Good coding style: Objects
+
+## Spacing
+
+### Parentheses
+
+Do not put spaces inside or outside parentheses for regular function calls.
+
+
+```r
+# Good
+mean(x, na.rm = TRUE)
+
+# Bad
+mean (x, na.rm = TRUE)
+mean( x, na.rm = TRUE )
+```
+
+
+Place a space before and after () when used with if, for, or while.
+
+
+```r
+# Good
+if (debug) {
+  show(x)
+}
+
+# Bad
+if(debug){
+  show(x)
+}
+```
+
+
+Place a space after () used for function arguments:
+
+
+```r
+# Good
+function(x) {}
+
+# Bad
+function (x) {}
+function(x){}
+```
+
+---
+
+# Good coding style: Objects
+
+## Spacing
+
+### Infix operators
+
+Most infix operators (`==`, `+`, `-`, `&lt;-`, etc.) should always be surrounded by spaces:
+
+
+```r
+# Good
+height &lt;- (feet * 12) + inches
+mean(x, na.rm = 10)
+
+# Bad
+height&lt;-feet*12+inches
+mean(x, na.rm=10)
+```
+
+---
+
+# Good coding style: Objects
+
+## Spacing
+
+### Infix operators
+
+Adding extra spaces ok if it improves alignment of `= `or `&lt;-`.
+
+
+```r
+# Good
+list(
+  total = a + b + c,
+  mean  = (a + b + c) / n
+)
+
+# Also fine
+list(
+  total = a + b + c,
+  mean = (a + b + c) / n
+)
+```
+
+Do not add extra spaces to places where space is not usually allowed.
+
+---
+# Good coding style: Objects
+
+## Code blocks
+
+Curly braces, `{}`, define the most important hierarchy of R code. To make this hierarchy easy to see:
+
+`{` should be the last character on the line. Related code (e.g., an if clause, a function declaration, a trailing comma, …) must be on the same line as the opening brace.
+
+The contents should be indented by two spaces.
+
+`}` should be the first character on the line.
+
+
+```r
+# Good
+if (y &lt; 0 &amp;&amp; debug) {
+  message("y is negative")
+}
+
+if (y == 0) {
+  if (x &gt; 0) {
+    log(x)
+  } else {
+    message("x is negative or zero")
+  }
+} else {
+  y^x
+}
+
+test_that("call1 returns an ordered factor", {
+  expect_s3_class(call1(x, y), c("factor", "ordered"))
+})
+
+tryCatch(
+  {
+    x &lt;- scan()
+    cat("Total: ", sum(x), "\n", sep = "")
+  },
+  interrupt = function(e) {
+    message("Aborted by user")
+  }
+)
+
+# Bad
+if (y &lt; 0 &amp;&amp; debug) {
+message("Y is negative")
+}
+
+if (y == 0)
+{
+    if (x &gt; 0) {
+      log(x)
+    } else {
+  message("x is negative or zero")
+    }
+} else { y ^ x }
+```
+
+---
+
+## Inline statements
+
+It’s ok to drop the curly braces for very simple statements that fit on one line, as long as they don’t have side-effects.
+
+
+```r
+# Good
+y &lt;- 10
+x &lt;- if (y &lt; 20) "Too low" else "Too high"
+Function calls that affect control flow (like return(), stop() or continue) should always go in their own {} block:
+
+# Good
+if (y &lt; 0) {
+  stop("Y is negative")
+}
+
+find_abs &lt;- function(x) {
+  if (x &gt; 0) {
+    return(x)
+  }
+  x * -1
+}
+
+# Bad
+if (y &lt; 0) stop("Y is negative")
+
+if (y &lt; 0)
+  stop("Y is negative")
+
+find_abs &lt;- function(x) {
+  if (x &gt; 0) return(x)
+  x * -1
+}
+```
+
+
+---
+
+## Lines
+
+Strive to limit your code to 80 characters per line. This fits comfortably on a printed page with a reasonably sized font. If you find yourself running out of room, this is a good indication that you should encapsulate some of the work in a separate function.
+
+If a function call is too long to fit on a single line, use one line each for the function name, each argument, and the closing `)`. This makes the code easier to read and to change later.
+
+
+```r
+# Good
+do_something_very_complicated(
+  something = "that",
+  requires = many,
+  arguments = "some of which may be long"
+)
+
+# Bad
+do_something_very_complicated("that", requires, many, arguments,
+                              "some of which may be long"
+                              )
+```
+
+As described under Argument names, you can omit the argument names for very common arguments (i.e. for arguments that are used in almost every invocation of the function). Short unnamed arguments can also go on the same line as the function name, even if the whole function call spans multiple lines.
+
+
+```r
+map(x, f,
+  extra_argument_a = 10,
+  extra_argument_b = c(1, 43, 390, 210209)
+)
+```
+
+
+You may also place several arguments on the same line if they are closely related to each other, e.g., strings in calls to `paste()` or `stop()`. When building strings, where possible match one line of code to one line of output.
+
+
+```r
+# Good
+paste0(
+  "Requirement: ", requires, "\n",
+  "Result: ", result, "\n"
+)
+
+# Bad
+paste0(
+  "Requirement: ", requires,
+  "\n", "Result: ",
+  result, "\n")
+```
+
+
+---
+
+## Assignments
+
+Use `&lt;-`, not `=`, for assignment.
+
+
+```r
+# Good
+x &lt;- 5
+
+# Bad
+x = 5
+```
+
+
+
+---
+  
+## Comments
+
+In data analysis code, use comments to record important findings and analysis decisions. If you need comments to explain what your code is doing, consider rewriting your code to be clearer. If you discover that you have more comments than code, considering switching to RMarkdown.
+
+
+---
+
+# Functions
+
+## Naming
+
+As well as following the general advice for object names, strive to use verbs for function names:
+
+
+```r
+# Good
+add_row()
+permute()
+
+# Bad
+row_adder()
+permutation()
+```
+
+---
+
+## Long lines
+
+If a function definition runs over multiple lines, indent the second line to where the definition starts.
+
+
+```r
+# Good
+long_function_name &lt;- function(a = "a long argument",
+                               b = "another argument",
+                               c = "another long argument") {
+  # As usual code is indented by two spaces.
+}
+
+# Bad
+long_function_name &lt;- function(a = "a long argument",
+  b = "another argument",
+  c = "another long argument") {
+  # Here it's hard to spot where the definition ends and the
+  # code begins
+}
+```
+
+---
+
+# Pipes
+
+## Introduction
+Use `%&gt;%` to emphasise a sequence of actions, rather than the object that the actions are being performed on.
+
+Avoid using the pipe when:
+
+* You need to manipulate more than one object at a time. Reserve pipes for a sequence of steps applied to one primary object.
+
+* There are meaningful intermediate objects that could be given informative names.
+---
+
+# Pipes
+
+## Whitespace
+`%&gt;%` should always have a space before it, and should usually be followed by a new line. After the first step, each line should be indented by two spaces. This structure makes it easier to add new steps (or rearrange existing steps) and harder to overlook a step.
+
+
+```r
+# Good
+iris %&gt;%
+  group_by(Species) %&gt;%
+  summarize_if(is.numeric, mean) %&gt;%
+  ungroup() %&gt;%
+  gather(measure, value, -Species) %&gt;%
+  arrange(value)
+
+# Bad
+iris %&gt;% group_by(Species) %&gt;% summarize_all(mean) %&gt;%
+ungroup %&gt;% gather(measure, value, -Species) %&gt;%
+arrange(value)
+```
+
+---
+# Pipes
+## Long lines
+If the arguments to a function don’t all fit on one line, put each argument on its own line and indent:
+
+
+```r
+iris %&gt;%
+  group_by(Species) %&gt;%
+  summarise(
+    Sepal.Length = mean(Sepal.Length),
+    Sepal.Width = mean(Sepal.Width),
+    Species = n_distinct(Species)
+  )
+```
+
+
+
+---
+# Pipes
+## Short pipes
+
+A one-step pipe can stay on one line, but unless you plan to expand it later on, you should consider rewriting it to a regular function call.
+
+
+```r
+# Good
+iris %&gt;% arrange(Species)
+
+iris %&gt;% 
+  arrange(Species)
+
+arrange(iris, Species)
+```
+
+
+Sometimes it’s useful to include a short pipe as an argument to a function in a longer pipe. Carefully consider whether the code is more readable with a short inline pipe (which doesn’t require a lookup elsewhere) or if it’s better to move the code outside the pipe and give it an evocative name.
+
+
+```r
+# Good
+x %&gt;%
+  select(a, b, w) %&gt;%
+  left_join(y %&gt;% select(a, b, v), by = c("a", "b"))
+
+# Better
+x_join &lt;- x %&gt;% select(a, b, w)
+y_join &lt;- y %&gt;% select(a, b, v)
+left_join(x_join, y_join, by = c("a", "b"))
+```
+
+---
+
+## Assignments
+
+There are three acceptable forms of assignment:
+
+1. Variable name and assignment on separate lines:
+
+
+```r
+iris_long &lt;-
+  iris %&gt;%
+  gather(measure, value, -Species) %&gt;%
+  arrange(-value)
+```
+
+2. Variable name and assignment on the same line:
+
+
+```r
+iris_long &lt;- iris %&gt;%
+  gather(measure, value, -Species) %&gt;%
+  arrange(-value)
+```
+
+3.Assignment at the end of the pipe with -&gt;:
+
+```r
+iris %&gt;%
+  gather(measure, value, -Species) %&gt;%
+  arrange(-value) -&gt;
+  iris_long
+```
+
+I think this is the most natural to write, but makes reading a little harder: when the name comes first, it can act as a heading to remind you of the purpose of the pipe.
+    </textarea>
+<script src="https://remarkjs.com/downloads/remark-latest.min.js"></script>
+<script>var slideshow = remark.create({
+"highlightStyle": "github",
+"highlightLines": true,
+"countIncrementalSlides": false
+});
+if (window.HTMLWidgets) slideshow.on('afterShowSlide', function (slide) {
+  window.dispatchEvent(new Event('resize'));
+});
+(function() {
+  var d = document, s = d.createElement("style"), r = d.querySelector(".remark-slide-scaler");
+  if (!r) return;
+  s.type = "text/css"; s.innerHTML = "@page {size: " + r.style.width + " " + r.style.height +"; }";
+  d.head.appendChild(s);
+})();</script>
+
+<script>
+(function() {
+  var i, text, code, codes = document.getElementsByTagName('code');
+  for (i = 0; i < codes.length;) {
+    code = codes[i];
+    if (code.parentNode.tagName !== 'PRE' && code.childElementCount === 0) {
+      text = code.textContent;
+      if (/^\\\((.|\s)+\\\)$/.test(text) || /^\\\[(.|\s)+\\\]$/.test(text) ||
+          /^\$\$(.|\s)+\$\$$/.test(text) ||
+          /^\\begin\{([^}]+)\}(.|\s)+\\end\{[^}]+\}$/.test(text)) {
+        code.outerHTML = code.innerHTML;  // remove <code></code>
+        continue;
+      }
+    }
+    i++;
+  }
+})();
+</script>
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+(function () {
+  var script = document.createElement('script');
+  script.type = 'text/javascript';
+  script.src  = 'https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML';
+  if (location.protocol !== 'file:' && /^https?:/.test(script.src))
+    script.src  = script.src.replace(/^https?:/, '');
+  document.getElementsByTagName('head')[0].appendChild(script);
+})();
+</script>
+  </body>
+</html>
