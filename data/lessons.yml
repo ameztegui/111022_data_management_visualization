@@ -15,7 +15,7 @@ lessons:
     slides: "lab-slides/00-lab-deck.html"
   - date: "Thur, Jan 11"
     title: "Good coding practices. "
-    slides: "lab-slides/04-good_coding_practices.html"
+    slides: "lec-slides/04-good_coding_practices.html"
   - date: "Thur, Jan 11"
     title: "Workflow. Projects in RStudio and RStudio Cloud "
     slides: "lab-slides/00-lab-deck.html"
