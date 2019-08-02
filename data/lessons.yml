@@ -12,7 +12,6 @@ lessons:
     appex: "00-unvotes.html"
   - date: "Thur, Jan 11"
     title: "The tidyverse and the concept of tidy data"
-    slides: "lab-slides/00-lab-deck.html"
   - date: "Thur, Jan 11"
     title: "Good coding practices. "
     slides: "lec-slides/04-good_coding_practices.html"

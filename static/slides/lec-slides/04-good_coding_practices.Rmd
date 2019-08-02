@@ -19,11 +19,11 @@ options(
   htmltools.dir.version = FALSE, # for blogdown
   show.signif.stars = FALSE,     # for regression output
   warm = 1)
-opts_chunk$set(eval = FALSE)
 
 # Set dpi and height for images
 library(knitr)
-opts_chunk$set(fig.height = 2.65, dpi = 300) 
+opts_chunk$set(fig.height = 2.65, dpi = 300,
+               eval = FALSE) 
 # ggplot2 color palette with gray
 color_palette <- list(gray = "#999999", 
                       salmon = "#E69F00", 
