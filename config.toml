@@ -1,13 +1,13 @@
 baseurl = "/"
 languageCode = "en-us"
 defaultContentLanguage = "en-us"
-title = "Data Management and Visualization"
+title = "Data Management and Visualization with R"
 theme = "material"
 #disqusShortname = ""
 # googleAnalytics = ""
 paginate = 7
 relativeurls = true
-publishDir = "public"
+publishDir = "static"
 ignoreFiles = ["\\.Rmd$", "\\.Rmarkdown$", "_files$", "_cache$"]
 
 
@@ -22,8 +22,8 @@ ignoreFiles = ["\\.Rmd$", "\\.Rmarkdown$", "_files$", "_cache$"]
 [author]
   name = "Aitor Ameztegui"
   bio = ""
-  job = "Associate Professor of the Practice"
-  location = "Duke University"
+  job = "Researcher/Lecturer"
+  location = "University of Lleida"
   gravatarEmail = "aitor.ameztegui@eagrof.udl.cat"
   # Your profile picture
 #  picture = ""
@@ -59,20 +59,15 @@ ignoreFiles = ["\\.Rmd$", "\\.Rmarkdown$", "_files$", "_cache$"]
   identifier = "github"
   name = "GitHub"
   pre = "<i class='fab fa-github fa-lg'></i>"
-  url = "https://github.com/Sta199-S18"
-[[menu.main]]
-  weight = 6
-  identifier = "help"
-  name = "Help"
-  pre = "<i class=\"material-icons\">help</i>"
-  url = "https://github.com/Sta199-S18/community/issues"
+  url = "https://github.com/ameztegui/111022_data_management_visualization"
+
 
 
 [[menu.footer]]
   weight = 1
   identifier = "Lleida"
   name = "University of Lleida"
-  pre = "img/Logo_UdL.svg.ico"
+  pre = "<i class='fa fa-university fa-lg'></i>"
   url = "http://udl.cat/"
 [[menu.footer]]
   weight = 2
