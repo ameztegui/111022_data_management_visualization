@@ -361,6 +361,16 @@ div.tweaked-header {
   bottom: 0%;
 
 }
+.pull-left {
+    float: left;
+    width: 50%;
+}
+
+.pull-right {
+    float: right;
+    width: 50%;
+}
+
 
 .pull-extleft {
     float: left;
