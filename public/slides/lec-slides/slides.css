@@ -1,137 +1,601 @@
-@import url(https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700);
-@import url(https://fonts.googleapis.com/css?family=Source+Code+Pro:400,700);
+@import url(https://fonts.googleapis.com/css?family=Fira+Sans:300,300i,400,400i,500,500i,700,700i);
+@import url(https://cdn.rawgit.com/tonsky/FiraCode/1.204/distr/fira_code.css);
 
-body { 
-  font-family: 'Source Sans Pro'; sans-serif;
-  font-weight: 400;
-  color: #333333;
-}
-h2 {
-  font-family: 'Source Sans Pro', sans-serif;
-  font-weight: bold;
-  color: #6CA0DC;
-  font-size: 12px;
-  margin: 0.25em 0 0.5em 0;
-}
-h1, h3 {
-  font-family: 'Source Sans Pro', sans-serif;
-  font-weight: bold;
-  color: #6CA0DC;
-}
-a, a > code {
-  font-family: 'Source Sans Pro', sans-serif;
-  color: #6CA0DC;
-  text-decoration: none;
+body {
+  font-family: 'Fira Sans','Droid Serif', 'Palatino Linotype', 'Book Antiqua', Palatino, 'Microsoft YaHei', 'Songti SC',serif;
 }
 
-.footnote {
-  position: absolute;
-  bottom: 3em;
-  padding-right: 4em;
-  font-size: 90%;
+
+.remark-code, .remark-inline-code {
+  font-family: 'Fira Code', 'Lucida Console', Monaco, monospace;
+  font-size: 80%;
 }
-.remark-code, .remark-inline-code { 
-  font-family: 'Source Code Pro', 'Lucida Console', Monaco, monospace; 
+
+.remark-code {
+  font-size: 70%;
 }
-.remark-code-line-highlighted     { background-color: #ffff88; }
+
+
+.remark-slide-content {
+  background-color: #FAFAFA;
+  border-top: 80px solid #23373B;
+  font-size: 20px;
+  font-weight: 300;
+  line-height: 1.5;
+  padding: 1em 2em 1em 2em
+}
+
+.title-slide .inverse .remark-slide-content {
+  background-color: #FAFAFA;
+}
 
 .inverse {
-  background-color: #6CA0DC;
-  color: #ffffff;
-  /* text-shadow: 0 0 20px #333; */
-}
-.inverse h1, .inverse h2, .inverse h3 {
-  color: #f3f3f3;
-}
-/* Two-column layout */
-.left-column {
-  color: #777;
-  width: 20%;
-  height: 92%;
-  float: left;
-}
-.left-column h2:last-of-type, .left-column h3:last-child {
-  color: #000;
-}
-.right-column {
-  width: 75%;
-  float: right;
-  padding-top: 1em;
-}
-.center {
-  text-align:center;
-}
-.pull-left {
-  float: left;
-  width: 47%;
-}
-.pull-right {
-  float: right;
-  width: 47%;
-}
-.pull-right ~ * {
-  clear: both;
-}
-.question {
-  background-color: #E1ECF8;
-  padding: 0.25px;
-}
-ul {
-  list-style-type: square;
-}
-li{
-  margin: 10px 0;
-}
-.large { font-size: 130% }
-.midi { font-size: 90% }
-.small { font-size: 70% }
-img, video, iframe {
-  max-width: 100%;
-}
-blockquote {
-  border-left: solid 5px lightgray;
-  padding-left: 1em;
-}
-table {
-  margin: auto;
-  border-top: 1px solid #666;
-  border-bottom: 1px solid #666;
-}
-table thead th { border-bottom: 1px solid #ddd; }
-th, td { padding: 5px; }
-thead, tfoot, tr:nth-child(even) { background: #eee }
-
-@page { margin: 0; }
-@media print {
-  .remark-slide-scaler {
-    width: 100% !important;
-    height: 100% !important;
-    transform: scale(1) !important;
-    top: 0 !important;
-    left: 0 !important;
-  }
+    text-align:center;
+    background-position: 85% 85%;
+    background-color: #23373B;
+    background-size: 20%;
+    text-shadow: none;
 }
 
-.remark-slide-content{
-  font-size: 24px;
-}
 
-.remark-slide-content:after {
-    content: "";
+.footnote {
+    color: #23373B;
     position: absolute;
-    bottom: 5px;
-    right: 810px;
-    height: 70px;
-    width: 81px;
-    background-repeat: no-repeat;
-    background-size: contain;
-    background-image: url("img/sta199-logo-hex.png");
+    bottom: 10px;
+    font-size: 16px;
 }
 
-.element.style {
+.footnote-right {
+    color: #23373B;
+    text-align: right;
     position: absolute;
-    left: 0px;
-    top: 0px;
-    height: 685px;
-    width: 700px;
+    bottom: 10px;
+    font-size: 16px;
+}
+
+.remark-slide-content > h1 {
+  font-family: 'Fira Sans';
+  font-weight: normal;
+  font-size: 40px;
+  margin-top: -95px;
+  margin-left: -00px;
+  color: #FAFAFA;
+}
+
+.remark-slide-content > inverse {
+  width: 112px;
+  height: 47px;
+  border-bottom: 1px solid black;
+  position: absolute;
+}
+
+/* Removes colored bar from top of the slide resulting in a clear slide */
+.clear{
+  border-top: 0px solid #FAFAFA;
+}
+
+.remark-slide-content > h2, h3, h4 {
+  padding-top: -15px;
+  padding-bottom: 00px;
+  color: #1A292C;
+  text-shadow: none;
+  text-align: left;
+  margin-left: 00px;
+  margin-bottom: -10px;
+}
+
+.remark-slide-content > h2, .pull-left > h2, .pull-extleft > h2, .pull-right > h2,
+.pull-left-wide > h2, .pull-left-wide-right > h2,
+.pull-right-wide > h2, .pull-right-wide-left > h2 {
+  font-size: 35px;
+  font-weight: 400;
+
+}
+
+.remark-slide-content > h3, .pull-left > h3, .pull-extleft > h3, .pull-right > h3,
+.pull-left-wide > h3, .pull-left-wide-right > h3,
+.pull-right-wide > h3, .pull-right-wide-left > h3{
+  font-size: 30px;
+  font-weight: 300;
+
+}
+
+.remark-slide-content > h4, .pull-left > h4, .pull-extleft > h4, .pull-right > h4,
+.pull-left-wide > h4, .pull-left-wide-right > h4,
+.pull-right-wide > h4, .pull-right-wide-left > h4{
+  font-size: 25px;
+  font-weight: 300;
+
+}
+
+.title-slide {
+  background-color: #23373B;
+  border-top: 0 solid #23373B;
+  background-image: url("resources/images/hex_stickers.png");
+  background-position: right center;
+  background-size:cover;
+}
+
+.title-slide > h1  {
+  color: #FAFAFA;
+  font-size: 40px;
+  text-shadow: none;
+  font-weight: 400;
+  text-align: left;
+  margin-left: 15px;
+  padding-top: 140px;
+}
+.title-slide > h2  {
+  margin-top: -25px;
+  padding-bottom: -20px;
+  color: #FAFAFA;
+  text-shadow: none;
+  font-weight: 300;
+  font-size: 35px;
+  text-align: left;
+  margin-left: 15px;
+  margin-bottom: 60px;
+}
+.title-slide > h3  {
+  color: #FAFAFA;
+  text-shadow: none;
+  font-weight: 300;
+  font-size: 20px;
+  text-align: left;
+  margin-left: 15px;
+  margin-bottom: -30px;
+}
+
+.title-slide > h4  {
+  color: #FAFAFA;
+  text-shadow: none;
+  font-weight: 200;
+  font-size: 15px;
+  text-align: right;
+  margin-left: 30px;
+  padding-top: 240px;
+}
+
+.title-slide > p {
+  color: #FAFAFA;
+  margin-left: 15px;
+}
+
+.full-screen {
+  background-image: url(https://upload.wikimedia.org/wikipedia/commons/3/39/Naruto_Shiki_Fujin.svg);
+  background-size: contain;
+}
+
+.remark-slide-number {
+  font-size: 13pt;
+  font-family: 'Fira Sans';
+  color: #272822;
+  opacity: 1;
+}
+.inverse .remark-slide-number {
+  font-size: 13pt;
+  font-family: 'Fira Sans';
+  color: #FAFAFA;
+  opacity: 1;
+}
+
+/* turns off slide numbers for title page: https://github.com/gnab/remark/issues/298 */
+.title-slide .remark-slide-number {
+  display: none;
+}
+
+.remark-inline-code {
+  /* background: #F5F5F5; /* lighter */
+  background: #e7e8e2; /* darker */
+  border-radius: 3px;
+  padding: 4px;
+}
+
+h1 > .remark-inline-code{
+  background: transparent;
+  font-size: 100%;
+}
+
+.code10 .remark-code {
+  font-size: 10%;
+}
+
+.code20 .remark-code {
+  font-size: 20%;
+}
+
+.code30 .remark-code {
+  font-size: 30%;
+}
+
+.code40 .remark-code {
+  font-size: 40%;
+}
+
+.code50 .remark-code {
+  font-size: 50%;
+}
+
+.code60 .remark-code {
+  font-size: 60%;
+}
+
+.code70 .remark-code {
+  font-size: 70%;
+}
+
+.code80 .remark-code {
+  font-size: 80%;
+}
+
+.code90 .remark-code {
+  font-size: 90%;
+}
+
+.code100 .remark-code {
+  font-size: 100%;
+}
+
+.font10 {
+  font-size: 10%;
+}
+
+.font20 {
+  font-size: 20%;
+}
+
+.font30 {
+  font-size: 30%;
+}
+
+.font40 {
+  font-size: 40%;
+}
+
+.font50 {
+  font-size: 50%;
+}
+
+.font60 {
+  font-size: 60%;
+}
+
+.font70 {
+  font-size: 70%;
+}
+
+.font80 {
+  font-size: 80%;
+}
+
+.font90 {
+  font-size: 90%;
+}
+
+.font100 {
+  font-size: 100%;
+}
+
+.font110 {
+  font-size: 110%;
+}
+
+.font120 {
+  font-size: 120%;
+}
+
+.font130 {
+  font-size: 130%;
+}
+
+.font140 {
+  font-size: 140%;
+}
+
+.font150 {
+  font-size: 150%;
+}
+
+.font160 {
+  font-size: 160%;
+}
+.font170 {
+  font-size: 170%;
+}
+.font180 {
+  font-size: 180%;
+}
+.font190 {
+  font-size: 190%;
+}
+.font200 {
+  font-size: 200%;
+}
+
+/* custom header */
+div.tweaked-header {
+  content: "";
+  position: absolute;
+  top: 2px;
+  right:   5px;
+  height: 75px;
+  width: 90px;
+  background-repeat: no-repeat;
+  background-size: contain;
+}
+
+/* final slide */
+.thanks {
+  background-color: #23373B;
+  color: #fff;
+  padding-left: 100px;
+  text-shadow: 0 0 20px #333;
+  text-align: center;
+}
+
+.thanks h1 {
+  color: #FAFAFA;
+}
+
+.thanks h2 {
+  color: #FAFAFA;
+}
+
+.blue {
+  color: #19b5fe;
+}
+
+
+/* extreme pulling to sides */
+
+.middle2 {
+  margin: 0;
+  position: absolute;
+  top: 50%;
+  -ms-transform: translate(-50%, -50%);
+    transform: translate(-0%, -50%);
+}
+
+.bottom2 {
+  position: absolute;
+  bottom: 0%;
+
+}
+
+.pull-extleft {
+    float: left;
+    width: 80%;
+}
+
+.pull-extleft-right {
+    float: right;
+    width: 20%;
+} 
+.pull-left-wide {
+  float: left;
+  width: 65%;
+}
+
+.pull-left-wide-right {
+  float: right;
+  font-size: 80%;
+  width: 35%;
+}
+
+.pull-right-wide {
+  float: right;
+  width: 65%;
+}
+
+.pull-right-wide-left {
+  float: left;
+  font-size: 80%;
+  width: 35%;
+}
+
+
+.tri-col-left{
+  float: left;
+  font-size: 90%;
+  width: 33%;
+}
+
+.tri-col-center{
+  float: left;
+  width: 33%;
+  font-size: 90%;
+
+}
+
+.tri-col-right{
+  float: right;
+  font-size: 90%;
+  width: 33%;
+}
+
+/************************************
+ *
+ * Template-independent CSS code for formatting xaringan presentations
+ *
+ * For that extra bit of "hygge"
+ *
+ ************************************/
+
+
+/**************
+ *
+ * Font size and colours
+ *
+ **************/
+
+
+.Large { font-size: 144% }
+.large { font-size: 120% }
+.small { font-size: 90% }
+.footnotesize { font-size: 80% }
+.scriptsize { font-size: 70% }
+.tiny { font-size: 60% }
+
+.black { color: black; }
+.red { color: red; }
+.blue { color: blue; }
+.green { color: green; }
+.white { color: white; }
+.yellow { color: yellow; }
+.orange { color: orange; }
+.purple { color: purple; }
+.gray { color: gray; }
+.grey { color: gray; }
+
+.bold { font-weight: bold; }
+.bolder { font-weight: bolder; }
+
+img {
+    max-width: 80%;
+    max-height: 80%;
+}
+
+/******************
+ * 
+ * Coloured content boxes
+ *
+ ****************/
+
+
+.content-box { 
+    box-sizing: content-box;
+    	background-color: #e2e2e2;
+  /* Total width: 160px + (2 * 20px) + (2 * 8px) = 216px
+     Total height: 80px + (2 * 20px) + (2 * 8px) = 136px
+     Content box width: 160px
+     Content box height: 80px */
+}
+
+
+.content-box-blue,
+.content-box-gray,
+.content-box-grey,
+.content-box-army,
+.content-box-green,
+.content-box-purple,
+.content-box-red,
+.content-box-yellow {
+    border-radius: 15px;
+    margin: 0 0 25px;
+    overflow: hidden;
+    padding: 0px;
+    width: 100%;
+}
+
+.content-box-blue {
+    background-color: #F0F8FF;
+
+}
+
+.content-box-gray {
+    background-color: #e2e2e2;
+}
+
+.content-box-grey {
+	background-color: #F5F5F5;
+}
+
+.content-box-army {
+	background-color: #737a36;
+}
+
+.content-box-green {
+	background-color: #d9edc2;
+}
+
+.content-box-purple {
+	background-color: #e2e2f9;
+}
+
+.content-box-red {
+	background-color: #f9dbdb;
+}
+
+.content-box-yellow {
+	background-color: #fef5c4;
+}
+
+
+.full-width {
+    display: flex;
+    width: 100%;
+    flex: 1 1 auto;
+}
+
+
+
+/***********
+ *
+ * Changed CSS
+ *
+ **************/
+
+.opacity{
+    opacity: 0.5;
+}
+
+.blur {
+    -webkit-filter: blur(5px);
+    -moz-filter: blur(10px);
+    -o-filter: blur(5px);
+    -ms-filter: blur(5px);
+    filter: blur(5px);
+}
+
+
+.grayscale img {
+    -webkit-filter: grayscale(100%); /* Safari 6.0 - 9.0 */
+    filter: grayscale(100%);
+}
+
+
+/**************
+ *
+ * Fancy stuff
+ *
+ **************/
+
+
+.rotate-left {
+    -webkit-transform: rotate(-2deg);
+    -moz-transform: rotate(-2deg);
+    transform: rotate(-2deg); 
+}
+
+.rotate-right {
+    -webkit-transform: rotate(2deg);
+    -moz-transform: rotate(2deg);
+    transform: rotate(2deg);     
+}
+
+
+
+/********** 
+ * 
+ * Image stuff
+ *
+ ************/
+
+
+.polaroid img {
+    border: 10px solid #fff;
+    border-bottom: 45px solid #fff;
+    -webkit-box-shadow: 3px 3px 3px #111;
+    -moz-box-shadow: 3px 3px 3px #111;
+    box-shadow: 3px 3px 3px #111;
+}
+
+
+
+.shadow {
+    -moz-border-radius: 5px;
+    -moz-box-shadow: 5px 5px 5px #aaa;
+    -webkit-box-shadow: 5px 5px 5px #aaa;
+    box-shadow: 5px 5px 5px #aaa;
+    border-radius: 2px;  
 }

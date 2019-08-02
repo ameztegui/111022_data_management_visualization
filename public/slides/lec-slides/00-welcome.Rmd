@@ -33,7 +33,6 @@ color_palette <- list(gray = "#999999",
                       red = "#D55E00", 
                       purple = "#CC79A7")
 # For nonsese...
-library(emo)
 htmltools::tagList(rmarkdown::html_dependency_font_awesome())
 ```
 
@@ -143,7 +142,7 @@ Everything you want to know about the course, and everything you will need for t
 
 --
 
-- Why not language X? We can discuss that over `r emo::ji("coffee")`.
+- Why not language X? We can discuss that over coffee
 
 
 ---
