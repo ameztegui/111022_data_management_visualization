@@ -11,5 +11,4 @@ Course website is at http://datamanagement.netlify.com
 
 - Colors: Pantone Spring 2018 - Little Boy Blue - #6CA0DC
   - To change, search & replace in `themes/material/static/css/material-kit.css`
-# 111022_data_management_visualization
 
