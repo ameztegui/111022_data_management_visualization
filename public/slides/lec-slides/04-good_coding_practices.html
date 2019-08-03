@@ -3,7 +3,7 @@
   <head>
     <title>Good coding practices</title>
     <meta charset="utf-8">
-    <meta name="author" content="Dr. Aitor Ameztegui" />
+    <meta name="author" content="Aitor Ameztegui" />
     <meta name="date" content="2019-09-15" />
     <link href="libs/font-awesome/css/all.css" rel="stylesheet" />
     <link href="libs/font-awesome/css/v4-shims.css" rel="stylesheet" />
@@ -14,7 +14,7 @@
 class: center, middle, inverse, title-slide
 
 # Good coding practices
-### Dr. Aitor Ameztegui
+### Aitor Ameztegui
 ### 2019-09-15
 
 ---
@@ -27,32 +27,29 @@ class: center, middle, inverse, title-slide
 
 # Good code vs. bad code
 
-* There is no such thing as inherently bad code
-
-* However, this does not mean we shouldn't judge our code, and try to improve our coding practices
-
-* Some decisions genuinely do make code easier to use (especially matching indenting to programming structure), but many decisions are arbitrary
-
-* Good coding style is like correct punctuation: you can manage without it, butitsuremakesthingseasiertoread
-
----
- # Good code vs. bad code
-
-* We're gonna cover some good coding practices
-* This includes style
-* But also bla bla bla
-* Some f the things you will not understand now, but it is important to see them before
-* It will act as a repository
-* Coding style recommendations will be fundamentaly based on the tidyverse style guide, by Wickham (https://style.tidyverse.org/)
-
+  * There is no such thing as inherently bad code
+  
+  * However, this does not mean we shouldn't judge our code, and try to improve our coding practices
+  
+  * Some decisions genuinely do make code easier to use (especially matching indenting to programming structure), but many decisions are arbitrary
+  
+  * Good coding style is like correct punctuation: you can manage without it, butitsuremakesthingseasiertoread
 
 ---
+# Good code vs. bad code
 
-# Good coding style: Files
+  * We're gonna cover some good coding practices
+  * This includes style
+  * But also bla bla bla
+  * Some f the things you will not understand now, but it is important to see them before
+  * It will act as a repository
+  * Coding style recommendations will be fundamentaly based on the tidyverse style guide, by Wickham (https://style.tidyverse.org/)
 
-## File names
+---
+# Good coding style
+  ## File names
 
-File names should be meaningful and end in `.R`. Avoid using special characters in file names - stick with numbers, letters, `-`, and `_`.
+Each file should have a short, descriptive name that indicates its purpose. Avoid using special characters in file names - stick with numbers, letters, `-`, and `_`, to separate words. 
 
 .pull-left[
 
@@ -74,35 +71,40 @@ stuff.r
 ```
 ]
 
+
+
+
 ---
 
-# Good coding style: Files
+# Good coding style
 
 ## File names
 
-If files should be run in a particular order, prefix them with numbers. If it seems likely you’ll have more than 10 files, left pad with zero:
+Files that are part of the same work flow should be numbered to indicate the order in which they are to be run. For example:
 
 
 ```r
 00_download.R
 01_explore.R
+
 ...
+
 09_model.R
 10_visualize.R
 ```
 
-Pay attention to capitalization. Prefer file names that are all lower case, and never have names that differ only in their capitalization.
+Pay attention to capitalization. Prefer file names that are all lower case, and never have names that differ only in their capitalization (some OS will not differenciate them).
 
 ---
-# Good coding style: Files
+# Good coding style
 
 ## RStudio set up
 
 ---
 
-# Good coding style: Files
+# Good coding style
 
-## Internal structure
+## Internal structure (within a file)
 
 Use commented lines of `-` to break up your file into easily readable chunks.
 
@@ -119,14 +121,33 @@ still some more code
 ```
 
 If your script uses add-on packages, load them all at once at the very beginning of the file. This is more transparent than sprinkling `library()` calls throughout your code
+---
+# Good coding style
+## Assignments
+
+Use `&lt;-`, not `=`, for assignment.
+
+
+```r
+# Good
+x &lt;- 5
+
+# Bad
+x = 5
+```
 
 ---
+  
+## Comments
 
-# Good coding style: Objects
+In data analysis code, use comments to record important findings and analysis decisions. If you need comments to explain what your code is doing, consider rewriting your code to be clearer. If you discover that you have more comments than code, considering switching to RMarkdown.
+---
+
+# Good coding style
 
 ## Object names
 
-Variable and function names should use only lowercase letters, numbers, and `_`. Use underscores (`_`) (so called snake case) to separate words within a name.
+Variable and function names should use only lowercase letters, numbers, and `_`. Use underscores (`_`) to separate words within a name.
 
 
 ```r
@@ -139,11 +160,18 @@ DayOne
 dayone
 ```
 
-Base R uses dots in function names (`contrib.url()`) and class names (`data.frame`), but it’s better to reserve dots exclusively for the S3 object system. In S3, methods are given the name `function.class`; if you also use `.` in function and class names, you end up with confusing methods like `as.data.frame.data.frame()`.
+Note: Base R uses dots in function names (`contrib.url()`) and class names (`data.frame`), but it’s better not to use them to separate words within names
 
 If you find yourself attempting to cram data into variable names (e.g. `model_2018`, `model_2019`, `model_2020`), consider using a list or data frame instead.
+---
 
+# Good coding style
+
+## Object names
 Generally, variable names should be nouns and function names should be verbs. Strive for names that are concise and meaningful (this is not easy!).
+
+.pull-left[
+OBJECTS
 
 
 ```r
@@ -153,9 +181,25 @@ day_one
 # Bad
 first_day_of_the_month
 djm1
+data
 ```
+]
 
-Where possible, avoid re-using names of common functions and variables. This will cause confusion for the readers of your code.
+.pull-right[
+FUNCTIONS
+
+```r
+# Good
+add_row()
+permute()
+
+# Bad
+row_adder()
+permutation()
+```
+]
+
+Avoid re-using names of common functions and variables. This will cause confusion
 
 ```r
 # Bad
@@ -167,11 +211,9 @@ mean &lt;- function(x) sum(x)
 
 
 ---
-# Good coding style: Objects
+# Good coding style
 
-## Spacing
-
-### Commas
+## Spacing: commas and parentheses
 
 Always put a space after a comma, never before, just like in regular English.
 
@@ -186,13 +228,6 @@ x[ ,1]
 x[ , 1]
 ```
 
----
-
-# Good coding style: Objects
-
-## Spacing
-
-### Parentheses
 
 Do not put spaces inside or outside parentheses for regular function calls.
 
@@ -206,8 +241,11 @@ mean (x, na.rm = TRUE)
 mean( x, na.rm = TRUE )
 ```
 
+---
+# Good coding style
 
-Place a space before and after () when used with if, for, or while.
+## Spacing: commas and parentheses
+Place a space before and after `()` when used with `if`, `for`, or `while`.
 
 
 ```r
@@ -223,7 +261,7 @@ if(debug){
 ```
 
 
-Place a space after () used for function arguments:
+Place a space after `()` used for function arguments:
 
 
 ```r
@@ -237,11 +275,9 @@ function(x){}
 
 ---
 
-# Good coding style: Objects
+# Good coding style
 
-## Spacing
-
-### Infix operators
+## Spacing: Infix operators
 
 Most infix operators (`==`, `+`, `-`, `&lt;-`, etc.) should always be surrounded by spaces:
 
@@ -256,16 +292,10 @@ height&lt;-feet*12+inches
 mean(x, na.rm=10)
 ```
 
----
-
-# Good coding style: Objects
-
-## Spacing
-
-### Infix operators
 
 Adding extra spaces ok if it improves alignment of `= `or `&lt;-`.
 
+.pull-left[
 
 ```r
 # Good
@@ -273,35 +303,39 @@ list(
   total = a + b + c,
   mean  = (a + b + c) / n
 )
+```
+]
 
+.pull-right[
+
+
+```r
 # Also fine
 list(
   total = a + b + c,
   mean = (a + b + c) / n
 )
 ```
-
+]
 Do not add extra spaces to places where space is not usually allowed.
 
 ---
-# Good coding style: Objects
+# Good coding style
 
 ## Code blocks
 
-Curly braces, `{}`, define the most important hierarchy of R code. To make this hierarchy easy to see:
+Curly braces, `{}`, define the most important hierarchy of R code. Make them easy to see:
 
-`{` should be the last character on the line. Related code (e.g., an if clause, a function declaration, a trailing comma, …) must be on the same line as the opening brace.
+* `{` should be the last character on the line. Related code (e.g., an if clause, a function declaration, a trailing comma, …) must be on the same line as the opening brace.
 
-The contents should be indented by two spaces.
+* The contents should be indented by two spaces (or four).
 
-`}` should be the first character on the line.
+* `}` should be the first character on the line.
 
+.pull-left[
 
 ```r
 # Good
-if (y &lt; 0 &amp;&amp; debug) {
-  message("y is negative")
-}
 
 if (y == 0) {
   if (x &gt; 0) {
@@ -312,25 +346,14 @@ if (y == 0) {
 } else {
   y^x
 }
+```
+]
 
-test_that("call1 returns an ordered factor", {
-  expect_s3_class(call1(x, y), c("factor", "ordered"))
-})
+.pull-right[
 
-tryCatch(
-  {
-    x &lt;- scan()
-    cat("Total: ", sum(x), "\n", sep = "")
-  },
-  interrupt = function(e) {
-    message("Aborted by user")
-  }
-)
 
+```r
 # Bad
-if (y &lt; 0 &amp;&amp; debug) {
-message("Y is negative")
-}
 
 if (y == 0)
 {
@@ -341,20 +364,24 @@ if (y == 0)
     }
 } else { y ^ x }
 ```
+]
 
 ---
-
+# Good coding style
 ## Inline statements
 
-It’s ok to drop the curly braces for very simple statements that fit on one line, as long as they don’t have side-effects.
+It’s ok to drop the curly braces for very simple statements that fit on one line
 
 
 ```r
 # Good
 y &lt;- 10
 x &lt;- if (y &lt; 20) "Too low" else "Too high"
-Function calls that affect control flow (like return(), stop() or continue) should always go in their own {} block:
+```
+Function calls that affect control flow (like `return()` or `stop()` should always go in their own `{}` block:
+.pull-left[
 
+```r
 # Good
 if (y &lt; 0) {
   stop("Y is negative")
@@ -366,26 +393,30 @@ find_abs &lt;- function(x) {
   }
   x * -1
 }
+```
+]
 
+.pull-right[
+
+```r
 # Bad
 if (y &lt; 0) stop("Y is negative")
 
-if (y &lt; 0)
-  stop("Y is negative")
+
 
 find_abs &lt;- function(x) {
   if (x &gt; 0) return(x)
   x * -1
 }
 ```
-
+]
 
 ---
+# Good coding style
 
 ## Lines
 
-Strive to limit your code to 80 characters per line. This fits comfortably on a printed page with a reasonably sized font. If you find yourself running out of room, this is a good indication that you should encapsulate some of the work in a separate function.
-
+Strive to limit your code to 80 characters per line. This fits comfortably on a printed page with a reasonably sized font. 
 If a function call is too long to fit on a single line, use one line each for the function name, each argument, and the closing `)`. This makes the code easier to read and to change later.
 
 
@@ -403,81 +434,10 @@ do_something_very_complicated("that", requires, many, arguments,
                               )
 ```
 
-As described under Argument names, you can omit the argument names for very common arguments (i.e. for arguments that are used in almost every invocation of the function). Short unnamed arguments can also go on the same line as the function name, even if the whole function call spans multiple lines.
-
-
-```r
-map(x, f,
-  extra_argument_a = 10,
-  extra_argument_b = c(1, 43, 390, 210209)
-)
-```
-
-
-You may also place several arguments on the same line if they are closely related to each other, e.g., strings in calls to `paste()` or `stop()`. When building strings, where possible match one line of code to one line of output.
-
-
-```r
-# Good
-paste0(
-  "Requirement: ", requires, "\n",
-  "Result: ", result, "\n"
-)
-
-# Bad
-paste0(
-  "Requirement: ", requires,
-  "\n", "Result: ",
-  result, "\n")
-```
-
-
 ---
 
-## Assignments
-
-Use `&lt;-`, not `=`, for assignment.
-
-
-```r
-# Good
-x &lt;- 5
-
-# Bad
-x = 5
-```
-
-
-
----
-  
-## Comments
-
-In data analysis code, use comments to record important findings and analysis decisions. If you need comments to explain what your code is doing, consider rewriting your code to be clearer. If you discover that you have more comments than code, considering switching to RMarkdown.
-
-
----
-
-# Functions
-
-## Naming
-
-As well as following the general advice for object names, strive to use verbs for function names:
-
-
-```r
-# Good
-add_row()
-permute()
-
-# Bad
-row_adder()
-permutation()
-```
-
----
-
-## Long lines
+# Good coding style
+## Lines within functions
 
 If a function definition runs over multiple lines, indent the second line to where the definition starts.
 
@@ -501,22 +461,66 @@ long_function_name &lt;- function(a = "a long argument",
 
 ---
 
-# Pipes
+# Good coding style
 
-## Introduction
-Use `%&gt;%` to emphasise a sequence of actions, rather than the object that the actions are being performed on.
+## Lines within functions
 
-Avoid using the pipe when:
+Short unnamed arguments can also go on the same line as the function name, even if the whole function call spans multiple lines.
 
-* You need to manipulate more than one object at a time. Reserve pipes for a sequence of steps applied to one primary object.
 
-* There are meaningful intermediate objects that could be given informative names.
+```r
+map(x, f,
+  extra_argument_a = 10,
+  extra_argument_b = c(1, 43, 390, 210209)
+)
+```
+
+
+You may also place several arguments on the same line if they are closely related to each other, e.g., strings in calls to `paste()` or `stop()`. When building strings, where possible match one line of code to one line of output.
+
+.pull-left[
+
+```r
+# Good
+paste0(
+  "Requirement: ", requires, "\n",
+  "Result: ", result, "\n"
+)
+```
+]
+
+.pull-right[
+
+```r
+# Bad
+paste0(
+  "Requirement: ", requires,
+  "\n", "Result: ",
+  result, "\n")
+```
+]
+
 ---
 
 # Pipes
 
-## Whitespace
-`%&gt;%` should always have a space before it, and should usually be followed by a new line. After the first step, each line should be indented by two spaces. This structure makes it easier to add new steps (or rearrange existing steps) and harder to overlook a step.
+Pipes (`%&gt;%`) allow to connect several actions in a more readable way. Therefore, you should use `%&gt;%` to emphasise a sequence of actions, rather than the object that the actions are being performed on.
+
+Pipes can be very useful, but you should avoid using the pipe when:
+
+* You need to manipulate more than one object at a time. Reserve pipes for a sequence of steps applied to one primary object.
+
+* There are meaningful intermediate objects that could be given informative names.
+
+* You pipe so many actions that you risk losing the thread of the operations you've done.
+
+---
+# Pipes
+
+* `%&gt;%` should always have a space before it, and should usually be followed by a new line.
+* After the first step, each line should be indented. 
+
+* This structure makes it easier to add new steps (or rearrange existing steps) and harder to overlook a step.
 
 
 ```r
@@ -534,9 +538,10 @@ ungroup %&gt;% gather(measure, value, -Species) %&gt;%
 arrange(value)
 ```
 
+
 ---
 # Pipes
-## Long lines
+
 If the arguments to a function don’t all fit on one line, put each argument on its own line and indent:
 
 
@@ -550,14 +555,13 @@ iris %&gt;%
   )
 ```
 
-
-
 ---
 # Pipes
 ## Short pipes
 
-A one-step pipe can stay on one line, but unless you plan to expand it later on, you should consider rewriting it to a regular function call.
+A one-step pipe can stay on one line, but you could also consider rewriting it to a regular function call.
 
+.pull-left[
 
 ```r
 # Good
@@ -565,33 +569,46 @@ iris %&gt;% arrange(Species)
 
 iris %&gt;% 
   arrange(Species)
+```
+]
+
+.pull-right[
+
+
+```r
+# Perhaps better
 
 arrange(iris, Species)
 ```
+]
 
+Sometimes it’s useful to include a short pipe as an argument to a function in a longer pipe. Carefully consider whether the code is more readable with a short inline pipe  or if it’s better to move the code outside the pipe.
 
-Sometimes it’s useful to include a short pipe as an argument to a function in a longer pipe. Carefully consider whether the code is more readable with a short inline pipe (which doesn’t require a lookup elsewhere) or if it’s better to move the code outside the pipe and give it an evocative name.
-
+.pull-left[
 
 ```r
 # Good
 x %&gt;%
   select(a, b, w) %&gt;%
-  left_join(y %&gt;% select(a, b, v), by = c("a", "b"))
+  left_join(y %&gt;% select(a, b, v), 
+            by = c("a", "b"))
+```
+]
 
+.pull-right[
+
+```r
 # Better
 x_join &lt;- x %&gt;% select(a, b, w)
 y_join &lt;- y %&gt;% select(a, b, v)
 left_join(x_join, y_join, by = c("a", "b"))
 ```
-
+]
 ---
+# Pipes
+## Pipe assignments
 
-## Assignments
-
-There are three acceptable forms of assignment:
-
-1. Variable name and assignment on separate lines:
+1) Variable name and assignment on separate lines:
 
 
 ```r
@@ -601,7 +618,7 @@ iris_long &lt;-
   arrange(-value)
 ```
 
-2. Variable name and assignment on the same line:
+2) Variable name and assignment on the same line:
 
 
 ```r
@@ -610,7 +627,8 @@ iris_long &lt;- iris %&gt;%
   arrange(-value)
 ```
 
-3.Assignment at the end of the pipe with -&gt;:
+3) Assignment at the end of the pipe with -&gt;:
+
 
 ```r
 iris %&gt;%
