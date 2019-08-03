@@ -7,7 +7,6 @@ theme = "material"
 # googleAnalytics = ""
 paginate = 7
 relativeurls = true
-publishDir = "public"
 ignoreFiles = ["\\.Rmd$", "\\.Rmarkdown$", "_files$", "_cache$"]
 
 
@@ -26,7 +25,7 @@ ignoreFiles = ["\\.Rmd$", "\\.Rmarkdown$", "_files$", "_cache$"]
   location = "University of Lleida"
   gravatarEmail = "aitor.ameztegui@eagrof.udl.cat"
   # Your profile picture
-#  picture = ""
+#  picture = ""º
   twitter = "multivac42"
  
 # Menu Configuration
