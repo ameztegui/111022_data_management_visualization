@@ -7,6 +7,7 @@
 <meta charset="utf-8" />
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <meta name="generator" content="pandoc" />
+<meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
 
 <meta name="viewport" content="width=device-width, initial-scale=1">
 
@@ -20,7 +21,7 @@
 
 
 <style type="text/css">code{white-space: pre;}</style>
-<style type="text/css">
+<style type="text/css" data-origin="pandoc">
 div.sourceCode { overflow-x: auto; }
 table.sourceCode, tr.sourceCode, td.lineNumbers, td.sourceCode {
   margin: 0; padding: 0; vertical-align: baseline; border: none; }
@@ -56,11 +57,36 @@ code > span.do { color: #ba2121; font-style: italic; } /* Documentation */
 code > span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
 code > span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
 code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+
 </style>
+<script>
+// apply pandoc div.sourceCode style to pre.sourceCode instead
+(function() {
+  var sheets = document.styleSheets;
+  for (var i = 0; i < sheets.length; i++) {
+    if (sheets[i].ownerNode.dataset["origin"] !== "pandoc") continue;
+    try { var rules = sheets[i].cssRules; } catch (e) { continue; }
+    for (var j = 0; j < rules.length; j++) {
+      var rule = rules[j];
+      // check if there is a div.sourceCode rule
+      if (rule.type !== rule.STYLE_RULE || rule.selectorText !== "div.sourceCode") continue;
+      var style = rule.style.cssText;
+      // check if color or background-color is set
+      if (rule.style.color === '' && rule.style.backgroundColor === '') continue;
+      // replace div.sourceCode by a pre.sourceCode rule
+      sheets[i].deleteRule(j);
+      sheets[i].insertRule('pre.sourceCode{' + style + '}', j);
+    }
+  }
+})();
+</script>
 
 
 
-<link href="data:text/css;charset=utf-8,%0A%40import%20%27https%3A%2F%2Ffonts%2Egoogleapis%2Ecom%2Fcss%3Ffamily%3DSource%2BSans%2BPro%3A300%2C400%2C600%2C700%27%3B%0A%40import%20%27https%3A%2F%2Ffonts%2Egoogleapis%2Ecom%2Fcss%3Ffamily%3DSource%2BCode%2BPro%27%3B%0A%40charset%20%22UTF%2D8%22%3B%0A%0Ahtml%20%7B%0Afont%2Dsize%3A%2012px%3B%0A%7D%0Abody%20%7B%0Afont%2Dfamily%3A%20%27Source%20Sans%20Pro%27%2C%20sans%2Dserif%3B%0Afont%2Dweight%3A%20300%3B%0Abackground%2Dcolor%3A%20%23fefefe%3B%0Acolor%3A%20%23222%3B%0Acounter%2Dreset%3A%20li%3B%0A%7D%0Ah1%2Etitle%20%7B%0Afont%2Dweight%3A%20700%3B%0Afont%2Dfamily%3A%20%27Source%20Sans%20Pro%27%2C%20sans%2Dserif%3B%0Acolor%3A%20%236CA0DC%3B%0A%7D%0Ah1%20%7B%0Afont%2Dstyle%3A%20normal%3B%0Afont%2Dfamily%3A%20%27Source%20Sans%20Pro%27%2C%20sans%2Dserif%3B%0Acolor%3A%20%236CA0DC%3B%0A%7D%0Ah2%20%7B%0Afont%2Dstyle%3A%20normal%3B%0Afont%2Dfamily%3A%20%27Source%20Sans%20Pro%27%2C%20sans%2Dserif%3B%0Afont%2Dweight%3A%20400%3B%0Acolor%3A%20%236CA0DC%3B%0A%7D%0Ah3%2Esubtitle%20%7B%0Afont%2Dstyle%3A%20normal%3B%0Acolor%3A%20%236CA0DC%3B%0A%7D%0Ah4%20%7B%0Afont%2Dstyle%3A%20normal%3B%0Afont%2Dweight%3A%20400%3B%0Afont%2Dfamily%3A%20%27Source%20Sans%20Pro%27%2C%20sans%2Dserif%3B%0Amargin%2Dtop%3A%201%2E5rem%3B%0Amargin%2Dbottom%3A%200%3B%0Aline%2Dheight%3A%201%3B%0A%7D%0Ah4%2Eauthor%2C%0Ah4%2Edate%20%7B%0Afont%2Dfamily%3A%20%27Source%20Sans%20Pro%27%2C%20sans%2Dserif%3B%0Afont%2Dweight%3A%20300%3B%0A%7D%0A%2Enumeral%20%7B%0Afont%2Dfamily%3A%20%22Source%20Sans%20Pro%22%3B%0Afont%2Dweight%3A%20300%3B%0A%7D%0Aem%20%7B%0Afont%2Dstyle%3A%20italic%3B%0Afont%2Dweight%3A%20300%3B%0Afont%2Dfamily%3A%20%22Source%20Sans%20Pro%22%3B%0A%7D%0Astrong%20%7B%0Afont%2Dstyle%3A%20bold%3B%0Afont%2Dweight%3A%20600%3B%0Afont%2Dfamily%3A%20%22Source%20Sans%20Pro%22%3B%0A%7D%0A%0A%40media%20screen%20and%20%28max%2Dwidth%3A%20760px%29%20%7B%0Apre%20%7B%0Awidth%3A%20100%25%3B%0Afont%2Dsize%3A%2016px%3B%0A%7D%0A%7D%0Acode%20%7B%0Afont%2Dfamily%3A%20%27Source%20Code%20Pro%27%2C%20Consolas%2C%20%22Liberation%20Mono%22%2C%20Menlo%2C%20Courier%2C%20monospace%3B%0Afont%2Dsize%3A%2015px%3B%0Aline%2Dheight%3A%201%2E6%3B%0A%7D%0Apre%20code%20%7B%0Afont%2Dsize%3A%2015px%3B%0A%7D%0A%2Emarginnote%20code%2C%0A%2Esidenote%20code%20%7B%0Afont%2Dsize%3A%201rem%3B%0A%7D%0Apre%20%7B%0Awidth%3A%20100%25%3B%0Afont%2Dsize%3A%2016px%3B%0Aoverflow%2Dx%3A%20auto%3B%0A%7D%0A%0Aol%20%7B%0A%0Apadding%2Dleft%3A%200%3B%0A%7D%0Aol%3Eli%20%7B%0A%0Aposition%3A%20relative%3B%0A%0Alist%2Dstyle%3A%20none%3B%0Awidth%3A%2090%25%3B%0Apadding%2Dtop%3A%2010px%3B%0Apadding%2Dbottom%3A%2010px%3B%0Apadding%2Dright%3A%200%3B%0Apadding%2Dleft%3A%2090px%3B%0A%7D%0Aol%3Eli%3Abefore%20%7B%0A%0Acontent%3A%20%22Exercise%20%22%20counter%28li%29%22%2E%22%3B%0A%0Acounter%2Dincrement%3A%20li%3B%0Aposition%3A%20absolute%3B%0Acolor%3A%20%236CA0DC%3B%0Aleft%3A%20%2D0%2E5px%3B%0Afont%2Dweight%3A%20bold%3B%0A%7D%0Aol%20ol%20%7B%0Acounter%2Dreset%3A%20subitem%3B%0A%7D%0A" rel="stylesheet" type="text/css" />
+<link href="data:text/css;charset=utf-8,%0A%40import%20%27https%3A%2F%2Ffonts%2Egoogleapis%2Ecom%2Fcss%3Ffamily%3DSource%2BSans%2BPro%3A300%2C400%2C600%2C700%27%3B%0A%40import%20%27https%3A%2F%2Ffonts%2Egoogleapis%2Ecom%2Fcss%3Ffamily%3DSource%2BCode%2BPro%27%3B%0A%40charset%20%22UTF%2D8%22%3B%0A%0Ahtml%20%7B%0Afont%2Dsize%3A%2012px%3B%0A%7D%0Abody%20%7B%0Afont%2Dfamily%3A%20%27Source%20Sans%20Pro%27%2C%20sans%2Dserif%3B%0Afont%2Dweight%3A%20300%3B%0Abackground%2Dcolor%3A%20%23fefefe%3B%0Acolor%3A%20%23222%3B%0Acounter%2Dreset%3A%20li%3B%0A%7D%0Ah1%2Etitle%20%7B%0Afont%2Dweight%3A%20700%3B%0Afont%2Dfamily%3A%20%27Source%20Sans%20Pro%27%2C%20sans%2Dserif%3B%0Acolor%3A%20%236CA0DC%3B%0A%7D%0Ah1%20%7B%0Afont%2Dstyle%3A%20normal%3B%0Afont%2Dfamily%3A%20%27Source%20Sans%20Pro%27%2C%20sans%2Dserif%3B%0Acolor%3A%20%236CA0DC%3B%0A%7D%0Ah2%20%7B%0Afont%2Dstyle%3A%20normal%3B%0Afont%2Dfamily%3A%20%27Source%20Sans%20Pro%27%2C%20sans%2Dserif%3B%0Afont%2Dweight%3A%20400%3B%0Acolor%3A%20%236CA0DC%3B%0A%7D%0Ah3%2Esubtitle%20%7B%0Afont%2Dstyle%3A%20normal%3B%0Acolor%3A%20%236CA0DC%3B%0A%7D%0Ah4%20%7B%0Afont%2Dstyle%3A%20normal%3B%0Afont%2Dweight%3A%20400%3B%0Afont%2Dfamily%3A%20%27Source%20Sans%20Pro%27%2C%20sans%2Dserif%3B%0Amargin%2Dtop%3A%201%2E5rem%3B%0Amargin%2Dbottom%3A%200%3B%0Aline%2Dheight%3A%201%3B%0A%7D%0Ah4%2Eauthor%2C%0Ah4%2Edate%20%7B%0Afont%2Dfamily%3A%20%27Source%20Sans%20Pro%27%2C%20sans%2Dserif%3B%0Afont%2Dweight%3A%20300%3B%0A%7D%0A%2Enumeral%20%7B%0Afont%2Dfamily%3A%20%22Source%20Sans%20Pro%22%3B%0Afont%2Dweight%3A%20300%3B%0A%7D%0Aem%20%7B%0Afont%2Dstyle%3A%20italic%3B%0Afont%2Dweight%3A%20300%3B%0Afont%2Dfamily%3A%20%22Source%20Sans%20Pro%22%3B%0A%7D%0Astrong%20%7B%0Afont%2Dstyle%3A%20bold%3B%0Afont%2Dweight%3A%20600%3B%0Afont%2Dfamily%3A%20%22Source%20Sans%20Pro%22%3B%0A%7D%0A%0A%40media%20screen%20and%20%28max%2Dwidth%3A%20760px%29%20%7B%0Apre%20%7B%0Awidth%3A%20100%25%3B%0Afont%2Dsize%3A%2016px%3B%0A%7D%0A%7D%0Acode%20%7B%0Afont%2Dfamily%3A%20%27Source%20Code%20Pro%27%2C%20Consolas%2C%20%22Liberation%20Mono%22%2C%20Menlo%2C%20Courier%2C%20monospace%3B%0Afont%2Dsize%3A%2015px%3B%0Aline%2Dheight%3A%201%2E6%3B%0A%7D%0Apre%20code%20%7B%0Afont%2Dsize%3A%2015px%3B%0A%7D%0A%2Emarginnote%20code%2C%0A%2Esidenote%20code%20%7B%0Afont%2Dsize%3A%201rem%3B%0A%7D%0Apre%20%7B%0Awidth%3A%20100%25%3B%0Afont%2Dsize%3A%2016px%3B%0Aoverflow%2Dx%3A%20auto%3B%0A%7D%0A%0Aol%20%7B%0A%0Apadding%2Dleft%3A%200%3B%0A%7D%0Aol%3Eli%20%7B%0A%0Aposition%3A%20relative%3B%0A%0Alist%2Dstyle%3A%20none%3B%0Awidth%3A%2090%25%3B%0Apadding%2Dtop%3A%2010px%3B%0Apadding%2Dbottom%3A%2010px%3B%0Apadding%2Dright%3A%200%3B%0Apadding%2Dleft%3A%2090px%3B%0A%7D%0Aol%3Eli%3Abefore%20%7B%0A%0Acontent%3A%20%22Exercise%20%22%20counter%28li%29%22%2E%22%3B%0A%0Acounter%2Dincrement%3A%20li%3B%0Aposition%3A%20absolute%3B%0Acolor%3A%20%236CA0DC%3B%0Aleft%3A%20%2D0%2E5px%3B%0Afont%2Dweight%3A%20bold%3B%0A%7D%0Aol%20ol%20%7B%0Acounter%2Dreset%3A%20subitem%3B%0A%7D" rel="stylesheet" type="text/css" />
+
+
+
 
 </head>
 
@@ -70,8 +96,8 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 
 
 <h1 class="title toc-ignore">Lab 07 - Modelling course evaluations, Pt 2</h1>
-<h3 class="subtitle"><em>Multiple predictors</em></h3>
-<h4 class="date"><em>2018-03-01</em></h4>
+<h3 class="subtitle">Multiple predictors</h3>
+<h4 class="date">2018-03-01</h4>
 
 
 
@@ -182,6 +208,9 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 </div>
 </div>
 
+
+
+<!-- code folding -->
 
 
 <!-- dynamically load mathjax for compatibility with self-contained -->
