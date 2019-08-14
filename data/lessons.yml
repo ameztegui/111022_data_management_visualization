@@ -5,7 +5,7 @@ lessons:
   - date: "tbd"
     title: "Lab 01: Introduction to R and RStudio"
     slides: "lab-slides/01-lab-deck.html"
-    lab: "lab-01-hello-r.html"
+    lab: "lab-01-intro-r.html"
   - date: "PART 1"
     title: "DATA MANAGEMENT"
   - title: "UNIT 1: Introduction"
