@@ -498,70 +498,47 @@ This gives a somewhat cryptic error:
 
 `Error in month.name[-1:3]: only 0's may be mixed with negative subscripts`
 
-But remember the order of operations. : is really a function, so what happens is it takes its first argument as -1, and second as 3, so generates the sequence of numbers: -1, 0, 1, 2, 3.
+But remember the order of operations. `:` is really a function, so what happens is it takes its first argument as -1, and second as 3, so generates the sequence of numbers: -1, 0, 1, 2, 3.
 
 The correct solution is to wrap that function call in brackets, so that the - operator is applied to the sequence:
 
-
+```{r}
 -(1:3)
-[1] -1 -2 -3
 month.name[-(1:3)]
-[1] "April"     "May"       "June"      "July"      "August"    "September"
-[7] "October"   "November"  "December" 
-
+```
 
 # Subsetting with logical vectors
-As well as providing a list of indices we want to keep (or delete, if we prefix them with -), we can pass a logical vector to R indicating the indices we wish to select:
+As well as providing a list of indices we want to keep (or delete, if we prefix them with `-`), we can pass a logical vector to R indicating the indices we wish to select:
 
 ```{r}
-
-fourmonths <- month.name[1:4]
-fourmonths
-```
-
-```{r}
-fourmonths[c(TRUE, FALSE, TRUE, TRUE)]
+month.name[c(TRUE, FALSE, TRUE, TRUE, FALSE, FALSE,
+             FALSE, TRUE, TRUE, FALSE, FALSE, TRUE)]
 
 ```
 
-What happens if we supply a logical vector that is shorter than the vector we’re extracting the elements from?
+The idea of selecting elements of a vector using a logical subsetting vector may seem a bit esoteric, and a lot more typing than just selecting the elements you want by index, but it becomes really useful when we write code to generate the logical vector:
 
 ```{r}
-fourmonths[c(TRUE,FALSE)]
-```
-
-This illustrates the idea of vector recycling; the `[]` extract operator “recycles” the subsetting vector:
-
-```{r}
-fourmonths[c(TRUE,FALSE,TRUE,FALSE)]
-```
-
-This can be useful, but can easily catch you out.
-
-The idea of selecting elements of a vector using a logical subsetting vector may seem a bit esoteric, and a lot more typing than just selecting the elements you want by index. It becomes really useful when we write code to generate the logical vector:
-
-```{r}
-my_vector <- c(0.01, 0.69, 0.51, 0.39)
-my_vector > 0.5
+my_vector <- c(10, 3, 6, 7, 9)
+my_vector > 6
 
 ```
 
 ```{r}
-my_vector[my_vector > 0.5]
+my_vector[my_vector > 6]
 
 ```
 
 Tip: Combining logical conditions
 There are many situations in which you will wish to combine multiple logical criteria. For example, we might want to find all the elements that are between two values. Several operations for combining logical vectors exist in R:
 
-&, the “logical AND” operator: returns TRUE if both the left and right are TRUE.
-|, the “logical OR” operator: returns TRUE, if either the left or right (or both) are TRUE.
-The recycling rule applies with both of these, so TRUE & c(TRUE, FALSE, TRUE) will compare the first TRUE on the left of the & sign with each of the three conditions on the right.
+-`&`, the logical "AND” operator: returns `TRUE` if both the left and right are `TRUE`.
 
-You may sometimes see && and || instead of & and |. These operators do not use the recycling rule: they only look at the first element of each vector and ignore the remaining elements. The longer operators are mainly used in programming, rather than data analysis.
+-`|`, the logical "OR” operator: returns `TRUE`, if either the left or right (or both) are `TRUE`.
 
-!, the “logical NOT” operator: converts TRUE to FALSE and FALSE to TRUE. It can negate a single logical condition (e.g. !TRUE becomes FALSE), or a whole vector of conditions(e.g. !c(TRUE, FALSE) becomes c(FALSE, TRUE)).
-Additionally, you can compare the elements within a single vector using the all function (which returns TRUE if every element of the vector is TRUE) and the any function (which returns TRUE if one or more elements of the vector are TRUE).
+-`!`, the logical "NOT” operator: converts `TRUE` to `FALSE` and `FALSE` to `TRUE`. It can negate a single logical condition (e.g. `!TRUE` becomes `FALSE`), or a whole vector of conditions(e.g. `!c(TRUE, FALSE)` becomes `c(FALSE, TRUE)`).
+
+Additionally, you can compare the elements within a single vector using the `all` function (which returns `TRUE` if every element of the vector is `TRUE`) and the `any` function (which returns `TRUE` if one or more elements of the vector are `TRUE`).
 
 
 # Data types
@@ -574,111 +551,8 @@ c(1, 2, "three", "four", 5)
 We see that R has coerced the elements containing digits to strings, so that all the elements have the same type. We will talk more about data types in a later episode.
 
 
+#### FALTA AÑADIR COSAS DE DATA FRAMES, etc. Mirar lo de marcos
 
 
-
-
-
-
-
-# Packages
-
-In this lab we will work with two packages: `datasauRus` which contains the dataset, and `tidyverse` which is a collection of packages for doing data analysis in a "tidy" way.
-
-Install these packages by running the following in the console.
-
-```{r eval = FALSE}
-install.packages("tidyverse")
-install.packages("datasauRus")
-```
-
-Now that the necessary packages are installed, you should be able to Knit your document and see the results.
-
-If you'd like to run your code in the Console as well you'll also need to load the packages there. To do so, run the following in the console. 
-
-```{r eval = FALSE}
-library(tidyverse) 
-library(datasauRus)
-```
-
-Note that the packages are also loaded with the same commands in your R Markdown document.
-
-
-# Warm up
-
-Before we introduce the data, let's warm up with some simple exercises. The following video is an overview of some of these warmup exercises.
-
-<div style="position:relative;height:0;padding-bottom:40%"><iframe width="600" height="320" src="https://www.youtube.com/embed/XE8h8jIyu04" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe></div>
-
-## Project name: 
-
-Currently your project is called *Untitled Project*. Update the name of your project to be "Lab 01 - Hello R".
-
-```{r untitled-project, fig.fullwidth=TRUE, echo = FALSE}
-knitr::include_graphics("img/01-intro-r/untitled-project.png")
-```
-
-# Data
-
-The data frame we will be working with today is called `datasaurus_dozen` and it's in the `datasauRus` package. Actually, this single data frame contains 13 datasets, designed to show us  why data visualisation is important and how summary statistics alone can be misleading. The different datasets are maked by the `dataset` variable.
-
-To find out more about the dataset, type the following in your Console: `?datasaurus_dozen`. A question mark before the name of an object will always bring up its help file. This command must be ran in the Console.
-
-1. Based on the help file, how many rows and how many columns does the `datasaurus_dozen` file have? What are the variables included in the data frame? Add your responses to your lab report. When you're done, commit your changes with the commit message "Added answer for Ex 1", and push.
-
-Let's take a look at what these datasets are. To do so we can make a *frequency table* of the dataset variable:
-
-```{r}
-datasaurus_dozen %>%
-  count(dataset) %>%
-  print(13)
-```
-
-```{marginfigure}
-Matejka, Justin, and George Fitzmaurice. "Same stats, different graphs: Generating datasets with varied appearance and identical statistics through simulated annealing." Proceedings of the 2017 CHI Conference on Human Factors in Computing Systems. ACM, 2017.
-```
-
-The original Datasaurus (`dino`) was created by Alberto Cairo in [this great blog post](http://www.thefunctionalart.com/2016/08/download-datasaurus-never-trust-summary.html). The other Dozen were generated using simulated annealing and the process is described in the paper *Same Stats, Different Graphs: Generating Datasets with Varied Appearance and Identical Statistics* through Simulated Annealing by Justin Matejka and George Fitzmaurice. In the paper, the authors simulate a variety of datasets that the same summary statistics to the Datasaurus but have very different distributions.
-
-# Data visualization and summary
-
-2. Plot `y` vs. `x` for the `dino` dataset. Then, calculate the correlation coefficient between `x` and `y` for this dataset.
-
-Below is the code you will need to complete this exercise. Basically, the answer is already given, but you need to include relevant bits in your Rmd document and successfully knit it and view the results.
-
-Start with the `datasaurus_dozen` and pipe it into the `filter` function to filter for observations where `dataset == "dino"`. Store the resulting filtered data frame as a new data frame called `dino_data`.
-
-```{r}
-dino_data <- datasaurus_dozen %>%
-  filter(dataset == "dino")
-```
-
-There is a lot going on here, so let's slow down and unpack it a bit. 
-
-First, the pipe operator: `%>%`, takes what comes before it and sends it as the first argument to what comes after it. So here, we're saying `filter` the `datasaurus_dozen` data frame for observations where `dataset == "dino"`.
-
-Second, the assignment operator: `<-`, assigns the name `dino_data` to the filtered data frame.
-
-Next, we need to visualize these data. We will use the `ggplot` function for this. Its first argument is the data you're visualizing. Next we define the `aes`thetic mappings. In other words, the columns of the data that get mapped to certain aesthetic features of the plot, e.g. the `x` axis will represent the variable called `x` and the `y` axis will represent the variable called `y`. Then, we add another layer to this plot where we define which `geom`etric shapes we want to use to represent each observation in the data. In this case we want these to be points,m hence `geom_point`.
-
-```{r fig.fullwidth=TRUE}
-ggplot(data = dino_data, mapping = aes(x = x, y = y)) +
-  geom_point()
-```
-
-If this seems like a lot, it is. And you will learn about the philosophy of building data visualizations in layer in detail next week. For now, follow along with the code that is provided.
-
-For the second part of this exercises, we need to calculate a summary statistic: the correlation coefficient. Correlation coefficient, often referred to as $r$ in statistics, measures the linear association between two variables. You will see that some of the pairs of variables we plot do not have a linear relationship between them. This is exactly why we want to visualize first: visualize to assess the form of the relationship, and calculate $r$ only if relevant. In this case, calculating a correlation coefficient really doesn't make sense since the relationship between `x` and `y` is definitely not linear -- it's dinosaurial!
-
-But, for illustrative purposes, let's calculate correlation coefficient between `x` and `y`.
-
-```{marginfigure}
-Start with `dino_data` and calculate a summary statistic that we will call `r` as the `cor`relation between `x` and `y`.
-```
-
-```{r}
-dino_data %>%
-  summarize(r = cor(x, y))
-```
 
 
