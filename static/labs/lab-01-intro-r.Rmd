@@ -1,6 +1,6 @@
 ---
 title: "Lab 01 - Intro to R and RStudio"
-date: "2018-01-18"
+date: "2019-09-15"
 output: 
   tufte::tufte_html:
     tufte_variant: "envisioned"
@@ -26,8 +26,6 @@ The main goal of this lab is to introduce you to R and RStudio, the software tha
 
 We will assume you don't have any previous experience with either R or RStudio, so we will cover the very basics, starting from the installation of the software and the first steps. If you do know some R, you may find some of the topics quite basic, and you are free to jump to wherever you wish within the document. Note however, that we provide some tips and advices that may be interesting even if you know some R.
 
-Science is a multi-step process: once you’ve designed an experiment and collected data, the real fun begins! This lesson will teach you how to start this process using R and RStudio. We will begin with raw data, perform exploratory analyses, and learn how to plot results graphically. This example starts with a dataset from gapminder.org containing population information for many countries through time. Can you read the data into R? Can you plot the population for Senegal? Can you calculate the average income for countries on continent of Asia? By the end of these lessons you will be able to do things like plot the populations for all of these countries in under a minute!
-
 # Before Starting The Lab
 If you are using your own computer, please ensure you have the latest version of R and RStudio installed on your machine. This is important, as some packages used may not install correctly (or at all) if R is not up to date.
 
@@ -39,13 +37,13 @@ If you are using your own computer, please ensure you have the latest version of
 Remember that R is the name of the programming language itself and RStudio is the most convenient interface.
 ```
 
-**The University machines already have suitable versions of R and RStudio installed.**
+*The University machines already have suitable versions of R and RStudio installed.*
 
 # Introduction to RStudio
 
 Throughout this lesson, we’re going to teach you some of the fundamentals of the R language as well as some best practices for organizing code for scientific projects that will make your life easier.
 
-We’ll be using RStudio: a free, open source R integrated development environment. It provides a built in editor, works on all platforms (including on servers) and provides many advantages such as integration with version control and project management.
+We’ll be using RStudio: a free, open source R integrated development environment. It provides a built in editor, works on all platforms (including on servers) and provides many advantages such as integration with version control and project management (see the slides of Lesson 1 to know more about the advantages of R and RStudio).
 
 ## Basic layout
 
@@ -56,25 +54,62 @@ When you first open RStudio, you will be greeted by three panels:
 - Files/Plots/Packages/Help/Viewer (tabbed in lower right)
 
 ```{r clone-repo-link, echo = FALSE, fig.width=3}
-knitr::include_graphics("img/01-hello-r/01-rstudio.png")
+knitr::include_graphics("img/01-intro-r/01_rstudio.png")
 ```
+
+### Environment/History
+
+The *Environment* tab shows the names of all the data objects (like vectors, matrices, and dataframes) that you’ve defined in your current R session. You can also see information like the number of observations and rows in data objects. The tab also has a few clickable actions like `Import Dataset` which will open a graphical user interface (GUI) for importing data into R.
+
+The *History* tab of this panel shows a history of all the code you’ve previously evaluated in the Console. Maybe it is not so commonly used as the *Environment* tab, but it is useful to have the history of code you just ran.
+
+As you get more comfortable with R, you might find the Environment / History panel useful. But at the beginning you may not find it so useful, so you could just ignore it, or you can even just minimize the window by clicking the minimize button on the top right of the panel.
+
+
+### Files / Plots / Packages / Help
+
+The Files / Plots / Packages / Help panel shows you lots of helpful information. Let’s go through each tab in detail:
+
+- Files: it gives you access to the file directory on your hard drive. One nice feature of the “Files” panel is that you can use it to set your working directory - once you navigate to a folder you want to read and save files to, click “More” and then “Set As Working Directory.” We’ll talk about working directories in more detail soon.
+
+- Plots: The Plots panel shows all the plots that you generate during an R session. There are buttons for opening the plot in a separate window and exporting the plot as a pdf or jpeg (though we will see how to do this with code, because it is way more convenient and customizable. To see how plots are displayed in the `Plots` panel, just copy the code below in the console to display a histogram of the petal length of three species of Iris plants, that are included in the iris database. When you do, you should see a plot similar to the one in the Figure show up in the Plots panel.
+
+```{r}
+library(ggplot2)
+
+ggplot(iris) +
+  geom_histogram(aes(Petal.Width, color = Species, fill = Species))
+```
+
+![](img/01-intro-r/01_plot.png)
+
+- Packages: shows a list of all the R packages installed on your harddrive and indicates whether or not they are currently loaded. Packages that are loaded in the current session are checked while those that are installed but not yet loaded are unchecked. We’ll discuss packages in more detail later.
+
+- Help: help menu for R functions. You can either type the name of a function in the search window, or use the code to search for a function with the name
+
+### Console
+
+The console is the heart of R. Here is where R actually evaluates code (remember what we just did with the `iris` example). This console in RStudio is the same as the one you would get if you typed in R in your command-line environment (or if you decided to use R without RStudio)
+The first thing you will see in the R interactive session is a bunch of information, followed by a `>` and a blinking cursor. This is a prompt that tells you that R is ready for new code. 
+
+The console operates on the idea of a “Read, evaluate, print" loop: you type in commands, R tries to execute them, and then returns a result.
+You can type code directly into the console after the prompt and get an immediate response, or copy it from elesewhere and paste it in the console. For example, if you type 1+1 into the console and press enter, you’ll see that R immediately gives an output of 2.
 
 
 # Introduction to R
-Much of your time in R will be spent in the R interactive console. This console in RStudio is the same as the one you would get if you typed in R in your command-line environment.
 
-The first thing you will see in the R interactive session is a bunch of information, followed by a > and a blinking cursor. It operates on the idea of a “Read, evaluate, print loop”: you type in commands, R tries to execute them, and then returns a result.
+We can use R (or its equivalent in RStudio, the console) for many purposes. We'll see some of tge most common uses:
 
 ## Using R as a calculator
-The simplest thing you could do with R is do arithmetic:
+The simplest thing you could do with R is use it as a calculator, i.e. to do arithmetics. Type the following:
 
 ```{r}
-1 + 100
+156 + 35
 ```
 
 And R will print out the answer, with a preceding [1]. Don’t worry about this for now, we’ll explain that later. For now think of it as indicating output.
 
-Like bash, if you type in an incomplete command, R will wait for you to complete it. For example, try to write in the console 
+If you type in an incomplete command, R will wait for you to complete it. For example, try to write in the console 
 
 `1 + `
 
@@ -84,25 +119,23 @@ When using R as a calculator, the order of operations is the same as you would h
 
 From highest to lowest precedence:
 
-Parentheses: `(`, `)`
-Exponents: `^` or `**`
-Divide: `/`
-Multiply: `*`
-Add: `+`
-Subtract: `-`
+* Parentheses: `(`, `)`
+* Exponents: `^` or `**`
+* Divide: `/`
+* Multiply: `*`
+* Add: `+`
+* Subtract: `-`
 
 ```{r}
 3 + 5 * 2
-
 ```
-Use parentheses to group operations in order to force the order of evaluation if it differs from the default, or to make clear what you intend.
+You can use parentheses to group operations to force the order of evaluation, or to make clear what you intend.
 
 ```{r}
 (3 + 5) * 2
 ```
 
-This can get unwieldy when not needed, but clarifies your intentions. Remember that 
-others may later read your code.
+The use of parentheses can easily get unwieldy when not needed, but clarifies the sense of the code. Remember that others may later read your code.
 
 ```{r}
 (3 + (5 * (2 ^ 2))) # hard to read
@@ -110,19 +143,24 @@ others may later read your code.
 3 + 5 * (2 ^ 2)     # if you forget some rules, this might help
 ```
 
-The text after each line of code is called a “comment”. Anything that follows after the hash symbol # is ignored by R when it executes code.
+You may have noticed that part of the text above has not been processed by R. Actually, znything that follows after the hash symbol `#` is ignored by R when it executes code. The text after the `#` is called a “comment”, and can be very useful to remember the purpose and steps of a given analysis. We will talk more about comments in the lesson on "Good coding practices".
 
 # Saving our commands
 
-Although we can use R in this interactive way, we will usually write our commands into a file. This way we (and others) can follow the steps performed in our analysis, and we (and others) can re-run them if required.
+Although we can use R in this interactive way (or using the Console in RStudio), 99% of the time you should be using the Source rather than the Console, that is, you will write your commands into a file. The reason for this is straightforward: If you type code into the console, it won’t be saved (though you can look back on your command History). And if you make a mistake in typing code into the console, you’d have to re-type everything all over again. Instead, if you write all your code in the Source, it will be available at any time needed, and if you need to rerun some analyses you just need to open the needed files and run all the code within.
 
-We can create a new script by choosing the menu item: `File, New File, R script, or with the keyboard shortcut <kbd>Ctrl</kbd> + <kbd>Shift</kbd> + <kbd>N</kbd>. Commands we type in here won’t be excuted immediately.
+We can create a new script by choosing the menu item: `File, New File, R script`, or with the keyboard shortcut <kbd>Ctrl</kbd> + <kbd>Shift</kbd> + <kbd>N</kbd>. Script files are text files, that can be opened by any text editor. By convention they have the extension `.R`.
+ 
+Commands within a script won’t be excuted immediately, just when you ask for it.
 
-Script files are text files. By convention they have the extension `.R`.
+```{marginfigure}
+**Tip:** you should get used as fast as possible to write most of your code in a document in the Source. Only type directly into the Console to do quick analyses.
+```
 
-You can execute the command that the cursor is currently on by pressing `Ctrl`+`Enter` (the cursor does not have to be at the start of the command, and the command can extend over more than one line, provided a single line does not make a complete command — you will explore this in the challenge below).
+To execute the command in which the cursor is currently you need to press `Ctrl`+`Enter`. Note that the cursor does not have to be at the start of the command, and that the command can extend over more than one line.
+However, if a single line does make a complete command, R will just execute one command. After executing one command, the cursor will automatically jump to the next command, making it very efficient to run large pieces of code by just pressing `Ctrl`+`Enter` several times. 
 
-If you have selected some code, `Ctrl`+`Enter` will execute the selection.
+To get a better control of the piece of code you want to execute, you can select it and press `Ctrl`+`Enter`, and R will execute the selection.
 
 To run all of the code in the script, press `Ctrl+Shift+Enter`.
 
@@ -184,7 +222,7 @@ You may find that you need to click the “refresh” icon in RStudio’s file w
 Your project structure should look like this:
 
 ```{r project, echo = FALSE, fig.width=3}
-knitr::include_graphics("img/01-hello-r/01-rstudio.png")
+knitr::include_graphics("img/01-intro-r/01_rstudio.png")
 ```
 
 The data directory should looks like this:
@@ -203,11 +241,15 @@ Select Set as current working directory
 
 # Let's continue using R
 
-# Mathematical functions
+Now that you know that you can either run code directly in the console or via R scripts, it's time to see some of the other options that R can be used for. 
+
+## Mathematical functions
 R has many built in mathematical functions. To call a function, we simply type its name, followed by open and closing parentheses. Anything we type inside the parentheses are called the function’s arguments:
 
 ```{r}
-sin(1)  # trigonometry functions
+# Let's work with some trigonometry functions
+
+sin(1)  # sinus of a number
 
 log(1)  # natural logarithm
 
@@ -216,50 +258,49 @@ log10(10) # base-10 logarithm
 exp(0.5) # e^(1/2)
 ```
 
-# Remembering function names and arguments
-Don’t worry about trying to remember every function in R. You can simply look them up on Google, or if you can remember the start of the function’s name, type the start of it, then press the tab key. This will show a list of functions whose name matches what you’ve typed so far; this is known as tab completion, and can save a lot of typing (and reduce the risk of typing errors). Tab completion works in R (i.e. running it out of RStudio), and in RStudio. In RStudio this feature is even more useful; a extract of the function’s help file will be shown alongside the function name.
+## Remembering function names and arguments
 
-This is one advantage that RStudio has over R on its own: it has auto-completion abilities that allow you to more easily look up functions, their arguments, and the values that they take.
+As we said, R has multitude of mathematical functions, and many more are included in the packages. Don’t worry about trying to remember every function in R. You can simply look them up on Google, or if you can remember the start of the function’s name, type the start of it, then press the `tab` key. This will show a list of functions whose name matches what you’ve typed so far. This is known as tab completion, and can save a lot of typing (and reduce the risk of typing errors). Tab completion works both in R and in RStudio. In RStudio this feature is even more useful; a extract of the function’s help file will be shown alongside the function name.
 
-Typing a ? before the name of a command will open the help page for that command. As well as providing a detailed description of the command and how it works, scrolling to the bottom of the help page will usually show a collection of code examples which illustrate command usage. We’ll go through an example later.
+Typing a ? before the name of a command will open the help page for that command, as well as providing a detailed description of the command and how it works, scrolling to the bottom of the help page will usually show a collection of code examples which illustrate command usage. 
 
-# Comparing things
+## Comparing things
 
-We can also do comparison in R:
+We can also do comparisons in R:
 
 ```{r}
-1 == 1  # equality (note two equals signs, read as "is equal to")
-1 != 2  # inequality (read as "is not equal to")
-1 < 2  # less than
-1 <= 1  # less than or equal to
-1 > 0  # greater than
-1 >= -9 # greater than or equal to
+1 == 1    # equality (note two equals signs, read as "is equal to")
+1 != 2    # inequality (read as "is not equal to")
+1 < 2     # less than
+1 <= 1    # less than or equal to
+1 > 0     # greater than
+1 >= -9   # greater than or equal to
 ```
 
-Tip: Comparing Numbers
-A word of warning about comparing numbers: you should never use == to compare two numbers unless they are integers (a data type which can specifically represent only whole numbers).
 
-Computers may only represent decimal numbers with a certain degree of precision, so two numbers which look the same when printed out by R, may actually have different underlying representations and therefore be different by a small margin of error (called Machine numeric tolerance).
+```{marginfigure}
+**Tip:** Comparing Numbers
+A word of warning about comparing numbers: you should never use `==` to compare two numbers unless they are integers (a data type which can specifically represent only whole numbers).
 
-Instead you should use the all.equal function.
+Computers may only represent decimal numbers with a certain degree of precision, so two numbers which look the same when printed out by R, may actually have different underlying representations and therefore be different by a small margin of error (called Machine numeric tolerance). Instead you should use the `all.equal` function.
+```
 
-Further reading: http://floating-point-gui.de/
 
-# Variables and assignment
+## Variables and assignment
+
 We can store values in variables using the assignment operator `<-`, like this:
 
 ```{r}
-x <- 1/40
+x <- 1/10
 ```
 
-Notice that assignment does not print a value. Instead, we stored it for later in something called a variable. x now contains the value 0.025:
+Notice that assignment does not print a value. Instead, we stored it for later in something called a variable. `x` now contains the value `0.1`:
 
 ```{r}
 x
 ```
-More precisely, the stored value is a decimal approximation of this fraction called a floating point number.
 
-Look for the Environment tab in one of the panes of RStudio, and you will see that x and its value have appeared. Our variable x can be used in place of a number in any calculation that expects a number:
+Now look for the Environment tab in one of the panes of RStudio, and you will see that `x` and its value have appeared. Our variable `x` can be used in place of a number in any calculation that expects a number:
 
 ```{r}
 log(x)
@@ -268,20 +309,21 @@ log(x)
 Notice also that variables can be reassigned:
 ```{r}
 x <- 100
-
 ```
-x used to contain the value 0.025 and and now it has the value 100.
 
+`x` used to contain the value `0.1` and and now it has the value `100`.
 
 Assignment values can contain the variable being assigned to:
+
 ```{r}
-x <- x + 1 #notice how RStudio updates its description of x on the top right tab
+
+x <- x + 1 # notice how RStudio updates its description of x on the top right tab
 
 ```
 
 The right hand side of the assignment can be any valid R expression. The right hand side is fully evaluated before the assignment occurs.
 
-# Legal variable names
+## Legal variable names
 Variable names can contain letters, numbers, underscores and periods. They cannot start with a number or underscore, nor contain spaces at all. Different people use different conventions for long variable names, these include:
 
 ```
@@ -290,41 +332,38 @@ underscores_between_words
 camelCaseToSeparateWords
 ```
 
-What you use is up to you, but be consistent.
+We will talk more about the most appropriate ways of naming variables in Lesson about Good coding practices.
 
-Variables that start with a `.` are hidden variables. These will not appear in the environment window or when we use the ls() function (unless we us ls(all.names = TRUE). The ls() function is introduced in the next episode. Hidden variables are used for things such as storing R’s random number seed, which we typically don’t want to change within a session.
+```{marginfigure}
 
-It is also possible to use the = operator for assignment:
+It is also possible to use the `=` operator for assignment, as in: `x = 1/40`. This is much less common among R users, and we will see later why it is not a good idea to use it. If you do, try to change your habits.
 
-```{r}
-x = 1/40
 ```
 
-But this is much less common among R users. It is a good idea to be consistent with the operator you use.
-
-We aren’t limited to storing numbers in variables:
+We've seen how to assign numbers to variables, but we aren’t limited to store numbers in variables:
 
 ```{r}
-sentence <- "the cat sat on the mat"
+y <- "I like Lleida"
 ```
 
-Note that we need to put strings of characters inside quotes.
+Note that we need to put strings of characters inside quotes. Otherwise R will thing that i is an object, and will return an error
 
-But the type of data that is stored in a variable affects what we can do with it:
+`y <- I like Lleida`
+
+Logically, the type of data that is stored in a variable affects what we can do with it:
 
 ```{r}
 x + 1
-
 ```
 
 `sentence + 1`
 
-`Error in sentence + 1: non-numeric argument to binary operator
-We will discuss the important concept of data types in the next episode.
+`Error in sentence + 1: non-numeric argument to binary operator`
+We will discuss the importance of data types below.
 
 # Vectorization
 As well as dealing with single values, we can work with vectors of values.
-There are various ways of creating vectors; the : operator will generate sequences of consecutive values:
+There are various ways of creating vectors; the `:` operator will generate sequences of consecutive values:
 
 ```{r}
 1:5
@@ -334,26 +373,25 @@ There are various ways of creating vectors; the : operator will generate sequenc
 5:1
 ```
 
-The result of the : operator is a vector; this is a 1 dimensional array of values. We can apply functions to all the elements of a vector:
+The result of the `:` operator is a vector: i.e. a 1 dimensional array of values. We can apply functions to each and all of the elements of a vector:
 
 ```{r}
 (1:5) * 2
 2^(1:5)
 ```
 
-We can assign a vector to a variable:
+We can also assign a vector to a variable:
 
 ```{r}
 x <- 5:10
 ```
 
-We can also create vectors “by hand” using the c() function; this tersely named function is used to combine values into a vector; these values can, themselves, be vectors:
+We can also create vectors “by hand” using the `c()` function; this function is used to combine values into a vector; these values can, themselves, be vectors:
 
 ```{r}
 c(2, 4, -1)
 c(x, 2, 2, 3)
 ```
-
 
 Vectors aren’t limited to storing numbers:
 
@@ -372,7 +410,7 @@ month.name
 
 We will use some of these in the examples that follow.
 
-# Vector lengths
+## Vector lengths
 
 We can calculate how many elements a vector contains using the length() function:
 ```{r}
@@ -380,8 +418,8 @@ length(x)
 length(letters)
 ```
 
-# Subsetting vectors
-Having defined a vector, it’s often useful to extract parts of a vector. We do this with the [] operator. Using the built in month.name vector:
+## Subsetting vectors
+Having defined a vector, it’s often useful to extract parts of a vector. We do this with the `[]` operator. Using the built in `month.name` vector:
 
 ```{r}
 month.name[2]
@@ -394,8 +432,9 @@ Let’s unpick the second example; `2:4` generates the sequence `2,3,4`. This ge
 month.name[c(2,3,4)]
 ```
 
-Vector numbering in R starts at 1
-In many programming languages (C and python, for example), the first element of a vector has an index of 0. In R, the first element is 1.
+```{marginfigure}
+In many programming languages (C and Python, for example), the first element of a vector has an index of `0`. In R, the first element is always `1`.
+```
 
 
 Values are returned in the order that we specify the indices. We can extract the same element more than once:
@@ -415,6 +454,7 @@ month.name[c(1,1,2,3,4)]
 ```
 
 This raises an interesting point; how do we test if a value is NA? This doesn’t work:
+
 `x <- NA`
 `x == NA`
 
@@ -422,12 +462,15 @@ This raises an interesting point; how do we test if a value is NA? This doesn’
 # Handling special values
 There are a number of special functions you can use to handle missing data, and other special values:
 
+`is.na` will return all positions in a vector, matrix, or `data.frame` containing `NA`.
 
-is.na will return all positions in a vector, matrix, or data.frame containing NA.
-likewise, is.nan, and is.infinite will do the same for NaN and Inf.
-is.finite will return all positions in a vector, matrix, or data.frame that do not contain NA, NaN or Inf.
-na.omit will filter out all missing values from a vector
-Skipping and removing elements
+`is.nan`, and `is.infinite` will do the same for `NaN` and `Inf`.
+
+`is.finite` will return all positions in a vector, matrix, or data.frame that do not contain `NA`, `NaN` or `Inf`.
+
+`na.omit` will filter out all missing values from a vector
+
+# Skipping and removing elements
 If we use a negative number as the index of a vector, R will return every element except for the one specified:
 
 ```{r}
@@ -446,9 +489,6 @@ month.name[c(-1, -5)]  # or
 month.name[-c(1,5)]
 ```
 
-
-# R’s results prompt
-We saw that R returns results prefixed with a [1]. This is the index of the first element of the results vector on that line of results. This is useful if we’re returning vectors that are too long to fit on a single row.
 
 ### Tip: Order of operations
 A common error occurs when trying to skip slices of a vector. Most people first try to negate a sequence like so:
@@ -540,15 +580,6 @@ We see that R has coerced the elements containing digits to strings, so that all
 
 
 
-- Go to RStudio Cloud and into the course workspace. Create a **New Project from Git Repo**. You will need to click on the down arrow next to the **New Project** button to see this option.
-
-```{r paste-gh-repo-url, fig.margin = TRUE, echo = FALSE, fig.width=5}
-knitr::include_graphics("img/01-hello-r/paste-gh-repo-url.png")
-```
-
-- Copy and paste the URL of your assignment repo into the dialog box:
-
-- Hit OK, and you're good to go!
 
 # Packages
 
@@ -584,7 +615,7 @@ Before we introduce the data, let's warm up with some simple exercises. The foll
 Currently your project is called *Untitled Project*. Update the name of your project to be "Lab 01 - Hello R".
 
 ```{r untitled-project, fig.fullwidth=TRUE, echo = FALSE}
-knitr::include_graphics("img/01-hello-r/untitled-project.png")
+knitr::include_graphics("img/01-intro-r/untitled-project.png")
 ```
 
 # Data

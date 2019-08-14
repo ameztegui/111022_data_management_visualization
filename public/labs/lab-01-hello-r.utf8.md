@@ -9,14 +9,7 @@ output:
 link-citations: yes
 ---
 
-```{r include=FALSE}
-library(tidyverse)
-library(datasauRus)
-options(
-  htmltools.dir.version = FALSE, # for blogdown
-  show.signif.stars = FALSE     # for regression output
-  )
-```
+
 
 **Due:** 2018-01-25 at noon
 
@@ -35,9 +28,7 @@ If you are using your own computer, please ensure you have the latest version of
 
 [Download and install RStudio here](Download and install RStudio here)
 
-```{marginfigure}
-Remember that R is the name of the programming language itself and RStudio is the most convenient interface.
-```
+<label for="tufte-mn-" class="margin-toggle">&#8853;</label><input type="checkbox" id="tufte-mn-" class="margin-toggle"><span class="marginnote"><span style="display: block;">Remember that R is the name of the programming language itself and RStudio is the most convenient interface.</span></span>
 
 **The University machines already have suitable versions of R and RStudio installed.**
 
@@ -55,9 +46,7 @@ When you first open RStudio, you will be greeted by three panels:
 - Environment/History (tabbed in upper right)
 - Files/Plots/Packages/Help/Viewer (tabbed in lower right)
 
-```{r clone-repo-link, echo = FALSE, fig.width=3}
-knitr::include_graphics("img/01-hello-r/01-rstudio.png")
-```
+<img src="img/01-hello-r/01-rstudio.png" width="1279"  />
 
 
 # Introduction to R
@@ -68,8 +57,13 @@ The first thing you will see in the R interactive session is a bunch of informat
 ## Using R as a calculator
 The simplest thing you could do with R is do arithmetic:
 
-```{r}
+
+```r
 1 + 100
+```
+
+```
+## [1] 101
 ```
 
 And R will print out the answer, with a preceding [1]. Don’t worry about this for now, we’ll explain that later. For now think of it as indicating output.
@@ -91,23 +85,51 @@ Multiply: `*`
 Add: `+`
 Subtract: `-`
 
-```{r}
-3 + 5 * 2
 
+```r
+3 + 5 * 2
+```
+
+```
+## [1] 13
 ```
 Use parentheses to group operations in order to force the order of evaluation if it differs from the default, or to make clear what you intend.
 
-```{r}
+
+```r
 (3 + 5) * 2
+```
+
+```
+## [1] 16
 ```
 
 This can get unwieldy when not needed, but clarifies your intentions. Remember that 
 others may later read your code.
 
-```{r}
+
+```r
 (3 + (5 * (2 ^ 2))) # hard to read
+```
+
+```
+## [1] 23
+```
+
+```r
 3 + 5 * 2 ^ 2       # clear, if you remember the rules
+```
+
+```
+## [1] 23
+```
+
+```r
 3 + 5 * (2 ^ 2)     # if you forget some rules, this might help
+```
+
+```
+## [1] 23
 ```
 
 The text after each line of code is called a “comment”. Anything that follows after the hash symbol # is ignored by R when it executes code.
@@ -183,9 +205,7 @@ You may find that you need to click the “refresh” icon in RStudio’s file w
 
 Your project structure should look like this:
 
-```{r project, echo = FALSE, fig.width=3}
-knitr::include_graphics("img/01-hello-r/01-rstudio.png")
-```
+<img src="img/01-hello-r/01-rstudio.png" width="1279"  />
 
 The data directory should looks like this:
 
@@ -206,14 +226,37 @@ Select Set as current working directory
 # Mathematical functions
 R has many built in mathematical functions. To call a function, we simply type its name, followed by open and closing parentheses. Anything we type inside the parentheses are called the function’s arguments:
 
-```{r}
+
+```r
 sin(1)  # trigonometry functions
+```
 
+```
+## [1] 0.841471
+```
+
+```r
 log(1)  # natural logarithm
+```
 
+```
+## [1] 0
+```
+
+```r
 log10(10) # base-10 logarithm
+```
 
+```
+## [1] 1
+```
+
+```r
 exp(0.5) # e^(1/2)
+```
+
+```
+## [1] 1.648721
 ```
 
 # Remembering function names and arguments
@@ -227,13 +270,53 @@ Typing a ? before the name of a command will open the help page for that command
 
 We can also do comparison in R:
 
-```{r}
+
+```r
 1 == 1  # equality (note two equals signs, read as "is equal to")
+```
+
+```
+## [1] TRUE
+```
+
+```r
 1 != 2  # inequality (read as "is not equal to")
+```
+
+```
+## [1] TRUE
+```
+
+```r
 1 < 2  # less than
+```
+
+```
+## [1] TRUE
+```
+
+```r
 1 <= 1  # less than or equal to
+```
+
+```
+## [1] TRUE
+```
+
+```r
 1 > 0  # greater than
+```
+
+```
+## [1] TRUE
+```
+
+```r
 1 >= -9 # greater than or equal to
+```
+
+```
+## [1] TRUE
 ```
 
 Tip: Comparing Numbers
@@ -248,35 +331,46 @@ Further reading: http://floating-point-gui.de/
 # Variables and assignment
 We can store values in variables using the assignment operator `<-`, like this:
 
-```{r}
+
+```r
 x <- 1/40
 ```
 
 Notice that assignment does not print a value. Instead, we stored it for later in something called a variable. x now contains the value 0.025:
 
-```{r}
+
+```r
 x
+```
+
+```
+## [1] 0.025
 ```
 More precisely, the stored value is a decimal approximation of this fraction called a floating point number.
 
 Look for the Environment tab in one of the panes of RStudio, and you will see that x and its value have appeared. Our variable x can be used in place of a number in any calculation that expects a number:
 
-```{r}
+
+```r
 log(x)
 ```
 
-Notice also that variables can be reassigned:
-```{r}
-x <- 100
+```
+## [1] -3.688879
+```
 
+Notice also that variables can be reassigned:
+
+```r
+x <- 100
 ```
 x used to contain the value 0.025 and and now it has the value 100.
 
 
 Assignment values can contain the variable being assigned to:
-```{r}
-x <- x + 1 #notice how RStudio updates its description of x on the top right tab
 
+```r
+x <- x + 1 #notice how RStudio updates its description of x on the top right tab
 ```
 
 The right hand side of the assignment can be any valid R expression. The right hand side is fully evaluated before the assignment occurs.
@@ -296,7 +390,8 @@ Variables that start with a `.` are hidden variables. These will not appear in t
 
 It is also possible to use the = operator for assignment:
 
-```{r}
+
+```r
 x = 1/40
 ```
 
@@ -304,7 +399,8 @@ But this is much less common among R users. It is a good idea to be consistent w
 
 We aren’t limited to storing numbers in variables:
 
-```{r}
+
+```r
 sentence <- "the cat sat on the mat"
 ```
 
@@ -312,9 +408,13 @@ Note that we need to put strings of characters inside quotes.
 
 But the type of data that is stored in a variable affects what we can do with it:
 
-```{r}
-x + 1
 
+```r
+x + 1
+```
+
+```
+## [1] 1.025
 ```
 
 `sentence + 1`
@@ -326,48 +426,125 @@ We will discuss the important concept of data types in the next episode.
 As well as dealing with single values, we can work with vectors of values.
 There are various ways of creating vectors; the : operator will generate sequences of consecutive values:
 
-```{r}
+
+```r
 1:5
+```
 
+```
+## [1] 1 2 3 4 5
+```
+
+```r
 -3:3
+```
 
+```
+## [1] -3 -2 -1  0  1  2  3
+```
+
+```r
 5:1
+```
+
+```
+## [1] 5 4 3 2 1
 ```
 
 The result of the : operator is a vector; this is a 1 dimensional array of values. We can apply functions to all the elements of a vector:
 
-```{r}
+
+```r
 (1:5) * 2
+```
+
+```
+## [1]  2  4  6  8 10
+```
+
+```r
 2^(1:5)
+```
+
+```
+## [1]  2  4  8 16 32
 ```
 
 We can assign a vector to a variable:
 
-```{r}
+
+```r
 x <- 5:10
 ```
 
 We can also create vectors “by hand” using the c() function; this tersely named function is used to combine values into a vector; these values can, themselves, be vectors:
 
-```{r}
+
+```r
 c(2, 4, -1)
+```
+
+```
+## [1]  2  4 -1
+```
+
+```r
 c(x, 2, 2, 3)
+```
+
+```
+## [1]  5  6  7  8  9 10  2  2  3
 ```
 
 
 Vectors aren’t limited to storing numbers:
 
-```{r}
+
+```r
 c("a", "b", "c", "def")
 ```
 
-R comes with a few built in constants, containing useful values:
-```{r}
+```
+## [1] "a"   "b"   "c"   "def"
+```
 
+R comes with a few built in constants, containing useful values:
+
+```r
 LETTERS
+```
+
+```
+##  [1] "A" "B" "C" "D" "E" "F" "G" "H" "I" "J" "K" "L" "M" "N" "O" "P" "Q"
+## [18] "R" "S" "T" "U" "V" "W" "X" "Y" "Z"
+```
+
+```r
 letters
+```
+
+```
+##  [1] "a" "b" "c" "d" "e" "f" "g" "h" "i" "j" "k" "l" "m" "n" "o" "p" "q"
+## [18] "r" "s" "t" "u" "v" "w" "x" "y" "z"
+```
+
+```r
 month.abb
+```
+
+```
+##  [1] "Jan" "Feb" "Mar" "Apr" "May" "Jun" "Jul" "Aug" "Sep" "Oct" "Nov"
+## [12] "Dec"
+```
+
+```r
 month.name
+```
+
+```
+##  [1] "January"   "February"  "March"     "April"     "May"      
+##  [6] "June"      "July"      "August"    "September" "October"  
+## [11] "November"  "December"
 ```
 
 We will use some of these in the examples that follow.
@@ -375,23 +552,52 @@ We will use some of these in the examples that follow.
 # Vector lengths
 
 We can calculate how many elements a vector contains using the length() function:
-```{r}
+
+```r
 length(x)
+```
+
+```
+## [1] 6
+```
+
+```r
 length(letters)
+```
+
+```
+## [1] 26
 ```
 
 # Subsetting vectors
 Having defined a vector, it’s often useful to extract parts of a vector. We do this with the [] operator. Using the built in month.name vector:
 
-```{r}
+
+```r
 month.name[2]
+```
+
+```
+## [1] "February"
+```
+
+```r
 month.name[2:4]
+```
+
+```
+## [1] "February" "March"    "April"
 ```
 
 Let’s unpick the second example; `2:4` generates the sequence `2,3,4`. This gets passed to the extract operator `[]`. We can also generate this sequence using the `c()` function:
 
-```{r}
+
+```r
 month.name[c(2,3,4)]
+```
+
+```
+## [1] "February" "March"    "April"
 ```
 
 Vector numbering in R starts at 1
@@ -400,18 +606,33 @@ In many programming languages (C and python, for example), the first element of 
 
 Values are returned in the order that we specify the indices. We can extract the same element more than once:
 
-```{r}
 
+```r
 month.name[4:2]
+```
+
+```
+## [1] "April"    "March"    "February"
+```
+
+```r
 month.name[c(1,1,2,3,4)]
+```
+
+```
+## [1] "January"  "January"  "February" "March"    "April"
 ```
 
 # Missing data
 `NA` is a special value, that is used to represent “not available”, or “missing”. If we perform computations which include `NA`, the result is usually `NA`:
 
-```{r}
-1 + NA
 
+```r
+1 + NA
+```
+
+```
+## [1] NA
 ```
 
 This raises an interesting point; how do we test if a value is NA? This doesn’t work:
@@ -430,9 +651,15 @@ na.omit will filter out all missing values from a vector
 Skipping and removing elements
 If we use a negative number as the index of a vector, R will return every element except for the one specified:
 
-```{r}
-month.name[-2]
 
+```r
+month.name[-2]
+```
+
+```
+##  [1] "January"   "March"     "April"     "May"       "June"     
+##  [6] "July"      "August"    "September" "October"   "November" 
+## [11] "December"
 ```
 
  [1] "January"   "March"     "April"     "May"       "June"     
@@ -441,9 +668,23 @@ month.name[-2]
 
 We can skip multiple elements:
 
-```{r}
+
+```r
 month.name[c(-1, -5)]  # or 
+```
+
+```
+##  [1] "February"  "March"     "April"     "June"      "July"     
+##  [6] "August"    "September" "October"   "November"  "December"
+```
+
+```r
 month.name[-c(1,5)]
+```
+
+```
+##  [1] "February"  "March"     "April"     "June"      "July"     
+##  [6] "August"    "September" "October"   "November"  "December"
 ```
 
 
@@ -473,42 +714,68 @@ month.name[-(1:3)]
 # Subsetting with logical vectors
 As well as providing a list of indices we want to keep (or delete, if we prefix them with -), we can pass a logical vector to R indicating the indices we wish to select:
 
-```{r}
 
+```r
 fourmonths <- month.name[1:4]
 fourmonths
 ```
 
-```{r}
-fourmonths[c(TRUE, FALSE, TRUE, TRUE)]
+```
+## [1] "January"  "February" "March"    "April"
+```
 
+
+```r
+fourmonths[c(TRUE, FALSE, TRUE, TRUE)]
+```
+
+```
+## [1] "January" "March"   "April"
 ```
 
 What happens if we supply a logical vector that is shorter than the vector we’re extracting the elements from?
 
-```{r}
+
+```r
 fourmonths[c(TRUE,FALSE)]
+```
+
+```
+## [1] "January" "March"
 ```
 
 This illustrates the idea of vector recycling; the `[]` extract operator “recycles” the subsetting vector:
 
-```{r}
+
+```r
 fourmonths[c(TRUE,FALSE,TRUE,FALSE)]
+```
+
+```
+## [1] "January" "March"
 ```
 
 This can be useful, but can easily catch you out.
 
 The idea of selecting elements of a vector using a logical subsetting vector may seem a bit esoteric, and a lot more typing than just selecting the elements you want by index. It becomes really useful when we write code to generate the logical vector:
 
-```{r}
+
+```r
 my_vector <- c(0.01, 0.69, 0.51, 0.39)
 my_vector > 0.5
-
 ```
 
-```{r}
-my_vector[my_vector > 0.5]
+```
+## [1] FALSE  TRUE  TRUE FALSE
+```
 
+
+```r
+my_vector[my_vector > 0.5]
+```
+
+```
+## [1] 0.69 0.51
 ```
 
 Tip: Combining logical conditions
@@ -527,9 +794,13 @@ Additionally, you can compare the elements within a single vector using the all 
 # Data types
 One thing you may have noticed is that all the data in a vector has been the same type; all the elements have had the same type (i.e. they have all been numbers, all been character, or all been logical (TRUE/FALSE)). This is an important property of vectors; the type of data the vector holds is a property of the vector, not of each element. Let’s look at what happens if we try to create a vector of numeric and character data:
 
-```{r}
-c(1, 2, "three", "four", 5)
 
+```r
+c(1, 2, "three", "four", 5)
+```
+
+```
+## [1] "1"     "2"     "three" "four"  "5"
 ```
 We see that R has coerced the elements containing digits to strings, so that all the elements have the same type. We will talk more about data types in a later episode.
 
@@ -542,9 +813,13 @@ We see that R has coerced the elements containing digits to strings, so that all
 
 - Go to RStudio Cloud and into the course workspace. Create a **New Project from Git Repo**. You will need to click on the down arrow next to the **New Project** button to see this option.
 
-```{r paste-gh-repo-url, fig.margin = TRUE, echo = FALSE, fig.width=5}
-knitr::include_graphics("img/01-hello-r/paste-gh-repo-url.png")
-```
+<p><span class="marginnote shownote">
+<!--
+<div class="figure">-->
+<img src="img/01-hello-r/paste-gh-repo-url.png" alt=" " width="500"  />
+<!--
+<p class="caption marginnote">--> <!--</p>-->
+<!--</div>--></span></p>
 
 - Copy and paste the URL of your assignment repo into the dialog box:
 
@@ -556,7 +831,8 @@ In this lab we will work with two packages: `datasauRus` which contains the data
 
 Install these packages by running the following in the console.
 
-```{r eval = FALSE}
+
+```r
 install.packages("tidyverse")
 install.packages("datasauRus")
 ```
@@ -565,7 +841,8 @@ Now that the necessary packages are installed, you should be able to Knit your d
 
 If you'd like to run your code in the Console as well you'll also need to load the packages there. To do so, run the following in the console. 
 
-```{r eval = FALSE}
+
+```r
 library(tidyverse) 
 library(datasauRus)
 ```
@@ -583,9 +860,10 @@ Before we introduce the data, let's warm up with some simple exercises. The foll
 
 Currently your project is called *Untitled Project*. Update the name of your project to be "Lab 01 - Hello R".
 
-```{r untitled-project, fig.fullwidth=TRUE, echo = FALSE}
-knitr::include_graphics("img/01-hello-r/untitled-project.png")
-```
+<div class="figure fullwidth">
+<img src="img/01-hello-r/untitled-project.png" alt=" " width="493"  />
+<p class="caption marginnote shownote"> </p>
+</div>
 
 # Data
 
@@ -597,15 +875,33 @@ To find out more about the dataset, type the following in your Console: `?datasa
 
 Let's take a look at what these datasets are. To do so we can make a *frequency table* of the dataset variable:
 
-```{r}
+
+```r
 datasaurus_dozen %>%
   count(dataset) %>%
   print(13)
 ```
 
-```{marginfigure}
-Matejka, Justin, and George Fitzmaurice. "Same stats, different graphs: Generating datasets with varied appearance and identical statistics through simulated annealing." Proceedings of the 2017 CHI Conference on Human Factors in Computing Systems. ACM, 2017.
 ```
+## # A tibble: 13 x 2
+##    dataset        n
+##    <chr>      <int>
+##  1 away         142
+##  2 bullseye     142
+##  3 circle       142
+##  4 dino         142
+##  5 dots         142
+##  6 h_lines      142
+##  7 high_lines   142
+##  8 slant_down   142
+##  9 slant_up     142
+## 10 star         142
+## 11 v_lines      142
+## 12 wide_lines   142
+## 13 x_shape      142
+```
+
+<label for="tufte-mn-" class="margin-toggle">&#8853;</label><input type="checkbox" id="tufte-mn-" class="margin-toggle"><span class="marginnote"><span style="display: block;">Matejka, Justin, and George Fitzmaurice. &quot;Same stats, different graphs: Generating datasets with varied appearance and identical statistics through simulated annealing.&quot; Proceedings of the 2017 CHI Conference on Human Factors in Computing Systems. ACM, 2017.</span></span>
 
 The original Datasaurus (`dino`) was created by Alberto Cairo in [this great blog post](http://www.thefunctionalart.com/2016/08/download-datasaurus-never-trust-summary.html). The other Dozen were generated using simulated annealing and the process is described in the paper *Same Stats, Different Graphs: Generating Datasets with Varied Appearance and Identical Statistics* through Simulated Annealing by Justin Matejka and George Fitzmaurice. In the paper, the authors simulate a variety of datasets that the same summary statistics to the Datasaurus but have very different distributions.
 
@@ -617,7 +913,8 @@ Below is the code you will need to complete this exercise. Basically, the answer
 
 Start with the `datasaurus_dozen` and pipe it into the `filter` function to filter for observations where `dataset == "dino"`. Store the resulting filtered data frame as a new data frame called `dino_data`.
 
-```{r}
+
+```r
 dino_data <- datasaurus_dozen %>%
   filter(dataset == "dino")
 ```
@@ -630,10 +927,16 @@ Second, the assignment operator: `<-`, assigns the name `dino_data` to the filte
 
 Next, we need to visualize these data. We will use the `ggplot` function for this. Its first argument is the data you're visualizing. Next we define the `aes`thetic mappings. In other words, the columns of the data that get mapped to certain aesthetic features of the plot, e.g. the `x` axis will represent the variable called `x` and the `y` axis will represent the variable called `y`. Then, we add another layer to this plot where we define which `geom`etric shapes we want to use to represent each observation in the data. In this case we want these to be points,m hence `geom_point`.
 
-```{r fig.fullwidth=TRUE}
+
+```r
 ggplot(data = dino_data, mapping = aes(x = x, y = y)) +
   geom_point()
 ```
+
+<div class="figure fullwidth">
+<img src="lab-01-hello-r_files/figure-html/unnamed-chunk-42-1.png" alt=" " width="672"  />
+<p class="caption marginnote shownote"> </p>
+</div>
 
 If this seems like a lot, it is. And you will learn about the philosophy of building data visualizations in layer in detail next week. For now, follow along with the code that is provided.
 
@@ -641,13 +944,19 @@ For the second part of this exercises, we need to calculate a summary statistic:
 
 But, for illustrative purposes, let's calculate correlation coefficient between `x` and `y`.
 
-```{marginfigure}
-Start with `dino_data` and calculate a summary statistic that we will call `r` as the `cor`relation between `x` and `y`.
-```
+<label for="tufte-mn-" class="margin-toggle">&#8853;</label><input type="checkbox" id="tufte-mn-" class="margin-toggle"><span class="marginnote"><span style="display: block;">Start with <code>dino_data</code> and calculate a summary statistic that we will call <code>r</code> as the <code>cor</code>relation between <code>x</code> and <code>y</code>.</span></span>
 
-```{r}
+
+```r
 dino_data %>%
   summarize(r = cor(x, y))
+```
+
+```
+## # A tibble: 1 x 1
+##         r
+##     <dbl>
+## 1 -0.0645
 ```
 
 
