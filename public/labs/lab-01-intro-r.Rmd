@@ -212,39 +212,59 @@ Notice that assignment does not print a value. Instead, we stored it for later i
 x
 ```
 
-The interesting thing is that our variable `x` can now be used in place of a number in any calculation that expects a number:
+
+
+> **Tip: assignment** </br>
+It is also possible to use the `=` operator for assignment, as in: `x = 1/40`. This is much less common among R users, and we will see later why it is not a good idea to use it. If you use it, try to change your habits as soon as possible.
+
+
+
+The interesting thing is that our variable `x` is now stored in memory, and so it can now be used in place of a number in any calculation that expects a number:
 
 ```{r}
 x + 3
 log(x)
 ```
 
-Variables can be reassigned:
+Variables can be reassigned as amny times as wished, but that means that is previous value will be deleted from memory:
 ```{r}
 x <- 100
 ```
 
-`x` used to contain the value `0.1` and and now it has the value `100`.
+`x` used to contain the value `0.1` and and now it has the value `100` (see the `Environment` tab in RStudio).
 
-Assignment values can contain the variable being assigned to, and in this case they will overwrite it.
+Assignment values can contain the variable being assigned to, and in this case they will take the currently stored value, calculate whatever is contained in the code, and overwrite the previous value with the new one.
 
 ```{r}
 
-x <- x *2 # notice how RStudio updates its description of x on the top right tab
+x <- x *2 # notice how RStudio updates its description of x on the Environment tab
 
 ```
 
 > **Warning:** </br>
-Although the possibility of overwriting a variable by assigning it a new value is one of the most useful features in R, it comes with  danger. When performing complex tasks, It is **extremely easy** to overwrite a variable inadvertently, and all our calculations from that moment onwards run the risk of being erroneous. 
-For example, if you run the copde above twice insted of once, `x` will get a value of `400` instead of `200`. **Always** check the current value of a variable (in the "Environment" panel) before overwriting it.
+Although the possibility of overwriting a variable as a result of an operation is one of the most useful features in R, it comes with danger. When performing complex tasks, It is **extremely easy** to overwrite a variable inadvertently, and all our calculations from that moment onwards run the risk of being erroneous. 
+For example, if you run the code above twice insted of once, `x` will get a value of `400` instead of `200`. If you do this without noticing it, `x`won't have the value you expect it to have. Also, if you make a mistake in the code above and R returns an error message, that means you won't have overwritten the value of `x`, which will sill be `100`. </br> So, **ALWAYS** check the current value of a variable (in the "Environment" panel) before transofrming or overwritting it.
 
-> **Tip: assignment** </br>
-It is also possible to use the `=` operator for assignment, as in: `x = 1/40`. This is much less common among R users, and we will see later why it is not a good idea to use it. If you do use it already, try to change your habits as soon as possible.
 
 
 # Objects in R
 
-Anytime we assign a variable and store it in R's memory, we are actually creating an `object`. If you look for the `Environment` tab in one of the panes of RStudio, you will see that `x` and its value have appeared. We have previously mentioned that R is an object-oriented language. This basically means that it is designed to use objects as the basis of all the tasks. 
+Anytime we assign a variable and store it in R's memory, we are actually creating an `object`. If you look for the `Environment` tab in one of the panes of RStudio, you will see that `x` and its value have appeared, and are updated as we transform `x`with our code. 
+
+Casi todo son objetos. 
+Los objetos mas sencillos son variables, pero hay otros como funciones, modelos, figuras. Recordar que R es object oriented.
+
+Para crear un objeto basta con asignarle un nombre. Hemos vistro como crear objetos sencillos (variables) que continene un numero o el resultado de una operacion aritmentica sencilla. Pero casi cialquier cosa puede giardarse en R como un objeto.
+
+Los objetos se caracterizan por nombre y contenido, u eso depende del tipo de objeto que hayamos creado. Por ejemplo podemos hacer
+
+ejemplo numerico
+ejemplo texto
+ejemplo 
+
+Todos ellos son objetos, son variables, pero de diferente tipo. Veamos algunos de los principales tipos de objetos que hay en r
+
+We have previously mentioned that R is an object-oriented language. This basically means that it is designed to use objects as the basis of all the tasks. 
 Almost  everything in R is an object (functions, variables, results …). Thus, entities that are created and manipulated in R are called objects, including data, functions and other structures.
 
 Objects are stored and characterized by their name and content. Any object we create will have a given set of characteristics depending on the type of object it is. The main objects of variable type in R are:
@@ -291,6 +311,29 @@ Some considerations to keep in mind when creating objects or working with R in g
 - The function ls() will show us in the terminal the objects created so far.
 - If the value obtained from an instruction is not assigned in an object it is only displayed in the terminal, it is not stored.
 
+
+# Saving our commands: Scripts in R
+
+So far we have inserted instructions directly in the console but this is not the most efficient way to work. 99% of the time you should be using the Source rather than the Console, that is, you will write your commands into a script. A script is nothing more than a file that contains an ordered set of instructions. This means we can write a text file with the instructions we want to insert and then run them at once.The advantage of this is straightforward: if you type code into the console, it won’t be saved (though you can look back on your command History). And if you make a mistake in typing code into the console, you’d have to re-type everything all over again. Instead, if you write all your code in the Source, it will be available at any time needed, and if you need to rerun some analyses you just need to open the needed files and run all the code within.
+
+We can create a new script by choosing the menu item: `File, New File, R script`, or with the keyboard shortcut <kbd>Ctrl</kbd> + <kbd>Shift</kbd> + <kbd>N</kbd>. Script files are text files, that can be opened by any text editor. By convention they have the extension `.R`.
+ 
+> **Tip: ** </br>
+you should get used as fast as possible to write most of your code in a document in the Source. Only type directly into the Console to do quick analyses.
+
+Commands within a script won’t be excuted immediately, just when you ask for it. To execute the command in which the cursor is currently you need to press `Ctrl`+`Enter`. Note that the cursor does not have to be at the start of the command, and that the command can extend over more than one line.
+However, if a single line does make a complete command, R will just execute one command. After executing one command, the cursor will automatically jump to the next command, making it very efficient to run large pieces of code by just pressing `Ctrl`+`Enter` several times. 
+
+To get a better control of the piece of code you want to execute, you can select it and press `Ctrl`+`Enter`, and R will execute the selection.
+
+To run all of the code in the script, press `Ctrl+Shift+Enter`.
+
+> **Tip: Projects in R studio** </br>
+When we are performing an analysis we will typically be using many files… input data, files containing code to perform the analysis, and results. By creating a project in Rstudio we make it easier to manage these files. We'll learn more about RStudio projects and how to use them to easen the workflow in later lessons.
+
+
+
+
 ## Vectors
 One of the most common objects in R is the vector. A vector can store several values, which must necessarily be of the same type (all numbers, all text, and so forth). There are several ways to create vectors. Try entering the following instructions and viewing the created objects:
 
@@ -330,133 +373,7 @@ v3 <- -5:3
 v3
 ```
 
-Vectors, lists, arrays, and dataframes are indexed objects. This means that they store several values and assign to each of them a numerical index that indicates their position within the object. We can access the information stored in each of the positions by using `name[position]`:
-
-```{r}
-v1[1]
-
-```
-
-Note that opposite to most of the other programming languages, the index for the first position in an indexed object is 1, whereas Python, C++ and others use 0.
-
-As with an unindexed object, it is possible to modify the information of a particular position using the combination `name[position]` and the assignment operator `<-`. For example:
-
-```{r}
-v3[9] <- 10000
-v3[9]
-```
-
-## Lists
-
-Once we have seen vectors we go to explore how objects of type list work. A list is an object similar to a vector with the difference that lists allow to store values of different type. Lists are created using the list(value1, value2, ...) function. For example:
-
-```{r}
-list1 <- list(1,7,'Marcos')
-list1
-```
-
-
-To access the values stored in the different positions proceed in the same way we did with vectors, ie name[position]:
-
-```{r}
-list1[3]
-
-```
-
-We can use the `length()` function with list too:
-
-```{r}
-length(list1)
-```
-
-
-## Arrays
-Arrays are an extension of vectors, which add additional dimensions to store information. The most common case is the 2-dimensional matrix (rows and columns). To create an array, we use array(values, dimensions). Both values and dimensions are specified using vectors. In the following example we see how to create a matrix with 4 rows and 5 columns, thus containing 20 values, in this case correlative numbers from 1 to 20:
-
-```{r}
-myarray<- array(1:20,dim=c(4,5))
-myarray
-```
-
-
-To access the stored values we will use a combination of row-and-column positions like matrix[row, col], where row indicates the row postition and col the column one. If we only assign value to one of the coordinates ([row,] or [,col]) we get the vector corresponding to the specified row or column.
-
-```{r}
-myarray[3,2]
-myarray[3,]
-myarray[,2]
-```
-
-
-## Data.frame
-A data frame is used for storing data tables. It is a list of vectors of equal length. For example, the following variable df is a data frame containing three vectors n, s, b.
-
-```{r}
-n <- c(2, 3, 5) 
-s <- c("aa", "bb", "cc") 
-b <- c(TRUE, FALSE, TRUE) 
-df <- data.frame(n, s, b)
-```
-
-
-As you can see, the function data.frame() is used to create the data.frame. However, we will seldom use these function to create objects or store data. Normally, we will call an instruction to read text files containing data or call data objects available in some packages.
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-We've seen how to assign numbers to variables, but we aren’t limited to store numbers in variables:
-
-```{r}
-y <- "I like Lleida"
-```
-
-Note that we need to put strings of characters inside quotes. Otherwise R will thing that i is an object, and will return an error
-
-`y <- I like Lleida`
-
-Logically, the type of data that is stored in a variable affects what we can do with it:
-
-```{r}
-x + 1
-```
-
-`sentence + 1`
-
-`Error in sentence + 1: non-numeric argument to binary operator`
-We will discuss the importance of data types below.
-
-# Saving our commands: Scripts in R
-
-So far we have inserted instructions directly in the console but this is not the most efficient way to work. 99% of the time you should be using the Source rather than the Console, that is, you will write your commands into a script. A script is nothing more than a file that contains an ordered set of instructions. This means we can write a text file with the instructions we want to insert and then run them at once.The advantage of this is straightforward: if you type code into the console, it won’t be saved (though you can look back on your command History). And if you make a mistake in typing code into the console, you’d have to re-type everything all over again. Instead, if you write all your code in the Source, it will be available at any time needed, and if you need to rerun some analyses you just need to open the needed files and run all the code within.
-
-We can create a new script by choosing the menu item: `File, New File, R script`, or with the keyboard shortcut <kbd>Ctrl</kbd> + <kbd>Shift</kbd> + <kbd>N</kbd>. Script files are text files, that can be opened by any text editor. By convention they have the extension `.R`.
- 
-> **Tip: ** </br>
-you should get used as fast as possible to write most of your code in a document in the Source. Only type directly into the Console to do quick analyses.
-
-Commands within a script won’t be excuted immediately, just when you ask for it. To execute the command in which the cursor is currently you need to press `Ctrl`+`Enter`. Note that the cursor does not have to be at the start of the command, and that the command can extend over more than one line.
-However, if a single line does make a complete command, R will just execute one command. After executing one command, the cursor will automatically jump to the next command, making it very efficient to run large pieces of code by just pressing `Ctrl`+`Enter` several times. 
-
-To get a better control of the piece of code you want to execute, you can select it and press `Ctrl`+`Enter`, and R will execute the selection.
-
-To run all of the code in the script, press `Ctrl+Shift+Enter`.
-
-> **Tip: Projects in R studio** </br>
-When we are performing an analysis we will typically be using many files… input data, files containing code to perform the analysis, and results. By creating a project in Rstudio we make it easier to manage these files. We'll learn more about RStudio projects and how to use them to easen the workflow in later lessons.
-
-
-# Vectorization
+## Working with vectors
 As well as dealing with single values, we can work with vectors of values.
 There are various ways of creating vectors; the `:` operator will generate sequences of consecutive values:
 
@@ -505,7 +422,19 @@ month.name
 
 We will use some of these in the examples that follow.
 
-## Vector lengths
+
+# Data types
+One thing you may have noticed is that all the data in a vector has been the same type; all the elements have had the same type (i.e. they have all been numbers, all been character, or all been logical (TRUE/FALSE)). This is an important property of vectors; the type of data the vector holds is a property of the vector, not of each element. Let’s look at what happens if we try to create a vector of numeric and character data:
+
+```{r}
+c(1, 2, "three", "four", 5)
+
+```
+We see that R has coerced the elements containing digits to strings, so that all the elements have the same type. We will talk more about data types in a later episode.
+
+
+
+### Vector lengths
 
 We can calculate how many elements a vector contains using the length() function:
 ```{r}
@@ -513,7 +442,7 @@ length(x)
 length(letters)
 ```
 
-## Subsetting vectors
+### Subsetting vectors
 Having defined a vector, it’s often useful to extract parts of a vector. We do this with the `[]` operator. Using the built in `month.name` vector:
 
 ```{r}
@@ -541,7 +470,7 @@ month.name[c(1,1,2,3,4)]
 
 
 
-# Skipping and removing elements
+### Skipping and removing elements
 If we use a negative number as the index of a vector, R will return every element except for the one specified:
 
 ```{r}
@@ -574,7 +503,7 @@ The correct solution is to wrap that function call in brackets, so that the - op
 month.name[-(1:3)]
 ```
 
-# Subsetting with logical vectors
+### Subsetting with logical vectors
 As well as providing a list of indices we want to keep (or delete, if we prefix them with `-`), we can pass a logical vector to R indicating the indices we wish to select:
 
 ```{r}
@@ -608,14 +537,123 @@ There are many situations in which you will wish to combine multiple logical cri
 Additionally, you can compare the elements within a single vector using the `all` function (which returns `TRUE` if every element of the vector is `TRUE`) and the `any` function (which returns `TRUE` if one or more elements of the vector are `TRUE`).
 
 
-# Data types
-One thing you may have noticed is that all the data in a vector has been the same type; all the elements have had the same type (i.e. they have all been numbers, all been character, or all been logical (TRUE/FALSE)). This is an important property of vectors; the type of data the vector holds is a property of the vector, not of each element. Let’s look at what happens if we try to create a vector of numeric and character data:
+
+
+
+
+
+
+
+
+
+Vectors, lists, arrays, and dataframes are indexed objects. This means that they store several values and assign to each of them a numerical index that indicates their position within the object. We can access the information stored in each of the positions by using `name[position]`:
 
 ```{r}
-c(1, 2, "three", "four", 5)
+v1[1]
 
 ```
-We see that R has coerced the elements containing digits to strings, so that all the elements have the same type. We will talk more about data types in a later episode.
+
+Note that opposite to most of the other programming languages, the index for the first position in an indexed object is 1, whereas Python, C++ and others use 0.
+
+As with an unindexed object, it is possible to modify the information of a particular position using the combination `name[position]` and the assignment operator `<-`. For example:
+
+```{r}
+v3[9] <- 10000
+v3[9]
+```
+
+
+## Lists
+
+Once we have seen vectors we go to explore how objects of type list work. A list is an object similar to a vector with the difference that lists allow to store values of different type. Lists are created using the list(value1, value2, ...) function. For example:
+
+```{r}
+list1 <- list(1,7,'Marcos')
+list1
+```
+
+
+To access the values stored in the different positions proceed in the same way we did with vectors, ie name[position]:
+
+```{r}
+list1[3]
+
+```
+
+We can use the `length()` function with list too:
+
+```{r}
+length(list1)
+```
+
+
+## Arrays
+Arrays are an extension of vectors, which add additional dimensions to store information. The most common case is the 2-dimensional matrix (rows and columns). To create an array, we use array(values, dimensions). Both values and dimensions are specified using vectors. In the following example we see how to create a matrix with 4 rows and 5 columns, thus containing 20 values, in this case correlative numbers from 1 to 20:
+
+```{r}
+myarray<- array(1:20,dim=c(4,5))
+myarray
+```
+
+
+To access the stored values we will use a combination of row-and-column positions like matrix[row, col], where row indicates the row postition and col the column one. If we only assign value to one of the coordinates ([row,] or [,col]) we get the vector corresponding to the specified row or column.
+
+```{r}
+myarray[3,2]
+myarray[3,]
+myarray[,2]
+```
+
+
+
+## Data.frame
+A data frame is used for storing data tables. It is a list of vectors of equal length. For example, the following variable df is a data frame containing three vectors n, s, b.
+
+```{r}
+n <- c(2, 3, 5) 
+s <- c("aa", "bb", "cc") 
+b <- c(TRUE, FALSE, TRUE) 
+df <- data.frame(n, s, b)
+```
+
+
+As you can see, the function data.frame() is used to create the data.frame. However, we will seldom use these function to create objects or store data. Normally, we will call an instruction to read text files containing data or call data objects available in some packages.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+We've seen how to assign numbers to variables, but we aren’t limited to store numbers in variables:
+
+```{r}
+y <- "I like Lleida"
+```
+
+Note that we need to put strings of characters inside quotes. Otherwise R will thing that i is an object, and will return an error
+
+`y <- I like Lleida`
+
+Logically, the type of data that is stored in a variable affects what we can do with it:
+
+```{r}
+x + 1
+```
+
+`sentence + 1`
+
+`Error in sentence + 1: non-numeric argument to binary operator`
+We will discuss the importance of data types below.
+
+
 
 
 
