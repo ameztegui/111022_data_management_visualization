@@ -6,12 +6,14 @@ output:
     highlight: pygments
     number_sections: true
     css: lab.css
+runtime: shiny_prerendered
 ---
 
 
 ```{r knitr_init, echo=FALSE, cache=FALSE}
 
 library(knitr)
+library(learnr)
 
 ## Global options
 options(max.print="75")
@@ -160,6 +162,11 @@ You may have noticed that part of the text above has not been processed by R. Ac
 
 ## Mathematical functions
 R has many built in mathematical functions. To call a function, we simply type its name, followed by open and closing parentheses. Anything we type inside the parentheses are called the function’s arguments:
+
+```{r addition, exercise=TRUE}
+1 + 1
+```
+
 
 ```{r}
 
