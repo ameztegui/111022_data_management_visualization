@@ -212,6 +212,13 @@ Notice that assignment does not print a value. Instead, we stored it for later i
 x
 ```
 
+
+
+> **Tip: assignment** </br>
+It is also possible to use the `=` operator for assignment, as in: `x = 1/40`. This is much less common among R users, and we will see later why it is not a good idea to use it. If you do use it already, try to change your habits as soon as possible.
+
+
+
 The interesting thing is that our variable `x` can now be used in place of a number in any calculation that expects a number:
 
 ```{r}
@@ -238,8 +245,6 @@ x <- x *2 # notice how RStudio updates its description of x on the top right tab
 Although the possibility of overwriting a variable by assigning it a new value is one of the most useful features in R, it comes with  danger. When performing complex tasks, It is **extremely easy** to overwrite a variable inadvertently, and all our calculations from that moment onwards run the risk of being erroneous. 
 For example, if you run the copde above twice insted of once, `x` will get a value of `400` instead of `200`. **Always** check the current value of a variable (in the "Environment" panel) before overwriting it.
 
-> **Tip: assignment** </br>
-It is also possible to use the `=` operator for assignment, as in: `x = 1/40`. This is much less common among R users, and we will see later why it is not a good idea to use it. If you do use it already, try to change your habits as soon as possible.
 
 
 # Objects in R
@@ -291,7 +296,30 @@ Some considerations to keep in mind when creating objects or working with R in g
 - The function ls() will show us in the terminal the objects created so far.
 - If the value obtained from an instruction is not assigned in an object it is only displayed in the terminal, it is not stored.
 
-## Vectors
+
+# Saving our commands: Scripts in R
+
+So far we have inserted instructions directly in the console but this is not the most efficient way to work. 99% of the time you should be using the Source rather than the Console, that is, you will write your commands into a script. A script is nothing more than a file that contains an ordered set of instructions. This means we can write a text file with the instructions we want to insert and then run them at once.The advantage of this is straightforward: if you type code into the console, it won’t be saved (though you can look back on your command History). And if you make a mistake in typing code into the console, you’d have to re-type everything all over again. Instead, if you write all your code in the Source, it will be available at any time needed, and if you need to rerun some analyses you just need to open the needed files and run all the code within.
+
+We can create a new script by choosing the menu item: `File, New File, R script`, or with the keyboard shortcut <kbd>Ctrl</kbd> + <kbd>Shift</kbd> + <kbd>N</kbd>. Script files are text files, that can be opened by any text editor. By convention they have the extension `.R`.
+ 
+> **Tip: ** </br>
+you should get used as fast as possible to write most of your code in a document in the Source. Only type directly into the Console to do quick analyses.
+
+Commands within a script won’t be excuted immediately, just when you ask for it. To execute the command in which the cursor is currently you need to press `Ctrl`+`Enter`. Note that the cursor does not have to be at the start of the command, and that the command can extend over more than one line.
+However, if a single line does make a complete command, R will just execute one command. After executing one command, the cursor will automatically jump to the next command, making it very efficient to run large pieces of code by just pressing `Ctrl`+`Enter` several times. 
+
+To get a better control of the piece of code you want to execute, you can select it and press `Ctrl`+`Enter`, and R will execute the selection.
+
+To run all of the code in the script, press `Ctrl+Shift+Enter`.
+
+> **Tip: Projects in R studio** </br>
+When we are performing an analysis we will typically be using many files… input data, files containing code to perform the analysis, and results. By creating a project in Rstudio we make it easier to manage these files. We'll learn more about RStudio projects and how to use them to easen the workflow in later lessons.
+
+
+
+
+# Vectors
 One of the most common objects in R is the vector. A vector can store several values, which must necessarily be of the same type (all numbers, all text, and so forth). There are several ways to create vectors. Try entering the following instructions and viewing the created objects:
 
 ```{r}
@@ -329,6 +357,167 @@ v2
 v3 <- -5:3
 v3
 ```
+
+# Working with vectors
+As well as dealing with single values, we can work with vectors of values.
+There are various ways of creating vectors; the `:` operator will generate sequences of consecutive values:
+
+```{r}
+1:5
+
+-3:3
+
+5:1
+```
+
+The result of the `:` operator is a vector: i.e. a 1 dimensional array of values. We can apply functions to each and all of the elements of a vector:
+
+```{r}
+(1:5) * 2
+2^(1:5)
+```
+
+We can also assign a vector to a variable:
+
+```{r}
+x <- 5:10
+```
+
+We can also create vectors “by hand” using the `c()` function; this function is used to combine values into a vector; these values can, themselves, be vectors:
+
+```{r}
+c(2, 4, -1)
+c(x, 2, 2, 3)
+```
+
+Vectors aren’t limited to storing numbers:
+
+```{r}
+c("a", "b", "c", "def")
+```
+
+R comes with a few built in constants, containing useful values:
+```{r}
+
+LETTERS
+letters
+month.abb
+month.name
+```
+
+We will use some of these in the examples that follow.
+
+## Vector lengths
+
+We can calculate how many elements a vector contains using the length() function:
+```{r}
+length(x)
+length(letters)
+```
+
+## Subsetting vectors
+Having defined a vector, it’s often useful to extract parts of a vector. We do this with the `[]` operator. Using the built in `month.name` vector:
+
+```{r}
+month.name[2]
+month.name[2:4]
+```
+
+Let’s unpick the second example; `2:4` generates the sequence `2,3,4`. This gets passed to the extract operator `[]`. We can also generate this sequence using the `c()` function:
+
+```{r}
+month.name[c(2,3,4)]
+```
+
+>**Tip:** </br>
+In many programming languages (C and Python, for example), the first element of a vector has an index of `0`. In R, the first element is always `1`.
+
+
+Values are returned in the order that we specify the indices. We can extract the same element more than once:
+
+```{r}
+
+month.name[4:2]
+month.name[c(1,1,2,3,4)]
+```
+
+
+
+## Skipping and removing elements
+If we use a negative number as the index of a vector, R will return every element except for the one specified:
+
+```{r}
+month.name[-2]
+
+```
+
+ [1] "January"   "March"     "April"     "May"       "June"     
+ [6] "July"      "August"    "September" "October"   "November" 
+[11] "December" 
+
+We can skip multiple elements:
+
+```{r}
+month.name[c(-1, -5)]  # or 
+month.name[-c(1,5)]
+```
+
+> **Tip: Order of operations** </br>
+A common error occurs when trying to skip slices of a vector. Most people first try to negate a sequence like so:
+`month.name[-1:3]`
+This gives a somewhat cryptic error:
+`Error in month.name[-1:3]: only 0's may be mixed with negative subscripts`
+But remember the order of operations. `:` is really a function, so what happens is it takes its first argument as -1, and second as 3, so generates the sequence of numbers: -1, 0, 1, 2, 3.
+
+The correct solution is to wrap that function call in brackets, so that the - operator is applied to the sequence:
+
+```{r}
+-(1:3)
+month.name[-(1:3)]
+```
+
+## Subsetting with logical vectors
+As well as providing a list of indices we want to keep (or delete, if we prefix them with `-`), we can pass a logical vector to R indicating the indices we wish to select:
+
+```{r}
+month.name[c(TRUE, FALSE, TRUE, TRUE, FALSE, FALSE,
+             FALSE, TRUE, TRUE, FALSE, FALSE, TRUE)]
+
+```
+
+The idea of selecting elements of a vector using a logical subsetting vector may seem a bit esoteric, and a lot more typing than just selecting the elements you want by index, but it becomes really useful when we write code to generate the logical vector:
+
+```{r}
+my_vector <- c(10, 3, 6, 7, 9)
+my_vector > 6
+
+```
+
+```{r}
+my_vector[my_vector > 6]
+
+```
+
+Tip: Combining logical conditions
+There are many situations in which you will wish to combine multiple logical criteria. For example, we might want to find all the elements that are between two values. Several operations for combining logical vectors exist in R:
+
+-`&`, the logical "AND” operator: returns `TRUE` if both the left and right are `TRUE`.
+
+-`|`, the logical "OR” operator: returns `TRUE`, if either the left or right (or both) are `TRUE`.
+
+-`!`, the logical "NOT” operator: converts `TRUE` to `FALSE` and `FALSE` to `TRUE`. It can negate a single logical condition (e.g. `!TRUE` becomes `FALSE`), or a whole vector of conditions(e.g. `!c(TRUE, FALSE)` becomes `c(FALSE, TRUE)`).
+
+Additionally, you can compare the elements within a single vector using the `all` function (which returns `TRUE` if every element of the vector is `TRUE`) and the `any` function (which returns `TRUE` if one or more elements of the vector are `TRUE`).
+
+
+
+
+
+
+
+
+
+
 
 Vectors, lists, arrays, and dataframes are indexed objects. This means that they store several values and assign to each of them a numerical index that indicates their position within the object. We can access the information stored in each of the positions by using `name[position]`:
 
@@ -436,176 +625,6 @@ x + 1
 `Error in sentence + 1: non-numeric argument to binary operator`
 We will discuss the importance of data types below.
 
-# Saving our commands: Scripts in R
-
-So far we have inserted instructions directly in the console but this is not the most efficient way to work. 99% of the time you should be using the Source rather than the Console, that is, you will write your commands into a script. A script is nothing more than a file that contains an ordered set of instructions. This means we can write a text file with the instructions we want to insert and then run them at once.The advantage of this is straightforward: if you type code into the console, it won’t be saved (though you can look back on your command History). And if you make a mistake in typing code into the console, you’d have to re-type everything all over again. Instead, if you write all your code in the Source, it will be available at any time needed, and if you need to rerun some analyses you just need to open the needed files and run all the code within.
-
-We can create a new script by choosing the menu item: `File, New File, R script`, or with the keyboard shortcut <kbd>Ctrl</kbd> + <kbd>Shift</kbd> + <kbd>N</kbd>. Script files are text files, that can be opened by any text editor. By convention they have the extension `.R`.
- 
-> **Tip: ** </br>
-you should get used as fast as possible to write most of your code in a document in the Source. Only type directly into the Console to do quick analyses.
-
-Commands within a script won’t be excuted immediately, just when you ask for it. To execute the command in which the cursor is currently you need to press `Ctrl`+`Enter`. Note that the cursor does not have to be at the start of the command, and that the command can extend over more than one line.
-However, if a single line does make a complete command, R will just execute one command. After executing one command, the cursor will automatically jump to the next command, making it very efficient to run large pieces of code by just pressing `Ctrl`+`Enter` several times. 
-
-To get a better control of the piece of code you want to execute, you can select it and press `Ctrl`+`Enter`, and R will execute the selection.
-
-To run all of the code in the script, press `Ctrl+Shift+Enter`.
-
-> **Tip: Projects in R studio** </br>
-When we are performing an analysis we will typically be using many files… input data, files containing code to perform the analysis, and results. By creating a project in Rstudio we make it easier to manage these files. We'll learn more about RStudio projects and how to use them to easen the workflow in later lessons.
-
-
-# Vectorization
-As well as dealing with single values, we can work with vectors of values.
-There are various ways of creating vectors; the `:` operator will generate sequences of consecutive values:
-
-```{r}
-1:5
-
--3:3
-
-5:1
-```
-
-The result of the `:` operator is a vector: i.e. a 1 dimensional array of values. We can apply functions to each and all of the elements of a vector:
-
-```{r}
-(1:5) * 2
-2^(1:5)
-```
-
-We can also assign a vector to a variable:
-
-```{r}
-x <- 5:10
-```
-
-We can also create vectors “by hand” using the `c()` function; this function is used to combine values into a vector; these values can, themselves, be vectors:
-
-```{r}
-c(2, 4, -1)
-c(x, 2, 2, 3)
-```
-
-Vectors aren’t limited to storing numbers:
-
-```{r}
-c("a", "b", "c", "def")
-```
-
-R comes with a few built in constants, containing useful values:
-```{r}
-
-LETTERS
-letters
-month.abb
-month.name
-```
-
-We will use some of these in the examples that follow.
-
-## Vector lengths
-
-We can calculate how many elements a vector contains using the length() function:
-```{r}
-length(x)
-length(letters)
-```
-
-## Subsetting vectors
-Having defined a vector, it’s often useful to extract parts of a vector. We do this with the `[]` operator. Using the built in `month.name` vector:
-
-```{r}
-month.name[2]
-month.name[2:4]
-```
-
-Let’s unpick the second example; `2:4` generates the sequence `2,3,4`. This gets passed to the extract operator `[]`. We can also generate this sequence using the `c()` function:
-
-```{r}
-month.name[c(2,3,4)]
-```
-
->**Tip:** </br>
-In many programming languages (C and Python, for example), the first element of a vector has an index of `0`. In R, the first element is always `1`.
-
-
-Values are returned in the order that we specify the indices. We can extract the same element more than once:
-
-```{r}
-
-month.name[4:2]
-month.name[c(1,1,2,3,4)]
-```
-
-
-
-# Skipping and removing elements
-If we use a negative number as the index of a vector, R will return every element except for the one specified:
-
-```{r}
-month.name[-2]
-
-```
-
- [1] "January"   "March"     "April"     "May"       "June"     
- [6] "July"      "August"    "September" "October"   "November" 
-[11] "December" 
-
-We can skip multiple elements:
-
-```{r}
-month.name[c(-1, -5)]  # or 
-month.name[-c(1,5)]
-```
-
-> **Tip: Order of operations** </br>
-A common error occurs when trying to skip slices of a vector. Most people first try to negate a sequence like so:
-`month.name[-1:3]`
-This gives a somewhat cryptic error:
-`Error in month.name[-1:3]: only 0's may be mixed with negative subscripts`
-But remember the order of operations. `:` is really a function, so what happens is it takes its first argument as -1, and second as 3, so generates the sequence of numbers: -1, 0, 1, 2, 3.
-
-The correct solution is to wrap that function call in brackets, so that the - operator is applied to the sequence:
-
-```{r}
--(1:3)
-month.name[-(1:3)]
-```
-
-# Subsetting with logical vectors
-As well as providing a list of indices we want to keep (or delete, if we prefix them with `-`), we can pass a logical vector to R indicating the indices we wish to select:
-
-```{r}
-month.name[c(TRUE, FALSE, TRUE, TRUE, FALSE, FALSE,
-             FALSE, TRUE, TRUE, FALSE, FALSE, TRUE)]
-
-```
-
-The idea of selecting elements of a vector using a logical subsetting vector may seem a bit esoteric, and a lot more typing than just selecting the elements you want by index, but it becomes really useful when we write code to generate the logical vector:
-
-```{r}
-my_vector <- c(10, 3, 6, 7, 9)
-my_vector > 6
-
-```
-
-```{r}
-my_vector[my_vector > 6]
-
-```
-
-Tip: Combining logical conditions
-There are many situations in which you will wish to combine multiple logical criteria. For example, we might want to find all the elements that are between two values. Several operations for combining logical vectors exist in R:
-
--`&`, the logical "AND” operator: returns `TRUE` if both the left and right are `TRUE`.
-
--`|`, the logical "OR” operator: returns `TRUE`, if either the left or right (or both) are `TRUE`.
-
--`!`, the logical "NOT” operator: converts `TRUE` to `FALSE` and `FALSE` to `TRUE`. It can negate a single logical condition (e.g. `!TRUE` becomes `FALSE`), or a whole vector of conditions(e.g. `!c(TRUE, FALSE)` becomes `c(FALSE, TRUE)`).
-
-Additionally, you can compare the elements within a single vector using the `all` function (which returns `TRUE` if every element of the vector is `TRUE`) and the `any` function (which returns `TRUE` if one or more elements of the vector are `TRUE`).
 
 
 # Data types
