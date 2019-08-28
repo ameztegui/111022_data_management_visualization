@@ -1,11 +1,11 @@
 ---
-title: "Welcome to Data Science"
+title: "Welcome to </br>Data Management </br>and Visualization with R"
 author: "Dr. Aitor Ameztegui"
-date: "2019-09-15"
+date: "`r Sys.Date()`"
 output:
   xaringan::moon_reader:
     css: "slides.css"
-    logo: img/sta199-logo-hex.png
+    logo: img/udl_logo.png
     lib_dir: libs
     nature:
       highlightStyle: github
@@ -41,41 +41,11 @@ library(tidyverse)
 library(rvest)
 ```
 
-class: center, middle
-
-# Hello world!
-
----
-
-## What is data science?
-
-- <i class="fa fa-database fa-10px"></i> + <i class="fa fa-flask fa-10px"></i> = data science?
-
---
-
-- <i class="fa fa-database fa-10px"></i> + <i class="fa fa-code fa-10px"></i> = data science?
-
---
-
-- <i class="fa fa-database fa-10px"></i> + <i class="fa fa-user fa-10px"></i> + <i class="fa fa-code fa-10px"></i> = data science?
-
---
-
-- <i class="fa fa-database fa-10px"></i> + <i class="fa fa-users fa-10px"></i> + <i class="fa fa-code fa-10px"></i> = data science?
-
---
-
-<br>
-
-Data science is an exciting discipline that allows you to turn raw data into understanding, insight, and knowledge. We're going to learn to do this in a `tidy` way -- more on that later!
-
----
-
 # Who are we?
 
 
-.pull-left[
- [Dr. Aitor Ameztegui](http://ameztegui.weebly.com/)<br>
+.pull-left[.bold[
+ [Dr. Aitor Ameztegui](http://ameztegui.weebly.com/)<br>]
 
 <i class="fa fa-envelope"></i> &nbsp; [aitor.ameztegui@eagrof.udl.cat](mailto:aitor.ameztegui@eagrof.udl.cat) <br>
 <i class="fa fa-university"></i> &nbsp; Building 4, Bureau 2.04.1 <br>
@@ -85,110 +55,167 @@ Data science is an exciting discipline that allows you to turn raw data into und
 &nbsp; &nbsp; &nbsp; upon request
 <br><br>]
 
-.pull-right[
-[Dr. Marcos Rodrigues](http://www.eagrof.udl.cat/es/personal/PDI/rodrigues.html) <br>
+.pull-right[.bold[
+[Dr. Marcos Rodrigues](http://www.eagrof.udl.cat/es/personal/PDI/rodrigues.html) <br>]
 
 <i class="fa fa-envelope"></i> &nbsp; [rmarcos@eagrof.udl.cat](mailto:rmarcos@eagrof.udl.cat) <br>
-<i class="fa fa-phone"></i> &nbsp; 973702546 <br> 
 <i class="fa fa-university"></i> &nbsp; Building 4, Bureau 2.05.1 <br>
+<i class="fa fa-phone"></i> &nbsp; 973702546 <br> 
 <i class="fa fa-calendar"></i> &nbsp; Mon 12:00 - 2:00 or <br>
 &nbsp; &nbsp; &nbsp; upon request
 <br><br>]
 
-<br><br>]
+---
 
+
+# What this course is about?
+
+- Everything you want to know about the course, and everything you will need for the course will be posted at [datamanagement.netlify.com/](https://datamanagement.netlify.com/)
+
+--
+
+This course is about: 
+
+- <i class="fa fa-code fa-10px"></i> Coding
+
+--
+
+- <i class="fa fa-database fa-10px"></i> Data management
+
+--
+
+- <i class="fa fa-bar-chart fa-10px"></i> Data visualization
+
+--
+
+- <i class="fa fa-flask fa-10px"></i> Modelling and statistics
+
+--
+
+- <i class="fa fa-users fa-10px"></i> Interpretation
+
+--
+
+-   <i class="fa fa-code fa-10px"></i> + 
+    <i class="fa fa-database fa-10px"></i> +
+    <i class="fa fa-bar-chart fa-10px"></i> +
+    <i class="fa fa-flask fa-10px"></i> +
+    <i class="fa fa-users fa-10px"></i> +
+    = Data Science!
+--
+
+<br>
+
+**Data science** is an exciting discipline that allows you to turn raw data into understanding, insight, and knowledge. We're going to learn to do this in a `tidy` way -- more on that later!
 
 
 ---
 
-# What is this course?
+# What this course is NOT about?
 
-Everything you want to know about the course, and everything you will need for the course will be posted at
 
-[bit.ly/sta199-s18](http://bit.ly/sta199-s18)
-
---
-
-- Will we be doing computing? Yes.
+- R
 
 --
 
-- Is this an intro CS course? No, but many themes are shared.
+- Statistics
 
 --
 
-- Is this an intro stat course? Yes, but it's not your high school statistics course.
+- Modelling
 
 --
 
-- What computing language will we learn? R.
-
---
-
-- Why not language X? We can discuss that over coffee
+- Big data
 
 
 ---
 
-class: center, middle
+# Why use R?
 
-# Data in the wild
+--
+
+- What's R?
+
+--
+
+- R is incredibly versatile
+
+--
+
+- R is a true “data language"
+
+--
+
+- R is multiplatform
+
+--
+
+- R is 100% free (in both senses)
+
+--
+
+- Analyses conducted in R are transparent, easily shareable, and reproducible
+
+--
+
+- R has a huge support community
 
 ---
+class: center, middle, inverse
 
-# A year as told by fitbit
 
-by Nick Strayer
+# Let'see some examples of data in the wild
+
+
+---
+# Example 1
+## A year as told by fitbit
+
+### by Nick Strayer
+
 
 http://livefreeordichotomize.com/2017/12/27/a-year-as-told-by-fitbit/
 
 ---
+# Example 2
 
-# R-Ladies global tour
+## R-Ladies global tour
 
-by Maelle Salmon
+### by Maelle Salmon
 
 http://www.masalmon.eu/2017/10/06/globalrladiestour/
 
 ---
 
-# Text analysis of Trump's tweets confirms he writes only the (angrier) Android half
+# Example 3
 
-by David Robinson (Stack Overflow)
+## Text analysis of Trump's tweets confirms he writes only the (angrier) Android half
+
+### by David Robinson (Stack Overflow)
 
 http://varianceexplained.org/r/trump-tweets/
 
 ---
 
-class: center, middle
+class: center, middle, inverse
 
 # Your turn!
 
----
-
-# Create a GitHub account
-
-Go to https://github.com/, and create an account (unless you already have one). Tips for selecting a username:<sup>1</sup>
-
-- Incorporate your actual name! People like to know who they’re dealing with. Also makes your username easier for people to guess or remember.
-- Reuse your username from other contexts if you can, e.g., Twitter or Slack.
-- Pick a username you will be comfortable revealing to your future boss.
-- Shorter is better than longer.
-- Be as unique as possible in as few characters as possible. In some settings GitHub auto-completes or suggests usernames.
-- Make it timeless. Don’t highlight your current university, employer, or place of residence.
-- Avoid words laden with special meaning in programming, like `NA`.
-
-.footnote[ [1] Source: [Happy git with R](http://happygitwithr.com/github-acct.html#username-advice) by Jenny Bryan.]
-
-<font color="#E34132">
-Once done, place a green sticky on your laptop. If you have questions, place a pink sticky.
-</font>
 
 ---
 
 # Join RStudio.cloud
 
-Go to [bit.ly/sta199-f18-rstudio-join](http://bit.ly/sta199-f18-rstudio-join), and log in with your GitHub credentials.
+- What's RStudio?
+
+--
+
+- And why RStudio Cloud?
+
+--
+
+Go to [shorturl.at/gitGM](shorturl.at/gitGM), and log in.
 
 <font color="#E34132">
 Once done, place a green sticky on your laptop. If you have questions, place a pink sticky.
@@ -197,10 +224,14 @@ Once done, place a green sticky on your laptop. If you have questions, place a p
 
 # Create your first data visualization
 
-- Once you log on to RStudio Cloud, click on this course's workspace "STA 199 - Spring 18"
-- You should see a project called UN Votes, fork it by clicking on the <i class="fa fa-fork"></i> icon. This will create your copy of the project and launch it.
-- In the Files pane in the bottom right corner, spot the file called `unvotes.Rmd`. Open it, and then click on the "Knit" button.
+- Once you log on to RStudio Cloud, click on this course's workspace "111022 Data Management and Visualization"
+
+- You should see a project called `SIBECOL twitter analysis`
+
+- In the Files pane in the bottom right corner, spot the file called `index.Rmd`. Open it, and then click on the "Knit" button.
+
 - Go back to the file and change your name on top (in the `yaml` -- we'll talk about what this means later) and knit again.
+
 - Then change the country names to those you're interested in. Your spelling and capitalization should match the data so take a peek at the Appendix to see how the country names are spelled. Knit again. And voila, your first data visualization!
 
 <font color="#E34132">
@@ -208,7 +239,7 @@ Once done, place a green sticky on your laptop. If you have questions, place a p
 </font>
 ---
 
-class: center, middle
+class: center, middle, inverse
 
 # Course structure and policies
 
@@ -218,30 +249,63 @@ class: center, middle
 
 - Interactive
 
-- Some lectures, lots of learn-by-doing
+- There will be some lectures, lots of learn-by-doing
 
 - Bring your laptop to class every day
 
----
-
-# Diversity & Inclusiveness:
-
-- Intent: Students from all diverse backgrounds and perspectives be well-served by this course, that students' learning needs be addressed both in and out of class, and that the diversity that the students bring to this class be viewed as a resource, strength and benefit. It is my intent to present materials and activities that are respectful of diversity: gender identity, sexuality, disability, age, socioeconomic status, ethnicity, race, nationality, religion, and culture. Let me know ways to improve the effectiveness of the course for you personally, or for other students or student groups.
-
-- If you have a name and/or set of pronouns that differ from those that appear in your official Duke records, please let me know!
-
-- If you feel like your performance in the class is being impacted by your experiences outside of class, please don't hesitate to come and talk with me. I want to be a resource for you. If you prefer to speak with someone outside of the course, your academic dean is an excellent resource. 
-
-- I (like many people) am still in the process of learning about diverse perspectives and identities. If something was said in class (by anyone) that made you feel uncomfortable, please talk to me about it.
 
 ---
 
-# How to get help
+---
 
-- Course content, logistics, etc. discussion via GitHub on the [Sta199-S18/community](https://github.com/Sta199-S18/community) repository. Note that this is a public discussion forum, which means others outside of the course can stumble upon it and help you as well.
-    - See course syllabus for tips on posting questions.
+# Course components:
 
-- For personal and grade related questions, use email.
+- Lectures: we will try to keep them short, but some "theory" will be needed
+
+- Labs: hands-on application of concepts and tools seen in class. 
+    - They're self paced tutorials with examples
+    - There will be some questions/exercises you will need to answer, by creating a "lab report" (we'll see how). Try to finish in class, but can continue later. Check/no check
+- Homework: Individual. You are expected to work at home (but can ask doubts of course!)
+- Exams: Individual, two take-home midterms
+- Final project: during the course eahc of you will design a data science project using your wn dataset (ideally for your master's thesis). You must present the results to your classmates. You must complete the final project and be in class to present it to pass this class.
+
+---
+
+# Grading
+
+Component             | Weight
+----------------------|----------------
+Participation & application exercises                   | 10%*
+Peer evaluation       | 5%
+Homework              | 20%
+Labs                  | 15%
+Midterm 1             | 17.5%
+Midterm 2             | 17.5%
+Final project         | 15%
+
+</br>
+- Class attendance is a firm expectation; frequent absences or tardiness 
+will be considered a legitimate cause for grade reduction.
+
+- Excused absences do not excuse you from assigned homework, it is your responsibility to make alternative arrangements to turn in any assignments in a timely fashion.
+
+---
+# Late/missed work policy
+
+- Late work policy for homework assignments:
+    - late, but within 48 hours of due date/time: -20%
+    - any later: no credit
+
+- If you cannot complete an assignment on the due date due to a short-term 
+illness, tell us in advance and we can arrange some extra time, then the regular late work policy kicks in.
+
+- Late work will not be accepted for take home midterms and the final project.
+
+- If you are faced with a personal or family emergency or a long-range or 
+chronic health condition that interferes with your ability to attend or 
+complete classes, please talk to us.
+
+- You must ABSOLUTELY complete the final project and be in class to present it in order to pass this course.
 
 ---
 
@@ -261,106 +325,39 @@ class: center, middle
 
 # Sharing/reusing code
 
-- I am well aware that a huge volume of code is available on the web to solve any number of problems.
-- Unless I explicitly tell you not to use something the course's policy is that you may make use of any online resources (e.g. StackOverflow) but you must explicitly cite where you obtained any code you directly use (or use as inspiration). 
+- We are aware that a huge volume of code is available on the web to solve any number of problems.
+
+- Unless we explicitly tell you not to use something, the course's policy is that you may make use of any online resources (e.g. StackOverflow) but you must explicitly cite where you obtained any code you directly use (or use as inspiration). 
+
 - Any recycled code that is discovered and is not explicitly cited will be treated as plagiarism. 
-- On individual assignments you may not directly share code with another student in this class, and on team assignments you may not directly share code with another team in this class. 
-- Except for the take home exams, you are welcome to discuss the problems together and ask for advice, but you may not send or make use of code from another team. 
+- Except for the take home exams, you are welcome to discuss the problems together and ask for advice, but you may not directly send or make use of code from another student in this class 
+
 - On the take home exams all communication with classmates is explicitly forbidden.
 
 ---
 
-# Course components:
+# Diversity & Inclusiveness:
 
-- Teams: 3-4 person teams, based on survey and pretest results, consistent throughout the semester
-- Application exercises: Usually start in class and finish in teams by the next class period, check/no check
-- Homework: Individual, lowest score dropped
-- Lab: Team, lowest score dropped
-- Exams: Individual, two take home midterms
-- Final project: Team, presentations during scheduled final exam time (last day of finals!), you must participate in the project and be in class to present to pass this class
-- Self paced tutorials: Individual, check/no check, extra credit
+- Intent: Students from all diverse backgrounds and perspectives be well-served by this course, that students' learning needs be addressed both in and out of class, and that the diversity that the students bring to this class be viewed as a resource, strength and benefit. It is my intent to present materials and activities that are respectful of diversity: gender identity, sexuality, disability, age, socioeconomic status, ethnicity, race, nationality, religion, and culture. Let me know ways to improve the effectiveness of the course for you personally, or for other students or student groups.
 
----
+- If you have a name and/or set of pronouns that differ from those that appear in your official UdL records, please let us know!
 
-# Grading
+- If you feel like your performance in the class is being impacted by your experiences outside of class, please don't hesitate to come and talk with any of us If you prefer to speak with someone outside of the course, the MSc coordinator is an excellent resource. 
 
-Component             | Weight
-----------------------|----------------
-Participation & application exercises       | 10%
-Peer evaluation       | 5%
-Homework              | 20%
-Labs                  | 15%
-Midterm 1             | 17.5%
-Midterm 2             | 17.5%
-Final project         | 15%
-
-- Class attendance is a firm expectation; frequent absences or tardiness 
-will be considered a legitimate cause for grade reduction.
-
-- Exact ranges for letter grades will be curved and cutoffs will be 
-determined after the final exam.
-
-- The more evidence there is that the class has mastered the material, the 
-more generous the curve will be.
+- We (like many people) are still in the process of learning about diverse perspectives and identities. If something was said in class (by anyone) that made you feel uncomfortable, please talk to us about it.
 
 ---
 
-# Excused absences
+# How to get help
 
-- Students who miss class due to a scheduled varsity trip, religious 
-holiday or short-term illness should fill out an online NOVAP, RHoliday or 
-short-term illness form respectively.
-    - Excused absences do not excuse you from assigned homework, it is your responsibility to make alternative arrangements to turn in any assignments in a timely fashion.
+MANY RESOURCES!!!
 
-- If you cannot complete an assignment on the due date due to a short-term 
-illness, you have until noon the following day to complete it at no 
-penalty, then the regular late work policy kicks in.
+- Course content, logistics, etc. discussion via GitHub on the [Sta199-S18/community](https://github.com/Sta199-S18/community) repository. Note that this is a public discussion forum, which means others outside of the course can stumble upon it and help you as well.
+    - See course syllabus for tips on posting questions.
 
-- If you are faced with a personal or family emergency or a long-range or 
-chronic health condition that interferes with your ability to attend or 
-complete classes, you should contact your academic dean’s office. See more 
-information on policies surrounding these conditions 
-at https://trinity.duke.edu/undergraduate/academic-policies/personal-emergencies. 
-Your academic dean can also provide more information.
+- For personal and grade related questions, use email.
 
 ---
+class: center, middle, inverse
 
-# Late/missed work policy
-
-- Late work policy for homework assignments:
-    - late, but within 24 hours of due date/time: -20%
-    - any later: no credit
-    
-- Late work will not be accepted for take home midterms and the final project.
-
-- Exam dates cannot be changed and no make-up exams will be given. If a midterm exam must be missed, absence must be officially excused in advance of the due date, in which case the missing exam score will be imputed using the final exam score. This policy only applies to the midterms.
-
-- You must complete the final project and be in class to present it in order to pass this course.
-
----
-
-# Other policies
-
-- Please refrain from texting or using your computer for anything other than coursework during class.
-
-- You must be in class on a day when you're scheduled to present, there are no make ups for presentations.
-
-- Regrade requests must be made within 3 days of when the assignment is returned, and must be submitted via the linked form on the course syllabus.
-
----
-
-class: center, middle
-
-# Save the date!
-
----
-
-# Some events on campus that might be of interest
-
-- **Data+ 2018 Project Fair**: January 16, Ahmadieh Atrium of Gross Hall (3rd Fl), 3-5pm
-- **DataFest!**: April 6 - Sunday April 8 (will announce when registration opens)
-- **Duke Data Vizualization Challenge:** Submissions due January 15, see https://rc.duke.edu/scholars-vis-challenge-2018/ for more info
-
-<br><br>
-
-<i>I'll announce more (either in class or via email) as more come up. If you hear of something interesting, let me know.</i>
+# Questions?
