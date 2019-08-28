@@ -1,6 +1,6 @@
 ---
 title: "Welcome to </br>Data Management </br>and Visualization with R"
-author: "Dr. Aitor Ameztegui"
+author: "Aitor Ameztegui"
 date: "`r Sys.Date()`"
 output:
   xaringan::moon_reader:
@@ -43,7 +43,6 @@ library(rvest)
 
 # Who are we?
 
-
 .pull-left[.bold[
  [Dr. Aitor Ameztegui](http://ameztegui.weebly.com/)<br>]
 
@@ -68,20 +67,18 @@ library(rvest)
 ---
 
 
-# What this course is about?
-
-- Everything you want to know about the course, and everything you will need for the course will be posted at [datamanagement.netlify.com/](https://datamanagement.netlify.com/)
+# What is this course about?
 
 --
 
-This course is about: 
+.font120[This course is about: ]
 
-- <i class="fa fa-code fa-10px"></i> Coding
-
---
 
 - <i class="fa fa-database fa-10px"></i> Data management
 
+--
+
+- <i class="fa fa-code fa-10px"></i> Coding
 --
 
 - <i class="fa fa-bar-chart fa-10px"></i> Data visualization
@@ -92,80 +89,126 @@ This course is about:
 
 --
 
-- <i class="fa fa-users fa-10px"></i> Interpretation
+- <i class="fa fa-user fa-10px"></i> Interpretation
 
 --
+- <i class="fa fa-users fa-10px"></i> Communication
 
--   <i class="fa fa-code fa-10px"></i> + 
-    <i class="fa fa-database fa-10px"></i> +
-    <i class="fa fa-bar-chart fa-10px"></i> +
-    <i class="fa fa-flask fa-10px"></i> +
-    <i class="fa fa-users fa-10px"></i> +
-    = Data Science!
+--
+</br></br>
+
+<i class="fa fa-code fa-10px"></i> + 
+<i class="fa fa-database fa-10px"></i> +
+<i class="fa fa-bar-chart fa-10px"></i> +
+<i class="fa fa-flask fa-10px"></i> +
+<i class="fa fa-user fa-10px"></i> +
+<i class="fa fa-users fa-10px"></i> 
+= .font130[.bold[Data Science!]]
 --
 
-<br>
+</br></br>
 
-**Data science** is an exciting discipline that allows you to turn raw data into understanding, insight, and knowledge. We're going to learn to do this in a `tidy` way -- more on that later!
+.center[.font110[**Data science** allows you to turn raw data into understanding, insight, and knowledge. We're going to learn to do this in a `tidy` way -- more on that later!]]
 
 
 ---
 
-# What this course is NOT about?
+# What is this course *NOT* about?
 
 
-- R
+.font120[This course is *NOT* about: ]
 
---
-
-- Statistics
+- <i class="fab fa-r-project fa-10px"></i> R language
 
 --
 
-- Modelling
+- <i class="fas fa-calculator"></i> Stats
 
 --
 
-- Big data
+- <i class="fas fa-subscript"></i> Modelling
+--
+
+- <i class="fa fa-database"></i>
+Big data
 
 
 ---
 
-# Why use R?
+# Our toolkit
+
+
+.pull-left[
+![](img/r_logo.jpeg)
+{{content}}
+]
 
 --
 
 - What's R?
+{{content}}
 
---
-
-- R is incredibly versatile
 
 --
 
 - R is a true “data language"
+{{content}}
+
+
+--
+
+- But very versatile
+{{content}}
+
 
 --
 
 - R is multiplatform
+{{content}}
+
 
 --
 
 - R is 100% free (in both senses)
+{{content}}
+
 
 --
 
 - Analyses conducted in R are transparent, easily shareable, and reproducible
+{{content}}
+
 
 --
 
 - R has a huge support community
 
+--
+
+.pull-right[</br>![](img/rstudio_logo.png)
+{{content}}
+]
+
+--
+
+- It is an integrated development environment (IDE). That means that any code block or instruction will work in any other R environment
+{{content}}
+
+--
+
+- RStudio is the most convenient IDE. It has a more user-friendly interface, and comes with many other useful tools:
+{{content}}
+--
+  - Autocomplete instructions
+  - Object management
+  - Data display and visualization.
+  - Exporting plots and figures.
+
 ---
 class: center, middle, inverse
 
 
-# Let'see some examples of data in the wild
+# Let's see some examples of data in the wild
 
 
 ---
@@ -252,39 +295,61 @@ class: center, middle, inverse
 - There will be some lectures, lots of learn-by-doing
 
 - Bring your laptop to class every day
-
-
----
+</br></br></br>
+.center[All the info, links and materials will be posted at [datamanagement.netlify.com/](https://datamanagement.netlify.com/)]
 
 ---
 
 # Course components:
 
-- Lectures: we will try to keep them short, but some "theory" will be needed
+- .bold[Lectures:] we will try to keep them short, but some "theory" will be needed
 
-- Labs: hands-on application of concepts and tools seen in class. 
+--
+
+- .bold[Labs:] hands-on application of concepts and tools seen in class. 
     - They're self paced tutorials with examples
     - There will be some questions/exercises you will need to answer, by creating a "lab report" (we'll see how). Try to finish in class, but can continue later. Check/no check
-- Homework: Individual. You are expected to work at home (but can ask doubts of course!)
-- Exams: Individual, two take-home midterms
-- Final project: during the course eahc of you will design a data science project using your wn dataset (ideally for your master's thesis). You must present the results to your classmates. You must complete the final project and be in class to present it to pass this class.
+
+--
+
+- .bold[Homework:] Individual. You are expected to work at home (but can ask doubts of course!)
+
+--
+
+- .bold[Exams:] Individual, two take-home midterms
+
+--
+
+- .bold[Final project:] during the course eahc of you will design a data science project using your wn dataset (ideally for your master's thesis). You must present the results to your classmates. You must complete the final project and be in class to present it to pass this class.
 
 ---
 
 # Grading
 
-Component             | Weight
-----------------------|----------------
-Participation & application exercises                   | 10%*
-Peer evaluation       | 5%
-Homework              | 20%
-Labs                  | 15%
-Midterm 1             | 17.5%
-Midterm 2             | 17.5%
-Final project         | 15%
+```{r echo=F}
+grading <- data.frame(Component = c("Participation & application exercises",
+                                    "Peer evaluation",
+                                    "Homework",
+                                    "Labs",
+                                    "Midterm 1",
+                                    "Midterm 2",
+                                    "Final project"),
+                      Weight = c("10%*",
+                                 "5%",
+                                 "20%",
+                                 "15%",
+                                 "17.5%",
+                                 "17.5%",
+                                 "15%"))
+
+library(knitr)
+kable(grading, format='html')
+```
+
+
 
 </br>
-- Class attendance is a firm expectation; frequent absences or tardiness 
+- *Class attendance is a firm expectation; frequent absences or tardiness 
 will be considered a legitimate cause for grade reduction.
 
 - Excused absences do not excuse you from assigned homework, it is your responsibility to make alternative arrangements to turn in any assignments in a timely fashion.
@@ -306,20 +371,6 @@ chronic health condition that interferes with your ability to attend or
 complete classes, please talk to us.
 
 - You must ABSOLUTELY complete the final project and be in class to present it in order to pass this course.
-
----
-
-# Academic integrity
-
-> To uphold the Duke Community Standard:
-
-> - I will not lie, cheat, or steal in my academic endeavors;
-> - I will conduct myself honorably in all my endeavors; and
-> - I will act if the Standard is compromised.
-
-- Only work that is clearly assigned as team work can be completed collaboratively.
-
-- Use of disallowed materials during the take home exam will not be tolerated.
 
 ---
 
@@ -350,12 +401,20 @@ complete classes, please talk to us.
 
 # How to get help
 
-MANY RESOURCES!!!
+- Course content, logistics, etc. are available at [datamanagement.netlify.com/](https://datamanagement.netlify.com/). 
 
-- Course content, logistics, etc. discussion via GitHub on the [Sta199-S18/community](https://github.com/Sta199-S18/community) repository. Note that this is a public discussion forum, which means others outside of the course can stumble upon it and help you as well.
-    - See course syllabus for tips on posting questions.
+- As we said, one of the best things about R is its community. Some highly recommended resources are:
 
-- For personal and grade related questions, use email.
+  - [R bloggers](http://www.r-bloggers.com/): A website dedicated to R development of tutorials.
+  - [StackOverflow](http://stackoverflow.com/): Website devoted to questions-and-answers on programming languages among which is R also available.
+  - [Datacamp](https://www.datacamp.com/search?q=&facets%5Btechnology%5D%5B%5D=R): Interactive data science tutorials covering many topics. Some are paid.
+  - [RStudio Online Learning](https://www.rstudio.com/online-learning/): A wealth of tutorials, articles, and examples developed by RStudio to help you learn R and its extensions.
+  - [R-Tutor](http://www.r-tutor.com/): A website devoted to teach statistics. An useful one if you are not much familiar with basic statistical methods.
+  
+It is relatively important to become familiar from the beginning with the various alternatives for getting help. A key part of your success in using R lies in your ability to be self-relient and be able to get help and apply it to your own problems.
+
+
+- For personal and grade related questions, contact us by email.
 
 ---
 class: center, middle, inverse

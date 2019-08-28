@@ -1,10 +1,10 @@
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<html>
   <head>
     <title>Welcome to Data Management and Visualization with R</title>
-    <meta charset="utf-8" />
-    <meta name="author" content="Dr. Aitor Ameztegui" />
-    <meta name="date" content="2019-08-28" />
+    <meta charset="utf-8">
+    <meta name="author" content="Aitor Ameztegui" />
+    <meta name="date" content="2019-08-29" />
     <link href="libs/font-awesome/css/all.css" rel="stylesheet" />
     <link href="libs/font-awesome/css/v4-shims.css" rel="stylesheet" />
     <link rel="stylesheet" href="slides.css" type="text/css" />
@@ -14,8 +14,8 @@
 class: center, middle, inverse, title-slide
 
 # Welcome to </br>Data Management </br>and Visualization with R
-### Dr. Aitor Ameztegui
-### 2019-08-28
+### Aitor Ameztegui
+### 2019-08-29
 
 ---
 
@@ -25,7 +25,6 @@ class: center, middle, inverse, title-slide
 
 
 # Who are we?
-
 
 .pull-left[.bold[
  [Dr. Aitor Ameztegui](http://ameztegui.weebly.com/)&lt;br&gt;]
@@ -51,20 +50,18 @@ class: center, middle, inverse, title-slide
 ---
 
 
-# What this course is about?
-
-- Everything you want to know about the course, and everything you will need for the course will be posted at [datamanagement.netlify.com/](https://datamanagement.netlify.com/)
+# What is this course about?
 
 --
 
-This course is about: 
+.font120[This course is about: ]
 
-- &lt;i class="fa fa-code fa-10px"&gt;&lt;/i&gt; Coding
-
---
 
 - &lt;i class="fa fa-database fa-10px"&gt;&lt;/i&gt; Data management
 
+--
+
+- &lt;i class="fa fa-code fa-10px"&gt;&lt;/i&gt; Coding
 --
 
 - &lt;i class="fa fa-bar-chart fa-10px"&gt;&lt;/i&gt; Data visualization
@@ -75,80 +72,126 @@ This course is about:
 
 --
 
-- &lt;i class="fa fa-users fa-10px"&gt;&lt;/i&gt; Interpretation
+- &lt;i class="fa fa-user fa-10px"&gt;&lt;/i&gt; Interpretation
 
 --
+- &lt;i class="fa fa-users fa-10px"&gt;&lt;/i&gt; Communication
 
--   &lt;i class="fa fa-code fa-10px"&gt;&lt;/i&gt; + 
-    &lt;i class="fa fa-database fa-10px"&gt;&lt;/i&gt; +
-    &lt;i class="fa fa-bar-chart fa-10px"&gt;&lt;/i&gt; +
-    &lt;i class="fa fa-flask fa-10px"&gt;&lt;/i&gt; +
-    &lt;i class="fa fa-users fa-10px"&gt;&lt;/i&gt; +
-    = Data Science!
+--
+&lt;/br&gt;&lt;/br&gt;
+
+&lt;i class="fa fa-code fa-10px"&gt;&lt;/i&gt; + 
+&lt;i class="fa fa-database fa-10px"&gt;&lt;/i&gt; +
+&lt;i class="fa fa-bar-chart fa-10px"&gt;&lt;/i&gt; +
+&lt;i class="fa fa-flask fa-10px"&gt;&lt;/i&gt; +
+&lt;i class="fa fa-user fa-10px"&gt;&lt;/i&gt; +
+&lt;i class="fa fa-users fa-10px"&gt;&lt;/i&gt; 
+= .font130[.bold[Data Science!]]
 --
 
-&lt;br&gt;
+&lt;/br&gt;&lt;/br&gt;
 
-**Data science** is an exciting discipline that allows you to turn raw data into understanding, insight, and knowledge. We're going to learn to do this in a `tidy` way -- more on that later!
+.center[.font110[**Data science** allows you to turn raw data into understanding, insight, and knowledge. We're going to learn to do this in a `tidy` way -- more on that later!]]
 
 
 ---
 
-# What this course is NOT about?
+# What is this course *NOT* about?
 
 
-- R
+.font120[This course is *NOT* about: ]
 
---
-
-- Statistics
+- &lt;i class="fab fa-r-project fa-10px"&gt;&lt;/i&gt; R language
 
 --
 
-- Modelling
+- &lt;i class="fas fa-calculator"&gt;&lt;/i&gt; Stats
 
 --
 
-- Big data
+- &lt;i class="fas fa-subscript"&gt;&lt;/i&gt; Modelling
+--
+
+- &lt;i class="fa fa-database"&gt;&lt;/i&gt;
+Big data
 
 
 ---
 
-# Why use R?
+# Our toolkit
+
+
+.pull-left[
+![](img/r_logo.jpeg)
+{{content}}
+]
 
 --
 
 - What's R?
+{{content}}
 
---
-
-- R is incredibly versatile
 
 --
 
 - R is a true “data language"
+{{content}}
+
+
+--
+
+- But very versatile
+{{content}}
+
 
 --
 
 - R is multiplatform
+{{content}}
+
 
 --
 
 - R is 100% free (in both senses)
+{{content}}
+
 
 --
 
 - Analyses conducted in R are transparent, easily shareable, and reproducible
+{{content}}
+
 
 --
 
 - R has a huge support community
 
+--
+
+.pull-right[&lt;/br&gt;![](img/rstudio_logo.png)
+{{content}}
+]
+
+--
+
+- It is an integrated development environment (IDE). That means that any code block or instruction will work in any other R environment
+{{content}}
+
+--
+
+- RStudio is the most convenient IDE. It has a more user-friendly interface, and comes with many other useful tools:
+{{content}}
+--
+  - Autocomplete instructions
+  - Object management
+  - Data display and visualization.
+  - Exporting plots and figures.
+
 ---
 class: center, middle, inverse
 
 
-# Let'see some examples of data in the wild
+# Let's see some examples of data in the wild
 
 
 ---
@@ -235,39 +278,80 @@ class: center, middle, inverse
 - There will be some lectures, lots of learn-by-doing
 
 - Bring your laptop to class every day
-
-
----
+&lt;/br&gt;&lt;/br&gt;&lt;/br&gt;
+.center[All the info, links and materials will be posted at [datamanagement.netlify.com/](https://datamanagement.netlify.com/)]
 
 ---
 
 # Course components:
 
-- Lectures: we will try to keep them short, but some "theory" will be needed
+- .bold[Lectures:] we will try to keep them short, but some "theory" will be needed
 
-- Labs: hands-on application of concepts and tools seen in class. 
+--
+
+- .bold[Labs:] hands-on application of concepts and tools seen in class. 
     - They're self paced tutorials with examples
     - There will be some questions/exercises you will need to answer, by creating a "lab report" (we'll see how). Try to finish in class, but can continue later. Check/no check
-- Homework: Individual. You are expected to work at home (but can ask doubts of course!)
-- Exams: Individual, two take-home midterms
-- Final project: during the course eahc of you will design a data science project using your wn dataset (ideally for your master's thesis). You must present the results to your classmates. You must complete the final project and be in class to present it to pass this class.
+
+--
+
+- .bold[Homework:] Individual. You are expected to work at home (but can ask doubts of course!)
+
+--
+
+- .bold[Exams:] Individual, two take-home midterms
+
+--
+
+- .bold[Final project:] during the course eahc of you will design a data science project using your wn dataset (ideally for your master's thesis). You must present the results to your classmates. You must complete the final project and be in class to present it to pass this class.
 
 ---
 
 # Grading
 
-Component             | Weight
-----------------------|----------------
-Participation &amp; application exercises                   | 10%*
-Peer evaluation       | 5%
-Homework              | 20%
-Labs                  | 15%
-Midterm 1             | 17.5%
-Midterm 2             | 17.5%
-Final project         | 15%
+&lt;table&gt;
+ &lt;thead&gt;
+  &lt;tr&gt;
+   &lt;th style="text-align:left;"&gt; Component &lt;/th&gt;
+   &lt;th style="text-align:left;"&gt; Weight &lt;/th&gt;
+  &lt;/tr&gt;
+ &lt;/thead&gt;
+&lt;tbody&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; Participation &amp;amp; application exercises &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 10%* &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; Peer evaluation &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 5% &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; Homework &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 20% &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; Labs &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 15% &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; Midterm 1 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 17.5% &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; Midterm 2 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 17.5% &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; Final project &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 15% &lt;/td&gt;
+  &lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+
+
 
 &lt;/br&gt;
-- Class attendance is a firm expectation; frequent absences or tardiness 
+- *Class attendance is a firm expectation; frequent absences or tardiness 
 will be considered a legitimate cause for grade reduction.
 
 - Excused absences do not excuse you from assigned homework, it is your responsibility to make alternative arrangements to turn in any assignments in a timely fashion.
@@ -289,20 +373,6 @@ chronic health condition that interferes with your ability to attend or
 complete classes, please talk to us.
 
 - You must ABSOLUTELY complete the final project and be in class to present it in order to pass this course.
-
----
-
-# Academic integrity
-
-&gt; To uphold the Duke Community Standard:
-
-&gt; - I will not lie, cheat, or steal in my academic endeavors;
-&gt; - I will conduct myself honorably in all my endeavors; and
-&gt; - I will act if the Standard is compromised.
-
-- Only work that is clearly assigned as team work can be completed collaboratively.
-
-- Use of disallowed materials during the take home exam will not be tolerated.
 
 ---
 
@@ -333,19 +403,26 @@ complete classes, please talk to us.
 
 # How to get help
 
-MANY RESOURCES!!!
+- Course content, logistics, etc. are available at [datamanagement.netlify.com/](https://datamanagement.netlify.com/). 
 
-- Course content, logistics, etc. discussion via GitHub on the [Sta199-S18/community](https://github.com/Sta199-S18/community) repository. Note that this is a public discussion forum, which means others outside of the course can stumble upon it and help you as well.
-    - See course syllabus for tips on posting questions.
+- As we said, one of the best things about R is its community. Some highly recommended resources are:
 
-- For personal and grade related questions, use email.
+  - [R bloggers](http://www.r-bloggers.com/): A website dedicated to R development of tutorials.
+  - [StackOverflow](http://stackoverflow.com/): Website devoted to questions-and-answers on programming languages among which is R also available.
+  - [Datacamp](https://www.datacamp.com/search?q=&amp;facets%5Btechnology%5D%5B%5D=R): Interactive data science tutorials covering many topics. Some are paid.
+  - [RStudio Online Learning](https://www.rstudio.com/online-learning/): A wealth of tutorials, articles, and examples developed by RStudio to help you learn R and its extensions.
+  - [R-Tutor](http://www.r-tutor.com/): A website devoted to teach statistics. An useful one if you are not much familiar with basic statistical methods.
+  
+It is relatively important to become familiar from the beginning with the various alternatives for getting help. A key part of your success in using R lies in your ability to be self-relient and be able to get help and apply it to your own problems.
+
+
+- For personal and grade related questions, contact us by email.
 
 ---
 class: center, middle, inverse
 
 # Questions?
     </textarea>
-<style data-target="print-only">@media screen {.remark-slide-container{display:block;}.remark-slide-scaler{box-shadow:none;}}</style>
 <script src="https://remarkjs.com/downloads/remark-latest.min.js"></script>
 <script>var slideshow = remark.create({
 "highlightStyle": "github",
@@ -355,57 +432,16 @@ class: center, middle, inverse
 if (window.HTMLWidgets) slideshow.on('afterShowSlide', function (slide) {
   window.dispatchEvent(new Event('resize'));
 });
-(function(d) {
-  var s = d.createElement("style"), r = d.querySelector(".remark-slide-scaler");
+(function() {
+  var d = document, s = d.createElement("style"), r = d.querySelector(".remark-slide-scaler");
   if (!r) return;
   s.type = "text/css"; s.innerHTML = "@page {size: " + r.style.width + " " + r.style.height +"; }";
   d.head.appendChild(s);
-})(document);
-
-(function(d) {
-  var el = d.getElementsByClassName("remark-slides-area");
-  if (!el) return;
-  var slide, slides = slideshow.getSlides(), els = el[0].children;
-  for (var i = 1; i < slides.length; i++) {
-    slide = slides[i];
-    if (slide.properties.continued === "true" || slide.properties.count === "false") {
-      els[i - 1].className += ' has-continuation';
-    }
-  }
-  var s = d.createElement("style");
-  s.type = "text/css"; s.innerHTML = "@media print { .has-continuation { display: none; } }";
-  d.head.appendChild(s);
-})(document);
-// delete the temporary CSS (for displaying all slides initially) when the user
-// starts to view slides
-(function() {
-  var deleted = false;
-  slideshow.on('beforeShowSlide', function(slide) {
-    if (deleted) return;
-    var sheets = document.styleSheets, node;
-    for (var i = 0; i < sheets.length; i++) {
-      node = sheets[i].ownerNode;
-      if (node.dataset["target"] !== "print-only") continue;
-      node.parentNode.removeChild(node);
-    }
-    deleted = true;
-  });
 })();</script>
 
 <script>
 (function() {
-  var links = document.getElementsByTagName('a');
-  for (var i = 0; i < links.length; i++) {
-    if (/^(https?:)?\/\//.test(links[i].getAttribute('href'))) {
-      links[i].target = '_blank';
-    }
-  }
-})();
-</script>
-
-<script>
-slideshow._releaseMath = function(el) {
-  var i, text, code, codes = el.getElementsByTagName('code');
+  var i, text, code, codes = document.getElementsByTagName('code');
   for (i = 0; i < codes.length;) {
     code = codes[i];
     if (code.parentNode.tagName !== 'PRE' && code.childElementCount === 0) {
@@ -419,8 +455,7 @@ slideshow._releaseMath = function(el) {
     }
     i++;
   }
-};
-slideshow._releaseMath(document);
+})();
 </script>
 <!-- dynamically load mathjax for compatibility with self-contained -->
 <script>
