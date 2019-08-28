@@ -6,6 +6,11 @@ body {
 }
 
 
+a {
+   text-decoration: none;
+   color: #729ACF;
+}
+
 .remark-code, .remark-inline-code {
   font-family: 'Fira Code', 'Lucida Console', Monaco, monospace;
   font-size: 80%;
@@ -27,6 +32,8 @@ body {
 
 .title-slide .inverse .remark-slide-content {
   background-color: #FAFAFA;
+    vertical-align: middle;
+
 }
 
 .inverse {
@@ -114,14 +121,15 @@ body {
   background-image: url("resources/images/hex_stickers.png");
   background-position: right center;
   background-size:cover;
+  vertical-align: middle;
 }
 
 .title-slide > h1  {
   color: #FAFAFA;
-  font-size: 40px;
+  font-size: 45px;
   text-shadow: none;
-  font-weight: 400;
-  text-align: left;
+  font-weight: 600;
+  text-align: center;
   margin-left: 15px;
   padding-top: 140px;
 }
@@ -131,8 +139,8 @@ body {
   color: #FAFAFA;
   text-shadow: none;
   font-weight: 300;
-  font-size: 35px;
-  text-align: left;
+  font-size: 40px;
+  text-align: center;
   margin-left: 15px;
   margin-bottom: 60px;
 }
@@ -140,10 +148,12 @@ body {
   color: #FAFAFA;
   text-shadow: none;
   font-weight: 300;
-  font-size: 20px;
-  text-align: left;
+  font-size: 35px;
+  text-align: center;
   margin-left: 15px;
-  margin-bottom: -30px;
+  margin-bottom: -50px;
+  padding-top: 20px;
+
 }
 
 .title-slide > h4  {
