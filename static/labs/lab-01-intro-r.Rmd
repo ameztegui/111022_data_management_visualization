@@ -67,7 +67,7 @@ When you first open RStudio, you will be greeted by three panels:
 - Files/Plots/Packages/Help/Viewer (tabbed in lower right)
 
 ```{r rstudio, echo = FALSE, fig.cap="Basic layout of RStudio"}
-knitr::include_graphics("img/01-intro-r/01_rstudio.png")
+knitr::include_graphics("images/01-intro-r/01_rstudio.png")
 ```
 
 ### Console

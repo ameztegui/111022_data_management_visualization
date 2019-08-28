@@ -9,7 +9,7 @@
 <meta name="generator" content="pandoc" />
 
 
-<meta name="date" content="2019-08-27" />
+<meta name="date" content="2019-08-28" />
 
 <title>Lab 01 - Intro to R and RStudio</title>
 
@@ -140,7 +140,7 @@ $(document).ready(function () {
 <li>Files/Plots/Packages/Help/Viewer (tabbed in lower right)</li>
 </ul>
 <div class="figure">
-<img src="img/01-intro-r/01_rstudio.png" alt="Basic layout of RStudio" width="1279" />
+<img src="images/01-intro-r/01_rstudio.png" alt="Basic layout of RStudio" width="1279" />
 <p class="caption">
 Basic layout of RStudio
 </p>
@@ -551,14 +551,14 @@ df &lt;-<span class="st"> </span><span class="kw">data.frame</span>(n, s, b)</co
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">rm</span>(n)
 <span class="kw">gc</span>()</code></pre></div>
 <pre><code>          used (Mb) gc trigger  (Mb) max used  (Mb)
-Ncells  986941 52.8    2054234 109.8  2054234 109.8
-Vcells 1721104 13.2    8388608  64.0  6042661  46.2</code></pre>
+Ncells  974659 52.1    2060697 110.1  2060697 110.1
+Vcells 1695214 13.0    8388608  64.0  6123374  46.8</code></pre>
 <p>If we want to removal al the objects we have currently in our working session we can pass a list object containing the names of all objects to the gc() function. If you are thinking on combining gc()and ls()you are right. This would be the way:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">rm</span>(<span class="dt">list=</span><span class="kw">ls</span>())
 <span class="kw">gc</span>()</code></pre></div>
 <pre><code>          used (Mb) gc trigger  (Mb) max used  (Mb)
-Ncells  986829 52.8    2054234 109.8  2054234 109.8
-Vcells 1720926 13.2    8388608  64.0  6042661  46.2</code></pre>
+Ncells  974577 52.1    2060697 110.1  2060697 110.1
+Vcells 1695078 13.0    8388608  64.0  6123374  46.8</code></pre>
 </div>
 <div id="section-functions-and-arguments" class="section level1">
 <h1><span class="header-section-number">9</span> Functions and arguments</h1>
@@ -609,7 +609,7 @@ output$`tutorial-exercise-addition-output` <- renderUI({
 </div>
 
 <div id="postamble" data-toggle="wy-nav-shift" class="status">
-<p class="date"><span class="glyphicon glyphicon-calendar"></span> 2019-08-27</p>
+<p class="date"><span class="glyphicon glyphicon-calendar"></span> 2019-08-28</p>
 </div>
 
 
