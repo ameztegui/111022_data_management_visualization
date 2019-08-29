@@ -1,6 +1,5 @@
 lessons:
-  - date: "tbd"
-    title: "Welcome. Course organization and warm-up"
+  - title: "Welcome. Course organization and warm-up"
     slides: "lec-slides/00-welcome.html"
   - date: "tbd"
     title: "Lab 01: Introduction to R and RStudio"
