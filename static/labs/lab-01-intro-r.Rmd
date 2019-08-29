@@ -40,27 +40,30 @@ options(
 ```
 
 
-# Introduction
+# Introduction. Goal
 
 The main goal of this lab is to introduce you to R and RStudio, the software that we will be using throughout the course to collect data, prepare and transform it, and to produce high quality visualizations and charts that allow us to come to informed conclusions. 
 
-We will assume you don't have any previous experience with either R or RStudio, so in this lab we will cover the very basics, starting from the installation of the software and the first steps. If you do know some R, you may find some of the topics quite basic, and you are free to jump to wherever you wish within the document. Note however, that we provide some tips and advices that may be interesting even if you have some experience with R.
+We will assume you don't have any previous experience with either R or RStudio, so in this lab we will cover the very basics, starting from the installation of the software and the first steps. If you do know some R, you may find some of the topics quite basic, and you are free to jump to wherever you wish within the document. Note however, that you are expected to complete the exercises. Moreover, we provide some tips and advices that may be interesting even if you have some experience with R.
 
 > **Important: Before Starting The Lab**</br>
-If you are using your own computer, please ensure you have the latest version of R and RStudio installed on your machine. This is important, as some packages used may not install correctly (or at all) if R is not up to date. Remember that R is the name of the programming language itself and RStudio is an IDE (i.e. an interface), so you won't be able to use RStudio without previously installing R.</br></br>
+To avoid the pain of setting up software in different computers with different configurations and OS, we will use RStudio Cloud, a service that allows to create your analyses using RStudio directly from your browser. In this way, there will be no software to install and nothing to configure on your computer. All the data and packages needed to run the lab will be already uploaded, and the instructors can look at your files without the need for data transfer.</br> </br>
+However, it is also good idea to install R and RStudio on your machine, so you can use it beyond this class. Remember that R is the name of the programming language itself and RStudio is an IDE (i.e. an interface), so you won't be able to use RStudio without previously installing R. </br></br>
 [Download and install the latest version of R here](https://www.r-project.org/)</br>
 [Download and install RStudio here](https://www.rstudio.com/products/rstudio/download/#download)</br> </br>
-Please note that the University machines already have suitable versions of R and RStudio installed.</br></br>
+Please note that if you use the University machines, they already have suitable versions of R and RStudio installed.</br></br>
 
 
 
 # Introduction to RStudio
 
-Throughout this lesson, we’re going to teach you some of the fundamentals of the R language as well as some best practices for organizing code that will make your life easier. We’ll be using RStudio: a free, open source R integrated development environment. It provides a built-in editor, works on all platforms (including on servers) and provides many advantages such as integration with version control and project management (see the slides of Lesson 1 to know more about the advantages of R and RStudio).
+Throughout this lesson, we’re going to teach you some of the fundamentals of the R language. We’ll be using RStudio: a free, open source R integrated development environment. It provides a built-in editor, works on all platforms (including on servers) and provides many advantages such as integration with version control and project management (see lecture 1 to know more about the advantages of R and RStudio).
+
+As mentioned above, throughout this course we will use RStudio Cloud, a service that allows to use RStudio in your browser. However, the layout, view and functioning of your RStudio Cloud is EXACTLY the same as it would the standalone RStudio, so all the instructions can apply to both ways of working.
 
 ## Basic layout
 
-When you first open RStudio, you will be greeted by three panels:
+When you first open RStudio (or in this case, RStudio Cloud), you will be greeted by three panels:
 
 - The interactive R console (entire left)
 - Environment/History (tabbed in upper right)
