@@ -73,13 +73,14 @@ library(rvest)
 
 .font120[This course is about: ]
 
+- <i class="fa fa-code fa-10px"></i> Coding
+
+--
 
 - <i class="fa fa-database fa-10px"></i> Data management
 
 --
 
-- <i class="fa fa-code fa-10px"></i> Coding
---
 
 - <i class="fa fa-bar-chart fa-10px"></i> Data visualization
 
@@ -145,12 +146,6 @@ Big data
 
 --
 
-- What's R?
-{{content}}
-
-
---
-
 - R is a true “data language"
 {{content}}
 
@@ -163,13 +158,13 @@ Big data
 
 --
 
-- R is multiplatform
+- Multiplatform
 {{content}}
 
 
 --
 
-- R is 100% free (in both senses)
+- 100% free (in both senses)
 {{content}}
 
 
@@ -181,7 +176,7 @@ Big data
 
 --
 
-- R has a huge support community
+- Come for the stats, stay for the huuuge support community
 
 --
 
@@ -208,7 +203,7 @@ Big data
 class: center, middle, inverse
 
 
-# Let's see some examples of data in the wild
+# Let's see some examples of amazing data analyses!
 
 
 ---
@@ -300,27 +295,32 @@ class: center, middle, inverse
 
 ---
 
-# Course components:
+# Course components
 
-- .bold[Lectures:] we will try to keep them short, but some "theory" will be needed
-
---
-
-- .bold[Labs:] hands-on application of concepts and tools seen in class. 
-    - They're self paced tutorials with examples
-    - There will be some questions/exercises you will need to answer, by creating a "lab report" (we'll see how). Try to finish in class, but can continue later. Check/no check
+<i class="fa fa-laptop  fa-lg"></i> .bold[Lectures:] we will try to keep them short, but some "theory" will be needed
 
 --
 
-- .bold[Homework:] Individual. You are expected to work at home (but can ask doubts of course!)
+
+<i class="fa fa-book fa-lg"></i> .bold[Readings:] In some lectures I will recommend some external readings to expand or consolidate concepts seen in class
 
 --
 
-- .bold[Exams:] Individual, two take-home midterms
+<i class="fa fa-code  fa-lg"></i> .bold[Labs:] hands-on application of concepts and tools seen in class. 
+- They're self paced tutorials with examples
+- There will be some questions/exercises you will need to answer, by creating a "lab report" (we'll see how). Try to finish in class, but can continue later. 
 
 --
 
-- .bold[Final project:] during the course eahc of you will design a data science project using your wn dataset (ideally for your master's thesis). You must present the results to your classmates. You must complete the final project and be in class to present it to pass this class.
+<i class="fa fa-pencil-square-o fa-lg"></i>.bold[Homework:] Individual. You are expected to work at home (but can ask doubts of course!)
+
+--
+
+<i class="fa fa-check-square fa-lg"></i> .bold[Exams:] Individual, two take-home midterms
+
+--
+
+<i class="fa fa-file-powerpoint fa-lg"></i> .bold[Final project:] during the course each of you will design a data science project using your own dataset (ideally it will come from your master's thesis). You must present the results to your classmates. You must complete the final project and be in class to present it to pass this class.
 
 ---
 
@@ -328,19 +328,18 @@ class: center, middle, inverse
 
 ```{r echo=F}
 grading <- data.frame(Component = c("Participation & application exercises",
-                                    "Peer evaluation",
                                     "Homework",
                                     "Labs",
                                     "Midterm 1",
                                     "Midterm 2",
-                                    "Final project"),
+                                    "Final project",                                                                        "Peer evaluation"),
                       Weight = c("10%*",
-                                 "5%",
                                  "20%",
                                  "15%",
                                  "17.5%",
                                  "17.5%",
-                                 "15%"))
+                                 "15%",                                 
+                                 "5%"))
 
 library(knitr)
 kable(grading, format='html')

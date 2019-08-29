@@ -1,8 +1,8 @@
 <!DOCTYPE html>
-<html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
   <head>
     <title>Welcome to Data Management and Visualization with R</title>
-    <meta charset="utf-8">
+    <meta charset="utf-8" />
     <meta name="author" content="Aitor Ameztegui" />
     <meta name="date" content="2019-08-29" />
     <link href="libs/font-awesome/css/all.css" rel="stylesheet" />
@@ -56,13 +56,14 @@ class: center, middle, inverse, title-slide
 
 .font120[This course is about: ]
 
+- &lt;i class="fa fa-code fa-10px"&gt;&lt;/i&gt; Coding
+
+--
 
 - &lt;i class="fa fa-database fa-10px"&gt;&lt;/i&gt; Data management
 
 --
 
-- &lt;i class="fa fa-code fa-10px"&gt;&lt;/i&gt; Coding
---
 
 - &lt;i class="fa fa-bar-chart fa-10px"&gt;&lt;/i&gt; Data visualization
 
@@ -128,12 +129,6 @@ Big data
 
 --
 
-- What's R?
-{{content}}
-
-
---
-
 - R is a true “data language"
 {{content}}
 
@@ -146,13 +141,13 @@ Big data
 
 --
 
-- R is multiplatform
+- Multiplatform
 {{content}}
 
 
 --
 
-- R is 100% free (in both senses)
+- 100% free (in both senses)
 {{content}}
 
 
@@ -164,7 +159,7 @@ Big data
 
 --
 
-- R has a huge support community
+- Come for the stats, stay for the huuuge support community
 
 --
 
@@ -191,7 +186,7 @@ Big data
 class: center, middle, inverse
 
 
-# Let's see some examples of data in the wild
+# Let's see some examples of amazing data analyses!
 
 
 ---
@@ -283,27 +278,32 @@ class: center, middle, inverse
 
 ---
 
-# Course components:
+# Course components
 
-- .bold[Lectures:] we will try to keep them short, but some "theory" will be needed
-
---
-
-- .bold[Labs:] hands-on application of concepts and tools seen in class. 
-    - They're self paced tutorials with examples
-    - There will be some questions/exercises you will need to answer, by creating a "lab report" (we'll see how). Try to finish in class, but can continue later. Check/no check
+&lt;i class="fa fa-laptop  fa-lg"&gt;&lt;/i&gt; .bold[Lectures:] we will try to keep them short, but some "theory" will be needed
 
 --
 
-- .bold[Homework:] Individual. You are expected to work at home (but can ask doubts of course!)
+
+&lt;i class="fa fa-book fa-lg"&gt;&lt;/i&gt; .bold[Readings:] In some lectures I will recommend some external readings to expand or consolidate concepts seen in class
 
 --
 
-- .bold[Exams:] Individual, two take-home midterms
+&lt;i class="fa fa-code  fa-lg"&gt;&lt;/i&gt; .bold[Labs:] hands-on application of concepts and tools seen in class. 
+- They're self paced tutorials with examples
+- There will be some questions/exercises you will need to answer, by creating a "lab report" (we'll see how). Try to finish in class, but can continue later. 
 
 --
 
-- .bold[Final project:] during the course eahc of you will design a data science project using your wn dataset (ideally for your master's thesis). You must present the results to your classmates. You must complete the final project and be in class to present it to pass this class.
+&lt;i class="fa fa-pencil-square-o fa-lg"&gt;&lt;/i&gt;.bold[Homework:] Individual. You are expected to work at home (but can ask doubts of course!)
+
+--
+
+&lt;i class="fa fa-check-square fa-lg"&gt;&lt;/i&gt; .bold[Exams:] Individual, two take-home midterms
+
+--
+
+&lt;i class="fa fa-file-powerpoint fa-lg"&gt;&lt;/i&gt; .bold[Final project:] during the course each of you will design a data science project using your own dataset (ideally it will come from your master's thesis). You must present the results to your classmates. You must complete the final project and be in class to present it to pass this class.
 
 ---
 
@@ -320,10 +320,6 @@ class: center, middle, inverse
   &lt;tr&gt;
    &lt;td style="text-align:left;"&gt; Participation &amp;amp; application exercises &lt;/td&gt;
    &lt;td style="text-align:left;"&gt; 10%* &lt;/td&gt;
-  &lt;/tr&gt;
-  &lt;tr&gt;
-   &lt;td style="text-align:left;"&gt; Peer evaluation &lt;/td&gt;
-   &lt;td style="text-align:left;"&gt; 5% &lt;/td&gt;
   &lt;/tr&gt;
   &lt;tr&gt;
    &lt;td style="text-align:left;"&gt; Homework &lt;/td&gt;
@@ -344,6 +340,10 @@ class: center, middle, inverse
   &lt;tr&gt;
    &lt;td style="text-align:left;"&gt; Final project &lt;/td&gt;
    &lt;td style="text-align:left;"&gt; 15% &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; Peer evaluation &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 5% &lt;/td&gt;
   &lt;/tr&gt;
 &lt;/tbody&gt;
 &lt;/table&gt;
@@ -423,6 +423,7 @@ class: center, middle, inverse
 
 # Questions?
     </textarea>
+<style data-target="print-only">@media screen {.remark-slide-container{display:block;}.remark-slide-scaler{box-shadow:none;}}</style>
 <script src="https://remarkjs.com/downloads/remark-latest.min.js"></script>
 <script>var slideshow = remark.create({
 "highlightStyle": "github",
@@ -432,16 +433,57 @@ class: center, middle, inverse
 if (window.HTMLWidgets) slideshow.on('afterShowSlide', function (slide) {
   window.dispatchEvent(new Event('resize'));
 });
-(function() {
-  var d = document, s = d.createElement("style"), r = d.querySelector(".remark-slide-scaler");
+(function(d) {
+  var s = d.createElement("style"), r = d.querySelector(".remark-slide-scaler");
   if (!r) return;
   s.type = "text/css"; s.innerHTML = "@page {size: " + r.style.width + " " + r.style.height +"; }";
   d.head.appendChild(s);
+})(document);
+
+(function(d) {
+  var el = d.getElementsByClassName("remark-slides-area");
+  if (!el) return;
+  var slide, slides = slideshow.getSlides(), els = el[0].children;
+  for (var i = 1; i < slides.length; i++) {
+    slide = slides[i];
+    if (slide.properties.continued === "true" || slide.properties.count === "false") {
+      els[i - 1].className += ' has-continuation';
+    }
+  }
+  var s = d.createElement("style");
+  s.type = "text/css"; s.innerHTML = "@media print { .has-continuation { display: none; } }";
+  d.head.appendChild(s);
+})(document);
+// delete the temporary CSS (for displaying all slides initially) when the user
+// starts to view slides
+(function() {
+  var deleted = false;
+  slideshow.on('beforeShowSlide', function(slide) {
+    if (deleted) return;
+    var sheets = document.styleSheets, node;
+    for (var i = 0; i < sheets.length; i++) {
+      node = sheets[i].ownerNode;
+      if (node.dataset["target"] !== "print-only") continue;
+      node.parentNode.removeChild(node);
+    }
+    deleted = true;
+  });
 })();</script>
 
 <script>
 (function() {
-  var i, text, code, codes = document.getElementsByTagName('code');
+  var links = document.getElementsByTagName('a');
+  for (var i = 0; i < links.length; i++) {
+    if (/^(https?:)?\/\//.test(links[i].getAttribute('href'))) {
+      links[i].target = '_blank';
+    }
+  }
+})();
+</script>
+
+<script>
+slideshow._releaseMath = function(el) {
+  var i, text, code, codes = el.getElementsByTagName('code');
   for (i = 0; i < codes.length;) {
     code = codes[i];
     if (code.parentNode.tagName !== 'PRE' && code.childElementCount === 0) {
@@ -455,7 +497,8 @@ if (window.HTMLWidgets) slideshow.on('afterShowSlide', function (slide) {
     }
     i++;
   }
-})();
+};
+slideshow._releaseMath(document);
 </script>
 <!-- dynamically load mathjax for compatibility with self-contained -->
 <script>
