@@ -1,0 +1,123 @@
+---
+title: "Lab 01: Intro to R and RStudio"
+author: ""
+date: "2018-01-18"
+output:
+  xaringan::moon_reader:
+    css: "lab-slides.css"
+    logo: img/logo_udl.png
+    lib_dir: libs
+    nature:
+      highlightStyle: github
+      highlightLines: true
+      countIncrementalSlides: false
+---
+
+```{r setup, include=FALSE}
+# R options
+options(
+  htmltools.dir.version = FALSE, # for blogdown
+  show.signif.stars = FALSE,     # for regression output
+  warm = 1
+  )
+# Set dpi and height for images
+library(knitr)
+opts_chunk$set(fig.height = 2.65, dpi = 300) 
+# ggplot2 color palette with gray
+color_palette <- list(gray = "#999999", 
+                      salmon = "#E69F00", 
+                      lightblue = "#56B4E9", 
+                      green = "#009E73", 
+                      yellow = "#F0E442", 
+                      darkblue = "#0072B2", 
+                      red = "#D55E00", 
+                      purple = "#CC79A7")
+# For nonsese...
+# library(emo)
+htmltools::tagList(rmarkdown::html_dependency_font_awesome())
+```
+
+```{r echo=FALSE, message=FALSE, warning=FALSE}
+library(tidyverse)
+library(rvest)
+```
+
+class: center, middle
+
+# Welcome to labs!
+
+---
+
+## Agenda
+
+1. **Lab strucuture:** Lab structure overview.
+2. **Lab 01 intro and demos:** Introduce the lab, and work through the first section as a class.
+3. **On your own:** Work on the rest of the lab "on your own", but feel free to check in with teammates as much as you like and ask me any doubt.
+
+---
+
+class: center, middle
+
+# Lab structure
+
+---
+
+## Lab structure
+
+- 5-10 minute introduction with lab goals (a bit longer today)
+
+- Lab instructions posted on the course website under `</>`
+    
+- Generally, we will start the lab together as a class, then you will use the remaining time to work through the lab, do the exercises and fill out your lab report using RStudio Cloud.
+    + Wait! Lab report? RStudio Cloud?
+    + Don't worry, we'll see how to use this tools (trust me, it's easy!). For now, relax and let's go find today's lab!
+    
+    
+---
+
+## Tips
+
+- You do not have to finish the lab in class, they're due next week in lab. But you might choose to get through portions that you think will be challenging (which initially might be the coding component) in class when I can help you on the spot, and leave the narrative writing till later.
+
+- Do not pressure each other to finish early, use the time wisely to really learn the material and produce a quality report. This will be valued in the gradings.
+
+- You are free to check in/discuss/talk with teammates as much as you like and ask me any doubt, but the lab report is an individual exercise.
+
+---
+
+class: center, middle
+
+# Lab 01 Intro to R and RStudio
+
+---
+
+## Goals
+
+- Introduce you to R and RStudio:
+    + R is the name of the programming language itself 
+    + RStudio is a convenient interface
+
+- Introduce you to RStudio Cloud, a tool developed by RStudio that allows to create your analyses using RStudio directly from your browser
+    + there is no software to install and nothing to configure on your computer.
+    + you can share your projects - and access those of others - without worrying about data transfer or package installation.
+
+
+---
+
+## Getting started
+
+- Go to RStudio Cloud and into the course workspace.
+
+- Go to the lab01 assignment
+
+- That's all for now. 
+
+---
+
+class: center, middle
+
+# Let's go find today's lab!
+
+<iframe src="https://giphy.com/embed/3o7TKUM3IgJBX2as9O" width="480" height="360" frameBorder="0" class="giphy-embed" allowFullScreen></iframe>
+
+
