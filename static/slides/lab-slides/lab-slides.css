@@ -109,5 +109,5 @@ thead, tfoot, tr:nth-child(even) { background: #eee }
     width: 81px;
     background-repeat: no-repeat;
     background-size: contain;
-    background-image: url("img/sta199-logo-hex.png");
+ /*   background-image: url("img/udl_lo.png"); */
 }
