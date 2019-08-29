@@ -2,7 +2,7 @@ lessons:
   - title: "Welcome. Course organization and warm-up"
     slides: "lec-slides/00-welcome.html"
   - title: "Lab 01: Introduction to R and RStudio"
-    slides: "lab_01_intro_R_slides.html"
+    slides: "lab-slides/lab_01_intro_R_slides.html"
     lab: "lab-01-intro-r.html"
   - title: "Lab 02: Introduction to RMarkdown"
     slides: 
