@@ -492,7 +492,8 @@ img {
  ****************/
 
 
-.content-box { 
+.content-box, 
+.exercise { 
     box-sizing: content-box;
     	background-color: #e2e2e2;
   /* Total width: 160px + (2 * 20px) + (2 * 8px) = 216px
@@ -509,11 +510,12 @@ img {
 .content-box-green,
 .content-box-purple,
 .content-box-red,
-.content-box-yellow {
+.content-box-yellow,
+.exercise {
     border-radius: 15px;
-    margin: 0 0 25px;
+    margin: 10 0 25px;
     overflow: hidden;
-    padding: 0px;
+    padding: 20px;
     width: 100%;
 }
 
@@ -550,6 +552,9 @@ img {
 	background-color: #fef5c4;
 }
 
+.exercise {
+	background-color: #FFE5CC;
+}
 
 .full-width {
     display: flex;
