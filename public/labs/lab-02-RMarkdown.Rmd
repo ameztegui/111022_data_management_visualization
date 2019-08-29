@@ -40,9 +40,42 @@ options(
 ```
 
 
-# Introduction. Goal
+# Goal and Introduction to R Markdown
 
-The main goal of this lab is to introduce you to R and RStudio, the software that we will be using throughout the course to collect data, prepare and transform it, and to produce high quality visualizations and charts that allow us to come to informed conclusions. 
+The main goal of this lab is to introduce you to R Markdown, and see how we can use it to produce lab reports for our course. 
+
+R Markdown is a file format for making dynamic documents with R. Markdown is a coding language that allows for text-to-HTML conversion. It was originally designed for web developers to allow for editing of web pages with an easy-to-read and easy-to-write plain text format. Due to it’s basic nature, you need none to very little programming knowledge in order to write in Markdown! R Markdown is a variation on Markdown allowing it to be implemented in R. An R Markdown document is thus simply a document written in Markdown that contains chunks of embedded R code.
+
+R Markdown was created to generate documents that serve as a neat record of your analysis, a bit like a notebook. Instead of commenting extensively the code script, RMarkdown presents your code alongside its output (graphs, tables, etc.) with conventional text to explain it. This is very useful to keep track of your analysis. You can either use it simply to keep as a personal record  or to share your code (and its output) with your colleagues or with anyone else. In the world of reproducible research, we want other researchers to easily understand what we did in our analysis, otherwise nobody can be certain that you analysed your data properly. Therefore, you could create an RMarkdown document as an appendix to a paper or project assignment that you are doing, upload it to an online repository and share it with the scientific community. In the context of our course, we will use R Markdown documents to create nice, self-explaining lab reports in which you can describe the reasoning and the steps you followed to answer the exercises, provide the code you used and show the output of that code.
+
+Since it was initially developed, many extensions and R packages have been created to get the most out of the Rmarkdown features. R Markdown documents can be used to produce a wide range of output file types: pdf, doc, html. The versatility of the html language makes it possible to produce many types of documents, including reports, slides for a presentation, websites, interactive panels...  To give you an idea, all the slides for the lectures, the labs documents, or even the course website have all been generated using R Markdown. This video gives a great, short explanation of R Markdown.
+
+
+# Using RMarkdown in RStudio
+
+
+The benefits of R Markdown are best appreciated when using it within RStudio (or RStudio Cloud). If you are using the standalone version of RStudio, you will need to have the package for rmarkdown installed. To do this, in the console panel (on the left), run:
+
+
+```{r, eval = F}
+install.packages("rmarkdown")
+```
+
+You should now be able to open a new R Markdown file. To do this go, to the “Open” symbol in the top left hand corner and select “R Markdown”
+
+
+The following window then asks you for a title, the author and what format you’d like the final rendered file to be. All of these elements can be changed later if you change your mind. You can also see from the left hand tab that R Markdown can be used to make other things besides documents, including presentations and shiny apps.
+
+Give the document an appropriate name and choose “HTML” as the output format:
+
+
+The new R Markdown file should now have opened on the left hand side, above the console window. A template R Markdown script is provided. This includes the set up information at the top of the page in between two lines of three dashes. More setup options can be added if needed. This is used by knitr during rendering to produce the correct file format. Text and code blocks are also included, and these will be explained in more detail below.
+
+
+
+
+
+and RStudio, the software that we will be using throughout the course to collect data, prepare and transform it, and to produce high quality visualizations and charts that allow us to come to informed conclusions. 
 
 We will assume you don't have any previous experience with either R or RStudio, so in this lab we will cover the very basics, starting from the installation of the software and the first steps. If you do know some R, you may find some of the topics quite basic, and you are free to jump to wherever you wish within the document. Note however, that you are expected to complete the exercises. Moreover, we provide some tips and advices that may be interesting even if you have some experience with R.
 

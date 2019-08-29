@@ -86,32 +86,33 @@ $(document).ready(function () {
     <h2><a href="#content">Lab 01 - Intro to R and RStudio</a></h2>
     <div id="text-table-of-contents">
       <ul>
-      <li><a href="#section-introduction.-goal"><span class="toc-section-number">1</span> Introduction. Goal</a></li>
-      <li><a href="#section-introduction-to-rstudio"><span class="toc-section-number">2</span> Introduction to RStudio</a><ul>
-      <li><a href="#section-basic-layout"><span class="toc-section-number">2.1</span> Basic layout</a></li>
+      <li><a href="#section-goal-and-introduction-to-r-markdown"><span class="toc-section-number">1</span> Goal and Introduction to R Markdown</a></li>
+      <li><a href="#section-using-rmarkdown-in-rstudio"><span class="toc-section-number">2</span> Using RMarkdown in RStudio</a></li>
+      <li><a href="#section-introduction-to-rstudio"><span class="toc-section-number">3</span> Introduction to RStudio</a><ul>
+      <li><a href="#section-basic-layout"><span class="toc-section-number">3.1</span> Basic layout</a></li>
       </ul></li>
-      <li><a href="#section-introduction-to-r"><span class="toc-section-number">3</span> Introduction to R</a><ul>
-      <li><a href="#section-using-r-as-a-calculator"><span class="toc-section-number">3.1</span> Using R as a calculator</a></li>
-      <li><a href="#section-mathematical-functions"><span class="toc-section-number">3.2</span> Mathematical functions</a></li>
-      <li><a href="#section-comparing-things"><span class="toc-section-number">3.3</span> Comparing things</a></li>
+      <li><a href="#section-introduction-to-r"><span class="toc-section-number">4</span> Introduction to R</a><ul>
+      <li><a href="#section-using-r-as-a-calculator"><span class="toc-section-number">4.1</span> Using R as a calculator</a></li>
+      <li><a href="#section-mathematical-functions"><span class="toc-section-number">4.2</span> Mathematical functions</a></li>
+      <li><a href="#section-comparing-things"><span class="toc-section-number">4.3</span> Comparing things</a></li>
       </ul></li>
-      <li><a href="#section-variables-and-assignment-in-r"><span class="toc-section-number">4</span> Variables and assignment in R</a></li>
-      <li><a href="#section-objects-in-r"><span class="toc-section-number">5</span> Objects in R</a><ul>
-      <li><a href="#section-creating-objects"><span class="toc-section-number">5.1</span> Creating objects</a></li>
+      <li><a href="#section-variables-and-assignment-in-r"><span class="toc-section-number">5</span> Variables and assignment in R</a></li>
+      <li><a href="#section-objects-in-r"><span class="toc-section-number">6</span> Objects in R</a><ul>
+      <li><a href="#section-creating-objects"><span class="toc-section-number">6.1</span> Creating objects</a></li>
       </ul></li>
-      <li><a href="#section-saving-our-commands-scripts-in-r"><span class="toc-section-number">6</span> Saving our commands: Scripts in R</a><ul>
-      <li><a href="#section-vectors"><span class="toc-section-number">6.1</span> Vectors</a></li>
-      <li><a href="#section-working-with-vectors"><span class="toc-section-number">6.2</span> Working with vectors</a></li>
+      <li><a href="#section-saving-our-commands-scripts-in-r"><span class="toc-section-number">7</span> Saving our commands: Scripts in R</a><ul>
+      <li><a href="#section-vectors"><span class="toc-section-number">7.1</span> Vectors</a></li>
+      <li><a href="#section-working-with-vectors"><span class="toc-section-number">7.2</span> Working with vectors</a></li>
       </ul></li>
-      <li><a href="#section-data-types"><span class="toc-section-number">7</span> Data types</a><ul>
-      <li><a href="#section-lists"><span class="toc-section-number">7.1</span> Lists</a></li>
-      <li><a href="#section-arrays"><span class="toc-section-number">7.2</span> Arrays</a></li>
-      <li><a href="#section-data.frame"><span class="toc-section-number">7.3</span> Data.frame</a></li>
+      <li><a href="#section-data-types"><span class="toc-section-number">8</span> Data types</a><ul>
+      <li><a href="#section-lists"><span class="toc-section-number">8.1</span> Lists</a></li>
+      <li><a href="#section-arrays"><span class="toc-section-number">8.2</span> Arrays</a></li>
+      <li><a href="#section-data.frame"><span class="toc-section-number">8.3</span> Data.frame</a></li>
       </ul></li>
-      <li><a href="#section-object-management"><span class="toc-section-number">8</span> Object management</a></li>
-      <li><a href="#section-functions-and-arguments"><span class="toc-section-number">9</span> Functions and arguments</a></li>
-      <li><a href="#section-missing-data"><span class="toc-section-number">10</span> Missing data</a></li>
-      <li><a href="#section-handling-special-values"><span class="toc-section-number">11</span> Handling special values</a></li>
+      <li><a href="#section-object-management"><span class="toc-section-number">9</span> Object management</a></li>
+      <li><a href="#section-functions-and-arguments"><span class="toc-section-number">10</span> Functions and arguments</a></li>
+      <li><a href="#section-missing-data"><span class="toc-section-number">11</span> Missing data</a></li>
+      <li><a href="#section-handling-special-values"><span class="toc-section-number">12</span> Handling special values</a></li>
       </ul>
     </div>
 </div>
@@ -120,20 +121,33 @@ $(document).ready(function () {
 <pre><code>## Warning: package &#39;knitr&#39; was built under R version 3.5.3</code></pre>
 <pre><code>## Warning: package &#39;learnr&#39; was built under R version 3.5.3</code></pre>
 <hr />
-<div id="section-introduction.-goal" class="section level1">
-<h1><span class="header-section-number">1</span> Introduction. Goal</h1>
-<p>The main goal of this lab is to introduce you to R and RStudio, the software that we will be using throughout the course to collect data, prepare and transform it, and to produce high quality visualizations and charts that allow us to come to informed conclusions.</p>
+<div id="section-goal-and-introduction-to-r-markdown" class="section level1">
+<h1><span class="header-section-number">1</span> Goal and Introduction to R Markdown</h1>
+<p>The main goal of this lab is to introduce you to R Markdown, and see how we can use it to produce lab reports for our course.</p>
+<p>R Markdown is a file format for making dynamic documents with R. Markdown is a coding language that allows for text-to-HTML conversion. It was originally designed for web developers to allow for editing of web pages with an easy-to-read and easy-to-write plain text format. Due to it’s basic nature, you need none to very little programming knowledge in order to write in Markdown! R Markdown is a variation on Markdown allowing it to be implemented in R. An R Markdown document is thus simply a document written in Markdown that contains chunks of embedded R code.</p>
+<p>R Markdown was created to generate documents that serve as a neat record of your analysis, a bit like a notebook. Instead of commenting extensively the code script, RMarkdown presents your code alongside its output (graphs, tables, etc.) with conventional text to explain it. This is very useful to keep track of your analysis. You can either use it simply to keep as a personal record or to share your code (and its output) with your colleagues or with anyone else. In the world of reproducible research, we want other researchers to easily understand what we did in our analysis, otherwise nobody can be certain that you analysed your data properly. Therefore, you could create an RMarkdown document as an appendix to a paper or project assignment that you are doing, upload it to an online repository and share it with the scientific community. In the context of our course, we will use R Markdown documents to create nice, self-explaining lab reports in which you can describe the reasoning and the steps you followed to answer the exercises, provide the code you used and show the output of that code.</p>
+<p>Since it was initially developed, many extensions and R packages have been created to get the most out of the Rmarkdown features. R Markdown documents can be used to produce a wide range of output file types: pdf, doc, html. The versatility of the html language makes it possible to produce many types of documents, including reports, slides for a presentation, websites, interactive panels… To give you an idea, all the slides for the lectures, the labs documents, or even the course website have all been generated using R Markdown. This video gives a great, short explanation of R Markdown.</p>
+</div>
+<div id="section-using-rmarkdown-in-rstudio" class="section level1">
+<h1><span class="header-section-number">2</span> Using RMarkdown in RStudio</h1>
+<p>The benefits of R Markdown are best appreciated when using it within RStudio (or RStudio Cloud). If you are using the standalone version of RStudio, you will need to have the package for rmarkdown installed. To do this, in the console panel (on the left), run:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">install.packages</span>(<span class="st">&quot;rmarkdown&quot;</span>)</code></pre></div>
+<p>You should now be able to open a new R Markdown file. To do this go, to the “Open” symbol in the top left hand corner and select “R Markdown”</p>
+<p>The following window then asks you for a title, the author and what format you’d like the final rendered file to be. All of these elements can be changed later if you change your mind. You can also see from the left hand tab that R Markdown can be used to make other things besides documents, including presentations and shiny apps.</p>
+<p>Give the document an appropriate name and choose “HTML” as the output format:</p>
+<p>The new R Markdown file should now have opened on the left hand side, above the console window. A template R Markdown script is provided. This includes the set up information at the top of the page in between two lines of three dashes. More setup options can be added if needed. This is used by knitr during rendering to produce the correct file format. Text and code blocks are also included, and these will be explained in more detail below.</p>
+<p>and RStudio, the software that we will be using throughout the course to collect data, prepare and transform it, and to produce high quality visualizations and charts that allow us to come to informed conclusions.</p>
 <p>We will assume you don’t have any previous experience with either R or RStudio, so in this lab we will cover the very basics, starting from the installation of the software and the first steps. If you do know some R, you may find some of the topics quite basic, and you are free to jump to wherever you wish within the document. Note however, that you are expected to complete the exercises. Moreover, we provide some tips and advices that may be interesting even if you have some experience with R.</p>
 <blockquote>
 <p><strong>Important: Before Starting The Lab</strong></br> To avoid the pain of setting up software in different computers with different configurations and OS, we will use RStudio Cloud, a service that allows to create your analyses using RStudio directly from your browser. In this way, there will be no software to install and nothing to configure on your computer. All the data and packages needed to run the lab will be already uploaded, and the instructors can look at your files without the need for data transfer.</br> </br> However, it is also good idea to install R and RStudio on your machine, so you can use it beyond this class. Remember that R is the name of the programming language itself and RStudio is an IDE (i.e. an interface), so you won’t be able to use RStudio without previously installing R. </br></br> <a href="https://www.r-project.org/">Download and install the latest version of R here</a></br> <a href="https://www.rstudio.com/products/rstudio/download/#download">Download and install RStudio here</a></br> </br> Please note that if you use the University machines, they already have suitable versions of R and RStudio installed.</br></br></p>
 </blockquote>
 </div>
 <div id="section-introduction-to-rstudio" class="section level1">
-<h1><span class="header-section-number">2</span> Introduction to RStudio</h1>
+<h1><span class="header-section-number">3</span> Introduction to RStudio</h1>
 <p>Throughout this lesson, we’re going to teach you some of the fundamentals of the R language. We’ll be using RStudio: a free, open source R integrated development environment. It provides a built-in editor, works on all platforms (including on servers) and provides many advantages such as integration with version control and project management (see lecture 1 to know more about the advantages of R and RStudio).</p>
 <p>As mentioned above, throughout this course we will use RStudio Cloud, a service that allows to use RStudio in your browser. However, the layout, view and functioning of your RStudio Cloud is EXACTLY the same as it would the standalone RStudio, so all the instructions can apply to both ways of working.</p>
 <div id="section-basic-layout" class="section level2">
-<h2><span class="header-section-number">2.1</span> Basic layout</h2>
+<h2><span class="header-section-number">3.1</span> Basic layout</h2>
 <p>When you first open RStudio (or in this case, RStudio Cloud), you will be greeted by three panels:</p>
 <ul>
 <li>The interactive R console (entire left)</li>
@@ -147,18 +161,18 @@ Basic layout of RStudio
 </p>
 </div>
 <div id="section-console" class="section level3">
-<h3><span class="header-section-number">2.1.1</span> Console</h3>
+<h3><span class="header-section-number">3.1.1</span> Console</h3>
 <p>The console is the heart of R, it is where R actually evaluates and executes the code. This console in RStudio is the same as the one you would get if you decided to use R without RStudio. The first thing you will see in the R interactive session is a bunch of information, followed by a <code>&gt;</code> and a blinking cursor. This is a prompt that tells you that R is ready for new code.</p>
 <p>The console operates on the idea of a “Read, evaluate, print” loop: you type in commands, R tries to execute them, and then returns a result. You can type code directly into the console after the prompt and get an immediate response, or copy it from elesewhere and paste it in the console. For example, if you type 1+1 into the console and press enter (do it now), you’ll see that R immediately gives an output of 2.</p>
 </div>
 <div id="section-environmenthistory" class="section level3">
-<h3><span class="header-section-number">2.1.2</span> Environment/History</h3>
+<h3><span class="header-section-number">3.1.2</span> Environment/History</h3>
 <p>The <strong>Environment</strong> tab shows the names of all the data objects (like vectors, matrices, and dataframes) that you’ve defined in your current R session (don’t worry, we’ll cover this later). You can also see information like the number of observations and rows in data objects. The tab also has a few clickable actions like <code>Import Dataset</code> which will open a graphical user interface (GUI) for importing data into R.</p>
 <p>The <strong>History</strong> tab of this panel shows a history of all the code you’ve previously evaluated in the Console. Maybe it is not so commonly used as the <strong>Environment</strong> tab, but often it is useful to have the history of code you just ran.</p>
 <p>As you get more comfortable with R, you might find the Environment / History panel more and more useful. But at the beginning you will probably just ignore it, so you can even just minimize the window by clicking the minimize button on the top right of the panel.</p>
 </div>
 <div id="section-files-plots-packages-help" class="section level3">
-<h3><span class="header-section-number">2.1.3</span> Files / Plots / Packages / Help</h3>
+<h3><span class="header-section-number">3.1.3</span> Files / Plots / Packages / Help</h3>
 <p>The <strong>Files / Plots / Packages / Help</strong> panel shows you lots of helpful information. Let’s go through each tab in detail:</p>
 <ul>
 <li><p><strong>Files:</strong> it gives you access to the file directory on your hard drive, so it is very useful to fnd and load code scripts. One nice feature of the “Files” panel is that you can use it to set your working directory - if you have all your files in a folder (which you should), you can point to it by clicking “More” and then “Set As Working Directory.” This will easen the process of reading and saving files, because RStudio will point to that directory by default. We’ll talk about working directories in more detail soon.</p></li>
@@ -168,7 +182,7 @@ Basic layout of RStudio
 
 <span class="kw">ggplot</span>(iris) <span class="op">+</span>
 <span class="st">  </span><span class="kw">geom_histogram</span>(<span class="kw">aes</span>(Petal.Width, <span class="dt">color =</span> Species, <span class="dt">fill =</span> Species))</code></pre></div>
-<p><img src="lab-02-RMarkdown_files/figure-html/unnamed-chunk-2-1.png" width="768" /></p>
+<p><img src="lab-02-RMarkdown_files/figure-html/unnamed-chunk-3-1.png" width="768" /></p>
 <ul>
 <li><p><strong>Packages:</strong> shows a list of all the R packages installed on your harddrive and indicates whether or not they are currently loaded. Packages that are loaded in the current session are checked while those that are installed but not yet loaded are unchecked. We’ll discuss packages in more detail later.</p></li>
 <li><p><strong>Help:</strong> help menu for R functions. You can either type the name of a function in the search window, or use the code to search for a function with the name</p></li>
@@ -178,10 +192,10 @@ Basic layout of RStudio
 </div>
 </div>
 <div id="section-introduction-to-r" class="section level1">
-<h1><span class="header-section-number">3</span> Introduction to R</h1>
+<h1><span class="header-section-number">4</span> Introduction to R</h1>
 <p>So once we know what we are seeing, we can start using R. As we said in the lectures, R is quite a versatile tool, because it goes from a statistical tool to a complex programming language. Let’s some of the most basic uses, and in the process we will get used to how R works.</p>
 <div id="section-using-r-as-a-calculator" class="section level2">
-<h2><span class="header-section-number">3.1</span> Using R as a calculator</h2>
+<h2><span class="header-section-number">4.1</span> Using R as a calculator</h2>
 <p>The simplest thing you could do with R is use it as a calculator, i.e. to do arithmetics. We just did this above. But now, for example, type the following:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="dv">156</span> <span class="op">*</span><span class="st"> </span><span class="dv">35</span></code></pre></div>
 <pre><code>[1] 5460</code></pre>
@@ -214,7 +228,7 @@ Basic layout of RStudio
 <p>You may have noticed that part of the text above has not been processed by R. Actually, anything that follows after the hash symbol <code>#</code> is ignored by R when it executes code. The text after the <code>#</code> is called a “comment”, and can be very useful to remember the purpose and steps of a given analysis. We will talk more about comments in the lesson on “Good coding practices”.</p>
 </div>
 <div id="section-mathematical-functions" class="section level2">
-<h2><span class="header-section-number">3.2</span> Mathematical functions</h2>
+<h2><span class="header-section-number">4.2</span> Mathematical functions</h2>
 <p>R has many built in mathematical functions. To call a function, we simply type its name, followed by open and closing parentheses. Anything we type inside the parentheses are called the function’s arguments:</p>
 <div class="tutorial-exercise" data-label="addition" data-caption="Code" data-completion="1" data-diagnostics="1" data-startover="1" data-lines="0">
 <pre class="text"><code>1 + 1</code></pre>
@@ -235,7 +249,7 @@ Basic layout of RStudio
 </blockquote>
 </div>
 <div id="section-comparing-things" class="section level2">
-<h2><span class="header-section-number">3.3</span> Comparing things</h2>
+<h2><span class="header-section-number">4.3</span> Comparing things</h2>
 <p>We can also do comparisons in R, and it will tell us if the comparison we are testing is either <code>TRUE</code> or <code>FALSE</code>. For instance, try the following comparisons:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="dv">1</span> <span class="op">==</span><span class="st"> </span><span class="dv">1</span>    <span class="co"># equality (note two equals signs, read as &quot;is equal to&quot;)</span></code></pre></div>
 <pre><code>[1] TRUE</code></pre>
@@ -255,7 +269,7 @@ Basic layout of RStudio
 </div>
 </div>
 <div id="section-variables-and-assignment-in-r" class="section level1">
-<h1><span class="header-section-number">4</span> Variables and assignment in R</h1>
+<h1><span class="header-section-number">5</span> Variables and assignment in R</h1>
 <p>We can store values in variables using the assignment operator <code>&lt;-</code>, like this:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">x &lt;-<span class="st"> </span><span class="dv">1</span><span class="op">/</span><span class="dv">10</span></code></pre></div>
 <p>Notice that assignment does not print a value. Instead, we stored it for later in something called a variable. <code>x</code> now contains the value <code>0.1</code>. To see the content of a variable in the console, we just need to type its name.</p>
@@ -279,7 +293,7 @@ Basic layout of RStudio
 </blockquote>
 </div>
 <div id="section-objects-in-r" class="section level1">
-<h1><span class="header-section-number">5</span> Objects in R</h1>
+<h1><span class="header-section-number">6</span> Objects in R</h1>
 <p>Anytime we assign a variable and store it in R’s memory, we are actually creating an <code>object</code>. If you look for the <code>Environment</code> tab in one of the panes of RStudio, you will see that <code>x</code> and its value have appeared, and are updated as we transform <code>x</code>with our code.</p>
 <p>Casi todo son objetos. Los objetos mas sencillos son variables, pero hay otros como funciones, modelos, figuras. Recordar que R es object oriented.</p>
 <p>Para crear un objeto basta con asignarle un nombre. Hemos vistro como crear objetos sencillos (variables) que continene un numero o el resultado de una operacion aritmentica sencilla. Pero casi cialquier cosa puede giardarse en R como un objeto.</p>
@@ -300,7 +314,7 @@ Basic layout of RStudio
 </ul>
 <p>There are other types of objects in R, but these are the main cases. For example, another object we are going to work with are <code>model</code> objects, which store the output of a given statistical model, like a linear regression model for instance. We will work with them later in the course.</p>
 <div id="section-creating-objects" class="section level2">
-<h2><span class="header-section-number">5.1</span> Creating objects</h2>
+<h2><span class="header-section-number">6.1</span> Creating objects</h2>
 <p>Prueba a introducir las siguientes instrucciones para crear distintos tipos de objeto:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">n &lt;-<span class="st"> </span><span class="dv">15</span>
 x &lt;-<span class="st"> </span><span class="fl">1.0</span>
@@ -316,7 +330,7 @@ name &lt;-<span class="st"> &quot;Marcos&quot;</span></code></pre></div>
 </div>
 </div>
 <div id="section-saving-our-commands-scripts-in-r" class="section level1">
-<h1><span class="header-section-number">6</span> Saving our commands: Scripts in R</h1>
+<h1><span class="header-section-number">7</span> Saving our commands: Scripts in R</h1>
 <p>So far we have inserted instructions directly in the console but this is not the most efficient way to work. 99% of the time you should be using the Source rather than the Console, that is, you will write your commands into a script. A script is nothing more than a file that contains an ordered set of instructions. This means we can write a text file with the instructions we want to insert and then run them at once.The advantage of this is straightforward: if you type code into the console, it won’t be saved (though you can look back on your command History). And if you make a mistake in typing code into the console, you’d have to re-type everything all over again. Instead, if you write all your code in the Source, it will be available at any time needed, and if you need to rerun some analyses you just need to open the needed files and run all the code within.</p>
 <p>We can create a new script by choosing the menu item: <code>File, New File, R script</code>, or with the keyboard shortcut <kbd>Ctrl</kbd> + <kbd>Shift</kbd> + <kbd>N</kbd>. Script files are text files, that can be opened by any text editor. By convention they have the extension <code>.R</code>.</p>
 <blockquote>
@@ -329,7 +343,7 @@ name &lt;-<span class="st"> &quot;Marcos&quot;</span></code></pre></div>
 <p><strong>Tip: Projects in R studio</strong> </br> When we are performing an analysis we will typically be using many files… input data, files containing code to perform the analysis, and results. By creating a project in Rstudio we make it easier to manage these files. We’ll learn more about RStudio projects and how to use them to easen the workflow in later lessons.</p>
 </blockquote>
 <div id="section-vectors" class="section level2">
-<h2><span class="header-section-number">6.1</span> Vectors</h2>
+<h2><span class="header-section-number">7.1</span> Vectors</h2>
 <p>One of the most common objects in R is the vector. A vector can store several values, which must necessarily be of the same type (all numbers, all text, and so forth). There are several ways to create vectors. Try entering the following instructions and viewing the created objects:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">v1 &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">3</span>, <span class="dv">4</span>, <span class="dv">5</span>)
 v1</code></pre></div>
@@ -359,7 +373,7 @@ v3</code></pre></div>
 <pre><code>[1] -5 -4 -3 -2 -1  0  1  2  3</code></pre>
 </div>
 <div id="section-working-with-vectors" class="section level2">
-<h2><span class="header-section-number">6.2</span> Working with vectors</h2>
+<h2><span class="header-section-number">7.2</span> Working with vectors</h2>
 <p>As well as dealing with single values, we can work with vectors of values. There are various ways of creating vectors; the <code>:</code> operator will generate sequences of consecutive values:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="dv">1</span><span class="op">:</span><span class="dv">5</span></code></pre></div>
 <pre><code>[1] 1 2 3 4 5</code></pre>
@@ -400,13 +414,13 @@ v3</code></pre></div>
 </div>
 </div>
 <div id="section-data-types" class="section level1">
-<h1><span class="header-section-number">7</span> Data types</h1>
+<h1><span class="header-section-number">8</span> Data types</h1>
 <p>One thing you may have noticed is that all the data in a vector has been the same type; all the elements have had the same type (i.e. they have all been numbers, all been character, or all been logical (TRUE/FALSE)). This is an important property of vectors; the type of data the vector holds is a property of the vector, not of each element. Let’s look at what happens if we try to create a vector of numeric and character data:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">2</span>, <span class="st">&quot;three&quot;</span>, <span class="st">&quot;four&quot;</span>, <span class="dv">5</span>)</code></pre></div>
 <pre><code>[1] &quot;1&quot;     &quot;2&quot;     &quot;three&quot; &quot;four&quot;  &quot;5&quot;    </code></pre>
 <p>We see that R has coerced the elements containing digits to strings, so that all the elements have the same type. We will talk more about data types in a later episode.</p>
 <div id="section-vector-lengths" class="section level3">
-<h3><span class="header-section-number">7.0.1</span> Vector lengths</h3>
+<h3><span class="header-section-number">8.0.1</span> Vector lengths</h3>
 <p>We can calculate how many elements a vector contains using the length() function:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">length</span>(x)</code></pre></div>
 <pre><code>[1] 6</code></pre>
@@ -414,7 +428,7 @@ v3</code></pre></div>
 <pre><code>[1] 26</code></pre>
 </div>
 <div id="section-subsetting-vectors" class="section level3">
-<h3><span class="header-section-number">7.0.2</span> Subsetting vectors</h3>
+<h3><span class="header-section-number">8.0.2</span> Subsetting vectors</h3>
 <p>Having defined a vector, it’s often useful to extract parts of a vector. We do this with the <code>[]</code> operator. Using the built in <code>month.name</code> vector:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">month.name[<span class="dv">2</span>]</code></pre></div>
 <pre><code>[1] &quot;February&quot;</code></pre>
@@ -433,7 +447,7 @@ v3</code></pre></div>
 <pre><code>[1] &quot;January&quot;  &quot;January&quot;  &quot;February&quot; &quot;March&quot;    &quot;April&quot;   </code></pre>
 </div>
 <div id="section-skipping-and-removing-elements" class="section level3">
-<h3><span class="header-section-number">7.0.3</span> Skipping and removing elements</h3>
+<h3><span class="header-section-number">8.0.3</span> Skipping and removing elements</h3>
 <p>If we use a negative number as the index of a vector, R will return every element except for the one specified:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">month.name[<span class="op">-</span><span class="dv">2</span>]</code></pre></div>
 <pre><code> [1] &quot;January&quot;   &quot;March&quot;     &quot;April&quot;     &quot;May&quot;       &quot;June&quot;     
@@ -459,7 +473,7 @@ v3</code></pre></div>
 [7] &quot;October&quot;   &quot;November&quot;  &quot;December&quot; </code></pre>
 </div>
 <div id="section-subsetting-with-logical-vectors" class="section level3">
-<h3><span class="header-section-number">7.0.4</span> Subsetting with logical vectors</h3>
+<h3><span class="header-section-number">8.0.4</span> Subsetting with logical vectors</h3>
 <p>As well as providing a list of indices we want to keep (or delete, if we prefix them with <code>-</code>), we can pass a logical vector to R indicating the indices we wish to select:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">month.name[<span class="kw">c</span>(<span class="ot">TRUE</span>, <span class="ot">FALSE</span>, <span class="ot">TRUE</span>, <span class="ot">TRUE</span>, <span class="ot">FALSE</span>, <span class="ot">FALSE</span>,
              <span class="ot">FALSE</span>, <span class="ot">TRUE</span>, <span class="ot">TRUE</span>, <span class="ot">FALSE</span>, <span class="ot">FALSE</span>, <span class="ot">TRUE</span>)]</code></pre></div>
@@ -485,7 +499,7 @@ v3[<span class="dv">9</span>]</code></pre></div>
 <pre><code>[1] 10000</code></pre>
 </div>
 <div id="section-lists" class="section level2">
-<h2><span class="header-section-number">7.1</span> Lists</h2>
+<h2><span class="header-section-number">8.1</span> Lists</h2>
 <p>Once we have seen vectors we go to explore how objects of type list work. A list is an object similar to a vector with the difference that lists allow to store values of different type. Lists are created using the list(value1, value2, …) function. For example:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">list1 &lt;-<span class="st"> </span><span class="kw">list</span>(<span class="dv">1</span>,<span class="dv">7</span>,<span class="st">&#39;Marcos&#39;</span>)
 list1</code></pre></div>
@@ -506,7 +520,7 @@ list1</code></pre></div>
 <pre><code>[1] 3</code></pre>
 </div>
 <div id="section-arrays" class="section level2">
-<h2><span class="header-section-number">7.2</span> Arrays</h2>
+<h2><span class="header-section-number">8.2</span> Arrays</h2>
 <p>Arrays are an extension of vectors, which add additional dimensions to store information. The most common case is the 2-dimensional matrix (rows and columns). To create an array, we use array(values, dimensions). Both values and dimensions are specified using vectors. In the following example we see how to create a matrix with 4 rows and 5 columns, thus containing 20 values, in this case correlative numbers from 1 to 20:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">myarray&lt;-<span class="st"> </span><span class="kw">array</span>(<span class="dv">1</span><span class="op">:</span><span class="dv">20</span>,<span class="dt">dim=</span><span class="kw">c</span>(<span class="dv">4</span>,<span class="dv">5</span>))
 myarray</code></pre></div>
@@ -524,7 +538,7 @@ myarray</code></pre></div>
 <pre><code>[1] 5 6 7 8</code></pre>
 </div>
 <div id="section-data.frame" class="section level2">
-<h2><span class="header-section-number">7.3</span> Data.frame</h2>
+<h2><span class="header-section-number">8.3</span> Data.frame</h2>
 <p>A data frame is used for storing data tables. It is a list of vectors of equal length. For example, the following variable df is a data frame containing three vectors n, s, b.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">n &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="dv">2</span>, <span class="dv">3</span>, <span class="dv">5</span>) 
 s &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="st">&quot;aa&quot;</span>, <span class="st">&quot;bb&quot;</span>, <span class="st">&quot;cc&quot;</span>) 
@@ -543,7 +557,7 @@ df &lt;-<span class="st"> </span><span class="kw">data.frame</span>(n, s, b)</co
 </div>
 </div>
 <div id="section-object-management" class="section level1">
-<h1><span class="header-section-number">8</span> Object management</h1>
+<h1><span class="header-section-number">9</span> Object management</h1>
 <p>We have seen so far aspects related to the creation of objects. However we should be also know how many objects we have created in our session and how to remove them if necessary. To display all created objects we use ls(). Deleting objects in R is done by the command remove rm(object) and then call to the garbage collector with gc() to free-up the occupied memory.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">ls</span>()</code></pre></div>
 <pre><code> [1] &quot;b&quot;         &quot;df&quot;        &quot;list1&quot;     &quot;my_vector&quot; &quot;myarray&quot;  
@@ -552,23 +566,23 @@ df &lt;-<span class="st"> </span><span class="kw">data.frame</span>(n, s, b)</co
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">rm</span>(n)
 <span class="kw">gc</span>()</code></pre></div>
 <pre><code>          used (Mb) gc trigger  (Mb) max used  (Mb)
-Ncells  974841 52.1    2060678 110.1  2060678 110.1
-Vcells 1695863 13.0    8388608  64.0  6123585  46.8</code></pre>
+Ncells  974717 52.1    2055022 109.8  2055022 109.8
+Vcells 1696497 13.0    8388608  64.0  5846457  44.7</code></pre>
 <p>If we want to removal al the objects we have currently in our working session we can pass a list object containing the names of all objects to the gc() function. If you are thinking on combining gc()and ls()you are right. This would be the way:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">rm</span>(<span class="dt">list=</span><span class="kw">ls</span>())
 <span class="kw">gc</span>()</code></pre></div>
 <pre><code>          used (Mb) gc trigger  (Mb) max used  (Mb)
-Ncells  974756 52.1    2060678 110.1  2060678 110.1
-Vcells 1695722 13.0    8388608  64.0  6123585  46.8</code></pre>
+Ncells  974620 52.1    2055022 109.8  2055022 109.8
+Vcells 1696344 13.0    8388608  64.0  5846457  44.7</code></pre>
 </div>
 <div id="section-functions-and-arguments" class="section level1">
-<h1><span class="header-section-number">9</span> Functions and arguments</h1>
+<h1><span class="header-section-number">10</span> Functions and arguments</h1>
 <p>Up to this point we have seen and executed some instructions in R, generally oriented to the creation of objects or realization of simple arithmetic operations.</p>
 <p>However, we have also executed some function-type statements, such as the length() function. A function can be defined as a group of instructions that takes an input, uses this input to compute other values and returns a result or product. We will not go into very deep details, at least for now. It suffices to know that to execute a function it is enough to invoke the instruction that calls the desired function (length) and to specify the necessary inputs, also knwon as arguments. These inputs are always included between the parentheses of the instruction (length(vector)). If several arguments are needed we separate them usign ,.</p>
 <p>Sometimes we can refer to a given argument by using the argument’s name as is the case of the example we saw to delete all the objects in a session rm(list=ls()).</p>
 </div>
 <div id="section-missing-data" class="section level1">
-<h1><span class="header-section-number">10</span> Missing data</h1>
+<h1><span class="header-section-number">11</span> Missing data</h1>
 <p><code>NA</code> is a special value, that is used to represent “not available”, or “missing”. If we perform computations which include <code>NA</code>, the result is usually <code>NA</code>:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="dv">1</span> <span class="op">+</span><span class="st"> </span><span class="ot">NA</span></code></pre></div>
 <pre><code>[1] NA</code></pre>
@@ -576,7 +590,7 @@ Vcells 1695722 13.0    8388608  64.0  6123585  46.8</code></pre>
 <p><code>x &lt;- NA</code> <code>x == NA</code></p>
 </div>
 <div id="section-handling-special-values" class="section level1">
-<h1><span class="header-section-number">11</span> Handling special values</h1>
+<h1><span class="header-section-number">12</span> Handling special values</h1>
 <p>There are a number of special functions you can use to handle missing data, and other special values:</p>
 <p><code>is.na</code> will return all positions in a vector, matrix, or <code>data.frame</code> containing <code>NA</code>.</p>
 <p><code>is.nan</code>, and <code>is.infinite</code> will do the same for <code>NaN</code> and <code>Inf</code>.</p>

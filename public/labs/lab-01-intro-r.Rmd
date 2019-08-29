@@ -6,7 +6,7 @@ output:
     highlight: pygments
     number_sections: true
     css: lab.css
-runtime: shiny_prerendered
+#runtime: shiny_prerendered
 ---
 
 
