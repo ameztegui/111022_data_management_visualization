@@ -1,6 +1,6 @@
 ---
 title: "Lab 02 - Intro to R Markdown"
-date: "111022 | Data management and visualization with R | UdL"
+date: "111022 | Data management and visualization with R"
 output:
   rmdformats::readthedown:
     highlight: pygments
@@ -379,7 +379,13 @@ When the report is knit, the results of these computations are inserted into the
 
 <div class=exercise>
 **EXERCISE 4:**</br>
-bla bla bla
+
+Now that you know how to produce a complete R Markdown document, I want you to create and R Markdown report using the 'mtcars' dataset, that is loaded by default with R. This dataset comprises fuel consumption and 10 aspects of automobile design and performance for 32 automobiles, so it has 32 observations and 11 variables. Please type `?mtcars`in the console to know more about this dataset and the variables it contains.
+
+
+A DECIDIR con MARCOS, quizá les damos algo ya hecho y que lo cambien???
+The topic is free, but try to include as many elements of RMarkdown as possible (formatting)
+
 </div>
 
 
@@ -413,12 +419,3 @@ RStudio also produces cheatsheets for most of their tools, and R Markdown is no 
 
 Another very interesting resource is the book "R Markdown: The Definitive Guide" by R Markdown developer Yihui Xie. The book is freely available online at https://bookdown.org/yihui/rmarkdown/" (yes, you guessed right, the book itself was generated with R Markdown!)
 
-
-
-Cheatsheet
-
-Book
-
-Tutorials
-
-Datacamp
