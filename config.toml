@@ -50,15 +50,9 @@ ignoreFiles = ["\\.Rmd$", "\\.Rmarkdown$", "_files$", "_cache$"]
 [[menu.main]]
   weight = 4
   identifier = "rstudio"
-  name = "RStudio"
+  name = "RStudio Cloud"
   pre = "<i class=\"material-icons\">cloud_queue</i>"
-  url = "https://rstudio.cloud"
-[[menu.main]]
-  weight = 5
-  identifier = "github"
-  name = "GitHub"
-  pre = "<i class='fab fa-github fa-lg'></i>"
-  url = "https://github.com/ameztegui/111022_data_management_visualization"
+  url = "https://rstudio.cloud/spaces/27211/join?access_code=aHODPtNn5L3JspKWeCMOnmC94jEBRM%2FmVJfm4p4t"
 
 
 
@@ -70,9 +64,9 @@ ignoreFiles = ["\\.Rmd$", "\\.Rmarkdown$", "_files$", "_cache$"]
   url = "http://udl.cat/"
 [[menu.footer]]
   weight = 2
-  name = "RStudio"
+  name = "RStudio Cloud"
   pre = "<i class=\"icon-rlogo\" style=\"font-size:150%\"></i>"
-  url = "https://rstudio.cloud/"
+  url = "https://rstudio.cloud/spaces/27211/join?access_code=aHODPtNn5L3JspKWeCMOnmC94jEBRM%2FmVJfm4p4t"
 [[menu.footer]]
   weight = 3
   identifier = "GitHub"
@@ -85,4 +79,4 @@ ignoreFiles = ["\\.Rmd$", "\\.Rmarkdown$", "_files$", "_cache$"]
 [params]
   dateFormat = "January 2, 2006"
   background = "http://www2.stat.duke.edu/courses/Spring18/Sta199/img/mugesketch.png"
-  favicon = "img/favicon.ico"
+  favicon = "img/udl_logo.ico"

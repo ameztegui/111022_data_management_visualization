@@ -52,6 +52,6 @@ These are the main texts used to prepare this course. All of them are either fre
 ### Materials
 
 You should have access to a laptop and bring it to every class, fully charged.
-
+Please refrain from texting or using your computer for anything other than coursework during class.
 
 
