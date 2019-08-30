@@ -1,6 +1,6 @@
 ---
 title: "Lab 01 - Intro to R and RStudio"
-date: "`r Sys.Date()`"
+date: "111022 | Data management and visualization with R"
 output:
   rmdformats::readthedown:
     highlight: pygments
@@ -720,3 +720,5 @@ There are a number of special functions you can use to handle missing data, and 
 
 `na.omit` will filter out all missing values from a vector
 
+
+# DISTRIBUTIONS!!!!!!!!!!!!!!
