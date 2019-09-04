@@ -107,9 +107,7 @@ class: center, middle
 
 ## Getting started
 
-- Go to RStudio Cloud and into the course workspace.
-
-- Go to the lab03 assignment
+- Go to RStudio Cloud and into the course workspace. Open the lab03 assignment
 
 
 
@@ -126,6 +124,7 @@ load("data/data_workshop.Rdata")
 
 This instruction loads 5 datasets with information from the 2nd and 3rd Spanish National Forest Inventory (IFN2 e IFN3) in Catalonia.
 
+![](img/03/plots.jpeg)
 
 
 ---
@@ -133,9 +132,9 @@ This instruction loads 5 datasets with information from the 2nd and 3rd Spanish 
 
 The data frames are:
 
-* **plots** [11,858 x 15]: all the IFN3 plots in Catalonia, with info about the date and time of measurement, soil texture and soil pH, total canopy cover and tree canopy cover, etc.
+* **plots** [11,858 x 9]: all the IFN3 plots in Catalonia, with info about the date and time of measurement, soil texture and soil pH, tree canopy cover, etc.
 
-* **trees** [111,756 x 12]: contains all the adult trees (diam > 7.5 cm) measured both in IFN2 and IFN3. Contains info about the plot, the species, diameter class, diameter measured at IFN2 and IFN3...
+* **trees** [111,756 x 10]: contains all the adult trees (diam > 7.5 cm) measured both in IFN2 and IFN3. Contains info about the plot, the species, diameter class, diameter measured at IFN2 and IFN3...
 
 * **species** [14,778 x 15]: contains the number of trees/ha per species and diameter class.
 
@@ -145,30 +144,55 @@ The data frames are:
 
 --
 
-In this lab we will use datasets `plots` and `trees`. Let's learn a little more about them:
+__In this lab we will use datasets `plots` and `trees`. Let's learn a little more about them:__
 
 
 ---
 
-## Our data: `plots`
+## `plots`
+
+Contains info about all the IFN3 **plots** measured in Catalonia </br>
 
 .small[
-- `Codi` (factor): the code of the permanent plot.
-- `Provincia` (character): the province in which the plot is located. For Catalonia the codes are:
+- __`Codi`__: the code of the permanent plot.
+- __`Provincia`__: the province in which the plot is located. For Catalonia the codes are:
     - Barcelona: "08"; Girona: "17"; Lleida: "25"; Tarragona "43"
-- `FccArb` (integer):
-- `FechaIni` (date):
-- `HoraIni` (datetime):
-- `FechaFin` (date):
-- `HoraFin` (datetime):
-- `PhSuelo` (integer):
-- `FechaPh` (date):
+- __`FccArb`__: tree canopy cover in %
+- __`FechaIni`__: date when the plot measurement started
+- __`HoraIni`__: hour at which plot measurement started 
+- __`FechaFin`__: date when the plot measurement finished
+- __`HoraFin`__: hour at which plot measurement finished 
+- __`PhSuelo`__: pH at soil
+- __`FechaPh`__: date when pH was measured
 
 ]
 
 ---
+## `trees`
 
+Contains info about all the **trees** measured in IFN3 in Catalonia
+
+.small[
+- __`Codi`__: the code of the permanent plot.
+- __`Provincia`__: the province in which the plot is located. For Catalonia the codes are:
+    - Barcelona: "08"; Girona: "17"; Lleida: "25"; Tarragona "43"
+- __`Especie`__: the specific identity of the tree, as a code. You can find the meaning of each code [here](https://www.miteco.gob.es/es/biodiversidad/servicios/banco-datos-naturaleza/documentador_bdcampo_ifn3_tcm30-282240.pdf) (pages 24-28)
+- __`Rumbo`__: the angle from the center of the plot to the tree, measured in centesimal degrees (so takes values from 0 to 400)
+- __`Dist`__: the distance from the center of the plot to the tree, in meters
+- __`N`__: number of trees per hectare that this tree represents
+- __`CD`__: diameter class, in centimeters and grouped in 5 cm classes
+- __`DiamIf3`__: tree diameter, in centimeters, as measured in IFN3
+- __`DiamIf2`__: tree diameter, in centimeters, as measured in IFN2
+- __`HeiIf3`__: tree height, in meters, as measured in IFN3.
+]
+
+
+---
 class: center, middle
+
+We will use the package `dplyr` to transform our data frames in the way we need it in each case. With `dplyr` we can create new variables, select those of interest, execute filters, etc. So...
+
+--
 
 # Let's go find today's lab!
 

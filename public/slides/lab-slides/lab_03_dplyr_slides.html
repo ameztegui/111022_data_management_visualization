@@ -1,8 +1,8 @@
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<html>
   <head>
     <title>Lab 03: Data transformation with dplyr</title>
-    <meta charset="utf-8" />
+    <meta charset="utf-8">
     <meta name="date" content="2018-01-18" />
     <link href="libs/font-awesome/css/all.css" rel="stylesheet" />
     <link href="libs/font-awesome/css/v4-shims.css" rel="stylesheet" />
@@ -87,9 +87,7 @@ class: center, middle
 
 ## Getting started
 
-- Go to RStudio Cloud and into the course workspace.
-
-- Go to the lab03 assignment
+- Go to RStudio Cloud and into the course workspace. Open the lab03 assignment
 
 
 
@@ -107,6 +105,7 @@ load("data/data_workshop.Rdata")
 
 This instruction loads 5 datasets with information from the 2nd and 3rd Spanish National Forest Inventory (IFN2 e IFN3) in Catalonia.
 
+![](img/03/plots.jpeg)
 
 
 ---
@@ -114,9 +113,9 @@ This instruction loads 5 datasets with information from the 2nd and 3rd Spanish 
 
 The data frames are:
 
-* **plots** [11,858 x 15]: all the IFN3 plots in Catalonia, with info about the date and time of measurement, soil texture and soil pH, total canopy cover and tree canopy cover, etc.
+* **plots** [11,858 x 9]: all the IFN3 plots in Catalonia, with info about the date and time of measurement, soil texture and soil pH, tree canopy cover, etc.
 
-* **trees** [111,756 x 12]: contains all the adult trees (diam &gt; 7.5 cm) measured both in IFN2 and IFN3. Contains info about the plot, the species, diameter class, diameter measured at IFN2 and IFN3...
+* **trees** [111,756 x 10]: contains all the adult trees (diam &gt; 7.5 cm) measured both in IFN2 and IFN3. Contains info about the plot, the species, diameter class, diameter measured at IFN2 and IFN3...
 
 * **species** [14,778 x 15]: contains the number of trees/ha per species and diameter class.
 
@@ -126,36 +125,60 @@ The data frames are:
 
 --
 
-In this lab we will use datasets `plots` and `trees`. Let's learn a little more about them:
+__In this lab we will use datasets `plots` and `trees`. Let's learn a little more about them:__
 
 
 ---
 
-## Our data: `plots`
+## `plots`
+
+Contains info about all the IFN3 **plots** measured in Catalonia &lt;/br&gt;
 
 .small[
-- `Codi` (factor): the code of the permanent plot.
-- `Provincia` (character): the province in which the plot is located. For Catalonia the codes are:
+- __`Codi`__: the code of the permanent plot.
+- __`Provincia`__: the province in which the plot is located. For Catalonia the codes are:
     - Barcelona: "08"; Girona: "17"; Lleida: "25"; Tarragona "43"
-- `FccArb` (integer):
-- `FechaIni` (date):
-- `HoraIni` (datetime):
-- `FechaFin` (date):
-- `HoraFin` (datetime):
-- `PhSuelo` (integer):
-- `FechaPh` (date):
+- __`FccArb`__: tree canopy cover in %
+- __`FechaIni`__: date when the plot measurement started
+- __`HoraIni`__: hour at which plot measurement started 
+- __`FechaFin`__: date when the plot measurement finished
+- __`HoraFin`__: hour at which plot measurement finished 
+- __`PhSuelo`__: pH at soil
+- __`FechaPh`__: date when pH was measured
 
 ]
 
 ---
+## `trees`
 
+Contains info about all the **trees** measured in IFN3 in Catalonia
+
+.small[
+- __`Codi`__: the code of the permanent plot.
+- __`Provincia`__: the province in which the plot is located. For Catalonia the codes are:
+    - Barcelona: "08"; Girona: "17"; Lleida: "25"; Tarragona "43"
+- __`Especie`__: the specific identity of the tree, as a code. You can find the meaning of each code [here](https://www.miteco.gob.es/es/biodiversidad/servicios/banco-datos-naturaleza/documentador_bdcampo_ifn3_tcm30-282240.pdf) (pages 24-28)
+- __`Rumbo`__: the angle from the center of the plot to the tree, measured in centesimal degrees (so takes values from 0 to 400)
+- __`Dist`__: the distance from the center of the plot to the tree, in meters
+- __`N`__: number of trees per hectare that this tree represents
+- __`CD`__: diameter class, in centimeters and grouped in 5 cm classes
+- __`DiamIf3`__: tree diameter, in centimeters, as measured in IFN3
+- __`DiamIf2`__: tree diameter, in centimeters, as measured in IFN2
+- __`HeiIf3`__: tree height, in meters, as measured in IFN3.
+]
+
+
+---
 class: center, middle
+
+We will use the package `dplyr` to transform our data frames in the way we need it in each case. With `dplyr` we can create new variables, select those of interest, execute filters, etc. So...
+
+--
 
 # Let's go find today's lab!
 
 &lt;iframe src="https://giphy.com/embed/3o7TKUM3IgJBX2as9O" width="480" height="360" frameBorder="0" class="giphy-embed" allowFullScreen&gt;&lt;/iframe&gt;
     </textarea>
-<style data-target="print-only">@media screen {.remark-slide-container{display:block;}.remark-slide-scaler{box-shadow:none;}}</style>
 <script src="https://remarkjs.com/downloads/remark-latest.min.js"></script>
 <script>var slideshow = remark.create({
 "highlightStyle": "github",
@@ -165,57 +188,16 @@ class: center, middle
 if (window.HTMLWidgets) slideshow.on('afterShowSlide', function (slide) {
   window.dispatchEvent(new Event('resize'));
 });
-(function(d) {
-  var s = d.createElement("style"), r = d.querySelector(".remark-slide-scaler");
+(function() {
+  var d = document, s = d.createElement("style"), r = d.querySelector(".remark-slide-scaler");
   if (!r) return;
   s.type = "text/css"; s.innerHTML = "@page {size: " + r.style.width + " " + r.style.height +"; }";
   d.head.appendChild(s);
-})(document);
-
-(function(d) {
-  var el = d.getElementsByClassName("remark-slides-area");
-  if (!el) return;
-  var slide, slides = slideshow.getSlides(), els = el[0].children;
-  for (var i = 1; i < slides.length; i++) {
-    slide = slides[i];
-    if (slide.properties.continued === "true" || slide.properties.count === "false") {
-      els[i - 1].className += ' has-continuation';
-    }
-  }
-  var s = d.createElement("style");
-  s.type = "text/css"; s.innerHTML = "@media print { .has-continuation { display: none; } }";
-  d.head.appendChild(s);
-})(document);
-// delete the temporary CSS (for displaying all slides initially) when the user
-// starts to view slides
-(function() {
-  var deleted = false;
-  slideshow.on('beforeShowSlide', function(slide) {
-    if (deleted) return;
-    var sheets = document.styleSheets, node;
-    for (var i = 0; i < sheets.length; i++) {
-      node = sheets[i].ownerNode;
-      if (node.dataset["target"] !== "print-only") continue;
-      node.parentNode.removeChild(node);
-    }
-    deleted = true;
-  });
 })();</script>
 
 <script>
 (function() {
-  var links = document.getElementsByTagName('a');
-  for (var i = 0; i < links.length; i++) {
-    if (/^(https?:)?\/\//.test(links[i].getAttribute('href'))) {
-      links[i].target = '_blank';
-    }
-  }
-})();
-</script>
-
-<script>
-slideshow._releaseMath = function(el) {
-  var i, text, code, codes = el.getElementsByTagName('code');
+  var i, text, code, codes = document.getElementsByTagName('code');
   for (i = 0; i < codes.length;) {
     code = codes[i];
     if (code.parentNode.tagName !== 'PRE' && code.childElementCount === 0) {
@@ -229,8 +211,7 @@ slideshow._releaseMath = function(el) {
     }
     i++;
   }
-};
-slideshow._releaseMath(document);
+})();
 </script>
 <!-- dynamically load mathjax for compatibility with self-contained -->
 <script>
