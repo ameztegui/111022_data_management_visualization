@@ -26,7 +26,7 @@ lessons:
     title: "Basic data visualization with ggplot"
   - date: "Rg"
     title: "Data transformation: create new variables, filter, select and organize data"
-    slides:
+    slides: "lab-slides/lab_03_dplyr_slides.html"
     lab: "lab-03-dplyr.html"
 
   - date: "Rg"
