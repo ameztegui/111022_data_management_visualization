@@ -1,0 +1,177 @@
+---
+title: "Lab 03: Data transformation with dplyr"
+author: ""
+date: "2018-01-18"
+output:
+  xaringan::moon_reader:
+    css: "lab-slides.css"
+    logo: img/logo_udl.png
+    lib_dir: libs
+    nature:
+      highlightStyle: github
+      highlightLines: true
+      countIncrementalSlides: false
+---
+
+```{r setup, include=FALSE}
+# R options
+options(
+  htmltools.dir.version = FALSE, # for blogdown
+  show.signif.stars = FALSE,     # for regression output
+  warm = 1
+  )
+# Set dpi and height for images
+library(knitr)
+opts_chunk$set(fig.height = 2.65, dpi = 300) 
+# ggplot2 color palette with gray
+color_palette <- list(gray = "#999999", 
+                      salmon = "#E69F00", 
+                      lightblue = "#56B4E9", 
+                      green = "#009E73", 
+                      yellow = "#F0E442", 
+                      darkblue = "#0072B2", 
+                      red = "#D55E00", 
+                      purple = "#CC79A7")
+# For nonsese...
+# library(emo)
+htmltools::tagList(rmarkdown::html_dependency_font_awesome())
+```
+
+```{r echo=FALSE, message=FALSE, warning=FALSE}
+library(tidyverse)
+library(rvest)
+```
+
+class: center, middle
+
+# Welcome to labs!
+
+---
+
+## Agenda
+
+1. **Lab structure:** Lab structure overview.
+2. **Lab 03 intro and demos:** Introduce the lab, and work through the first section as a class.
+3. **On your own:** Work on the rest of the lab "on your own", but feel free to check in with teammates as much as you like and ask me any doubt.
+
+---
+
+class: center, middle
+
+# Lab structure
+
+---
+
+## Lab structure
+
+- Short introduction with lab goals 
+
+- Lab instructions posted on the course website under `</>`
+    
+- Generally, we will start the lab together as a class, then you will use the remaining time to work through the lab, do the exercises and fill out your lab report using RStudio Cloud.
+    + Wait! Lab report? RStudio Cloud?
+    + Don't worry, we'll see how to use this tools (trust me, it's easy!). For now, relax and let's go find today's lab!
+    
+    
+---
+
+## Tips
+
+- You do not have to finish the lab in class, they're due next week in lab. But you might choose to get through portions that you think will be challenging (which initially might be the coding component) in class when I can help you on the spot, and leave the narrative writing till later.
+
+- Do not pressure each other to finish early, use the time wisely to really learn the material and produce a quality report. This will be valued in the gradings.
+
+- You are free to check in/discuss/talk with teammates as much as you like and ask me any doubt, but the lab report is an individual exercise.
+
+---
+
+class: center, middle
+
+# Lab 03 Data transformation with dplyr
+
+---
+
+## Goals
+
+- Learn to transform your dataframe
+    + Create new variables
+    + Select by rows and by columns
+    + Sort your data
+    
+- Learn to create summary information about your dataframe
+    + Summarised functions
+    + Summaries by group
+
+
+---
+
+## Getting started
+
+- Go to RStudio Cloud and into the course workspace.
+
+- Go to the lab03 assignment
+
+
+
+---
+
+## Our data
+
+- The data is loaded in the RStudio Cloud Assignment for Lab03
+- To load it in your session you need to type:
+
+```{r, eval=F}
+load("data/data_workshop.Rdata")
+```
+
+This instruction loads 5 datasets with information from the 2nd and 3rd Spanish National Forest Inventory (IFN2 e IFN3) in Catalonia.
+
+
+
+---
+## Our data 
+
+The data frames are:
+
+* **plots** [11,858 x 15]: all the IFN3 plots in Catalonia, with info about the date and time of measurement, soil texture and soil pH, total canopy cover and tree canopy cover, etc.
+
+* **trees** [111,756 x 12]: contains all the adult trees (diam > 7.5 cm) measured both in IFN2 and IFN3. Contains info about the plot, the species, diameter class, diameter measured at IFN2 and IFN3...
+
+* **species** [14,778 x 15]: contains the number of trees/ha per species and diameter class.
+
+* **coordinates** [11,858 x 6]: contains the X & Y coordinates of each IFN3 plot.
+
+* **leaf** [10447 x 3]: leaf biomass and carbon content for those IFN3 plots where it is  available
+
+--
+
+In this lab we will use datasets `plots` and `trees`. Let's learn a little more about them:
+
+
+---
+
+## Our data: `plots`
+
+.small[
+- `Codi` (factor): the code of the permanent plot.
+- `Provincia` (character): the province in which the plot is located. For Catalonia the codes are:
+    - Barcelona: "08"; Girona: "17"; Lleida: "25"; Tarragona "43"
+- `FccArb` (integer):
+- `FechaIni` (date):
+- `HoraIni` (datetime):
+- `FechaFin` (date):
+- `HoraFin` (datetime):
+- `PhSuelo` (integer):
+- `FechaPh` (date):
+
+]
+
+---
+
+class: center, middle
+
+# Let's go find today's lab!
+
+<iframe src="https://giphy.com/embed/3o7TKUM3IgJBX2as9O" width="480" height="360" frameBorder="0" class="giphy-embed" allowFullScreen></iframe>
+
+

@@ -37,16 +37,16 @@ options(
   show.signif.stars = FALSE     # for regression output
   )
 ```
-The main goal of this lab is to introduce you to R Markdown, and see how we can use it to produce lab reports for our course. 
+The main goal of this lab is ...
 
 
-We also need to load the dataset we will use for this workshop, we can download them from  [GitHub](https://github.com/ameztegui/tidyverse_workshop/data).
+We also need to load the dataset we will use for this workshop, which are already uploaded in the RStudio Cloud project. To load it to your R session:
 
 ```{r introduccion, message=F, warning=FALSE, results="hide"}
 load("data/data_workshop.Rdata")
 ```
 
-In these exercises we will use five data frames with information from the 2nd and 3rd Spanish National Forest Inventory (IFN2 e IFN3) in Catalonia. The data frames are:
+This instruction loads 5 datasets with information from the 2nd and 3rd Spanish National Forest Inventory (IFN2 e IFN3) in Catalonia. The data frames are:
 
 * **plots** [11,858 x 15]: all the IFN3 plots in Catalonia, with info about the date and time of measurement, soil texture and soil pH, total canopy cover and tree canopy cover, etc.
 
@@ -58,23 +58,60 @@ In these exercises we will use five data frames with information from the 2nd an
 
 * **leaf** [10447 x 3]: leaf biomass and carbon content for those IFN3 plots where it is  available
 
-First thing to do is to have a look at the data, to get familiar with the data they contain. 
+The first thing to do when you load a dataset is to have a look at the data, to get familiar with the information they contain. 
 
 ```{r see.data}
 plots
 trees
 ```
 
-Maybe you have noticed that printing the data frames produces a different output. Instead of plotting all the content, it prints by default the first 10 rows, and it will also give us some information about the variable types. This is because they are not *normal* data frames, but tibbles.We can check this by printing its class type.
-```{r tibble_class}
-class(plots)
-```
-
-A *tibble* is just a data frame with some particularities: for example, they only print the first 10 rows by default (instead of the whole data frame), and printing them provides information on all the variables and their class. Besides that, we can treat tibbles as normal data frames, because they behave like them at all effects. Since they are tibbles, we can use the function `glimpse` to have a prettier summary of its content.
+We can get a slightly different view by using the `glimpse`function from the `tibble`package (included in the tidyverse)
 
 ```{r glimpse.data}
-glimpse(plots)
+glimpse(trees)
 ```
+
+For this lab we will mostly use the datasets `trees`, and plots, let's see the variables that they contain:
+
+**PLOTS**
+
+This dataframe contains information on the plots measured in the National Forest Inventory
+
+- Codi (factor): the code of the permanent plot.
+- Provincia (character): the province in which the plot is located. For Catalonia the codes are:
+    - Barcelona: "08"
+    - Girona: "17"
+    - Lleida: "25"
+    - Tarragona "43"
+- Cla (factor): type of plot, depending if it was measured in IFN2 or not
+- Subclase (factor):
+- FccTot (integer):
+- FccArb (integer):
+- FechaIni (date):
+- HoraIni (datetime):
+- FechaFin (date):
+- HoraFin (datetime):
+- Rocosid (integer):
+- Textura (integer):
+- MatOrg (integer):
+- PhSuelo (integer):
+
+** TREES**
+
+- Codi (factor): the code of the permanent plot.
+- Provincia (character): the province in which the plot is located. For Catalonia the codes are:
+    - Barcelona: "08"
+    - Girona: "17"
+    - Lleida: "25"
+    - Tarragona "43"
+- Especie (factor): the specific identity of the tree, as a code. You can find the meaning of each code [here](https://www.miteco.gob.es/es/biodiversidad/servicios/banco-datos-naturaleza/documentador_bdcampo_ifn3_tcm30-282240.pdf) (pages 24-28)
+- Rumbo: the angle from the center of the plot to the tree, measured in centesimal degrees (so takes values from 0 to 400)
+- Dist: the distance from the center of the plot to the tree, in meters
+- N: number of trees per hectare that this tree represents
+- CD: diameter class, in centimeters and grouped in 5 cm classes
+- DiamIf3: tree diameter, in centimeters, as measured in IFN3
+- DiamIf2: tree diameter, in centimeters, as measured in IFN2
+- HeiIf3: tree height, in meters, as measured in IFN3.
 
 
 
@@ -94,14 +131,47 @@ We will use the package `dplyr` to transform our data frames in the way we need 
 
 * `summarise` will create new variables that summarize values of an existing variable (mean, sum, etc.)
 
-All of them have a similar structure: the first argument in the function is the `data frame` to which it will be applied, and the rest of arguments specify what to do with this `data frame`, depending on the `verb`we are using. This is a common feature of the `tidyverse`, and also one of its strengths, because many functions share the same structure.
+All of them, as most fuctions in the tidyverse, have a similar structure: the first argument in the function is the dataframe to which it will be applied, and the rest of arguments specify what to do with this dataframe, depending on the verb we are using. This is a common feature of the `tidyverse`, and also one of its strengths, because many functions share the same structure.
 
-Also, it is important to note that the output of these functions will always be a data frame (as is the input), and that they do not modify the original data frame. That is, if we want to store the result of our process, we need to assign the operations to a given R object, that can be the original data frame (in this case, it will overwrite it) or a new one.
+Also, it is important to note that the output of these functions will always be a dataframe (as is the input), and that they do not modify the original dataframe. That is, if we want to store the result of our process, we need to assign the operations to a given R object, that can be the original data frame (in this case, it will overwrite it) or a new one.
 
-### `filter`
+## Retain observations with `filter`
 
  `filter` selects those rows of a data frame that accomplish a certain criterion. The first argument is the data frame, and the rest are the criteria, that can be specified in chain, separated by commas.
  
+For example, we can select all those plots that have been measured in Barcelona by typing:
+
+```{r}
+filter(plots, Provincia == "08")
+```
+
+ 
+<div class=exercise>
+**EXERCISE 1:**</br>
+
+To practice with `filter` let's try to find those plots of IFN that: 
+
+* 1.1 Are located in Barcelona (08) or Girona (17). 
+Hint: check the operators `|` and [`%in%`](http://www.datasciencemadesimple.com/in-operator-in-r/)
+
+We have two options:
+
+
+```{r,results="hide"}
+# Option 1
+    filter (plots, Provincia =="08" | Provincia =="17")
+# Option 2
+    filter (plots, Provincia %in% c("08", "17"))
+    
+```
+
+We see that both options produce exactly the same result. But the next option wouldn't be valid, since we need to specify explicitly the variable every time we add a new condition:
+
+``` {r,eval=FALSE, results="hide"}
+filter(plots, Provincia =="08" | "17")
+```
+
+</div>
 
 ```{r, eval=TRUE}
 filter(gapminder, country == "Spain")
