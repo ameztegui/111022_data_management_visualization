@@ -26,6 +26,9 @@ lessons:
     title: "Basic data visualization with ggplot"
   - date: "Rg"
     title: "Data transformation: create new variables, filter, select and organize data"
+    slides:
+    lab: "lab-03-dplyr.html"
+
   - date: "Rg"
     title: "Types of data: categorical and numerical, data transformation"
   - date: "tbd"

@@ -1,5 +1,5 @@
 ---
-title: "Welcome to </br>Data Management </br>and Visualization with R"
+title: "The data pipeline and </br>the concept of tidy data"
 author: "Aitor Ameztegui"
 date: "`r Sys.Date()`"
 output:
@@ -40,6 +40,92 @@ htmltools::tagList(rmarkdown::html_dependency_font_awesome())
 library(tidyverse)
 library(rvest)
 ```
+
+# The steps of the scientific method
+
+.pull-left[
+1. Formulate of a question
+{{content}}]
+
+--
+
+2. Hypothesis and predictions
+{{content}}
+
+--
+
+3. Set an experiment and collect data
+{{content}}
+
+--
+
+4. Analyse the data
+{{content}}
+
+--
+
+5. Get to a conclusion
+{{content}}
+
+--
+
+6. Communicate
+
+
+
+.pull-right[
+![](img/02/drawing.png)
+]
+
+
+---
+
+# The data pipeline
+
+So once we have the data, what do we do with it?
+
+![](img/02/tidyverse_schema.png)
+
+---
+
+# The data pipeline
+
+So once we have the data, what do we do with it?
+
+![](img/02/tidyverse_schema2.png)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+---
 
 # Who are we?
 
