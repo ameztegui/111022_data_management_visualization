@@ -28,8 +28,8 @@ markup: "mmark"
 {.table .table-condensed .table-striped .text-left}
 <span></span>     | <span></span>     | <span></span>    | <span></span>    |  <span></span>      
 ------------------|-------------------|------------------|------------------|------------------ 
- [Aitor Ameztegui](http://ameztegui.weebly.com/) | <a href="mailto:aitor.ameztegui@eagrof.udl.cat" title="email"><i class="fa fa-envelope"></i></a> &nbsp; <a href="https://github.com/ameztegui" title="GitHub"><i class="fa fa-github"></i></a> &nbsp; <a href="https://twitter.com/multivac42" title="Twitter"><i class="fa fa-twitter"></i></a>  &nbsp;<a href="tel:973702540" title="Telephone"><i class="fa fa-phone"></i></a> | Tue 11:00 - 12:30 and Thur 10:00 - 11:30 | Building 4 2.04.1
-[Marcos Rodrigues](http://www.eagrof.udl.cat/es/personal/PDI/rodrigues.html) | <a href="mailto:rmarcos@eagrof.udl.cat" title="email"><i class="fa fa-envelope"></i></a>  &nbsp; &nbsp;&nbsp;&nbsp;&nbsp; &nbsp; <a href="tel:973702546" title="Telephone"><i class="fa fa-phone"></i></a> | Sun 1:00 - 3:00 | Building 4 2.05.2
+ [Aitor Ameztegui](http://ameztegui.weebly.com/) | <a href="mailto:aitor.ameztegui@eagrof.udl.cat" title="email"><i class="fa fa-envelope"></i></a> &nbsp; <a href="https://github.com/ameztegui" title="GitHub"><i class="fa fa-github"></i></a> &nbsp; <a href="https://twitter.com/multivac42" title="Twitter"><i class="fa fa-twitter"></i></a>  &nbsp;<a href="tel:973702539" title="Telephone"><i class="fa fa-phone"></i></a> | Tue 11:00 - 12:30 and Thur 10:00 - 11:30 | Building 4 2.04.2
+[Marcos Rodrigues](http://www.eagrof.udl.cat/es/personal/PDI/rodrigues.html) | <a href="mailto:rmarcos@eagrof.udl.cat" title="email"><i class="fa fa-envelope"></i></a>  &nbsp; &nbsp;&nbsp;&nbsp;&nbsp; &nbsp; <a href="tel:973702546" title="Telephone"><i class="fa fa-phone"></i></a> | Sun 1:00 - 3:00 | Building 4 2.04.2
                 
 
 ### Texts

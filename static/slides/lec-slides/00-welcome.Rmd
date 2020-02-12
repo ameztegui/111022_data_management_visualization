@@ -47,8 +47,8 @@ library(rvest)
  [Dr. Aitor Ameztegui](http://ameztegui.weebly.com/)<br>]
 
 <i class="fa fa-envelope"></i> &nbsp; [aitor.ameztegui@eagrof.udl.cat](mailto:aitor.ameztegui@eagrof.udl.cat) <br>
-<i class="fa fa-university"></i> &nbsp; Building 4, Bureau 2.04.1 <br>
-<i class="fa fa-phone"></i> &nbsp; 973702540 <br> 
+<i class="fa fa-university"></i> &nbsp; Building 4, Bureau 2.04.2 <br>
+<i class="fa fa-phone"></i> &nbsp; 973702539 <br> 
 <i class="fa fa-calendar"></i> &nbsp; Tue 11:00 - 12:30 <br> 
 &nbsp; &nbsp; &nbsp; Thur 15:00 - 16:00 or <br>
 &nbsp; &nbsp; &nbsp; upon request
