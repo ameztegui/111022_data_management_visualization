@@ -12,19 +12,19 @@ Class time is designed to be as interactive as possible. As instructors, we are 
 
 #### Lectures
 
-Usually, every session will start with a (hopefully short) lecture in which we set up the goals and expectations for the session, and introduce the tools we will use.
-
-#### Readings 
-
-After some lectures I will recommend some external readings to expand or consolidate concepts seen in class. These are usually not mandatory, but highly recommended.
+Usually, every session will start with a (hopefully short) lecture in which we set up the goals and expectations for the session, and introduce the tools we will use. Some  lectures will be face-to-face classes and others will be for autonomous work at home.
 
 #### Labs:
 
-The objective of the labs is to give you hands on experience with data analysis using modern statistical software. The labs will also provide you with tools that you will need to complete the final project successfully.
+The objective of the labs is to give you hands-on experience with data analysis using modern statistical software. The labs will also provide you with tools that you will need to complete the final project successfully.
 
-We will start the labs together, but they are self paced tutorials with examples, so from a point you will work on your own (although you are free to discuss with your teammates).
+In presential sessions, we will start the labs together, but they are self paced tutorials with examples, so from a point you will work on your own (although you are free to discuss with your teammates).
 
 The labs will include some short exercises you will need to complete, by creating a "lab report" (we'll see how). You are not forced to finish the lab in class, you can finish it later at home.
+
+#### Readings 
+
+In some sessions we will recommend some external readings to expand or consolidate concepts seen in class. These are usually not mandatory, but highly recommended.
 
 #### Homework:
 
@@ -33,7 +33,7 @@ Beyond the in class activities, you will be assigned larger data analysis tasks 
 
 #### Exams:
 
-There will be a two take home midterms that you are expected to complete individually. Each exam will ask you to complete a number of small programming and or analysis tasks related to the material presented in the class. The exact structure and content of the exams will be discussed in more detail before they are assigned.
+There will be two midterms that you are expected to complete individually. Each exam will ask you to complete a number of small programming and or analysis tasks related to the material presented in the class. The exact structure and content of the exams will be discussed in more detail before they are assigned.
 
 #### Final Project:
 
@@ -47,15 +47,14 @@ Your final grade will be comprised of the following:
 {.table .table-condensed .table-striped .text-left}
  <span></span>        | <span></span>
 ----------------------|----------------
-Participation & application exercises       | 10%
-Homework              | 20%
-Labs                  | 15%
-Midterm 1             | 17.5%
-Midterm 2             | 17.5%
-Final project         | 15%
+Participation         | 10%
+Labs                  | 20%
+Midterm 1             | 12.5%
+Midterm 2             | 12.5%
+Final project         | 40%
 Peer evaluation       | 5%
 
-Class attendance in lecture and lab is a firm expectation; frequent absences or tardiness will be considered a legitimate cause for grade reduction.
+Class attendance in presential lectures and labs is a firm expectation; frequent absences or tardiness will be considered a legitimate cause for grade reduction.
 
 Excused absences do not excuse you from assigned homework, it is your responsibility to make alternative arrangements to turn in any assignments in a timely fashion.
 
@@ -66,8 +65,6 @@ Excused absences do not excuse you from assigned homework, it is your responsibi
     - late, but within 48 hours of due date/time: -20%
     - any later: no credit
     
-- Late work will not be accepted for take home midterms and the final project.
-
 - You must complete the final project and be in class to present it in order to pass this course.
 
 - Please talk to us in case of illness, or personal or family issues that interferes with your ability to attend or complete classes.
@@ -77,24 +74,15 @@ Excused absences do not excuse you from assigned homework, it is your responsibi
 
 We expect each of you to behave in accordance to the principles of honesty, fairness, respect, and accountability that characterize the University community. 
 
-- Cheating on exams or plagiarism on homework assignments, lying about an illness or absence and other forms of academic dishonesty are a breach of trust with classmates and faculty, violate the abovementioned principles and will not be tolerated. Such incidences will result in a 0 grade for all parties involved.  
-
-- Use of disallowed materials during the take home exam will not be tolerated.
-
-**A note on sharing / reusing code:** IWe are aware that a huge volume of code is available on the web to solve any number of problems. Unless we explicitly tell you not to use something, the course's policy is that you may make use of any online resources (e.g. StackOverflow) but you must explicitly cite where you obtained any code you directly use (or use as inspiration). Except for the take home exams, you are welcome to discuss the problems together and ask for advice, but you may not directly send or make use of code from another student in this class. On the take home exams all communication with classmates is explicitly forbidden.
-
+**A note on sharing / reusing code:** We are aware that a huge volume of code is available on the web to solve any number of problems. Unless we explicitly tell you not to use something, the course's policy is that you may make use of any online resources (e.g. StackOverflow) but you must explicitly cite where you obtained any code you directly use (or use as inspiration). Except for the exams, you are welcome to discuss the problems together and ask for advice, but you may not directly send or make use of code from another student in this class. On the exams, all communication with classmates will be explicitly forbidden.
 
 ### Diversity & Inclusiveness:
 
-It is our intent that students from all diverse backgrounds and perspectives be well-served by this course, that students' learning needs be addressed both in and out of class, and that the diversity that the students bring to this class be viewed as a resource, strength and benefit. It is my intent to present materials and activities that are respectful of diversity: gender identity, sexuality, disability, age, socioeconomic status, ethnicity, race, nationality, religion, and culture. Let me know ways to improve the effectiveness of the course for you personally, or for other students or student groups.
+It is our intent that students from all diverse backgrounds and perspectives be well-served by this course, that students' learning needs be addressed both in and out of class, and that the diversity that the students bring to this class be viewed as a resource, strength and benefit. It is our intent to present materials and activities that are respectful of diversity: gender identity, sexuality, disability, age, socioeconomic status, ethnicity, race, nationality, religion, and culture. Let us know ways to improve the effectiveness of the course for you personally, or for other students or student groups.
 
-- If you have a name and/or set of pronouns that differ from those that appear in your official Duke records, please let me know!
-
-- If you feel like your performance in the class is being impacted by your experiences outside of class, please don't hesitate to come and talk with any of us If you prefer to speak with someone outside of the course, the MSc coordinator is an excellent resource.
+- If you feel like your performance in the class is being impacted by your experiences outside of class, please don't hesitate to come and talk with any of us. If you prefer to speak with someone outside of the course, the MSc coordinator is an excellent resource.
 
 - We (like many people) are still in the process of learning about diverse perspectives and identities. If something was said in class (by anyone) that made you feel uncomfortable, please talk to us about it.
-
-
 
 ### How to get help:
 
