@@ -46,7 +46,7 @@ library(rvest)
 .pull-left[.bold[
  [Dr. Aitor Ameztegui](http://ameztegui.weebly.com/)<br>]
 
-<i class="fa fa-envelope"></i> &nbsp; [aitor.ameztegui@eagrof.udl.cat](mailto:aitor.ameztegui@eagrof.udl.cat) <br>
+<i class="fa fa-envelope"></i> &nbsp; [aitor.ameztegui@udl.cat](mailto:aitor.ameztegui@udl.cat) <br>
 <i class="fa fa-university"></i> &nbsp; Building 4, Bureau 2.04.2 <br>
 <i class="fa fa-phone"></i> &nbsp; 973702539 <br> 
 <i class="fa fa-calendar"></i> &nbsp; Tue 11:00 - 12:30 <br> 
@@ -57,7 +57,7 @@ library(rvest)
 .pull-right[.bold[
 [Dr. Marcos Rodrigues](http://www.eagrof.udl.cat/es/personal/PDI/rodrigues.html) <br>]
 
-<i class="fa fa-envelope"></i> &nbsp; [rmarcos@eagrof.udl.cat](mailto:rmarcos@eagrof.udl.cat) <br>
+<i class="fa fa-envelope"></i> &nbsp; [rmarcos@udl.cat](mailto:rmarcos@udl.cat) <br>
 <i class="fa fa-university"></i> &nbsp; Building 4, Bureau 2.05.1 <br>
 <i class="fa fa-phone"></i> &nbsp; 973702546 <br> 
 <i class="fa fa-calendar"></i> &nbsp; Mon 12:00 - 2:00 or <br>
@@ -243,21 +243,43 @@ class: center, middle, inverse
 
 ---
 
-# Join RStudio.cloud
+# Join RStudio cloud. Why?
 
-- What's RStudio?
+.pull-left[
+![](img/rstudiocloud.jpg)
+{{content}}
+]
+--
+- RStudio Cloud is a managed cloud instance of the RStudio IDE
+{{content}}
 
 --
 
-- And why RStudio Cloud?
+- Reduces friction at first exposure to R
+{{content}}
 
 --
 
-Go to [shorturl.at/gitGM](shorturl.at/gitGM), and log in.
+- Avoid the need for software local installation, usually painful
+{{content}}
 
-<font color="#E34132">
-Once done, place a green sticky on your laptop. If you have questions, place a pink sticky.
-</font>
+--
+
+- No need to install packages, circulate files with data or download files
+{{content}}
+
+--
+
+.pull-right[
+
+- qwsasd
+{{content}}
+
+--
+
+- Go to [shorturl.at/gitGM](shorturl.at/gitGM), and log in
+
+]
 ---
 
 # Create your first data visualization
