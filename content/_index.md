@@ -7,29 +7,20 @@ markup: "mmark"
 
 ### Course info
 
-#### Lectures
+#### Lectures and labs
 
-<font color="#6CA0DC"><i class="fas fa-university fa-lg"></i></font> &nbsp; To be determined
+<font color="#6CA0DC"><i class="fas fa-university fa-lg"></i></font> &nbsp; Computer Room 4.2 (Building 4)
 
-<font color="#6CA0DC"><i class="fas fa-calendar-alt fa-lg"></i></font> &nbsp; To be determined
+<font color="#6CA0DC"><i class="fas fa-calendar-alt fa-lg"></i></font> &nbsp; Mondays, from 9.15 to 14
 
-#### Labs
-
-<font color="#6CA0DC"><i class="fas fa-university fa-lg"></i></font> &nbsp; To be determined
-
-<font color="#6CA0DC"><i class="fas fa-calendar-alt fa-lg"></i></font> &nbsp; To be determined
-&nbsp;&nbsp; <i>or</i> &nbsp;&nbsp;
-<font color="#6CA0DC"><i class="fas fa-calendar-alt fa-lg"></i></font> &nbsp; Thur 3:05 - 4:20
-&nbsp;&nbsp; <i>or</i> &nbsp;&nbsp;
-<font color="#6CA0DC"><i class="fas fa-calendar-alt fa-lg"></i></font> &nbsp; Thur 4:40 - 5:55
 
 ### Teaching team and office hours 
 
 {.table .table-condensed .table-striped .text-left}
 <span></span>     | <span></span>     | <span></span>    | <span></span>    |  <span></span>      
 ------------------|-------------------|------------------|------------------|------------------ 
- [Aitor Ameztegui](http://ameztegui.weebly.com/) | <a href="mailto:aitor.ameztegui@eagrof.udl.cat" title="email"><i class="fa fa-envelope"></i></a> &nbsp; <a href="https://github.com/ameztegui" title="GitHub"><i class="fa fa-github"></i></a> &nbsp; <a href="https://twitter.com/multivac42" title="Twitter"><i class="fa fa-twitter"></i></a>  &nbsp;<a href="tel:973702539" title="Telephone"><i class="fa fa-phone"></i></a> | Tue 11:00 - 12:30 and Thur 10:00 - 11:30 | Building 4 2.04.2
-[Marcos Rodrigues](http://www.eagrof.udl.cat/es/personal/PDI/rodrigues.html) | <a href="mailto:rmarcos@eagrof.udl.cat" title="email"><i class="fa fa-envelope"></i></a>  &nbsp; &nbsp;&nbsp;&nbsp;&nbsp; &nbsp; <a href="tel:973702546" title="Telephone"><i class="fa fa-phone"></i></a> | Sun 1:00 - 3:00 | Building 4 2.04.2
+ [Aitor Ameztegui](http://ameztegui.weebly.com/) | <a href="mailto:aitor.ameztegui@udl.cat" title="email"><i class="fa fa-envelope"></i></a> &nbsp; <a href="https://github.com/ameztegui" title="GitHub"><i class="fa fa-github"></i></a> &nbsp; <a href="https://twitter.com/multivac42" title="Twitter"><i class="fa fa-twitter"></i></a>  &nbsp;<a href="tel:973702539" title="Telephone"><i class="fa fa-phone"></i></a> | Thur 11:30 - 13:30 or upon request | Building 4 - Office 2.04.2
+[Marcos Rodrigues](http://www.eagrof.udl.cat/es/personal/PDI/rodrigues.html) | <a href="mailto:rmarcos@eagrof.udl.cat" title="email"><i class="fa fa-envelope"></i></a>  &nbsp; &nbsp;&nbsp;&nbsp;&nbsp; &nbsp; <a href="tel:973702546" title="Telephone"><i class="fa fa-phone"></i></a> | Upon request | Building 4 - Office 2.04.2
                 
 
 ### Texts
@@ -51,7 +42,7 @@ These are the main texts used to prepare this course. All of them are either fre
 
 ### Materials
 
-You should have access to a laptop and bring it to every class, fully charged.
+The classes will be held in a computer room, but if you prefer, you can bring your own laptop to class, fully charged.
 Please refrain from texting or using your computer for anything other than coursework during class.
 
 
