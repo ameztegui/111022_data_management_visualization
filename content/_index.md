@@ -5,16 +5,16 @@ description: "Introductory course on data science, focused on the collection, ma
 markup: "mmark"
 ---
 
-### Course info
+## Course info
 
-#### Lectures and labs
+### Lectures and labs
 
 <font color="#6CA0DC"><i class="fas fa-university fa-lg"></i></font> &nbsp; Computer Room 4.2 (Building 4)
 
 <font color="#6CA0DC"><i class="fas fa-calendar-alt fa-lg"></i></font> &nbsp; Mondays, from 9.15 to 12
 
 
-### Teaching team and office hours 
+### Teaching team and office hours
 
 {.table .table-condensed .table-striped .text-left}
 <span></span>     | <span></span>     | <span></span>    | <span></span>    |  <span></span>      
