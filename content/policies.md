@@ -82,7 +82,7 @@ We expect each of you to behave in accordance to the principles of honesty, fair
 
 - Use of disallowed materials during the exams will not be tolerated.
 
-**A note on sharing / reusing code:** We are aware that a huge volume of code is available on the web to solve any number of problems. Unless we explicitly tell you not to use something, the course's policy is that you may make use of any online resources (e.g. StackOverflow) but you must explicitly cite where you obtained any code you directly use (or use as inspiration), and that is not coming from the materials we provide. Except for the take home exams, you are welcome to discuss the problems together and ask for advice, but you may not directly send or make use of code from another student in this class. On the take home exams all communication with classmates is explicitly forbidden.
+**A note on sharing / reusing code:** We are aware that a huge volume of code is available on the web to solve any number of problems. Unless we explicitly tell you not to use something, the course's policy is that you may make use of any online resources (e.g. StackOverflow) but you must explicitly cite where you obtained any code you directly use (or use as inspiration), and that is not coming from the materials we provide. Except for the exams, you are welcome to discuss the problems together and ask for advice, but you may not directly send or make use of code from another student in this class. On the  exams all communication with classmates is explicitly forbidden.
 
 
 ### Diversity & Inclusiveness:

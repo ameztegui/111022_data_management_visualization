@@ -49,19 +49,17 @@ library(rvest)
 <i class="fa fa-envelope"></i> &nbsp; [aitor.ameztegui@udl.cat](mailto:aitor.ameztegui@udl.cat) <br>
 <i class="fa fa-university"></i> &nbsp; Building 4, Bureau 2.04.2 <br>
 <i class="fa fa-phone"></i> &nbsp; 973702539 <br> 
-<i class="fa fa-calendar"></i> &nbsp; Tue 11:00 - 12:30 <br> 
-&nbsp; &nbsp; &nbsp; Thur 15:00 - 16:00 or <br>
-&nbsp; &nbsp; &nbsp; upon request
+<i class="fa fa-calendar"></i> &nbsp; Thur 11:30 - 13:30  <br> 
+or upon request
 <br><br>]
 
 .pull-right[.bold[
 [Dr. Marcos Rodrigues](http://www.eagrof.udl.cat/es/personal/PDI/rodrigues.html) <br>]
 
 <i class="fa fa-envelope"></i> &nbsp; [rmarcos@udl.cat](mailto:rmarcos@udl.cat) <br>
-<i class="fa fa-university"></i> &nbsp; Building 4, Bureau 2.05.1 <br>
-<i class="fa fa-phone"></i> &nbsp; 973702546 <br> 
-<i class="fa fa-calendar"></i> &nbsp; Mon 12:00 - 2:00 or <br>
-&nbsp; &nbsp; &nbsp; upon request
+<i class="fa fa-university"></i> &nbsp; Building 4, Bureau 2.04.2 <br>
+<i class="fa fa-phone"></i> &nbsp; 973702539 <br> 
+<i class="fa fa-calendar"></i> &nbsp; Upon request
 <br><br>]
 
 ---
@@ -270,16 +268,11 @@ class: center, middle, inverse
 
 --
 
-.pull-right[
 
-- qwsasd
-{{content}}
 
---
+**Go to [shorturl.at/gitGM](shorturl.at/gitGM), and log in**
 
-- Go to [shorturl.at/gitGM](shorturl.at/gitGM), and log in
 
-]
 ---
 
 # Create your first data visualization
@@ -292,11 +285,13 @@ class: center, middle, inverse
 
 - Go back to the file and change your name on top (in the `yaml` -- we'll talk about what this means later) and knit again.
 
-- Then change the country names to those you're interested in. Your spelling and capitalization should match the data so take a peek at the Appendix to see how the country names are spelled. Knit again. And voila, your first data visualization!
+- Then change the country names to those you're interested in. Your spelling and capitalization should match the data so take a peek at the Appendix to see how the country names are spelled. Knit again. 
 
-<font color="#E34132">
-Once done, place a green sticky on your laptop. If you have questions, place a pink sticky.
-</font>
+
+
+And voila, your first data visualization!
+
+
 ---
 
 class: center, middle, inverse
@@ -307,13 +302,14 @@ class: center, middle, inverse
 
 # Class meetings
 
-- Interactive
+- As interactive as possible
 
 - There will be some lectures, lots of learn-by-doing
 
-- Bring your laptop to class every day
+- You can bring your laptop to class (but please refrain from texting or using your computer for anything other than coursework)
 </br></br></br>
 .center[All the info, links and materials will be posted at [datamanagement.netlify.com/](https://datamanagement.netlify.com/)]
+
 
 ---
 
@@ -323,14 +319,15 @@ class: center, middle, inverse
 
 --
 
-
-<i class="fa fa-book fa-lg"></i> .bold[Readings:] In some lectures I will recommend some external readings to expand or consolidate concepts seen in class
-
---
-
 <i class="fa fa-code  fa-lg"></i> .bold[Labs:] hands-on application of concepts and tools seen in class. 
 - They're self paced tutorials with examples
 - There will be some questions/exercises you will need to answer, by creating a "lab report" (we'll see how). Try to finish in class, but can continue later. 
+- Some labs are expected to be completed at home.
+
+--
+
+
+<i class="fa fa-book fa-lg"></i> .bold[Readings:] In some lectures we will recommend some external readings to expand or consolidate concepts seen in class
 
 --
 
@@ -338,7 +335,7 @@ class: center, middle, inverse
 
 --
 
-<i class="fa fa-check-square fa-lg"></i> .bold[Exams:] Individual, two take-home midterms
+<i class="fa fa-check-square fa-lg"></i> .bold[Exams:] Individual, two  midterms. We will ask you to complete a number of small programming and or analysis tasks related to the material presented in the class.
 
 --
 
@@ -349,19 +346,17 @@ class: center, middle, inverse
 # Grading
 
 ```{r echo=F}
-grading <- data.frame(Component = c("Participation & application exercises",
+grading <- data.frame(Component = c("Labs",
                                     "Homework",
-                                    "Labs",
                                     "Midterm 1",
                                     "Midterm 2",
-                                    "Final project",                                                                        "Peer evaluation"),
-                      Weight = c("10%*",
-                                 "20%",
+                                    "Final project",                                                                        "Participation and Peer evaluation"),
+                      Weight = c("15%",
                                  "15%",
-                                 "17.5%",
-                                 "17.5%",
-                                 "15%",                                 
-                                 "5%"))
+                                 "10%",
+                                 "10%",
+                                 "40%",                                 
+                                 "10%*"))
 
 library(knitr)
 kable(grading, format='html')
@@ -370,10 +365,9 @@ kable(grading, format='html')
 
 
 </br>
-- *Class attendance is a firm expectation; frequent absences or tardiness 
-will be considered a legitimate cause for grade reduction.
+- *Class attendance in lectures and labs is not mandatory, but is a firm expectation; frequent absences or tardiness will be considered a legitimate cause for grade reduction.
 
-- Excused absences do not excuse you from assigned homework, it is your responsibility to make alternative arrangements to turn in any assignments in a timely fashion.
+
 
 ---
 # Late/missed work policy
@@ -382,7 +376,7 @@ will be considered a legitimate cause for grade reduction.
     - late, but within 48 hours of due date/time: -20%
     - any later: no credit
 
-- Late work will not be accepted for take home midterms and the final project.
+- Late work will not be accepted for the final project.
 
 - You must ABSOLUTELY complete the final project and be in class to present it in order to pass this course.
 
@@ -391,25 +385,13 @@ will be considered a legitimate cause for grade reduction.
 
 # Sharing/reusing code
 
-- We are aware that a huge volume of code is available on the web to solve any number of problems.
+- A huge volume of code is available on the web to solve any number of problems.
 
-- Unless we explicitly tell you not to use something, the course's policy is that you may make use of any online resources (e.g. StackOverflow) but you must explicitly cite where you obtained any code you directly use (or use as inspiration). 
+- Unless we explicitly tell you not to use something, the course's policy is that *you may make use of any online resources* (e.g. StackOverflow) but **you must cite** where you obtained any code you use
 
-- Except for the take home exams, you are welcome to discuss the problems together and ask for advice, but you may not directly send or make use of code from another student in this class 
+- Except for the exams, you are welcome to discuss the problems together and ask for advice, but you may not directly send or make **use of code from another student** in this class 
 
-- On the take home exams all communication with classmates is explicitly forbidden.
-
----
-
-# Diversity & Inclusiveness:
-
-- Intent: Students from all diverse backgrounds and perspectives be well-served by this course, that students' learning needs be addressed both in and out of class, and that the diversity that the students bring to this class be viewed as a resource, strength and benefit. It is my intent to present materials and activities that are respectful of diversity: gender identity, sexuality, disability, age, socioeconomic status, ethnicity, race, nationality, religion, and culture. Let me know ways to improve the effectiveness of the course for you personally, or for other students or student groups.
-
-- If you have a name and/or set of pronouns that differ from those that appear in your official UdL records, please let us know!
-
-- If you feel like your performance in the class is being impacted by your experiences outside of class, please don't hesitate to come and talk with any of us If you prefer to speak with someone outside of the course, the MSc coordinator is an excellent resource. 
-
-- We (like many people) are still in the process of learning about diverse perspectives and identities. If something was said in class (by anyone) that made you feel uncomfortable, please talk to us about it.
+- On the exams all communication with classmates is explicitly forbidden.
 
 ---
 
