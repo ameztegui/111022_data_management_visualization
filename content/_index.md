@@ -11,7 +11,7 @@ markup: "mmark"
 
 <font color="#6CA0DC"><i class="fas fa-university fa-lg"></i></font> &nbsp; Computer Room 4.2 (Building 4)
 
-<font color="#6CA0DC"><i class="fas fa-calendar-alt fa-lg"></i></font> &nbsp; Mondays, from 9.15 to 14
+<font color="#6CA0DC"><i class="fas fa-calendar-alt fa-lg"></i></font> &nbsp; Mondays, from 9.15 to 12
 
 
 ### Teaching team and office hours 
