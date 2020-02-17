@@ -213,18 +213,10 @@ class: center, middle, inverse
 
 http://livefreeordichotomize.com/2017/12/27/a-year-as-told-by-fitbit/
 
+
 ---
+
 # Example 2
-
-## R-Ladies global tour
-
-### by Maelle Salmon
-
-http://www.masalmon.eu/2017/10/06/globalrladiestour/
-
----
-
-# Example 3
 
 ## Text analysis of Trump's tweets confirms he writes only the (angrier) Android half
 
@@ -268,9 +260,7 @@ class: center, middle, inverse
 
 --
 
-
-
-**Go to [shorturl.at/gitGM](shorturl.at/gitGM), and log in**
+**Go to [https://rstudio.cloud/spaces/27211](https://rstudio.cloud/spaces/27211), and log in (or sign up)**
 
 
 ---
@@ -279,14 +269,13 @@ class: center, middle, inverse
 
 - Once you log on to RStudio Cloud, click on this course's workspace "111022 Data Management and Visualization"
 
-- You should see a project called `SIBECOL twitter analysis`
+- You should see a project called `UN Votes`
 
-- In the Files pane in the bottom right corner, spot the file called `index.Rmd`. Open it, and then click on the "Knit" button.
+- In the Files pane in the bottom right corner, spot the file called `UN_votes.Rmd`. Open it, and then click on the "Knit" button.
 
 - Go back to the file and change your name on top (in the `yaml` -- we'll talk about what this means later) and knit again.
 
 - Then change the country names to those you're interested in. Your spelling and capitalization should match the data so take a peek at the Appendix to see how the country names are spelled. Knit again. 
-
 
 
 And voila, your first data visualization!
@@ -307,8 +296,8 @@ class: center, middle, inverse
 - There will be some lectures, lots of learn-by-doing
 
 - You can bring your laptop to class (but please refrain from texting or using your computer for anything other than coursework)
-</br></br></br>
-.center[All the info, links and materials will be posted at [datamanagement.netlify.com/](https://datamanagement.netlify.com/)]
+</br></br></br></br></br>
+.center[**All the info, links and materials will be posted at </br>[datamanagement.netlify.com](https://datamanagement.netlify.com)**]
 
 
 ---
@@ -322,7 +311,7 @@ class: center, middle, inverse
 <i class="fa fa-code  fa-lg"></i> .bold[Labs:] hands-on application of concepts and tools seen in class. 
 - They're self paced tutorials with examples
 - There will be some questions/exercises you will need to answer, by creating a "lab report" (we'll see how). Try to finish in class, but can continue later. 
-- Some labs are expected to be completed at home.
+- Some labs are expected to be done completely at home.
 
 --
 
@@ -342,6 +331,36 @@ class: center, middle, inverse
 <i class="fa fa-file-powerpoint fa-lg"></i> .bold[Final project:] during the course each of you will design a data science project using your own dataset (ideally it will come from your master's thesis). You must present the results to your classmates. You must complete the final project and be in class to present it to pass this class.
 
 ---
+
+# Class meetings
+
+####<i class="fa fa-university"></i> &nbsp; Building 4, Computer Room 4.2 <br>
+####<i class="fa fa-calendar"></i> &nbsp; Mon 10:00 - 12:00  <br> 
+
+
+--
+</br>
+- We plan weekly meetings
+
+--
+
+- We will introduce the concepts, start working in the lab together
+
+--
+
+- At a point, you must continue with the lab on your own. You can do it here (we can assist) or at home. You are not forced to finish the lab in class.
+
+--
+
+- But we expect you to have it done before next meeting.
+
+--
+
+- Face-to face classes can also be used as office hours, to solve doubts
+
+
+---
+
 
 # Grading
 
@@ -367,9 +386,8 @@ kable(grading, format='html')
 </br>
 - *Class attendance in lectures and labs is not mandatory, but is a firm expectation; frequent absences or tardiness will be considered a legitimate cause for grade reduction.
 
-
-
 ---
+
 # Late/missed work policy
 
 - Late work policy for homework assignments:
