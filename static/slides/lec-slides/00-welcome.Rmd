@@ -1,7 +1,9 @@
 ---
 title: "Welcome to </br>Data Management </br>and Visualization with R"
 author: "Aitor Ameztegui"
-date: "`r Sys.Date()`"
+date: '`r format(Sys.Date(), "%B %Y")`'
+
+
 output:
   xaringan::moon_reader:
     css: "slides.css"
