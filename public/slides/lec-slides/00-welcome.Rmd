@@ -226,6 +226,18 @@ http://varianceexplained.org/r/trump-tweets/
 
 ---
 
+# Example 3 (nicest one! XD)
+
+## Analysis of twitter interactions during SIBECOL Conference
+
+### by Aitor Ameztegui (Universitat de Lleida)
+
+https://sibecol2019-twitter.netlify.com/
+
+(Code available in the course's RStudio cloud Site)
+
+---
+
 class: center, middle, inverse
 
 # Your turn!
@@ -240,7 +252,7 @@ class: center, middle, inverse
 {{content}}
 ]
 --
-- RStudio Cloud is a managed cloud instance of the RStudio IDE
+- RStudio Cloud is a cloud managed instance of the RStudio IDE
 {{content}}
 
 --
@@ -358,6 +370,9 @@ class: center, middle, inverse
 
 - Face-to face classes can also be used as office hours, to solve doubts
 
+--
+
+- As mentioned, some lessons will be done completely at home
 
 ---
 
