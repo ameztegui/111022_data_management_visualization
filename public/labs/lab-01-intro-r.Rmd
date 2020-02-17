@@ -6,14 +6,14 @@ output:
     highlight: pygments
     number_sections: true
     css: lab.css
-runtime: shiny_prerendered
+# runtime: shiny_prerendered
 ---
 
 
 ```{r knitr_init, echo=FALSE, cache=FALSE}
 
 library(knitr)
-library(learnr)
+# library(learnr)
 
 ## Global options
 options(max.print="75")
