@@ -44,10 +44,10 @@ options(
 
 The main goal of this lab is to introduce you to R and RStudio, the software that we will be using throughout the course to collect data, prepare and transform it, and to produce high quality visualizations and charts that allow us to come to informed conclusions. 
 
-We will assume you don't have any previous experience with either R or RStudio, so in this lab we will cover the very basics, starting from the installation of the software and the first steps. If you do know some R, you may find some of the topics quite basic, and you are free to jump to wherever you wish within the document. Note however, that you are expected to complete the exercises. Moreover, we provide some tips and advices that may be interesting even if you have some experience with R.
+We will assume you don't have any previous experience with either R or RStudio, so in this lab we will cover the very basics, starting from the installation of the software and the first steps. If you *do know* some R, you may find some of the topics quite basic, and you are free to jump to wherever you wish within the document. Note however, that **you are expected to complete the exercises**. Moreover, we provide some tips and advices that may be interesting even if you have some experience with R.
 
 > **Important: Before Starting The Lab**</br>
-To avoid the pain of setting up software in different computers with different configurations and OS, we will use RStudio Cloud, a service that allows to create your analyses using RStudio directly from your browser. In this way, there will be no software to install and nothing to configure on your computer. All the data and packages needed to run the lab will be already uploaded, and the instructors can look at your files without the need for data transfer.</br> </br>
+To avoid the pain of setting up software in different computers with different configurations and OS, we will use RStudio Cloud, a service that allows to create your analyses using RStudio directly from your browser. In this way, there will be no software to install and nothing to configure on your computer. All the data and packages needed to run the lab will be already uploaded. Moreover, the instructors will be able look at your files, reports and assignments, and edit them to provide you feedback,  without the need for data transfer.</br> </br>
 However, it is also good idea to install R and RStudio on your machine, so you can use it beyond this class. Remember that R is the name of the programming language itself and RStudio is an IDE (i.e. an interface), so you won't be able to use RStudio without previously installing R. </br></br>
 [Download and install the latest version of R here](https://www.r-project.org/)</br>
 [Download and install RStudio here](https://www.rstudio.com/products/rstudio/download/#download)</br> </br>
@@ -57,9 +57,9 @@ Please note that if you use the University machines, they already have suitable 
 
 # Introduction to RStudio
 
-Throughout this lesson, we’re going to teach you some of the fundamentals of the R language. We’ll be using RStudio: a free, open source R integrated development environment. It provides a built-in editor, works on all platforms (including on servers) and provides many advantages such as integration with version control and project management (see lecture 1 to know more about the advantages of R and RStudio).
+Throughout this lesson, we’re going to teach you some of the fundamentals of the R language. We’ll be using RStudio: a free, open source R integrated development environment. It provides a built-in editor, works on all platforms (including on servers) and provides many advantages such as integration with version control and project management (see [welcome lecture](https://datamanagement.netlify.com/slides/lec-slides/00-welcome.html) to know more about the advantages of R and RStudio).
 
-As mentioned above, throughout this course we will use RStudio Cloud, a service that allows to use RStudio in your browser. However, the layout, view and functioning of your RStudio Cloud is EXACTLY the same as it would the standalone RStudio, so all the instructions can apply to both ways of working.
+As mentioned above, throughout this course we will use RStudio Cloud, a service that allows to use RStudio in your browser. However, the layout, view and functioning of your RStudio Cloud is **EXACTLY** the same as it would the standalone RStudio, so all the instructions can apply to both ways of working.
 
 ## Basic layout
 
@@ -109,11 +109,11 @@ ggplot(iris) +
 
 - **Help:** help menu for R functions. You can either type the name of a function in the search window, or use the code to search for a function with the name
 
-Of course, the layout in RStudio can be modified, and the user can set up wheich panels to see, the color of the code, and many other issues. You can learn more about customizing RStuio [here](https://support.rstudio.com/hc/en-us/articles/200549016-Customizing-RStudio). Anyway, don't worry about the different panels and their functionalities for now. You will learn more about them as we use it during the course, and hopefully you will get very familiar with them.
+Of course, the layout in RStudio can be modified, and the user can set up which panels to see, the color of the code, and many other issues. You can learn more about customizing RStuio [here](https://support.rstudio.com/hc/en-us/articles/200549016-Customizing-RStudio). Anyway, don't worry about the different panels and their functionalities for now. You will learn more about them as we use them during the course, and hopefully you will get very familiar with them.
 
 # Introduction to R
 
-So once we know what we are seeing, we can start using R. As we said in the lectures, R is quite a versatile tool, because it goes from a statistical tool to a complex programming language. Let's some of the most basic uses, and in the process we will get used to how R works.
+So once we know what we are seeing, we can start using R. As we said in the lectures, R is quite a versatile tool, because it goes from a statistical tool to a complex programming language. Let's see some of the most basic uses, and in the process we will get used to how R works.
 
 ## Using R as a calculator
 The simplest thing you could do with R is use it as a calculator, i.e. to do arithmetics. We just did this above. But now, for example, type the following:
@@ -141,22 +141,27 @@ From highest to lowest precedence:
 * Add: `+`
 * Subtract: `-`
 
-```{r}
-3 + 5 * 2
-```
-You can use parentheses to group operations to force the order of evaluation, or to make clear what you intend.
 
-```{r}
+<div class=exercise>
+
+**EXERCISE 1:** </br>
+Type the following commands in R console and see which resilt you get:</div>
+
+```{r, eval = FALSE}
+3 + 5 * 2
+
 (3 + 5) * 2
 
 ```
 
-However, although the use of parentheses clarifies the sense of the code, it can easily get unwieldy when not needed. Remember that others (or even yourself!) may later read your code.
+</div>
+
+Parenthesis can be used to clarify the sense of the code. However it can easily get unwieldy when not needed. Remember that others (or even yourself!) may later read your code.
 
 ```{r}
 3 + 5 * 2 ^ 2       # clear, if you remember the rules
 3 + 5 * (2 ^ 2)     # this is probably easier to understand
-(3 + (5 * (2 ^ 2))) # too hard to read
+(3 + (5 * (2 ^ 2))) # probably too hard to read
 
 ```
 
@@ -164,12 +169,7 @@ You may have noticed that part of the text above has not been processed by R. Ac
 
 
 ## Mathematical functions
-R has many built in mathematical functions. To call a function, we simply type its name, followed by open and closing parentheses. Anything we type inside the parentheses are called the function’s arguments:
-
-```{r addition, exercise=TRUE}
-1 + 1
-```
-
+R has many built-in mathematical functions. To call a function, we simply type its name, followed by open and closing parentheses. Anything we type inside the parentheses are called the function’s arguments:
 
 ```{r}
 
@@ -186,7 +186,9 @@ exp(0.5) # e^(1/2)
 
 >**Remembering function names and arguments:** </br></br>
 As we said, R has multitude of mathematical functions, and many more are included in the packages. Don’t worry about trying to remember every function in R. You can simply look them up on Google, or if you can remember the start of the function’s name, type the start of it, then press the <kbd>tab</kbd> key. This will show a list of functions whose name matches what you’ve typed so far. This is known as tab completion, and can save a lot of typing (and reduce the risk of typing errors). Tab completion works both in R and in RStudio. In RStudio this feature is even more useful; a extract of the function’s help file will be shown alongside the function name. Try to type `me`and press <kbd>tab</kbd> </br> </br>
+Moreover, if you press <kbd>tab</kbd> after specifying the name of the function, RStudio will provide a list of the arguments that that function needs. And if you press <kbd>tab</kbd> within quotes, it will provide a list with the folders in your current directory.
 Also, typing a `?` before the name of a command will open the help page for that command, as well as providing a detailed description of the command and how it works, scrolling to the bottom of the help page will usually show a collection of code examples which illustrate command usage. 
+At the beginning you may not find this feature so useful, but as you write more code you will find yourself using it extensively.
 
 ## Comparing things
 

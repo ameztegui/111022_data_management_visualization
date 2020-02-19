@@ -132,15 +132,15 @@ $(document).ready(function () {
 <div id="introduction.-goal" class="section level1">
 <h1><span class="header-section-number">1</span> Introduction. Goal</h1>
 <p>The main goal of this lab is to introduce you to R and RStudio, the software that we will be using throughout the course to collect data, prepare and transform it, and to produce high quality visualizations and charts that allow us to come to informed conclusions.</p>
-<p>We will assume you don’t have any previous experience with either R or RStudio, so in this lab we will cover the very basics, starting from the installation of the software and the first steps. If you do know some R, you may find some of the topics quite basic, and you are free to jump to wherever you wish within the document. Note however, that you are expected to complete the exercises. Moreover, we provide some tips and advices that may be interesting even if you have some experience with R.</p>
+<p>We will assume you don’t have any previous experience with either R or RStudio, so in this lab we will cover the very basics, starting from the installation of the software and the first steps. If you <em>do know</em> some R, you may find some of the topics quite basic, and you are free to jump to wherever you wish within the document. Note however, that <strong>you are expected to complete the exercises</strong>. Moreover, we provide some tips and advices that may be interesting even if you have some experience with R.</p>
 <blockquote>
-<p><strong>Important: Before Starting The Lab</strong></br> To avoid the pain of setting up software in different computers with different configurations and OS, we will use RStudio Cloud, a service that allows to create your analyses using RStudio directly from your browser. In this way, there will be no software to install and nothing to configure on your computer. All the data and packages needed to run the lab will be already uploaded, and the instructors can look at your files without the need for data transfer.</br> </br> However, it is also good idea to install R and RStudio on your machine, so you can use it beyond this class. Remember that R is the name of the programming language itself and RStudio is an IDE (i.e. an interface), so you won’t be able to use RStudio without previously installing R. </br></br> <a href="https://www.r-project.org/">Download and install the latest version of R here</a></br> <a href="https://www.rstudio.com/products/rstudio/download/#download">Download and install RStudio here</a></br> </br> Please note that if you use the University machines, they already have suitable versions of R and RStudio installed.</br></br></p>
+<p><strong>Important: Before Starting The Lab</strong></br> To avoid the pain of setting up software in different computers with different configurations and OS, we will use RStudio Cloud, a service that allows to create your analyses using RStudio directly from your browser. In this way, there will be no software to install and nothing to configure on your computer. All the data and packages needed to run the lab will be already uploaded. Moreover, the instructors will be able look at your files, reports and assignments, and edit them to provide you feedback, without the need for data transfer.</br> </br> However, it is also good idea to install R and RStudio on your machine, so you can use it beyond this class. Remember that R is the name of the programming language itself and RStudio is an IDE (i.e. an interface), so you won’t be able to use RStudio without previously installing R. </br></br> <a href="https://www.r-project.org/">Download and install the latest version of R here</a></br> <a href="https://www.rstudio.com/products/rstudio/download/#download">Download and install RStudio here</a></br> </br> Please note that if you use the University machines, they already have suitable versions of R and RStudio installed.</br></br></p>
 </blockquote>
 </div>
 <div id="introduction-to-rstudio" class="section level1">
 <h1><span class="header-section-number">2</span> Introduction to RStudio</h1>
-<p>Throughout this lesson, we’re going to teach you some of the fundamentals of the R language. We’ll be using RStudio: a free, open source R integrated development environment. It provides a built-in editor, works on all platforms (including on servers) and provides many advantages such as integration with version control and project management (see lecture 1 to know more about the advantages of R and RStudio).</p>
-<p>As mentioned above, throughout this course we will use RStudio Cloud, a service that allows to use RStudio in your browser. However, the layout, view and functioning of your RStudio Cloud is EXACTLY the same as it would the standalone RStudio, so all the instructions can apply to both ways of working.</p>
+<p>Throughout this lesson, we’re going to teach you some of the fundamentals of the R language. We’ll be using RStudio: a free, open source R integrated development environment. It provides a built-in editor, works on all platforms (including on servers) and provides many advantages such as integration with version control and project management (see <a href="https://datamanagement.netlify.com/slides/lec-slides/00-welcome.html">welcome lecture</a> to know more about the advantages of R and RStudio).</p>
+<p>As mentioned above, throughout this course we will use RStudio Cloud, a service that allows to use RStudio in your browser. However, the layout, view and functioning of your RStudio Cloud is <strong>EXACTLY</strong> the same as it would the standalone RStudio, so all the instructions can apply to both ways of working.</p>
 <div id="basic-layout" class="section level2">
 <h2><span class="header-section-number">2.1</span> Basic layout</h2>
 <p>When you first open RStudio (or in this case, RStudio Cloud), you will be greeted by three panels:</p>
@@ -180,13 +180,13 @@ $(document).ready(function () {
 <li><p><strong>Packages:</strong> shows a list of all the R packages installed on your harddrive and indicates whether or not they are currently loaded. Packages that are loaded in the current session are checked while those that are installed but not yet loaded are unchecked. We’ll discuss packages in more detail later.</p></li>
 <li><p><strong>Help:</strong> help menu for R functions. You can either type the name of a function in the search window, or use the code to search for a function with the name</p></li>
 </ul>
-<p>Of course, the layout in RStudio can be modified, and the user can set up wheich panels to see, the color of the code, and many other issues. You can learn more about customizing RStuio <a href="https://support.rstudio.com/hc/en-us/articles/200549016-Customizing-RStudio">here</a>. Anyway, don’t worry about the different panels and their functionalities for now. You will learn more about them as we use it during the course, and hopefully you will get very familiar with them.</p>
+<p>Of course, the layout in RStudio can be modified, and the user can set up which panels to see, the color of the code, and many other issues. You can learn more about customizing RStuio <a href="https://support.rstudio.com/hc/en-us/articles/200549016-Customizing-RStudio">here</a>. Anyway, don’t worry about the different panels and their functionalities for now. You will learn more about them as we use them during the course, and hopefully you will get very familiar with them.</p>
 </div>
 </div>
 </div>
 <div id="introduction-to-r" class="section level1">
 <h1><span class="header-section-number">3</span> Introduction to R</h1>
-<p>So once we know what we are seeing, we can start using R. As we said in the lectures, R is quite a versatile tool, because it goes from a statistical tool to a complex programming language. Let’s some of the most basic uses, and in the process we will get used to how R works.</p>
+<p>So once we know what we are seeing, we can start using R. As we said in the lectures, R is quite a versatile tool, because it goes from a statistical tool to a complex programming language. Let’s see some of the most basic uses, and in the process we will get used to how R works.</p>
 <div id="using-r-as-a-calculator" class="section level2">
 <h2><span class="header-section-number">3.1</span> Using R as a calculator</h2>
 <p>The simplest thing you could do with R is use it as a calculator, i.e. to do arithmetics. We just did this above. But now, for example, type the following:</p>
@@ -206,25 +206,25 @@ $(document).ready(function () {
 <li>Add: <code>+</code></li>
 <li>Subtract: <code>-</code></li>
 </ul>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="dv">3</span> <span class="op">+</span><span class="st"> </span><span class="dv">5</span> <span class="op">*</span><span class="st"> </span><span class="dv">2</span></code></pre></div>
-<pre><code>[1] 13</code></pre>
-<p>You can use parentheses to group operations to force the order of evaluation, or to make clear what you intend.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">(<span class="dv">3</span> <span class="op">+</span><span class="st"> </span><span class="dv">5</span>) <span class="op">*</span><span class="st"> </span><span class="dv">2</span></code></pre></div>
-<pre><code>[1] 16</code></pre>
-<p>However, although the use of parentheses clarifies the sense of the code, it can easily get unwieldy when not needed. Remember that others (or even yourself!) may later read your code.</p>
+<div class="exercise">
+<strong>EXERCISE 1:</strong> </br> Type the following commands in R console and see which resilt you get:
+</div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="dv">3</span> <span class="op">+</span><span class="st"> </span><span class="dv">5</span> <span class="op">*</span><span class="st"> </span><span class="dv">2</span>
+
+(<span class="dv">3</span> <span class="op">+</span><span class="st"> </span><span class="dv">5</span>) <span class="op">*</span><span class="st"> </span><span class="dv">2</span></code></pre></div>
+</div>
+<p>Parenthesis can be used to clarify the sense of the code. However it can easily get unwieldy when not needed. Remember that others (or even yourself!) may later read your code.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="dv">3</span> <span class="op">+</span><span class="st"> </span><span class="dv">5</span> <span class="op">*</span><span class="st"> </span><span class="dv">2</span> <span class="op">^</span><span class="st"> </span><span class="dv">2</span>       <span class="co"># clear, if you remember the rules</span></code></pre></div>
 <pre><code>[1] 23</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="dv">3</span> <span class="op">+</span><span class="st"> </span><span class="dv">5</span> <span class="op">*</span><span class="st"> </span>(<span class="dv">2</span> <span class="op">^</span><span class="st"> </span><span class="dv">2</span>)     <span class="co"># this is probably easier to understand</span></code></pre></div>
 <pre><code>[1] 23</code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">(<span class="dv">3</span> <span class="op">+</span><span class="st"> </span>(<span class="dv">5</span> <span class="op">*</span><span class="st"> </span>(<span class="dv">2</span> <span class="op">^</span><span class="st"> </span><span class="dv">2</span>))) <span class="co"># too hard to read</span></code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">(<span class="dv">3</span> <span class="op">+</span><span class="st"> </span>(<span class="dv">5</span> <span class="op">*</span><span class="st"> </span>(<span class="dv">2</span> <span class="op">^</span><span class="st"> </span><span class="dv">2</span>))) <span class="co"># probably too hard to read</span></code></pre></div>
 <pre><code>[1] 23</code></pre>
 <p>You may have noticed that part of the text above has not been processed by R. Actually, anything that follows after the hash symbol <code>#</code> is ignored by R when it executes code. The text after the <code>#</code> is called a “comment”, and can be very useful to remember the purpose and steps of a given analysis. We will talk more about comments in the lesson on “Good coding practices”.</p>
 </div>
 <div id="mathematical-functions" class="section level2">
 <h2><span class="header-section-number">3.2</span> Mathematical functions</h2>
-<p>R has many built in mathematical functions. To call a function, we simply type its name, followed by open and closing parentheses. Anything we type inside the parentheses are called the function’s arguments:</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="dv">1</span> <span class="op">+</span><span class="st"> </span><span class="dv">1</span></code></pre></div>
-<pre><code>[1] 2</code></pre>
+<p>R has many built-in mathematical functions. To call a function, we simply type its name, followed by open and closing parentheses. Anything we type inside the parentheses are called the function’s arguments:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Let's work with some trigonometry functions</span>
 
 <span class="kw">sin</span>(<span class="dv">1</span>)  <span class="co"># sinus of a number</span></code></pre></div>
@@ -236,7 +236,7 @@ $(document).ready(function () {
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">exp</span>(<span class="fl">0.5</span>) <span class="co"># e^(1/2)</span></code></pre></div>
 <pre><code>[1] 1.648721</code></pre>
 <blockquote>
-<p><strong>Remembering function names and arguments:</strong> </br></br> As we said, R has multitude of mathematical functions, and many more are included in the packages. Don’t worry about trying to remember every function in R. You can simply look them up on Google, or if you can remember the start of the function’s name, type the start of it, then press the <kbd>tab</kbd> key. This will show a list of functions whose name matches what you’ve typed so far. This is known as tab completion, and can save a lot of typing (and reduce the risk of typing errors). Tab completion works both in R and in RStudio. In RStudio this feature is even more useful; a extract of the function’s help file will be shown alongside the function name. Try to type <code>me</code>and press <kbd>tab</kbd> </br> </br> Also, typing a <code>?</code> before the name of a command will open the help page for that command, as well as providing a detailed description of the command and how it works, scrolling to the bottom of the help page will usually show a collection of code examples which illustrate command usage.</p>
+<p><strong>Remembering function names and arguments:</strong> </br></br> As we said, R has multitude of mathematical functions, and many more are included in the packages. Don’t worry about trying to remember every function in R. You can simply look them up on Google, or if you can remember the start of the function’s name, type the start of it, then press the <kbd>tab</kbd> key. This will show a list of functions whose name matches what you’ve typed so far. This is known as tab completion, and can save a lot of typing (and reduce the risk of typing errors). Tab completion works both in R and in RStudio. In RStudio this feature is even more useful; a extract of the function’s help file will be shown alongside the function name. Try to type <code>me</code>and press <kbd>tab</kbd> </br> </br> Moreover, if you press <kbd>tab</kbd> after specifying the name of the function, RStudio will provide a list of the arguments that that function needs. And if you press <kbd>tab</kbd> within quotes, it will provide a list with the folders in your current directory. Also, typing a <code>?</code> before the name of a command will open the help page for that command, as well as providing a detailed description of the command and how it works, scrolling to the bottom of the help page will usually show a collection of code examples which illustrate command usage. At the beginning you may not find this feature so useful, but as you write more code you will find yourself using it extensively.</p>
 </blockquote>
 </div>
 <div id="comparing-things" class="section level2">
@@ -553,15 +553,15 @@ df &lt;-<span class="st"> </span><span class="kw">data.frame</span>(n, s, b)</co
 [13] &quot;x&quot;         &quot;y&quot;        </code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">rm</span>(n)
 <span class="kw">gc</span>()</code></pre></div>
-<pre><code>          used (Mb) gc trigger (Mb) limit (Mb) max used  (Mb)
-Ncells 1059179 56.6    2039562  109         NA  2039562 109.0
-Vcells 1848825 14.2    8388608   64      16384  3167354  24.2</code></pre>
+<pre><code>          used (Mb) gc trigger  (Mb) limit (Mb) max used  (Mb)
+Ncells 1059138 56.6    2038788 108.9         NA  2038788 108.9
+Vcells 1848940 14.2    8388608  64.0      16384  3144462  24.0</code></pre>
 <p>If we want to removal al the objects we have currently in our working session we can pass a list object containing the names of all objects to the gc() function. If you are thinking on combining gc()and ls()you are right. This would be the way:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">rm</span>(<span class="dt">list=</span><span class="kw">ls</span>())
 <span class="kw">gc</span>()</code></pre></div>
-<pre><code>          used (Mb) gc trigger (Mb) limit (Mb) max used  (Mb)
-Ncells 1059068 56.6    2039562  109         NA  2039562 109.0
-Vcells 1848666 14.2    8388608   64      16384  3167354  24.2</code></pre>
+<pre><code>          used (Mb) gc trigger  (Mb) limit (Mb) max used  (Mb)
+Ncells 1059039 56.6    2038788 108.9         NA  2038788 108.9
+Vcells 1848802 14.2    8388608  64.0      16384  3144462  24.0</code></pre>
 </div>
 <div id="functions-and-arguments" class="section level1">
 <h1><span class="header-section-number">9</span> Functions and arguments</h1>
