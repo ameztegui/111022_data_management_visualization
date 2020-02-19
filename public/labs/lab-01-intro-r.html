@@ -114,9 +114,10 @@ $(document).ready(function () {
       <li><a href="#working-with-vectors"><span class="toc-section-number">6.2</span> Working with vectors</a></li>
       </ul></li>
       <li><a href="#data-types"><span class="toc-section-number">7</span> Data types</a><ul>
-      <li><a href="#lists"><span class="toc-section-number">7.1</span> Lists</a></li>
-      <li><a href="#arrays"><span class="toc-section-number">7.2</span> Arrays</a></li>
-      <li><a href="#data.frame"><span class="toc-section-number">7.3</span> Data.frame</a></li>
+      <li><a href="#vectors-1"><span class="toc-section-number">7.1</span> Vectors</a></li>
+      <li><a href="#lists"><span class="toc-section-number">7.2</span> Lists</a></li>
+      <li><a href="#arrays"><span class="toc-section-number">7.3</span> Arrays</a></li>
+      <li><a href="#data.frame"><span class="toc-section-number">7.4</span> Data.frame</a></li>
       </ul></li>
       <li><a href="#object-management"><span class="toc-section-number">8</span> Object management</a></li>
       <li><a href="#functions-and-arguments"><span class="toc-section-number">9</span> Functions and arguments</a></li>
@@ -280,7 +281,7 @@ $(document).ready(function () {
 <p>Assignment values can contain the variable being assigned to, and in this case they will take the currently stored value, calculate whatever is contained in the code, and overwrite the previous value with the new one.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">x &lt;-<span class="st"> </span>x <span class="op">*</span><span class="dv">2</span> <span class="co"># notice how RStudio updates its description of x on the Environment tab</span></code></pre></div>
 <blockquote>
-<p><strong>Warning:</strong> </br> Although the possibility of overwriting a variable as a result of an operation is one of the most useful features in R, it comes with danger. When performing complex tasks, It is <strong>extremely easy</strong> to overwrite a variable inadvertently, and all our calculations from that moment onwards run the risk of being erroneous. For example, if you run the code above twice insted of once, <code>x</code> will get a value of <code>400</code> instead of <code>200</code>. If you do this without noticing it, <code>x</code>won’t have the value you expect it to have. Also, if you make a mistake in the code above and R returns an error message, that means you won’t have overwritten the value of <code>x</code>, which will sill be <code>100</code>. </br> So, <strong>ALWAYS</strong> check the current value of a variable (in the “Environment” panel) before transofrming or overwritting it.</p>
+<p><strong>Warning:</strong> </br> Although the possibility of overwriting a variable as a result of an operation is one of the most useful features in R, it comes with danger. When performing complex tasks, It is <strong>extremely easy</strong> to overwrite a variable inadvertently, and all our calculations from that moment onwards run the risk of being erroneous. For example, if you run the code above twice insted of once, <code>x</code> will get a value of <code>400</code> instead of <code>200</code>. If you do this without noticing it, <code>x</code>won’t have the value you expect it to have. Also, if you make a mistake in the code above and R returns an error message, that means you won’t have overwritten the value of <code>x</code>, which will sill be <code>100</code>. </br> So, <strong>ALWAYS</strong> check the current value of a variable (in the “Environment” panel) before transforming or overwritting it.</p>
 </blockquote>
 </div>
 <div id="objects-in-r" class="section level1">
@@ -408,8 +409,10 @@ v3</code></pre></div>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">2</span>, <span class="st">&quot;three&quot;</span>, <span class="st">&quot;four&quot;</span>, <span class="dv">5</span>)</code></pre></div>
 <pre><code>[1] &quot;1&quot;     &quot;2&quot;     &quot;three&quot; &quot;four&quot;  &quot;5&quot;    </code></pre>
 <p>We see that R has coerced the elements containing digits to strings, so that all the elements have the same type. We will talk more about data types in a later episode.</p>
+<div id="vectors-1" class="section level2">
+<h2><span class="header-section-number">7.1</span> Vectors</h2>
 <div id="vector-lengths" class="section level3">
-<h3><span class="header-section-number">7.0.1</span> Vector lengths</h3>
+<h3><span class="header-section-number">7.1.1</span> Vector lengths</h3>
 <p>We can calculate how many elements a vector contains using the length() function:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">length</span>(x)</code></pre></div>
 <pre><code>[1] 6</code></pre>
@@ -417,7 +420,7 @@ v3</code></pre></div>
 <pre><code>[1] 26</code></pre>
 </div>
 <div id="subsetting-vectors" class="section level3">
-<h3><span class="header-section-number">7.0.2</span> Subsetting vectors</h3>
+<h3><span class="header-section-number">7.1.2</span> Subsetting vectors</h3>
 <p>Having defined a vector, it’s often useful to extract parts of a vector. We do this with the <code>[]</code> operator. Using the built in <code>month.name</code> vector:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">month.name[<span class="dv">2</span>]</code></pre></div>
 <pre><code>[1] &quot;February&quot;</code></pre>
@@ -436,7 +439,7 @@ v3</code></pre></div>
 <pre><code>[1] &quot;January&quot;  &quot;January&quot;  &quot;February&quot; &quot;March&quot;    &quot;April&quot;   </code></pre>
 </div>
 <div id="skipping-and-removing-elements" class="section level3">
-<h3><span class="header-section-number">7.0.3</span> Skipping and removing elements</h3>
+<h3><span class="header-section-number">7.1.3</span> Skipping and removing elements</h3>
 <p>If we use a negative number as the index of a vector, R will return every element except for the one specified:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">month.name[<span class="op">-</span><span class="dv">2</span>]</code></pre></div>
 <pre><code> [1] &quot;January&quot;   &quot;March&quot;     &quot;April&quot;     &quot;May&quot;       &quot;June&quot;      &quot;July&quot;     
@@ -461,7 +464,7 @@ v3</code></pre></div>
 [7] &quot;October&quot;   &quot;November&quot;  &quot;December&quot; </code></pre>
 </div>
 <div id="subsetting-with-logical-vectors" class="section level3">
-<h3><span class="header-section-number">7.0.4</span> Subsetting with logical vectors</h3>
+<h3><span class="header-section-number">7.1.4</span> Subsetting with logical vectors</h3>
 <p>As well as providing a list of indices we want to keep (or delete, if we prefix them with <code>-</code>), we can pass a logical vector to R indicating the indices we wish to select:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">month.name[<span class="kw">c</span>(<span class="ot">TRUE</span>, <span class="ot">FALSE</span>, <span class="ot">TRUE</span>, <span class="ot">TRUE</span>, <span class="ot">FALSE</span>, <span class="ot">FALSE</span>,
              <span class="ot">FALSE</span>, <span class="ot">TRUE</span>, <span class="ot">TRUE</span>, <span class="ot">FALSE</span>, <span class="ot">FALSE</span>, <span class="ot">TRUE</span>)]</code></pre></div>
@@ -486,8 +489,9 @@ my_vector <span class="op">&gt;</span><span class="st"> </span><span class="dv">
 v3[<span class="dv">9</span>]</code></pre></div>
 <pre><code>[1] 10000</code></pre>
 </div>
+</div>
 <div id="lists" class="section level2">
-<h2><span class="header-section-number">7.1</span> Lists</h2>
+<h2><span class="header-section-number">7.2</span> Lists</h2>
 <p>Once we have seen vectors we go to explore how objects of type list work. A list is an object similar to a vector with the difference that lists allow to store values of different type. Lists are created using the list(value1, value2, …) function. For example:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">list1 &lt;-<span class="st"> </span><span class="kw">list</span>(<span class="dv">1</span>,<span class="dv">7</span>,<span class="st">'Marcos'</span>)
 list1</code></pre></div>
@@ -508,7 +512,7 @@ list1</code></pre></div>
 <pre><code>[1] 3</code></pre>
 </div>
 <div id="arrays" class="section level2">
-<h2><span class="header-section-number">7.2</span> Arrays</h2>
+<h2><span class="header-section-number">7.3</span> Arrays</h2>
 <p>Arrays are an extension of vectors, which add additional dimensions to store information. The most common case is the 2-dimensional matrix (rows and columns). To create an array, we use array(values, dimensions). Both values and dimensions are specified using vectors. In the following example we see how to create a matrix with 4 rows and 5 columns, thus containing 20 values, in this case correlative numbers from 1 to 20:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">myarray&lt;-<span class="st"> </span><span class="kw">array</span>(<span class="dv">1</span><span class="op">:</span><span class="dv">20</span>,<span class="dt">dim=</span><span class="kw">c</span>(<span class="dv">4</span>,<span class="dv">5</span>))
 myarray</code></pre></div>
@@ -526,7 +530,7 @@ myarray</code></pre></div>
 <pre><code>[1] 5 6 7 8</code></pre>
 </div>
 <div id="data.frame" class="section level2">
-<h2><span class="header-section-number">7.3</span> Data.frame</h2>
+<h2><span class="header-section-number">7.4</span> Data.frame</h2>
 <p>A data frame is used for storing data tables. It is a list of vectors of equal length. For example, the following variable df is a data frame containing three vectors n, s, b.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">n &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="dv">2</span>, <span class="dv">3</span>, <span class="dv">5</span>) 
 s &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="st">&quot;aa&quot;</span>, <span class="st">&quot;bb&quot;</span>, <span class="st">&quot;cc&quot;</span>) 
@@ -554,14 +558,14 @@ df &lt;-<span class="st"> </span><span class="kw">data.frame</span>(n, s, b)</co
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">rm</span>(n)
 <span class="kw">gc</span>()</code></pre></div>
 <pre><code>          used (Mb) gc trigger  (Mb) limit (Mb) max used  (Mb)
-Ncells 1059138 56.6    2038788 108.9         NA  2038788 108.9
-Vcells 1848940 14.2    8388608  64.0      16384  3144462  24.0</code></pre>
+Ncells 1049951 56.1    2067134 110.4         NA  2067134 110.4
+Vcells 1829336 14.0    8388608  64.0      16384  3158888  24.2</code></pre>
 <p>If we want to removal al the objects we have currently in our working session we can pass a list object containing the names of all objects to the gc() function. If you are thinking on combining gc()and ls()you are right. This would be the way:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">rm</span>(<span class="dt">list=</span><span class="kw">ls</span>())
 <span class="kw">gc</span>()</code></pre></div>
 <pre><code>          used (Mb) gc trigger  (Mb) limit (Mb) max used  (Mb)
-Ncells 1059039 56.6    2038788 108.9         NA  2038788 108.9
-Vcells 1848802 14.2    8388608  64.0      16384  3144462  24.0</code></pre>
+Ncells 1049759 56.1    2067134 110.4         NA  2067134 110.4
+Vcells 1829043 14.0    8388608  64.0      16384  3158888  24.2</code></pre>
 </div>
 <div id="functions-and-arguments" class="section level1">
 <h1><span class="header-section-number">9</span> Functions and arguments</h1>

@@ -205,7 +205,7 @@ We can also do comparisons in R, and it will tell us if the comparison we are te
 
 
 > **Tip: Comparing Numbers** </br>
-A word of warning about comparing numbers: you should never use `==` to compare two numbers         unless they are integers (a data type which can specifically represent only whole numbers). Computers may only represent decimal numbers with a certain degree of precision, so two             numbers which look the same when printed out by R, may actually have different underlying representations and therefore be different by a small margin of error (called Machine numeric tolerance). Instead you should use the `all.equal` function.
+A word of warning about comparing numbers: you should never use `==` to compare two numbers unless they are integers (a data type which can specifically represent only whole numbers). Computers may only represent decimal numbers with a certain degree of precision, so two numbers which look the same when printed out by R, may actually have different underlying representations and therefore be different by a small margin of error (called Machine numeric tolerance). Instead you should use the `all.equal` function.
 
 
 
@@ -228,8 +228,6 @@ x
 
 > **Tip: assignment** </br>
 It is also possible to use the `=` operator for assignment, as in: `x = 1/40`. This is much less common among R users, and we will see later why it is not a good idea to use it. If you use it, try to change your habits as soon as possible.
-
-
 
 The interesting thing is that our variable `x` is now stored in memory, and so it can now be used in place of a number in any calculation that expects a number:
 
@@ -255,7 +253,7 @@ x <- x *2 # notice how RStudio updates its description of x on the Environment t
 
 > **Warning:** </br>
 Although the possibility of overwriting a variable as a result of an operation is one of the most useful features in R, it comes with danger. When performing complex tasks, It is **extremely easy** to overwrite a variable inadvertently, and all our calculations from that moment onwards run the risk of being erroneous. 
-For example, if you run the code above twice insted of once, `x` will get a value of `400` instead of `200`. If you do this without noticing it, `x`won't have the value you expect it to have. Also, if you make a mistake in the code above and R returns an error message, that means you won't have overwritten the value of `x`, which will sill be `100`. </br> So, **ALWAYS** check the current value of a variable (in the "Environment" panel) before transofrming or overwritting it.
+For example, if you run the code above twice insted of once, `x` will get a value of `400` instead of `200`. If you do this without noticing it, `x`won't have the value you expect it to have. Also, if you make a mistake in the code above and R returns an error message, that means you won't have overwritten the value of `x`, which will sill be `100`. </br> So, **ALWAYS** check the current value of a variable (in the "Environment" panel) before transforming or overwritting it.
 
 
 
@@ -445,6 +443,7 @@ c(1, 2, "three", "four", 5)
 We see that R has coerced the elements containing digits to strings, so that all the elements have the same type. We will talk more about data types in a later episode.
 
 
+## Vectors
 
 ### Vector lengths
 
