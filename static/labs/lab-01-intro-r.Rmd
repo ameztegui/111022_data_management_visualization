@@ -356,7 +356,21 @@ When we are performing an analysis we will typically be using many files: input 
 
 
 ## Vectors
-One of the most common objects in R is the vector. A vector can store several values, but they **MUST** necessarily be of the **same type** (all numbers, all text, and so forth). There are several ways to create vectors. The most common approach is use the function `c()` which allow us to introduce values manually by separatting them with `,`.
+
+There are two types of vectors:
+
+1. Atomic vectors, of which there are six types: logical, integer, double, character, complex, and raw. Integer and double vectors are collectively known as numeric vectors.
+
+2. Lists, which are sometimes called recursive vectors because lists can contain other lists.
+
+Atomic vectors are one of the most common object types in R. The chief difference between atomic vectors and lists is that atomic vectors are homogeneous, while lists can be heterogeneous. That means that atomic vectors (hereafter we will called them just 'vectors') can store several values, but they **MUST** necessarily be of the **same type** (all numbers, all text, and so forth), whereas lists can hold elements of different classes. 
+
+Every vector has two properties:
+    1. Its type (character, integer, double...), which can be determined by the function `typeof()`
+    2. Its length, which we can determine with `length()`
+
+
+There are several ways to create vectors. The most common approach is use the function `c()` which allow us to introduce values manually by separatting them with `,`.
 
 ```{r}
 v1 <- c(1, 2, 3, 4, 5)
@@ -365,7 +379,7 @@ v1
 v2 <- c('spatial','statistics','rules!!')
 v2
 ```
-As you see, vectors aren’t limited to storing numbers. However, let us emphashize again that all the data in a vector has to be of the same type: they must be either characters, numbers, or all been logical (TRUE/FALSE)). This is an important property of vectors; the type of data the vector holds is a property of the vector, not of each element. Let’s see what what happens if we try to create a vector of numeric and character data:
+As you see, vectors aren’t limited to storing numbers. However, let us emphashize again that all the data in a vector has to be of the same type: they must be either characters, numbers, or all been logical (TRUE/FALSE)). This is an important property of (atomic) vectors; the type of data the vector holds is a property of the vector, not of each element. Let’s see what what happens if we try to create a vector of numeric and character data:
 
 ```{r}
 c(1, 2, "three", "four", 5)
@@ -373,7 +387,21 @@ c(1, 2, "three", "four", 5)
 ```
 We see that R has coerced the elements containing digits to strings, so that all the elements have the same type. We will talk more about data types in a later chapter
 
-Another option to create vectors, but only for vectors contaning numeric values, is the use of `:`, which produces an ordered sequence of numbers by adding 1 starting from the first value and finishing in the last.
+
+### Main types of atomic vectors
+
+#### Logical
+
+Logical vectors can tanke only three possible values: `FALSE`, `TRUE`, and `NA` (not available, we'll see about this later on). Logical vectors are usually build with comparison operators:
+
+```{r}
+c(1,2,8,4,5,3,7,8,9) >= 5   # Which elements are bigger or equal than 5
+```
+
+Logical vectors have the particularity that `TRUES` have a value of 1, and `FALSE`of 0. So the sum of the vector gives the number of `TRUE`and the mean gives the proportion of `TRUE`. Try it in your console!
+
+#### Numeric
+Integer and double vectors are known collectively as numeric vectors. In R, numbers are double (with decimals) by default. Anyway, the difference between interger and double is not usually important, so we won't go into further details here. To construct numeric vectors we can use the `c` operator seen above, but there is another option. We can use  `:`, which produces an ordered sequence of numbers by adding 1 starting from the first value and finishing in the last.
 
 ```{r}
 v3 <- 1:10
@@ -384,7 +412,25 @@ v4
 
 ```
 
+
+#### Character vectors
+
+Character vectors are the most complex type of atomic vector, because each element of a character vector is a string, and a string can contain an arbitrary amount of data.
+
+```{r}
+
+v5 <- c("Lleida", "Lleida", "Barcelona", "Madrid", "Lleida", "Madrid")
+
+```
+
+
+#### Missing values
+
+Vectors, as almost any data object in R, can hold missing values. These are indicated as `NA`(not available). However, note that `NA` inherits the class of the vector, so an `NA` within a numeric vector will still be numeric, whereas an `NA` in a character vector will be of type character.
+
+
 ### Working with vectors
+
 R is sometimes defined as a vectorized language. That means that we can apply functions to each and all of the elements of a vector. For example:
 
 ```{r}
@@ -416,7 +462,9 @@ LETTERS + 1
 ```
 
 
-### Vector lengths
+Let's see some of the tools we have to work with vectirs
+
+#### Vector lengths
 
 We can calculate how many elements a vector contains using the length() function:
 ```{r}
@@ -424,7 +472,7 @@ length(x)
 length(letters)
 ```
 
-### Subsetting vectors
+#### Subsetting vectors
 Having defined a vector, it’s often useful to extract parts of a vector. We do this with the `[]` operator. Using the built in `month.name` vector:
 
 ```{r}
@@ -462,7 +510,7 @@ month.name[12] <- "Christmas time!"
 month.name
 ```
 
-### Skipping and removing elements
+#### Skipping and removing elements
 If we use a negative number as the index of a vector, R will return every element except for the one specified:
 
 ```{r}
@@ -494,7 +542,7 @@ month.name[-(1:3)]
 
 
 
-### Subsetting with logical vectors
+#### Subsetting with logical vectors
 As well as providing a list of indices we want to keep (or delete, if we prefix them with `-`), we can pass a logical vector to R indicating the indices we wish to select:
 
 ```{r}
@@ -565,22 +613,6 @@ df <- data.frame(n, s, b)
 
 
 As you can see, the function data.frame() is used to create the data.frame. However, we will seldom use these function to create objects or store data. Normally, we will call an instruction to read text files containing data or call data objects available in some packages.
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 

@@ -391,26 +391,55 @@ Levels: North East South West</code></pre>
 <h1><span class="header-section-number">7</span> Data types</h1>
 <div id="vectors" class="section level2">
 <h2><span class="header-section-number">7.1</span> Vectors</h2>
-<p>One of the most common objects in R is the vector. A vector can store several values, but they <strong>MUST</strong> necessarily be of the <strong>same type</strong> (all numbers, all text, and so forth). There are several ways to create vectors. The most common approach is use the function <code>c()</code> which allow us to introduce values manually by separatting them with <code>,</code>.</p>
+<p>There are two types of vectors:</p>
+<ol style="list-style-type: decimal">
+<li><p>Atomic vectors, of which there are six types: logical, integer, double, character, complex, and raw. Integer and double vectors are collectively known as numeric vectors.</p></li>
+<li><p>Lists, which are sometimes called recursive vectors because lists can contain other lists.</p></li>
+</ol>
+<p>Atomic vectors are one of the most common object types in R. The chief difference between atomic vectors and lists is that atomic vectors are homogeneous, while lists can be heterogeneous. That means that atomic vectors (hereafter we will called them just ‘vectors’) can store several values, but they <strong>MUST</strong> necessarily be of the <strong>same type</strong> (all numbers, all text, and so forth), whereas lists can hold elements of different classes.</p>
+<p>Every vector has two properties: 1. Its type (character, integer, double…), which can be determined by the function <code>typeof()</code> 2. Its length, which we can determine with <code>length()</code></p>
+<p>There are several ways to create vectors. The most common approach is use the function <code>c()</code> which allow us to introduce values manually by separatting them with <code>,</code>.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">v1 &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">3</span>, <span class="dv">4</span>, <span class="dv">5</span>)
 v1</code></pre></div>
 <pre><code>[1] 1 2 3 4 5</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">v2 &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="st">&quot;spatial&quot;</span>, <span class="st">&quot;statistics&quot;</span>, <span class="st">&quot;rules!!&quot;</span>)
 v2</code></pre></div>
 <pre><code>[1] &quot;spatial&quot;    &quot;statistics&quot; &quot;rules!!&quot;   </code></pre>
-<p>As you see, vectors aren’t limited to storing numbers. However, let us emphashize again that all the data in a vector has to be of the same type: they must be either characters, numbers, or all been logical (TRUE/FALSE)). This is an important property of vectors; the type of data the vector holds is a property of the vector, not of each element. Let’s see what what happens if we try to create a vector of numeric and character data:</p>
+<p>As you see, vectors aren’t limited to storing numbers. However, let us emphashize again that all the data in a vector has to be of the same type: they must be either characters, numbers, or all been logical (TRUE/FALSE)). This is an important property of (atomic) vectors; the type of data the vector holds is a property of the vector, not of each element. Let’s see what what happens if we try to create a vector of numeric and character data:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">2</span>, <span class="st">&quot;three&quot;</span>, <span class="st">&quot;four&quot;</span>, <span class="dv">5</span>)</code></pre></div>
 <pre><code>[1] &quot;1&quot;     &quot;2&quot;     &quot;three&quot; &quot;four&quot;  &quot;5&quot;    </code></pre>
 <p>We see that R has coerced the elements containing digits to strings, so that all the elements have the same type. We will talk more about data types in a later chapter</p>
-<p>Another option to create vectors, but only for vectors contaning numeric values, is the use of <code>:</code>, which produces an ordered sequence of numbers by adding 1 starting from the first value and finishing in the last.</p>
+<div id="main-types-of-atomic-vectors" class="section level3">
+<h3><span class="header-section-number">7.1.1</span> Main types of atomic vectors</h3>
+<div id="logical" class="section level4">
+<h4><span class="header-section-number">7.1.1.1</span> Logical</h4>
+<p>Logical vectors can tanke only three possible values: <code>FALSE</code>, <code>TRUE</code>, and <code>NA</code> (not available, we’ll see about this later on). Logical vectors are usually build with comparison operators:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">8</span>, <span class="dv">4</span>, <span class="dv">5</span>, <span class="dv">3</span>, <span class="dv">7</span>, <span class="dv">8</span>, <span class="dv">9</span>) <span class="op">&gt;=</span><span class="st"> </span><span class="dv">5</span>  <span class="co"># Which elements are bigger or equal than 5</span></code></pre></div>
+<pre><code>[1] FALSE FALSE  TRUE FALSE  TRUE FALSE  TRUE  TRUE  TRUE</code></pre>
+<p>Logical vectors have the particularity that <code>TRUES</code> have a value of 1, and <code>FALSE</code>of 0. So the sum of the vector gives the number of <code>TRUE</code>and the mean gives the proportion of <code>TRUE</code>. Try it in your console!</p>
+</div>
+<div id="numeric" class="section level4">
+<h4><span class="header-section-number">7.1.1.2</span> Numeric</h4>
+<p>Integer and double vectors are known collectively as numeric vectors. In R, numbers are double (with decimals) by default. Anyway, the difference between interger and double is not usually important, so we won’t go into further details here. To construct numeric vectors we can use the <code>c</code> operator seen above, but there is another option. We can use <code>:</code>, which produces an ordered sequence of numbers by adding 1 starting from the first value and finishing in the last.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">v3 &lt;-<span class="st"> </span><span class="dv">1</span><span class="op">:</span><span class="dv">10</span>
 v3</code></pre></div>
 <pre><code> [1]  1  2  3  4  5  6  7  8  9 10</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">v4 &lt;-<span class="st"> </span><span class="op">-</span><span class="dv">5</span><span class="op">:</span><span class="dv">3</span>
 v4</code></pre></div>
 <pre><code>[1] -5 -4 -3 -2 -1  0  1  2  3</code></pre>
+</div>
+<div id="character-vectors" class="section level4">
+<h4><span class="header-section-number">7.1.1.3</span> Character vectors</h4>
+<p>Character vectors are the most complex type of atomic vector, because each element of a character vector is a string, and a string can contain an arbitrary amount of data.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">v5 &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="st">&quot;Lleida&quot;</span>, <span class="st">&quot;Lleida&quot;</span>, <span class="st">&quot;Barcelona&quot;</span>, <span class="st">&quot;Madrid&quot;</span>, <span class="st">&quot;Lleida&quot;</span>, <span class="st">&quot;Madrid&quot;</span>)</code></pre></div>
+</div>
+<div id="missing-values" class="section level4">
+<h4><span class="header-section-number">7.1.1.4</span> Missing values</h4>
+<p>Vectors, as almost any data object in R, can hold missing values. These are indicated as <code>NA</code>(not available). However, note that <code>NA</code> inherits the class of the vector, so an <code>NA</code> within a numeric vector will still be numeric, whereas an <code>NA</code> in a character vector will be of type character.</p>
+</div>
+</div>
 <div id="working-with-vectors" class="section level3">
-<h3><span class="header-section-number">7.1.1</span> Working with vectors</h3>
+<h3><span class="header-section-number">7.1.2</span> Working with vectors</h3>
 <p>R is sometimes defined as a vectorized language. That means that we can apply functions to each and all of the elements of a vector. For example:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">(<span class="dv">1</span><span class="op">:</span><span class="dv">5</span>) <span class="op">*</span><span class="st"> </span><span class="dv">2</span>  <span class="co"># Multiplies each element of the vector by 2</span></code></pre></div>
 <pre><code>[1]  2  4  6  8 10</code></pre>
@@ -435,17 +464,17 @@ v4</code></pre></div>
 <p>Logically, the type of data that is stored in a variable affects what we can do with it:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">LETTERS <span class="op">+</span><span class="st"> </span><span class="dv">1</span></code></pre></div>
 <pre><code>Error in LETTERS + 1: non-numeric argument to binary operator</code></pre>
-</div>
-<div id="vector-lengths" class="section level3">
-<h3><span class="header-section-number">7.1.2</span> Vector lengths</h3>
+<p>Let’s see some of the tools we have to work with vectirs</p>
+<div id="vector-lengths" class="section level4">
+<h4><span class="header-section-number">7.1.2.1</span> Vector lengths</h4>
 <p>We can calculate how many elements a vector contains using the length() function:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">length</span>(x)</code></pre></div>
 <pre><code>[1] 6</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">length</span>(letters)</code></pre></div>
 <pre><code>[1] 26</code></pre>
 </div>
-<div id="subsetting-vectors" class="section level3">
-<h3><span class="header-section-number">7.1.3</span> Subsetting vectors</h3>
+<div id="subsetting-vectors" class="section level4">
+<h4><span class="header-section-number">7.1.2.2</span> Subsetting vectors</h4>
 <p>Having defined a vector, it’s often useful to extract parts of a vector. We do this with the <code>[]</code> operator. Using the built in <code>month.name</code> vector:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">month.name[<span class="dv">2</span>]</code></pre></div>
 <pre><code>[1] &quot;February&quot;</code></pre>
@@ -471,8 +500,8 @@ month.name</code></pre></div>
  [7] &quot;July&quot;            &quot;August&quot;          &quot;September&quot;      
 [10] &quot;October&quot;         &quot;November&quot;        &quot;Christmas time!&quot;</code></pre>
 </div>
-<div id="skipping-and-removing-elements" class="section level3">
-<h3><span class="header-section-number">7.1.4</span> Skipping and removing elements</h3>
+<div id="skipping-and-removing-elements" class="section level4">
+<h4><span class="header-section-number">7.1.2.3</span> Skipping and removing elements</h4>
 <p>If we use a negative number as the index of a vector, R will return every element except for the one specified:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">month.name[<span class="op">-</span><span class="dv">2</span>]</code></pre></div>
 <pre><code> [1] &quot;January&quot;         &quot;March&quot;           &quot;April&quot;          
@@ -501,8 +530,8 @@ month.name</code></pre></div>
 [5] &quot;August&quot;          &quot;September&quot;       &quot;October&quot;         &quot;November&quot;       
 [9] &quot;Christmas time!&quot;</code></pre>
 </div>
-<div id="subsetting-with-logical-vectors" class="section level3">
-<h3><span class="header-section-number">7.1.5</span> Subsetting with logical vectors</h3>
+<div id="subsetting-with-logical-vectors" class="section level4">
+<h4><span class="header-section-number">7.1.2.4</span> Subsetting with logical vectors</h4>
 <p>As well as providing a list of indices we want to keep (or delete, if we prefix them with <code>-</code>), we can pass a logical vector to R indicating the indices we wish to select:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">month.name[<span class="kw">c</span>(<span class="ot">TRUE</span>, <span class="ot">FALSE</span>, <span class="ot">TRUE</span>, <span class="ot">TRUE</span>, <span class="ot">FALSE</span>, <span class="ot">FALSE</span>, <span class="ot">FALSE</span>, <span class="ot">TRUE</span>, <span class="ot">TRUE</span>, <span class="ot">FALSE</span>, 
     <span class="ot">FALSE</span>, <span class="ot">TRUE</span>)]</code></pre></div>
@@ -521,6 +550,7 @@ my_vector <span class="op">&gt;</span><span class="st"> </span><span class="dv">
 <p>-<code>|</code>, the logical “OR” operator: returns <code>TRUE</code>, if either the left or right (or both) are <code>TRUE</code>.</p>
 <p>-<code>!</code>, the logical “NOT” operator: converts <code>TRUE</code> to <code>FALSE</code> and <code>FALSE</code> to <code>TRUE</code>. It can negate a single logical condition (e.g. <code>!TRUE</code> becomes <code>FALSE</code>), or a whole vector of conditions(e.g. <code>!c(TRUE, FALSE)</code> becomes <code>c(FALSE, TRUE)</code>).</p>
 <p>Additionally, you can compare the elements within a single vector using the <code>all</code> function (which returns <code>TRUE</code> if every element of the vector is <code>TRUE</code>) and the <code>any</code> function (which returns <code>TRUE</code> if one or more elements of the vector are <code>TRUE</code>).</p>
+</div>
 </div>
 </div>
 <div id="lists" class="section level2">
@@ -562,12 +592,13 @@ df &lt;-<span class="st"> </span><span class="kw">data.frame</span>(n, s, b)</co
  [5] &quot;directions&quot;    &quot;list1&quot;         &quot;matriz&quot;        &quot;month.name&quot;   
  [9] &quot;my_vector&quot;     &quot;n&quot;             &quot;name&quot;          &quot;p&quot;            
 [13] &quot;q&quot;             &quot;s&quot;             &quot;v1&quot;            &quot;v2&quot;           
-[17] &quot;v3&quot;            &quot;v4&quot;            &quot;vector&quot;        &quot;x&quot;            </code></pre>
+[17] &quot;v3&quot;            &quot;v4&quot;            &quot;v5&quot;            &quot;vector&quot;       
+[21] &quot;x&quot;            </code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">rm</span>(n)
 <span class="kw">gc</span>()</code></pre></div>
 <pre><code>          used (Mb) gc trigger  (Mb) max used  (Mb)
-Ncells 1168165 62.4    2084378 111.4  2084378 111.4
-Vcells 1979573 15.2    8388608  64.0  7952811  60.7</code></pre>
+Ncells 1167936 62.4    2110325 112.8  2110325 112.8
+Vcells 1978386 15.1    8388608  64.0  7782104  59.4</code></pre>
 <p>If we want to remove several objects, we can pass a list object containing the names of all objects to the <code>rm()</code> function. To remove all the elements in the current session we can pass the <code>ls()</code> to the <code>rm()</code>function:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">rm</span>(<span class="dt">list =</span> <span class="kw">ls</span>())</code></pre></div>
 </div>
