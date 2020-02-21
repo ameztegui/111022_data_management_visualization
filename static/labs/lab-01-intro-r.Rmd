@@ -217,8 +217,6 @@ We can also do comparisons in R, and it will tell us if the comparison we are te
 A word of warning about comparing numbers: you should never use `==` to compare two numbers unless they are integers (a data type which can specifically represent only whole numbers). Computers may only represent decimal numbers with a certain degree of precision, so two numbers which look the same when printed out by R, may actually have different underlying representations and therefore be different by a small margin of error (called Machine numeric tolerance). Instead you should use the `all.equal` function.
 
 
-
-
 # Variables and assignment in R
 
 We can store values in variables using the assignment operator `<-`, like this:
@@ -431,6 +429,34 @@ Vectors, as almost any data object in R, can hold missing values. These are indi
 
 ### Working with vectors
 
+We will now see some of the operations we can do with vectors, and the tools we have to work with them
+
+#### Length and test functions
+
+As we said above, the two main characteristics of a vector are its type and length. We can calculate how many elements a vector contains using the `length()` function:
+
+```{r}
+length(x)
+length(letters)
+```
+
+Sometimes you want to do different things based on the type of vector. One option is to use `typeof()`. Another is to use a test function which returns a `TRUE` or `FALSE`. Base R provides many functions like `is.vector()` and `is.numeric()`, but they often return surprising results. Instead, it’s safer to use the `is_*` functions provided by the package `purrr`:
+
+Caracteristicas son longitud y tipo, longitud length()
+
+is_logical, is_integer
+is_double, is_numeric
+```{r}
+is_logical(letters)
+is_character(letters)
+is_integer()
+```
+
+#### Coercion
+
+
+#### Scalars and recycling rules
+
 R is sometimes defined as a vectorized language. That means that we can apply functions to each and all of the elements of a vector. For example:
 
 ```{r}
@@ -438,6 +464,8 @@ R is sometimes defined as a vectorized language. That means that we can apply fu
 2^(1:5) 
 ```
 
+
+#### Naming vectors
 We can also assign a vector to an object, as seen above:
 
 ```{r}
@@ -459,17 +487,6 @@ Logically, the type of data that is stored in a variable affects what we can do 
 
 ```{r, error = T}
 LETTERS + 1
-```
-
-
-Let's see some of the tools we have to work with vectirs
-
-#### Vector lengths
-
-We can calculate how many elements a vector contains using the length() function:
-```{r}
-length(x)
-length(letters)
 ```
 
 #### Subsetting vectors
@@ -510,7 +527,7 @@ month.name[12] <- "Christmas time!"
 month.name
 ```
 
-#### Skipping and removing elements
+##### Skipping and removing elements
 If we use a negative number as the index of a vector, R will return every element except for the one specified:
 
 ```{r}
@@ -542,7 +559,7 @@ month.name[-(1:3)]
 
 
 
-#### Subsetting with logical vectors
+##### Subsetting with logical vectors
 As well as providing a list of indices we want to keep (or delete, if we prefix them with `-`), we can pass a logical vector to R indicating the indices we wish to select:
 
 ```{r}

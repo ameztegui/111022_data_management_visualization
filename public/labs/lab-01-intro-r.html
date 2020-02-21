@@ -440,11 +440,30 @@ v4</code></pre></div>
 </div>
 <div id="working-with-vectors" class="section level3">
 <h3><span class="header-section-number">7.1.2</span> Working with vectors</h3>
+<p>Let’s see some of the tools we have to work with vectors</p>
+<div id="length-and-test-functions" class="section level4">
+<h4><span class="header-section-number">7.1.2.1</span> Length and test functions</h4>
+<p>We can calculate how many elements a vector contains using the length() function:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">length</span>(x)</code></pre></div>
+<pre><code>[1] 1</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">length</span>(letters)</code></pre></div>
+<pre><code>[1] 26</code></pre>
+<p>Caracteristicas son longitud y tipo, longitud length()</p>
+<p>typeof() is_logical, is_integer is_double, is_numeric</p>
+</div>
+<div id="coercion" class="section level4">
+<h4><span class="header-section-number">7.1.2.2</span> Coercion</h4>
+</div>
+<div id="scalars-and-recycling-rules" class="section level4">
+<h4><span class="header-section-number">7.1.2.3</span> Scalars and recycling rules</h4>
 <p>R is sometimes defined as a vectorized language. That means that we can apply functions to each and all of the elements of a vector. For example:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">(<span class="dv">1</span><span class="op">:</span><span class="dv">5</span>) <span class="op">*</span><span class="st"> </span><span class="dv">2</span>  <span class="co"># Multiplies each element of the vector by 2</span></code></pre></div>
 <pre><code>[1]  2  4  6  8 10</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="dv">2</span><span class="op">^</span>(<span class="dv">1</span><span class="op">:</span><span class="dv">5</span>)</code></pre></div>
 <pre><code>[1]  2  4  8 16 32</code></pre>
+</div>
+<div id="naming-vectors" class="section level4">
+<h4><span class="header-section-number">7.1.2.4</span> Naming vectors</h4>
 <p>We can also assign a vector to an object, as seen above:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">x &lt;-<span class="st"> </span><span class="dv">5</span><span class="op">:</span><span class="dv">10</span></code></pre></div>
 <p>R comes with a few built-in vectors, containing useful common values:</p>
@@ -464,17 +483,9 @@ v4</code></pre></div>
 <p>Logically, the type of data that is stored in a variable affects what we can do with it:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">LETTERS <span class="op">+</span><span class="st"> </span><span class="dv">1</span></code></pre></div>
 <pre><code>Error in LETTERS + 1: non-numeric argument to binary operator</code></pre>
-<p>Let’s see some of the tools we have to work with vectirs</p>
-<div id="vector-lengths" class="section level4">
-<h4><span class="header-section-number">7.1.2.1</span> Vector lengths</h4>
-<p>We can calculate how many elements a vector contains using the length() function:</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">length</span>(x)</code></pre></div>
-<pre><code>[1] 6</code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">length</span>(letters)</code></pre></div>
-<pre><code>[1] 26</code></pre>
 </div>
 <div id="subsetting-vectors" class="section level4">
-<h4><span class="header-section-number">7.1.2.2</span> Subsetting vectors</h4>
+<h4><span class="header-section-number">7.1.2.5</span> Subsetting vectors</h4>
 <p>Having defined a vector, it’s often useful to extract parts of a vector. We do this with the <code>[]</code> operator. Using the built in <code>month.name</code> vector:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">month.name[<span class="dv">2</span>]</code></pre></div>
 <pre><code>[1] &quot;February&quot;</code></pre>
@@ -499,9 +510,8 @@ month.name</code></pre></div>
  [4] &quot;April&quot;           &quot;May&quot;             &quot;June&quot;           
  [7] &quot;July&quot;            &quot;August&quot;          &quot;September&quot;      
 [10] &quot;October&quot;         &quot;November&quot;        &quot;Christmas time!&quot;</code></pre>
-</div>
-<div id="skipping-and-removing-elements" class="section level4">
-<h4><span class="header-section-number">7.1.2.3</span> Skipping and removing elements</h4>
+<div id="skipping-and-removing-elements" class="section level5">
+<h5><span class="header-section-number">7.1.2.5.1</span> Skipping and removing elements</h5>
 <p>If we use a negative number as the index of a vector, R will return every element except for the one specified:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">month.name[<span class="op">-</span><span class="dv">2</span>]</code></pre></div>
 <pre><code> [1] &quot;January&quot;         &quot;March&quot;           &quot;April&quot;          
@@ -530,8 +540,8 @@ month.name</code></pre></div>
 [5] &quot;August&quot;          &quot;September&quot;       &quot;October&quot;         &quot;November&quot;       
 [9] &quot;Christmas time!&quot;</code></pre>
 </div>
-<div id="subsetting-with-logical-vectors" class="section level4">
-<h4><span class="header-section-number">7.1.2.4</span> Subsetting with logical vectors</h4>
+<div id="subsetting-with-logical-vectors" class="section level5">
+<h5><span class="header-section-number">7.1.2.5.2</span> Subsetting with logical vectors</h5>
 <p>As well as providing a list of indices we want to keep (or delete, if we prefix them with <code>-</code>), we can pass a logical vector to R indicating the indices we wish to select:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">month.name[<span class="kw">c</span>(<span class="ot">TRUE</span>, <span class="ot">FALSE</span>, <span class="ot">TRUE</span>, <span class="ot">TRUE</span>, <span class="ot">FALSE</span>, <span class="ot">FALSE</span>, <span class="ot">FALSE</span>, <span class="ot">TRUE</span>, <span class="ot">TRUE</span>, <span class="ot">FALSE</span>, 
     <span class="ot">FALSE</span>, <span class="ot">TRUE</span>)]</code></pre></div>
@@ -550,6 +560,7 @@ my_vector <span class="op">&gt;</span><span class="st"> </span><span class="dv">
 <p>-<code>|</code>, the logical “OR” operator: returns <code>TRUE</code>, if either the left or right (or both) are <code>TRUE</code>.</p>
 <p>-<code>!</code>, the logical “NOT” operator: converts <code>TRUE</code> to <code>FALSE</code> and <code>FALSE</code> to <code>TRUE</code>. It can negate a single logical condition (e.g. <code>!TRUE</code> becomes <code>FALSE</code>), or a whole vector of conditions(e.g. <code>!c(TRUE, FALSE)</code> becomes <code>c(FALSE, TRUE)</code>).</p>
 <p>Additionally, you can compare the elements within a single vector using the <code>all</code> function (which returns <code>TRUE</code> if every element of the vector is <code>TRUE</code>) and the <code>any</code> function (which returns <code>TRUE</code> if one or more elements of the vector are <code>TRUE</code>).</p>
+</div>
 </div>
 </div>
 </div>
@@ -597,8 +608,8 @@ df &lt;-<span class="st"> </span><span class="kw">data.frame</span>(n, s, b)</co
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">rm</span>(n)
 <span class="kw">gc</span>()</code></pre></div>
 <pre><code>          used (Mb) gc trigger  (Mb) max used  (Mb)
-Ncells 1167936 62.4    2110325 112.8  2110325 112.8
-Vcells 1978386 15.1    8388608  64.0  7782104  59.4</code></pre>
+Ncells 1183739 63.3    2155192 115.1  2155192 115.1
+Vcells 2037959 15.6    8388608  64.0  8388566  64.0</code></pre>
 <p>If we want to remove several objects, we can pass a list object containing the names of all objects to the <code>rm()</code> function. To remove all the elements in the current session we can pass the <code>ls()</code> to the <code>rm()</code>function:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">rm</span>(<span class="dt">list =</span> <span class="kw">ls</span>())</code></pre></div>
 </div>
