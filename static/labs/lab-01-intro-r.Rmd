@@ -357,15 +357,16 @@ When we are performing an analysis we will typically be using many files: input 
 
 There are two types of vectors:
 
-1. Atomic vectors, of which there are six types: logical, integer, double, character, complex, and raw. Integer and double vectors are collectively known as numeric vectors.
+1. **Atomic vectors**, of which there are six types: logical, integer, double, character, complex, and raw. Integer and double vectors are collectively known as numeric vectors.
 
-2. Lists, which are sometimes called recursive vectors because lists can contain other lists.
+2. **Lists**, which are sometimes called recursive vectors because lists can contain other lists.
 
 Atomic vectors are one of the most common object types in R. The chief difference between atomic vectors and lists is that atomic vectors are homogeneous, while lists can be heterogeneous. That means that atomic vectors (hereafter we will called them just 'vectors') can store several values, but they **MUST** necessarily be of the **same type** (all numbers, all text, and so forth), whereas lists can hold elements of different classes. 
 
 Every vector has two properties:
-    1. Its type (character, integer, double...), which can be determined by the function `typeof()`
-    2. Its length, which we can determine with `length()`
+
+1. Its type (character, integer, double...), which can be determined by the function `typeof()`
+2. Its length, which we can determine with `length()`
 
 
 There are several ways to create vectors. The most common approach is use the function `c()` which allow us to introduce values manually by separatting them with `,`.
@@ -377,20 +378,20 @@ v1
 v2 <- c('spatial','statistics','rules!!')
 v2
 ```
-As you see, vectors aren’t limited to storing numbers. However, let us emphashize again that all the data in a vector has to be of the same type: they must be either characters, numbers, or all been logical (TRUE/FALSE)). This is an important property of (atomic) vectors; the type of data the vector holds is a property of the vector, not of each element. Let’s see what what happens if we try to create a vector of numeric and character data:
+As you see, vectors aren’t limited to storing numbers. However, let us emphasize again that all the data in a vector has to be of the same type: they must be either characters, numbers, or all been logical (TRUE/FALSE)). This is an important property of (atomic) vectors: the type of data the vector holds is a property of the vector, not of each element. Let’s see what what happens if we try to create a vector of numeric and character data:
 
 ```{r}
 c(1, 2, "three", "four", 5)
 
 ```
-We see that R has coerced the elements containing digits to strings, so that all the elements have the same type. We will talk more about data types in a later chapter
+We see that R has coerced the elements containing digits to strings, so that all the elements have the same type.
 
 
 ### Main types of atomic vectors
 
 #### Logical
 
-Logical vectors can tanke only three possible values: `FALSE`, `TRUE`, and `NA` (not available, we'll see about this later on). Logical vectors are usually build with comparison operators:
+Logical vectors can take only three possible values: `FALSE`, `TRUE`, and `NA` (not available, we'll see about this later on). Logical vectors are usually build with comparison operators:
 
 ```{r}
 c(1,2,8,4,5,3,7,8,9) >= 5   # Which elements are bigger or equal than 5
@@ -399,7 +400,7 @@ c(1,2,8,4,5,3,7,8,9) >= 5   # Which elements are bigger or equal than 5
 Logical vectors have the particularity that `TRUES` have a value of 1, and `FALSE`of 0. So the sum of the vector gives the number of `TRUE`and the mean gives the proportion of `TRUE`. Try it in your console!
 
 #### Numeric
-Integer and double vectors are known collectively as numeric vectors. In R, numbers are double (with decimals) by default. Anyway, the difference between interger and double is not usually important, so we won't go into further details here. To construct numeric vectors we can use the `c` operator seen above, but there is another option. We can use  `:`, which produces an ordered sequence of numbers by adding 1 starting from the first value and finishing in the last.
+Integer and double vectors are known collectively as numeric vectors. In R, numbers are double (with decimals) by default. Anyway, the difference between integer and double is not usually important, so we won't go into further details here. To construct numeric vectors we can use the `c()` function seen above, but there is another option. We can use  `:`, which produces an ordered sequence of numbers by adding 1 starting from the first value and finishing in the last.
 
 ```{r}
 v3 <- 1:10
@@ -418,13 +419,14 @@ Character vectors are the most complex type of atomic vector, because each eleme
 ```{r}
 
 v5 <- c("Lleida", "Lleida", "Barcelona", "Madrid", "Lleida", "Madrid")
+v5
 
 ```
 
 
 #### Missing values
 
-Vectors, as almost any data object in R, can hold missing values. These are indicated as `NA`(not available). However, note that `NA` inherits the class of the vector, so an `NA` within a numeric vector will still be numeric, whereas an `NA` in a character vector will be of type character.
+Vectors, as almost any data object in R, can hold missing values. These are indicated as `NA` (not available). However, note that `NA` inherits the class of the vector, so an `NA` within a numeric vector will still be numeric, whereas an `NA` in a character vector will be of type character.
 
 
 ### Working with vectors
@@ -433,37 +435,58 @@ We will now see some of the operations we can do with vectors, and the tools we 
 
 #### Length and test functions
 
-As we said above, the two main characteristics of a vector are its type and length. We can calculate how many elements a vector contains using the `length()` function:
+As we said above, the two main characteristics of a vector are its type and length. We can calculate how many elements contains a vector by using the `length()` function:
 
 ```{r}
 length(x)
 length(letters)
 ```
 
-Sometimes you want to do different things based on the type of vector. One option is to use `typeof()`. Another is to use a test function which returns a `TRUE` or `FALSE`. Base R provides many functions like `is.vector()` and `is.numeric()`, but they often return surprising results. Instead, it’s safer to use the `is_*` functions provided by the package `purrr`:
+Sometimes you want to do different things based on the type of vector. One option is to use `typeof()`. Another is to use a test function, which returns a `TRUE` or `FALSE`. Base R provides many functions like `is.vector()` and `is.numeric()`, but they often return surprising results. Instead, it’s safer to use the `is_*` functions provided by the package `purrr`:
 
-Caracteristicas son longitud y tipo, longitud length()
-
-is_logical, is_integer
-is_double, is_numeric
 ```{r}
 is_logical(letters)
 is_character(letters)
-is_integer()
+is_integer(letters)
 ```
 
 #### Coercion
 
+We may want to force (coerce) a vector to be of a certain type. We can do this calling a function like `as.logical()`, `as.integer()`, `as.double()`, or `as.character()`.
+
+```{r}
+v6 <- as.character(c(1,2,3,4))
+v6
+
+v7 <- as.integer(c(3.5, 4.3, 6.4, 5.0))
+v7
+
+```
+
 
 #### Scalars and recycling rules
 
-R is sometimes defined as a vectorized language. That means that we can apply functions to each and all of the elements of a vector. For example:
+R is sometimes defined as a vectorized language. That means that we can apply functions to each and all of the elements of a vector, and you should never need to perform explicit iteration when performing simple mathematical computations.
+
+For example:
 
 ```{r}
 (1:5) * 2    # Multiplies each element of the vector by 2
 2^(1:5) 
+sample(10) + 100
 ```
 
+Note, however, that R applies vector recycling, because the shorter vector is repeated, or recycled, to the same length as the longer vector.
+
+It’s intuitive what should happen if you add two vectors of the same length, or a vector and a “scalar”, but what happens if you add two vectors of different lengths?
+
+```{r}
+1:10 + 1:2
+
+```
+
+Here, R will expand the shortest vector to the same length as the longest, so called recycling. 
+This is an useful feature that is important to know, and that can be used to create very succinct, clever code, but can also create some problems.
 
 #### Naming vectors
 We can also assign a vector to an object, as seen above:
@@ -490,6 +513,7 @@ LETTERS + 1
 ```
 
 #### Subsetting vectors
+
 Having defined a vector, it’s often useful to extract parts of a vector. We do this with the `[]` operator. Using the built in `month.name` vector:
 
 ```{r}
@@ -506,7 +530,6 @@ month.name[c(2,3,4)]
 >**Tip:** </br>
 In many programming languages (C and Python, for example), the first element of a vector has an index of `0`. In R, the first element is always `1`.
 
-
 Values are returned in the order that we specify the indices. 
 
 ```{r}
@@ -519,7 +542,6 @@ We can also extract the same element more than once:
 month.name[c(1,1,2,2,2,4)]
 ```
 
-
 It is also possible to modify the information of a particular position using the combination `name[position]` and the assignment operator `<-`. For example:
 
 ```{r}
@@ -527,14 +549,12 @@ month.name[12] <- "Christmas time!"
 month.name
 ```
 
-##### Skipping and removing elements
 If we use a negative number as the index of a vector, R will return every element except for the one specified:
 
 ```{r}
 month.name[-2]
 
 ```
-
 
 We can also skip multiple elements:
 
@@ -557,9 +577,6 @@ The correct solution is to wrap that function call in brackets, so that the - op
 month.name[-(1:3)]
 ```
 
-
-
-##### Subsetting with logical vectors
 As well as providing a list of indices we want to keep (or delete, if we prefix them with `-`), we can pass a logical vector to R indicating the indices we wish to select:
 
 ```{r}
@@ -593,50 +610,115 @@ There are many situations in which you will wish to combine multiple logical cri
 Additionally, you can compare the elements within a single vector using the `all` function (which returns `TRUE` if every element of the vector is `TRUE`) and the `any` function (which returns `TRUE` if one or more elements of the vector are `TRUE`).
 
 
-
 ## Lists
 
-Once we have seen vectors we go to explore how objects of type list work. A list is an object similar to a vector with the difference that lists **allow to store values of different type**. Lists are created using the `list(value1, value2, ...)` function. For example:
+Lists, sometimes also called recursive vectors, are objects similar to atomic vectors, with the difference that lists **allow to store values of different type**. They can even contain other lists! Lists are created using the `list(value1, value2, ...)` function. For example:
 
 ```{r}
 list1 <- list(1,7,'Marcos')
 list1
 ```
 
+### Subsetting lists
 
-To access the values stored in the different positions proceed in the same way we did with vectors, ie name[position]:
+To access the values stored in the different positions proceed in the same way we did with vectors, ie `name[position]`. However, `[` extracts a sub-list, so the result will always be a list.
 
 ```{r}
 list1[3]
+typeof(list1[3])
+
 
 ```
 
-We can use the `length()` function with list too:
+`[[`extracts a single component from a list. It removes a level of hierarchy from the list.
 
 ```{r}
-length(list1)
+list1[[3]]
+typeof(list1[[3]])
+
 ```
 
+The distinction between `[` and `[[` is really important for lists, because `[[` drills down into the list while `[` returns a new, smaller list. To see a brilliant metaphore that explains the differences between both operators you can see the well known ["pepper shaker" example](https://r4ds.had.co.nz/vectors.html#lists-of-condiments) at Hadley Wickham's "R for data science"
 
-## Data.frame
-A data frame is used for storing data tables. It is a list of vectors of equal length. For example, the following variable df is a data frame containing three vectors n, s, b.
+`$` is a shorthand for extracting named elements of a list. It works similarly to `[[` except that you don’t need to use quotes.
 
 ```{r}
-n <- c(2, 3, 5) 
-s <- c("aa", "bb", "cc") 
-b <- c(TRUE, FALSE, TRUE) 
-df <- data.frame(n, s, b)
+list2 <- list(Name = "Harry", Surname = "Potter", Profession = "Wizard", Age = 24)
+
+list2$Surname
+list2$Age
+
 ```
 
 
-As you can see, the function data.frame() is used to create the data.frame. However, we will seldom use these function to create objects or store data. Normally, we will call an instruction to read text files containing data or call data objects available in some packages.
 
 
+## Data.frames
 
+Data frames are the most common object to store data in R. During this course we will mostly use data frames, and many of the functions we will learn are specifically designed to work with them.
 
+A data frame is a table or a two-dimensional structure (it has rows and columns). Each column typically contains values of one variable, so we could consider that a data frame is a list of vectors of equal length. Each row contains one value from each column.
+
+Data frames must have certain characteristics: 
+- The column names should be non-empty.
+- The row names (if they exist) should be unique.
+- Each column should contain same number of data items.
+
+To create a data frame, we can use the function `data.frame` and provide a list of named vectors:
+
+```{r}
+grades <- data.frame(Name = c("Mark", "Lewis", "Brian", "Matthew"),
+                     Course = c(2,2,1,2),
+                     Grade = c("A", "B", "A+", "C"))
+
+```
+
+We will seldom create data frames manually. Normally, we will call an instruction to read text files containing data or call data objects available in some packages. For example, let's consider the following data frame, available in the `tidyverse` package:
+
+```{r}
+starwars
+```
+
+This dataset contains the names and characteristics (name, height, mass, vehicles... up to 13 variables) of 87 characters that participate in the Star Wars saga. There are numeric and character columns, but all variables have 87 elements.
+
+To subset a data frame, we can also use the `[` operator, but we must now indicate two dimensions: which row(s) we want to subset, and which column(s):
+
+```{r}
+starwars[1,4]
+starwars[4,3]
+```
+
+If we miss one of the dimensions, we will get an error message. However, if we leave an empty space, R will understand that we want to keep all the elements in the selected row or column:
+
+```{r}
+starwars[, 3]   # Will select all rows of column 3
+starwars[4, ]   # will select the fourth row of all columns
+```
+
+As data frames are a succession of named vectors, we can use the name to extract the desired columns:
+
+```{r}
+starwars[ , "gender"]
+starwars[ , c("gender", "birth_year")]
+starwars[2, "homeworld"]
+
+```
+
+Or we can also use the `$` operator to extract a whole column:
+
+```{r}
+starwars$gender
+```
+
+Some useful functions to use with data frames include `str()` to get the names, types, and first values of the columns; and `summary()` to get the descriptive statistics of the numeric variables.
+
+```{r}
+str(starwars)
+summary(starwars)
+```
 
 # Object management
-We have seen so far aspects related to the creation of objects. However we should be also know how many objects we have created in our session and how to remove them if necessary. To display all created objects in the current session we use `ls()`. Deleting objects in R is done by the command remove `rm(object_name)`. After doing so, we must call the garbage collector with `gc()` to free-up the occupied memory.
+We have seen so far aspects related to the creation of objects. However we should also know how many objects we have created in our session and how to remove them if necessary. To display all created objects in the current session we use `ls()`. Deleting objects in R is done by the command remove `rm(object_name)`. After doing so, we must call the garbage collector with `gc()` to free-up the occupied memory.
 
 ```{r}
 ls()
@@ -644,7 +726,6 @@ ls()
 rm(n)
 gc()
 ```
-
 
 If we want to remove several objects,  we can pass a list object containing the names of all objects to the `rm()` function. To remove all the elements in the current session we can pass the `ls()` to the `rm()`function:
 
@@ -657,16 +738,10 @@ Up to this point we have seen and executed some instructions in R, generally ori
 
 However, we have also executed some function-type statements, such as the `length()` function. A function can be defined as a group of instructions that takes an input, uses this input to compute other values and returns a result or output. We will not go into deep details for now. It suffices to know that to execute a function it is enough to invoke the instruction that calls the desired function (length) and to specify the necessary inputs, also knwon as arguments. These inputs are always included between the parentheses of the instruction , as in `length(vector)`. If several arguments are needed we separate them usign `,`. We will devote a full unit of the course to functions.
 
-
-
-# Missing data
-`NA` is a special value, that is used to represent “not available”, or “missing”. If we perform computations which include `NA`, the result is usually `NA`:
-
-```{r}
-1 + NA
-
-```
-ES UN TIPO SIN CATEGORIA? VAÑE PARA CHARACTER; NUMEIC????
-
 # To know more
 
+To learn more about some of the topics covered in this lab, I recommend watching the video "Writing code in RStudio", developed by the RStudio team. It contains many of the concepts covered here, and also some more tips and advices to follow:
+
+https://resources.rstudio.com/wistia-rstudio-essentials-2/rstudioessentialsprogrammingpart1-2
+
+Or come see me if you have any doubts.
