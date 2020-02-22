@@ -94,7 +94,7 @@ As you get more comfortable with R, you might find the Environment / History pan
 
 The **Files / Plots / Packages / Help** panel shows you lots of helpful information. Let’s go through each tab in detail:
 
-- **Files:** it gives you access to the file directory on your hard drive, so it is very useful to fnd and load code scripts. One nice feature of the “Files” panel is that you can use it to set your working directory - if you have all your files in a folder (which you should), you can point to it by clicking “More” and then “Set As Working Directory.” This will easen the process of reading and saving files, because RStudio will point to that directory by default. We’ll talk about working directories in more detail soon.
+- **Files:** it gives you access to the file directory on your hard drive, so it is very useful to find and load code scripts. One nice feature of the “Files” panel is that you can use it to set your working directory - if you have all your files in a folder (which you should), you can point to it by clicking “More” and then “Set As Working Directory.” This will easen the process of reading and saving files, because RStudio will point to that directory by default. We’ll talk about working directories in more detail soon.
 
 - **Plots:** this panel shows all the plots that you generate during an R session. There are buttons for opening the plot in a separate window and exporting the plot as a `.pdf` or `.jpeg` (though we will see how to do this with code, because it is way more convenient and customizable). To see how plots are displayed in the `Plots` panel, just copy the code below in the `console`to display an histogram of the petal length of three species of Iris plants, that are included in the iris database (loaded with the basic R installation). When you do, you should see a plot similar to the one in the Figure show up in the Plots panel.
 
@@ -109,7 +109,7 @@ ggplot(iris) +
 
 - **Help:** help menu for R functions. You can either type the name of a function in the search window, or use the code to search for a function with the name
 
-Of course, the layout in RStudio can be modified, and the user can set up which panels to see, the color of the code, and many other issues. You can learn more about customizing RStuio [here](https://support.rstudio.com/hc/en-us/articles/200549016-Customizing-RStudio). Anyway, don't worry about the different panels and their functionalities for now. You will learn more about them as we use them during the course, and hopefully you will get very familiar with them.
+Of course, the layout in RStudio can be modified, and the user can set up which panels to see, the color of the code, and many other issues. You can learn more about customizing RStudio [here](https://support.rstudio.com/hc/en-us/articles/200549016-Customizing-RStudio). Anyway, don't worry about the different panels and their functionalities for now. You will learn more about them as we use them during the course, and hopefully you will get very familiar with them.
 
 # Introduction to R
 
