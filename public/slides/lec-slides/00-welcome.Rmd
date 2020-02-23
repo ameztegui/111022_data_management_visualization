@@ -285,6 +285,16 @@ class: center, middle, inverse
 
 - You should see a project called `UN Votes`
 
+- When you open the project (it may take a while), you will see a red prompt saying 'TEMPORARY COPY' and just beside, the option to 'Save a permanent copy'. Whenever you open a project created by us, the **FIRST THING TO DO** is create your own copy. Otherwise, all the changes you make will be lost when you log out.
+
+- In the case of assignments, when you click "Start assignment", it automatically creates the copy in your space.
+
+- We can access your own copies of projects, and even edit them or make comments. This is the first time we use this, but seems a very convenient way of working with no file exchange.
+
+---
+
+# Create your first data visualization
+
 - In the Files pane in the bottom right corner, spot the file called `UN_votes.Rmd`. Open it, and then click on the "Knit" button.
 
 - Go back to the file and change your name on top (in the `yaml` -- we'll talk about what this means later) and knit again.
@@ -416,17 +426,6 @@ kable(grading, format='html')
 - You must ABSOLUTELY complete the final project and be in class to present it in order to pass this course.
 
 - Please talk to us in case of illness, or personal or family issues that interferes with your ability to attend or complete classes.
----
-
-# Sharing/reusing code
-
-- A huge volume of code is available on the web to solve any number of problems.
-
-- Unless we explicitly tell you not to use something, the course's policy is that *you may make use of any online resources* (e.g. StackOverflow) but **you must cite** where you obtained any code you use
-
-- Except for the exams, you are welcome to discuss the problems together and ask for advice, but you may not directly send or make **use of code from another student** in this class 
-
-- On the exams all communication with classmates is explicitly forbidden.
 
 ---
 
@@ -444,10 +443,21 @@ kable(grading, format='html')
   
 It is relatively important to become familiar from the beginning with the various alternatives for getting help. A key part of your success in using R lies in your ability to be self-relient and be able to get help and apply it to your own problems.
 
+---
 
-- For personal and grade related questions, contact us by email.
+
+# But... a note on sharing/reusing code
+
+- A huge volume of code is available on the web to solve any number of problems.
+
+- Unless we explicitly tell you not to use something, the course's policy is that *you may make use of any online resources* (e.g. StackOverflow) but if you copy pieces of code from somewhere **you must cite** where you obtained it.
+
+- Except for the exams, you are welcome to discuss the problems together and ask for advice, but you may not directly send or make **use of code from another student** in this class 
+
+- On the exams all communication with classmates is explicitly forbidden.
 
 ---
+
 class: center, middle, inverse
 
 # Questions?
