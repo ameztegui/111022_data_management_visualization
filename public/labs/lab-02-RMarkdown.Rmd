@@ -381,11 +381,7 @@ When the report is knit, the results of these computations are inserted into the
 **EXERCISE 4:**</br>
 
 Now that you know how to produce a complete R Markdown document, I want you to create and R Markdown report using the 'mtcars' dataset, that is loaded by default with R. This dataset comprises fuel consumption and 10 aspects of automobile design and performance for 32 automobiles, so it has 32 observations and 11 variables. Please type `?mtcars`in the console to know more about this dataset and the variables it contains.
-
-
-A DECIDIR con MARCOS, quizá les damos algo ya hecho y que lo cambien???
-The topic is free, but try to include as many elements of RMarkdown as possible (formatting)
-
+    
 </div>
 
 
