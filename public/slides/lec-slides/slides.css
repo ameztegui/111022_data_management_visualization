@@ -386,11 +386,23 @@ div.tweaked-header {
     float: left;
     width: 80%;
 }
+.pull-extleft2 {
+    float: left;
+    width: 35%;
+}
+
 
 .pull-extleft-right {
     float: right;
     width: 20%;
 } 
+
+.pull-extleft_right2 {
+  float: right;
+  font-size: 82%;
+  width: 65%;
+}
+
 .pull-left-wide {
   float: left;
   width: 65%;
@@ -404,13 +416,14 @@ div.tweaked-header {
 
 .pull-right-wide {
   float: right;
-  width: 65%;
+  font-size: 80%;
+  width: 60%;
 }
 
 .pull-right-wide-left {
   float: left;
   font-size: 80%;
-  width: 35%;
+  width: 40%;
 }
 
 
