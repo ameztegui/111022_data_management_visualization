@@ -22,6 +22,7 @@ options(
 
 # Set dpi and height for images
 library(knitr)
+library(tidyverse)
 opts_chunk$set(fig.height = 2.65, dpi = 300,
                eval = FALSE) 
 # ggplot2 color palette with gray
@@ -39,7 +40,7 @@ color_palette <- list(gray = "#999999",
 
 
 ```
----
+
 
 background-image: url(./img/hadley.png)
 background-position: right bottom
@@ -78,20 +79,142 @@ All packages share an underlying design philosophy, grammar, and data structures
 
 ---
 
+background-image: url(./img/Leon_Tolstoi.jpg)
+background-position: right bottom
+
 # *tidyverse*: tidy data
 
-![](./img/tidy_data.png)
+
+> "All happy families are alike; 
+> each unhappy family is unhappy in its own way"
+
+</br>
+</br>
+
+---
+
+
+background-image: url(./img/hadley.png)
+background-position: right bottom
+
+# *tidyverse*: tidy data
+
+
+> "All tidy datasets are  alike;
+> but every messy dataset is messy in its own way.”
+
+</br>
+</br>
+
+---
+
+# So what the **** is tidy data?
 
 --
 
-  - Data in **tidy** format eases the processing and analysis, particularly in
+![](./img/tidy_data.png)
+--
+
+
+  - Information may not be in tidy formats for multiple reasons (easier to get, poor maintenance, ignorance...) 
+  
+--
+
+  - Pays off: data in **tidy** format eases the processing and analysis, particularly in
     vectorized languages as R.
     
 ---
 
-Let'see some examples of tidy and untidy data
+# Let's see some examples (I)
+
+
+```{r, eval=T, echo = T}
+table1
+```
 
 ---
+
+background-image: url(./img/tidy_ds1.png)
+background-position: middle
+
+# Let's see some examples (I)
+
+
+
+
+---
+
+
+# Let's see some examples (II)
+
+
+```{r, eval=T, echo = T}
+table2
+```
+
+---
+
+
+background-image: url(./img/tidy_ds2.png)
+background-position: middle
+
+# Let's see some examples (II)
+
+---
+
+# Let's see some examples (III)
+
+
+```{r, eval=T, echo = T}
+table3
+```
+
+---
+
+
+background-image: url(./img/tidy_ds3.png)
+background-position: middle
+
+# Let's see some examples (III)
+
+
+
+---
+
+# Let's see some examples (IV)
+
+
+```{r, eval=T, echo = T}
+table4
+table5
+```
+
+---
+
+
+background-image: url(./img/tidy_ds4.png)
+background-position: middle
+
+# Let's see some examples (IV)
+
+
+---
+
+background-image: url(./img/tidy_data2b.png)
+background-position: bottom
+
+
+# To make datasets *tidy*...
+
+These three rules are interrelated because it’s impossible to only satisfy two of the three. That interrelationship leads to an even simpler set of practical instructions:
+
+1. Put each dataset in a tibble.
+2. Put each variable in a column.
+
+dplyr, ggplot2, and all the other packages in the tidyverse are designed to work with *tidy data*. 
+
+---
+
 
 # So what's exactly *in* the tidyverse?
 
