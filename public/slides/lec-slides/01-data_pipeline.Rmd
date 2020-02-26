@@ -1,11 +1,11 @@
 ---
-title: "The data pipeline and </br>the concept of tidy data"
+title: "The data science pipeline"
+subtitle: "The tidyverse and the concept of tidy data"
 author: "Aitor Ameztegui"
-date: "`r Sys.Date()`"
 output:
   xaringan::moon_reader:
     css: "slides.css"
-    logo: img/udl_logo.png
+    logo: img/sta199-logo-hex.png
     lib_dir: libs
     nature:
       highlightStyle: github
@@ -18,11 +18,13 @@ output:
 options(
   htmltools.dir.version = FALSE, # for blogdown
   show.signif.stars = FALSE,     # for regression output
-  warm = 1
-  )
+  warm = 1)
+
 # Set dpi and height for images
 library(knitr)
-opts_chunk$set(fig.height = 2.65, dpi = 300) 
+library(tidyverse)
+opts_chunk$set(fig.height = 2.65, dpi = 300,
+               eval = FALSE) 
 # ggplot2 color palette with gray
 color_palette <- list(gray = "#999999", 
                       salmon = "#E69F00", 
@@ -32,14 +34,14 @@ color_palette <- list(gray = "#999999",
                       darkblue = "#0072B2", 
                       red = "#D55E00", 
                       purple = "#CC79A7")
-# For nonsese...
-htmltools::tagList(rmarkdown::html_dependency_font_awesome())
-```
 
-```{r echo=FALSE, message=FALSE, warning=FALSE}
-library(tidyverse)
-library(rvest)
+
+# load('data/data_workshop.Rdata')
+
+
 ```
+---
+
 
 # The steps of the scientific method
 
@@ -74,7 +76,7 @@ library(rvest)
 
 
 .pull-right[
-![](img/02/drawing.png)
+![](img/drawing.png)
 ]
 
 
@@ -84,7 +86,7 @@ library(rvest)
 
 So once we have the data, what do we do with it?
 
-![](img/02/tidyverse_schema.png)
+![](img/tidyverse_schema.png)
 
 ---
 
@@ -92,409 +94,234 @@ So once we have the data, what do we do with it?
 
 So once we have the data, what do we do with it?
 
-![](img/02/tidyverse_schema2.png)
+![](img/tidyverse_schema2.png)
 
+---
+# The data pipeline
 
+![](./img/tidyverse_schema.png)
 
+---
+background-image: url(./img/hadley.png)
+background-position: right bottom
 
+# The tidyverse
 
+The **tidyverse** is a collection of R packages designed for data science, as a suite aimed
+at easening the data analysis in all its steps.
 
+Created by Hadley Wickham, chief scientist of RStudio, and author of more than
+30 R packages (`readr`, `ggplot2`, `plyr`, `devtools`, `roxygen2`, `rmarkdown`...)
 
+All packages share an underlying design philosophy, grammar, and data structures. 
 
+--
 
+![](./img/tidyverse_schema.png)
 
+---
 
+background-image: url(./img/hadley.png)
+background-position: right bottom
 
+# The tidyverse
 
+The **tidyverse** is a collection of R packages designed for data science, as a suite aimed
+at easening the data analysis in all its steps.
 
+Created by Hadley Wickham, chief scientist of RStudio, and author of more than
+30 R packages (`readr`, `ggplot2`, `plyr`, `devtools`, `roxygen2`, `rmarkdown`...)
 
+All packages share an underlying design philosophy, grammar, and data structures. 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+![](./img/tidyverse_schema_2.png)
 
 
 ---
 
-# Who are we?
+background-image: url(./img/Leon_Tolstoi.jpg)
+background-position: right bottom
 
-.pull-left[.bold[
- [Dr. Aitor Ameztegui](http://ameztegui.weebly.com/)<br>]
+# *tidyverse*: tidy data
 
-<i class="fa fa-envelope"></i> &nbsp; [aitor.ameztegui@eagrof.udl.cat](mailto:aitor.ameztegui@eagrof.udl.cat) <br>
-<i class="fa fa-university"></i> &nbsp; Building 4, Bureau 2.04.1 <br>
-<i class="fa fa-phone"></i> &nbsp; 973702540 <br> 
-<i class="fa fa-calendar"></i> &nbsp; Tue 11:00 - 12:30 <br> 
-&nbsp; &nbsp; &nbsp; Thur 15:00 - 16:00 or <br>
-&nbsp; &nbsp; &nbsp; upon request
-<br><br>]
 
-.pull-right[.bold[
-[Dr. Marcos Rodrigues](http://www.eagrof.udl.cat/es/personal/PDI/rodrigues.html) <br>]
-
-<i class="fa fa-envelope"></i> &nbsp; [rmarcos@eagrof.udl.cat](mailto:rmarcos@eagrof.udl.cat) <br>
-<i class="fa fa-university"></i> &nbsp; Building 4, Bureau 2.05.1 <br>
-<i class="fa fa-phone"></i> &nbsp; 973702546 <br> 
-<i class="fa fa-calendar"></i> &nbsp; Mon 12:00 - 2:00 or <br>
-&nbsp; &nbsp; &nbsp; upon request
-<br><br>]
-
----
-
-
-# What is this course about?
-
---
-
-.font120[This course is about: ]
-
-- <i class="fa fa-code fa-10px"></i> Coding
-
---
-
-- <i class="fa fa-database fa-10px"></i> Data management
-
---
-
-
-- <i class="fa fa-bar-chart fa-10px"></i> Data visualization
-
---
-
-- <i class="fa fa-flask fa-10px"></i> Modelling and statistics
-
---
-
-- <i class="fa fa-user fa-10px"></i> Interpretation
-
---
-- <i class="fa fa-users fa-10px"></i> Communication
-
---
-</br></br>
-
-<i class="fa fa-code fa-10px"></i> + 
-<i class="fa fa-database fa-10px"></i> +
-<i class="fa fa-bar-chart fa-10px"></i> +
-<i class="fa fa-flask fa-10px"></i> +
-<i class="fa fa-user fa-10px"></i> +
-<i class="fa fa-users fa-10px"></i> 
-= .font130[.bold[Data Science!]]
---
-
-</br></br>
-
-.center[.font110[**Data science** allows you to turn raw data into understanding, insight, and knowledge. We're going to learn to do this in a `tidy` way -- more on that later!]]
-
-
----
-
-# What is this course *NOT* about?
-
-
-.font120[This course is *NOT* about: ]
-
-- <i class="fab fa-r-project fa-10px"></i> R language
-
---
-
-- <i class="fas fa-calculator"></i> Stats
-
---
-
-- <i class="fas fa-subscript"></i> Modelling
---
-
-- <i class="fa fa-database"></i>
-Big data
-
-
----
-
-# Our toolkit
-
-
-.pull-left[
-![](img/r_logo.jpeg)
-{{content}}
-]
-
---
-
-- R is a true “data language"
-{{content}}
-
-
---
-
-- But very versatile
-{{content}}
-
-
---
-
-- Multiplatform
-{{content}}
-
-
---
-
-- 100% free (in both senses)
-{{content}}
-
-
---
-
-- Analyses conducted in R are transparent, easily shareable, and reproducible
-{{content}}
-
-
---
-
-- Come for the stats, stay for the huuuge support community
-
---
-
-.pull-right[</br>![](img/rstudio_logo.png)
-{{content}}
-]
-
---
-
-- It is an integrated development environment (IDE). That means that any code block or instruction will work in any other R environment
-{{content}}
-
---
-
-- RStudio is the most convenient IDE. It has a more user-friendly interface, and comes with many other useful tools:
-{{content}}
---
-  - Autocomplete instructions
-  - Object management
-  - Data display and visualization.
-  - Exporting plots and figures.
-
----
-class: center, middle, inverse
-
-
-# Let's see some examples of amazing data analyses!
-
-
----
-# Example 1
-## A year as told by fitbit
-
-### by Nick Strayer
-
-
-http://livefreeordichotomize.com/2017/12/27/a-year-as-told-by-fitbit/
-
----
-# Example 2
-
-## R-Ladies global tour
-
-### by Maelle Salmon
-
-http://www.masalmon.eu/2017/10/06/globalrladiestour/
-
----
-
-# Example 3
-
-## Text analysis of Trump's tweets confirms he writes only the (angrier) Android half
-
-### by David Robinson (Stack Overflow)
-
-http://varianceexplained.org/r/trump-tweets/
-
----
-
-class: center, middle, inverse
-
-# Your turn!
-
-
----
-
-# Join RStudio.cloud
-
-- What's RStudio?
-
---
-
-- And why RStudio Cloud?
-
---
-
-Go to [shorturl.at/gitGM](shorturl.at/gitGM), and log in.
-
-<font color="#E34132">
-Once done, place a green sticky on your laptop. If you have questions, place a pink sticky.
-</font>
----
-
-# Create your first data visualization
-
-- Once you log on to RStudio Cloud, click on this course's workspace "111022 Data Management and Visualization"
-
-- You should see a project called `SIBECOL twitter analysis`
-
-- In the Files pane in the bottom right corner, spot the file called `index.Rmd`. Open it, and then click on the "Knit" button.
-
-- Go back to the file and change your name on top (in the `yaml` -- we'll talk about what this means later) and knit again.
-
-- Then change the country names to those you're interested in. Your spelling and capitalization should match the data so take a peek at the Appendix to see how the country names are spelled. Knit again. And voila, your first data visualization!
-
-<font color="#E34132">
-Once done, place a green sticky on your laptop. If you have questions, place a pink sticky.
-</font>
----
-
-class: center, middle, inverse
-
-# Course structure and policies
-
----
-
-# Class meetings
-
-- Interactive
-
-- There will be some lectures, lots of learn-by-doing
-
-- Bring your laptop to class every day
-</br></br></br>
-.center[All the info, links and materials will be posted at [datamanagement.netlify.com/](https://datamanagement.netlify.com/)]
-
----
-
-# Course components
-
-<i class="fa fa-laptop  fa-lg"></i> .bold[Lectures:] we will try to keep them short, but some "theory" will be needed
-
---
-
-
-<i class="fa fa-book fa-lg"></i> .bold[Readings:] In some lectures I will recommend some external readings to expand or consolidate concepts seen in class
-
---
-
-<i class="fa fa-code  fa-lg"></i> .bold[Labs:] hands-on application of concepts and tools seen in class. 
-- They're self paced tutorials with examples
-- There will be some questions/exercises you will need to answer, by creating a "lab report" (we'll see how). Try to finish in class, but can continue later. 
-
---
-
-<i class="fa fa-pencil-square-o fa-lg"></i>.bold[Homework:] Individual. You are expected to work at home (but can ask doubts of course!)
-
---
-
-<i class="fa fa-check-square fa-lg"></i> .bold[Exams:] Individual, two take-home midterms
-
---
-
-<i class="fa fa-file-powerpoint fa-lg"></i> .bold[Final project:] during the course each of you will design a data science project using your own dataset (ideally it will come from your master's thesis). You must present the results to your classmates. You must complete the final project and be in class to present it to pass this class.
-
----
-
-# Grading
-
-```{r echo=F}
-grading <- data.frame(Component = c("Participation & application exercises",
-                                    "Homework",
-                                    "Labs",
-                                    "Midterm 1",
-                                    "Midterm 2",
-                                    "Final project",                                                                        "Peer evaluation"),
-                      Weight = c("10%*",
-                                 "20%",
-                                 "15%",
-                                 "17.5%",
-                                 "17.5%",
-                                 "15%",                                 
-                                 "5%"))
-
-library(knitr)
-kable(grading, format='html')
-```
-
-
+> "All happy families are alike; 
+> each unhappy family is unhappy in its own way"
 
 </br>
-- *Class attendance is a firm expectation; frequent absences or tardiness 
-will be considered a legitimate cause for grade reduction.
-
-- Excused absences do not excuse you from assigned homework, it is your responsibility to make alternative arrangements to turn in any assignments in a timely fashion.
-
----
-# Late/missed work policy
-
-- Late work policy for homework assignments:
-    - late, but within 48 hours of due date/time: -20%
-    - any later: no credit
-
-- Late work will not be accepted for take home midterms and the final project.
-
-- You must ABSOLUTELY complete the final project and be in class to present it in order to pass this course.
-
-- Please talk to us in case of illness, or personal or family issues that interferes with your ability to attend or complete classes.
----
-
-# Sharing/reusing code
-
-- We are aware that a huge volume of code is available on the web to solve any number of problems.
-
-- Unless we explicitly tell you not to use something, the course's policy is that you may make use of any online resources (e.g. StackOverflow) but you must explicitly cite where you obtained any code you directly use (or use as inspiration). 
-
-- Except for the take home exams, you are welcome to discuss the problems together and ask for advice, but you may not directly send or make use of code from another student in this class 
-
-- On the take home exams all communication with classmates is explicitly forbidden.
+</br>
 
 ---
 
-# Diversity & Inclusiveness:
 
-- Intent: Students from all diverse backgrounds and perspectives be well-served by this course, that students' learning needs be addressed both in and out of class, and that the diversity that the students bring to this class be viewed as a resource, strength and benefit. It is my intent to present materials and activities that are respectful of diversity: gender identity, sexuality, disability, age, socioeconomic status, ethnicity, race, nationality, religion, and culture. Let me know ways to improve the effectiveness of the course for you personally, or for other students or student groups.
+background-image: url(./img/hadley.png)
+background-position: right bottom
 
-- If you have a name and/or set of pronouns that differ from those that appear in your official UdL records, please let us know!
+# *tidyverse*: tidy data
 
-- If you feel like your performance in the class is being impacted by your experiences outside of class, please don't hesitate to come and talk with any of us If you prefer to speak with someone outside of the course, the MSc coordinator is an excellent resource. 
 
-- We (like many people) are still in the process of learning about diverse perspectives and identities. If something was said in class (by anyone) that made you feel uncomfortable, please talk to us about it.
+> "All tidy datasets are  alike;
+> but every messy dataset is messy in its own way.”
+
+</br>
+</br>
 
 ---
 
-# How to get help
+# So what the **** is tidy data?
 
-- Course content, logistics, etc. are available at [datamanagement.netlify.com/](https://datamanagement.netlify.com/). 
+--
 
-- As we said, one of the best things about R is its community. Some highly recommended resources are:
+![](./img/tidy_data.png)
+--
 
-  - [R bloggers](http://www.r-bloggers.com/): A website dedicated to R development of tutorials.
-  - [StackOverflow](http://stackoverflow.com/): Website devoted to questions-and-answers on programming languages among which is R also available.
-  - [Datacamp](https://www.datacamp.com/search?q=&facets%5Btechnology%5D%5B%5D=R): Interactive data science tutorials covering many topics. Some are paid.
-  - [RStudio Online Learning](https://www.rstudio.com/online-learning/): A wealth of tutorials, articles, and examples developed by RStudio to help you learn R and its extensions.
-  - [R-Tutor](http://www.r-tutor.com/): A website devoted to teach statistics. An useful one if you are not much familiar with basic statistical methods.
+
+  - Information may not be in tidy formats for multiple reasons (easier to get, poor maintenance, ignorance...) 
   
-It is relatively important to become familiar from the beginning with the various alternatives for getting help. A key part of your success in using R lies in your ability to be self-relient and be able to get help and apply it to your own problems.
+--
+
+  - Pays off: data in **tidy** format eases the processing and analysis, particularly in
+    vectorized languages as R.
+    
+---
+
+# Let's see some examples (I)
 
 
-- For personal and grade related questions, contact us by email.
+```{r, eval=T, echo = T}
+table1
+```
 
 ---
-class: center, middle, inverse
 
-# Questions?
+background-image: url(./img/tidy_ds1.png)
+background-position: middle
+
+# Let's see some examples (I)
+
+
+
+
+---
+
+
+# Let's see some examples (II)
+
+
+```{r, eval=T, echo = T}
+table2
+```
+
+---
+
+
+background-image: url(./img/tidy_ds2.png)
+background-position: middle
+
+# Let's see some examples (II)
+
+---
+
+# Let's see some examples (III)
+
+
+```{r, eval=T, echo = T}
+table3
+```
+
+---
+
+
+background-image: url(./img/tidy_ds3.png)
+background-position: middle
+
+# Let's see some examples (III)
+
+
+
+---
+
+# Let's see some examples (IV)
+
+
+```{r, eval=T, echo = T}
+table4a
+table4b
+```
+
+---
+
+
+background-image: url(./img/tidy_ds4.png)
+background-position: middle
+
+# Let's see some examples (IV)
+
+
+---
+
+background-image: url(./img/tidy_data2b.png)
+background-position: bottom
+
+
+# To make datasets *tidy*...
+
+These three rules are interrelated because it’s impossible to only satisfy two of the three. That interrelationship leads to an even simpler set of practical instructions:
+
+1. Put each dataset in a tibble.
+2. Put each variable in a column.
+
+dplyr, ggplot2, and all the other packages in the tidyverse are designed to work with *tidy data*. 
+
+---
+
+
+# So what's exactly *in* the tidyverse?
+
+.pull-right-wide-left[![](./img/hex-tidyverse.png)]
+
+.pull-right-wide[
+
+* `ggplot2` a system for creating graphics, based on the Grammar of Graphics
+
+* `readr` a fast and friendly way to read rectangular data (csv, txt...)
+
+* `tibble` a tibble is a re-imagining version of the data frame, keeping what time has proven to be effective and throwing out what has not
+
+* `stringr` provides a cohesive set of functions designed to make working with strings as easy as possible
+
+* `forcats` provides a suite of useful tools that solve common problems with factors
+
+* `dplyr` provides a grammar of data manipulation, providing a consistent set of verbs that solve the most common data manipulation challenges
+ 
+* `tidyr` provides a set of functions that help you get to tidy data
+ 
+* `purrr` enhances R’s functional programming (FP) toolkit by providing a complete and consistent set of tools for working with functions and vectors
+]
+
+---
+
+# Installation and use
+
+
+ - Install all the packages in the tidyverse by running `install.packages("tidyverse")`
+
+ - Run `library(tidyverse)` to load the core tidyverse and make it available in your current R session.
+ - Learn more about the tidyverse package at http://tidyverse.tidyverse.org.
+ - Or check the cheatsheets
+ 
+ ![](./img/cheatsheet_purrr.png)
+
+---
+
+# Before we start...
+
+- Neither `tidyr`, nor `dplyr` or `purrr` do anything that can't be done with
+  base R code, `apply` family functions, `for` loops or other packages.  
+
+- Designed to be more efficient (in time), easier to read and easier to use. More intuitive to use, specially for beginners (it may require some adaptation if you are used to base R code).
+
+- Valid mostly for data.frames. For other formats (matrices, arrays) `plyr` can
+  be used.
+
+
