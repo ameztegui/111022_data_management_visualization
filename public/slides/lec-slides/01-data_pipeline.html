@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<html lang="" xml:lang="">
   <head>
     <title>The data science pipeline</title>
     <meta charset="utf-8" />
@@ -18,17 +18,14 @@ class: center, middle, inverse, title-slide
 
 
 
----
 
 
 # The steps of the scientific method
-
 .pull-left[
 1. Formulate of a question
 {{content}}]
 
 --
-
 2. Hypothesis and predictions
 {{content}}
 
@@ -36,50 +33,35 @@ class: center, middle, inverse, title-slide
 
 3. Set an experiment and collect data
 {{content}}
-
 --
 
 4. Analyse the data
 {{content}}
-
 --
 
 5. Get to a conclusion
 {{content}}
-
 --
 
 6. Communicate
+{{content}}
 
-
-
-.pull-right[
-![](img/drawing.png)
-]
 
 
 ---
 
 # The data pipeline
 
-So once we have the data, what do we do with it?
+### So once we have the data, what do we do with it?
 
+&lt;/br&gt;
+&lt;/br&gt;
+&lt;/br&gt;
+--
 ![](img/tidyverse_schema.png)
 
 ---
 
-# The data pipeline
-
-So once we have the data, what do we do with it?
-
-![](img/tidyverse_schema2.png)
-
----
-# The data pipeline
-
-![](./img/tidyverse_schema.png)
-
----
 background-image: url(./img/hadley.png)
 background-position: right bottom
 
@@ -414,7 +396,24 @@ if (window.HTMLWidgets) slideshow.on('afterShowSlide', function (slide) {
     }
     deleted = true;
   });
-})();</script>
+})();
+// adds .remark-code-has-line-highlighted class to <pre> parent elements
+// of code chunks containing highlighted lines with class .remark-code-line-highlighted
+(function(d) {
+  const hlines = d.querySelectorAll('.remark-code-line-highlighted');
+  const preParents = [];
+  const findPreParent = function(line, p = 0) {
+    if (p > 1) return null; // traverse up no further than grandparent
+    const el = line.parentElement;
+    return el.tagName === "PRE" ? el : findPreParent(el, ++p);
+  };
+
+  for (let line of hlines) {
+    let pre = findPreParent(line);
+    if (pre && !preParents.includes(pre)) preParents.push(pre);
+  }
+  preParents.forEach(p => p.classList.add("remark-code-has-line-highlighted"));
+})(document);</script>
 
 <script>
 (function() {

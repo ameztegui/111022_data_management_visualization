@@ -40,17 +40,14 @@ color_palette <- list(gray = "#999999",
 
 
 ```
----
 
 
 # The steps of the scientific method
-
 .pull-left[
 1. Formulate of a question
 {{content}}]
 
 --
-
 2. Hypothesis and predictions
 {{content}}
 
@@ -58,50 +55,35 @@ color_palette <- list(gray = "#999999",
 
 3. Set an experiment and collect data
 {{content}}
-
 --
 
 4. Analyse the data
 {{content}}
-
 --
 
 5. Get to a conclusion
 {{content}}
-
 --
 
 6. Communicate
+{{content}}
 
-
-
-.pull-right[
-![](img/drawing.png)
-]
 
 
 ---
 
 # The data pipeline
 
-So once we have the data, what do we do with it?
+### So once we have the data, what do we do with it?
 
+</br>
+</br>
+</br>
+--
 ![](img/tidyverse_schema.png)
 
 ---
 
-# The data pipeline
-
-So once we have the data, what do we do with it?
-
-![](img/tidyverse_schema2.png)
-
----
-# The data pipeline
-
-![](./img/tidyverse_schema.png)
-
----
 background-image: url(./img/hadley.png)
 background-position: right bottom
 
