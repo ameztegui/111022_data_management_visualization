@@ -46,28 +46,82 @@ library(rvest)
 
 * Computers are now essential in all branches of science,
 
-* but most researchers are never taught the equivalent of basic lab skills for research computing.
+* But most researchers are never taught the equivalent of basic lab skills for research computing.
 
 * Consequences: data can get lost, analyses can take much longer than necessary, and researchers are limited in how effectively they can work with software and data.
 
-Computing workflows need to follow the same practices as lab projects and notebooks, with organized data, documented steps, and the project structured for reproducibility, but researchers new to computing often don't know where to start. 
+* Computing workflows need to follow the same practices as lab projects and notebooks, with organized data, documented steps, and the project structured for reproducibility, but researchers new to computing often don't know where to start. 
 
 ---
 
 # Introduction
 
-Three years ago, a group of researchers involved in Software Carpentry and Data Carpentry wrote a paper called "Best Practices for Scientific Computing" [1]. That paper provided recommendations for people who were already doing significant amounts of computation in their research. However, as computing has become an essential part of science for all researchers, there is a larger group of people new to scientific computing, and the question then becomes, "where to start?"
+* In 2014, a group of researchers involved in Software Carpentry and Data Carpentry wrote a paper called "Best Practices for Scientific Computing" -> for people who were already doing significant amounts of computation in their research. 
 
-This paper focuses on these first accessible skills and perspectives—the "good enough" practices—for scientific computing: a minimum set of tools and techniques that we believe every researcher can and should consider adopting. It draws inspiration from many sources [2–8], from our personal experience, and from the experiences of the thousands of people who have taken part in Software Carpentry and Data Carpentry workshops over the past 6 years.
+![](img/paper_practices.png)
 
-Our intended audience is researchers who are working alone or with a handful of collaborators on projects lasting a few days to several months. A practice is included in our list if large numbers of researchers use it and large numbers of people are still using it months after first trying it out. We include the second criterion because there is no point in recommending something that people won't actually adopt.
-
-Many of our recommendations are for the benefit of the collaborator every researcher cares about most: their future self (as the joke goes, yourself from 3 months ago doesn't answer email…). Change is hard, and if researchers don't see those benefits quickly enough to justify the pain, they will almost certainly switch back to their old way of doing things. This rules out many practices, such as code review, that we feel are essential for larger-scale development (Section 6).
+* Some are viewed as "too advanced" by newbies in programming or computer science
 
 ---
 
+# Introduction
 
-# Good code vs. bad code
+* In 2017, a group of scientists pubished a paper that focuses on "good enough" practices—for scientific computing: a minimum set of tools and techniques that every researcher can and should consider adopting
+
+* Many of our recommendations are for the benefit of the collaborator every researcher cares about most: their future self 
+
+* We won't cover the details here, but I **STRONGLY** encourage you to read the paper and apply most of the advices to your projects
+
+![](img/paper_practices2.png)
+
+
+---
+
+# Project organization
+
+* It is good practice to keep all files for a given project in the same project-specific folder. 
+
+* You can then create sub-folders for specific types of files, such as data, figures, function files, and manuscripts. Using a consistent folder structure and file naming system across projects makes it easier to:
+
+    - Navigate the project contents.
+    - Resume work after a hiatus.
+    - Re-use code in multiple projects.
+    
+![](img/project_organization.png)
+
+
+
+* We will cover the topic of project organization in the next lecture
+
+---
+
+# Data management
+
+* You should *ALWAYS* keep a copy of the raw data, as you obtained it from the field, the lab, or the software you use. This file should **NEVER** be modified, and be stored in more than one location
+
+* If you want to modify your raw data (you will), do so in a friendly, tidy and reproducible way that allows yopu yo keep track of all the steps used to process the data (using R, of course). If you modify the raw data and then you discover you shouldn't have done it, you should be able to know which records you modified, why, and how.
+
+* Create the data that you would like to receive from others: tidy and well documented
+
+---
+
+# Code organization
+
+---
+
+# Keeping track of changes
+
+* You should get used to back up your code, ideally using a version control software (e.g. git)
+
+* It is preferable to back up frequently small changes, rather than backing up after great mdoifications of the code.
+
+* This topic is beyond this course, but please read the paper "Good enough practices for scientific computing" or check any tutorial on using Git and GitHub from RStudio.
+
+---
+
+# Coding style
+
+## Good code vs. bad code
 
   * There is no such thing as inherently bad code
   
@@ -77,18 +131,12 @@ Many of our recommendations are for the benefit of the collaborator every resear
   
   * Good coding style is like correct punctuation: you can manage without it, butitsuremakesthingseasiertoread
 
----
-# Good code vs. bad code
-
-  * We're gonna cover some good coding practices
-  * This includes style
-  * But also bla bla bla
-  * Some f the things you will not understand now, but it is important to see them before
-  * It will act as a repository
   * Coding style recommendations will be fundamentaly based on the tidyverse style guide, by Wickham (https://style.tidyverse.org/)
 
 ---
+
 # Good coding style
+
   ## File names
 
 Each file should have a short, descriptive name that indicates its purpose. Avoid using special characters in file names - stick with numbers, letters, `-`, and `_`, to separate words. 
