@@ -1,6 +1,9 @@
 ---
 title: "Lab 01 - Intro to R and RStudio"
 date: "111022 | Data management and visualization with R"
+author: 
+  - "Marcos Rodrigues"
+  - "Aitor Ameztegui"
 output:
   rmdformats::readthedown:
     highlight: pygments

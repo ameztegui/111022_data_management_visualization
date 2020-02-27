@@ -1,14 +1,15 @@
 ---
-title: "Data transformation (I)"
-subtitle: "Create new variables, filter, select and organize data"
-date: "2020-02-01"
+title: "Data transformation (I): Create new variables, filter, select and organize data"
+date: "111022 | Data management and visualization with R"
 author: 
   - "Marcos Rodrigues"
   - "Aitor Ameztegui"
-output: rmdformats::readthedown
-highlight: pygments
-css: lab.css
-link-citations: yes
+output:
+  rmdformats::readthedown:
+    highlight: pygments
+    number_sections: true
+    css: lab.css
+# runtime: shiny_prerendered
 ---
 
 ```{r include=FALSE}
@@ -163,7 +164,7 @@ verb(data, ...)
 - Output is always another data frame (`tbl_df` or `data.frame`).
 - Unless we are assigning (`<-`) the result into an object, functions never modify the original data.
 
-# Selecting rows with `filter`
+## Selecting rows with `filter`
 
 Use `filter()` to choose rows/cases/observations where a given condition(s) is `TRUE`. The first argument in `filter`is the dataframe we want it to apply to, and the rest are the criteria for the filtering. If there are several criteria, they can be separated by commas:
 
@@ -194,9 +195,10 @@ filter(trees, CD %in% c(45, 70))
 
 ![](images/04-data-transformation/logical_operators.png){width=250px}
 
+<div class=exercise>
 
-**Exercise 1**
-```
+**EXERCISE 1:** </br>
+
 Let's find those plots in IFN3n (`plots` data frame) that:
 
   1.1 Are located either in Barcelona (08) or Girona (17)
@@ -204,10 +206,11 @@ Let's find those plots in IFN3n (`plots` data frame) that:
   1.2 Were measured **in** January 2001
   
   1.3 It took **more** than 2 hours to measure (7200s)
-```
+
+</div>
 
 
-# Selecting columns with `select`
+## Selecting columns with `select`
 
 `Select` is the function in `dplyr` to choose variables (i.e., columns) from a `tibble` or `data.frame`. It keeps only the variables you mention.
 
@@ -262,12 +265,14 @@ select(trees,-(Codi:Dist))
 select(trees, starts_with('Diam'))
 ```
 
-**Exercise 2**
-```
-Think of three or four ways to select the variables that define the start and finish date of plot measuring.
-```
+<div class=exercise>
 
-# Sorting rows with `arrange`
+**EXERCISE 2** </br>
+
+Think of three or four ways to select the variables that define the start and finish date of plot measuring.
+</div>
+
+## Sorting rows with `arrange`
 
 The last function we are going to cover is `arrange`. This function allows sorting a data table according to the values of a *guiding* variable. Sorting can be done in either *ascending* or *descending* order, both with numerical (increase or decrease) or alphanumerical (alphabetical order) variables.
 
@@ -285,16 +290,19 @@ arrange(trees, HeiIf3)
 arrange(trees, desc(Dist))
 ```
 
-**Exercise 3**
-```
+<div class=exercise>
+
+**EXERCISE 3** </br>
+
   3.1 Sort plots by date and hour of measurement
   
   3.2 Which plots were started to be measured later in the day?
   
   3.3 Which plots took longer to be measured?
-```
 
-# Create new variables with `mutate`
+</div>
+
+## Create new variables with `mutate`
 
 `mutate()` allows to create/calculate new columns/variables in our dataset. It is perhaps one of the most used functions given its ability to either create or update variables in a given `tibble` or `data.frame`.
 
@@ -333,15 +341,16 @@ mutate(
 )
 ```
 
-**Exercise 4**
-```
+<div class=exercise>
+
+**EXERCISE 4**
+
   4.1 Get diameter growth (in cm) of each tree between IFN2 (DiamIf2)  and IFN3 (DiamIf3)
 
   4.2 Create two new variables with basal area of each tree (in $m^2$ per hectare), both for IFN2 and IFN3. Which is the species of the fastest-growing tree in basal area?
-
-```
 
 $$
 AB = \frac{\pi}{4} · Diam^{2} · N
 $$
 
+</div>

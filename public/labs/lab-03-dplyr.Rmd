@@ -84,26 +84,23 @@ This dataframe contains information on the plots measured in the National Forest
     - Lleida: "25"
     - Tarragona "43"
 - Cla (factor): type of plot, depending if it was measured in IFN2 or not
-- Subclase (factor):
-- FccTot (integer):
-- FccArb (integer):
-- FechaIni (date):
-- HoraIni (datetime):
-- FechaFin (date):
-- HoraFin (datetime):
-- Rocosid (integer):
-- Textura (integer):
-- MatOrg (integer):
-- PhSuelo (integer):
+- Subclase (factor): type of plot, depending if it was measured in IFN2 or not
+- FccTot (integer): canopy cover in the plot
+- FccArb (integer): tree canopy cover in the plot
+- FechaIni (date): date at which the plot was started to measure
+- HoraIni (datetime): date and time at which the plot was started to measure
+- FechaFin (date): date at which the plot was finished to measure
+- HoraFin (datetime): time at which the plot was finished to measure
+- Rocosid (integer): proportion of rocks in surface of the plot
+- Textura (integer): soil texture
+- MatOrg (integer): amount of organic matter in the plot
+- PhSuelo (integer): pH of the soil in the plot
+- FechaPh (date): date at which pH was measured
 
 ** TREES**
 
 - Codi (factor): the code of the permanent plot.
-- Provincia (character): the province in which the plot is located. For Catalonia the codes are:
-    - Barcelona: "08"
-    - Girona: "17"
-    - Lleida: "25"
-    - Tarragona "43"
+- Provincia (character): the province in which the plot is located. 
 - Especie (factor): the specific identity of the tree, as a code. You can find the meaning of each code [here](https://www.miteco.gob.es/es/biodiversidad/servicios/banco-datos-naturaleza/documentador_bdcampo_ifn3_tcm30-282240.pdf) (pages 24-28)
 - Rumbo: the angle from the center of the plot to the tree, measured in centesimal degrees (so takes values from 0 to 400)
 - Dist: the distance from the center of the plot to the tree, in meters
