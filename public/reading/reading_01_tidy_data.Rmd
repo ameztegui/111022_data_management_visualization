@@ -1,5 +1,5 @@
 ---
-title: "Reading 01"
+title: "Reading: Tidy data and the tidyverse"
 output: 
   html_document: 
     theme: yeti
