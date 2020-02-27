@@ -1,0 +1,21 @@
+---
+title: "Reading: Good coding practices"
+output: 
+  html_document: 
+    theme: yeti
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+In the slides for this lesson we have already provided several additional resources, here are the most recommended:
+
+- Wilson, G; Bryan, J; et al. (2017) [Good enough practices in scientific computing.](https://doi.org/10.1371/journal.pcbi.1005510) PLoS Computational Biology 13(6): e1005510. https://doi.org/10.1371/journal.pcbi.1005510
+ - Wilson, G; Aruliah, D.A; et al. (2014) [Best practices in scientific computing.](https://doi.org/10.1371/journal.pbio.1001745) PLoS Biology 12(1): e1001745. https://doi.org/10.1371/journal.pbio.1001745 (This is probably too advanced for this course, but is offered as reference)
+- [The tidyverse style guide.](https://style.tidyverse.org/), by Hadley Wickham
+
+Other interesting resources can be:
+
+- [Software Carpentry: Programming with R](https://swcarpentry.github.io/r-novice-inflammation/)
+- [What They Forgot to Teach You About R](https://whattheyforgot.org/project-oriented-workflow.html), by Jennifer Bryan and Jim Hester
