@@ -17,5 +17,6 @@ In the slides for this lesson we have already provided several additional resour
 
 Other interesting resources can be:
 
+- Benureau, F.C.Y; Rougier, N.P (2018)[Re-run, Repeat, Reproduce, Reuse, Replicate: Transforming Code into Scientific Contributions.](https://www.frontiersin.org/articles/10.3389/fninf.2017.00069/full) Frontiers in Neuroinformatics 11:69.    
 - [Software Carpentry: Programming with R](https://swcarpentry.github.io/r-novice-inflammation/)
 - [What They Forgot to Teach You About R](https://whattheyforgot.org/project-oriented-workflow.html), by Jennifer Bryan and Jim Hester
