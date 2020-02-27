@@ -1,0 +1,1044 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+  <head>
+    <title>Good coding practices</title>
+    <meta charset="utf-8" />
+    <meta name="author" content="Aitor Ameztegui" />
+    <link href="libs/font-awesome/css/all.css" rel="stylesheet" />
+    <link href="libs/font-awesome/css/v4-shims.css" rel="stylesheet" />
+    <link rel="stylesheet" href="slides.css" type="text/css" />
+  </head>
+  <body>
+    <textarea id="source">
+class: center, middle, inverse, title-slide
+
+# Good coding practices
+## Taking the most of your code
+### Aitor Ameztegui
+
+---
+
+
+
+
+
+
+# Introduction
+
+* Computers are now essential in all branches of science,
+
+* But most researchers are never taught the equivalent of basic lab skills for research computing.
+
+* Consequences: data can get lost, analyses can take much longer than necessary, and researchers are limited in how effectively they can work with software and data.
+
+* Computing workflows need to follow the same practices as lab projects and notebooks, with organized data, documented steps, and the project structured for reproducibility, but researchers new to computing often don't know where to start. 
+
+---
+
+# Introduction
+
+* In 2014, a group of researchers involved in Software Carpentry and Data Carpentry wrote a paper called "Best Practices for Scientific Computing" --&gt; for people who were already doing significant amounts of computation in their research. 
+
+![](img/paper_practices.png)
+
+* Some are viewed as "too advanced" by newbies in programming or computer science
+
+---
+
+# Introduction
+
+* In 2017, a group of scientists pubished a paper that focuses on "good enough" practices for scientific computing --&gt; a minimum set of tools and techniques that every researcher can and should consider adopting
+
+* Most of their recommendations are for the benefit of the collaborator every researcher cares about most: their future self 
+* We won't cover all the details here, but I **STRONGLY** encourage you to read the paper and apply most of the advices to your projects
+
+![](img/paper_practices2.png)
+
+
+---
+
+# Summary of good coding practices
+
+We are going to cover several topics here:
+
+1. Project and files organization
+
+2. Code organization within files
+
+3. Coding style and syntax
+
+4. Reproducibility
+
+
+You may find some of the advices not so useful right now, but they will be when you work in your own research project, hopefully soon.
+
+---
+
+class: inverse, middle
+
+# Project and files organization
+
+---
+
+# Project organization
+
+* It is good practice to keep all files for a given project in the same project-specific folder. 
+
+* You can then create sub-folders for specific types of files, such as data, figures, function files, and manuscripts. Using a consistent folder structure and file naming system across projects makes it easier to:
+
+    - Navigate the project contents.
+    - Resume work after a hiatus.
+    - Re-use code in multiple projects.
+    
+* Here is an example of what could be basic project layout:
+
+![](img/project_organization.png)
+
+---
+
+# Project organization
+
+* Within each project, try to write short, modular scripts rather than long ones. This makes it easier to figure out what the script is doing and to troubleshoot when something goes wrong.
+
+* Each file should have a short, descriptive name that indicates its purpose. Avoid using special characters in file names - stick with numbers, letters, `-`, and `_`, to separate words. 
+
+.pull-left[
+
+```r
+# Good
+fit_models.R
+utility_functions.R
+download_data.R
+```
+]
+
+.pull-right[
+
+
+```r
+# Bad
+fit models.R
+foo.r
+stuff.r
+code.r
+```
+]
+
+
+
+
+
+---
+
+# Project organization
+
+
+* Files that are part of the same work flow should be numbered to indicate the order in which they are to be run. For example:
+
+
+```r
+00_download.R
+01_explore.R
+
+...
+
+09_model.R
+10_visualize.R
+```
+
+* Pay attention to capitalization. Prefer file names that are all lower case, and never have names that differ only in their capitalization (some OS will not differenciate them).
+
+.pull-left[
+
+```r
+# Good
+linear_models.R
+new_linear_models.R
+```
+]
+
+.pull-right[
+
+```r
+# Bad
+LinearModels.R
+
+# Worse
+linearmodels.R
+LinearModels.R
+```
+
+]
+
+---
+# Project organization
+
+* While not essential for a good workflow, RStudio Projects are an easy way to keep everything you need for your analysis together and make it easier to create reproducible and shareable projects 
+
+* We will cover the topic of project organization and RStudio projects in the next lecture
+
+---
+
+# Project organization
+
+## A few words about data management
+
+* You should *ALWAYS* keep a copy of the raw data, as you obtained it from the field, the lab, or the software you use. This file should **NEVER** be modified, and be stored in more than one location
+
+* If you want to modify your raw data (you will), do so in a friendly, tidy and reproducible way that allows yopu yo keep track of all the steps used to process the data (using R, of course). If you modify the raw data and then you discover you shouldn't have done it, you should be able to know which records you modified, why, and how.
+
+* Create the data that you would like to receive from others: tidy and well documented
+
+---
+
+class: inverse, middle
+# Code organization: internal structure within the code scripts
+
+---
+
+# Code organization
+
+* Start each file with a comment saying who wrote it and when, and a brief description of what it does. This can be in the form of a comment block in a simple .R script, or as text if it is an R Markdown (.Rmd) file.
+
+Example
+
+
+```r
+# This script reads in raw data from the forest_data.csv file and runs a series of corrections and
+# preliminary calculations. A preprocessed data frame is generated 
+# and saved as tidy_forest_data.Rda
+#
+# Aitor Ameztegui, Universitat de Lleida, 2020
+```
+
+* Then load all required packages and source required files if any. This is more transparent than sprinkling `library()` calls throughout your code or having hidden dependencies
+
+---
+
+# Code organization
+
+* Use commented lines of `-` to break up your file into easily readable chunks.
+
+
+```r
+# Load data ---------------------------
+
+some code
+some more code
+
+# Plot data ---------------------------
+
+still some more code
+```
+
+Hint: in RStudio, you can insert these lines by going to Code &gt; Insert section or pressing Ctrl+Shift+R.
+
+
+
+---
+  
+# Code organization
+
+## Comments
+
+* In data analysis code, comments should note analysis decisions, summarize results or steps, and break-up sections of code that do different things. 
+
+* Use comments to explain the “why” not the “what” or “how”. If you need comments to explain what your code is doing, consider rewriting your code to be clearer. 
+
+.pull-left[
+
+```r
+# Good
+
+# The model only works with adult trees
+filter(trees, DBH &gt; 7.5)
+```
+
+]
+
+.pull-right[
+
+```r
+# Bad
+
+# Let's filter those trees with DBH &gt; 7.5 cm
+filter(trees, DBH &gt; 7.5)
+```
+]
+
+You should comment a lot, it makes much easier collaboration with colleagues or your future self. But if you discover that you have more comments than code, considering switching to RMarkdown.
+
+---
+
+class: inverse, middle
+# Code style and syntax
+
+---
+
+# Coding style
+
+## Good code vs. bad code
+
+  * There is no such thing as inherently bad code
+  
+  * However, this does not mean we shouldn't judge our code, and try to improve our coding practices
+  
+  * Some decisions genuinely do make code easier to use (especially matching indenting to programming structure), but many decisions are arbitrary
+  
+  * Good coding style is like correct punctuation: you can manage without it, butitsuremakesthingseasiertoread
+
+  * Coding style recommendations will be fundamentaly based on the tidyverse style guide, by Wickham (https://style.tidyverse.org/)
+
+
+---
+
+# Coding style
+
+## Object names
+
+Variable and function names should use only lowercase letters, numbers, and `_`. Use underscores (`_`) to separate words within a name.
+
+
+```r
+# Good
+day_one
+day_1
+
+# Bad
+DayOne
+dayone
+```
+
+Note: Base R uses dots in function names (`contrib.url()`) and class names (`data.frame`), but it’s better not to use them to separate words within names
+
+If you find yourself attempting to cram data into variable names (e.g. `model_2018`, `model_2019`, `model_2020`), consider using a list or data frame instead.
+
+---
+
+# Coding style
+
+## Object names
+Generally, variable names should be nouns and function names should be verbs. Strive for names that are concise and meaningful (this is not easy!).
+
+.pull-left[
+OBJECTS
+
+
+```r
+# Good
+day_one
+
+# Bad
+first_day_of_the_month
+djm1
+data
+```
+]
+
+.pull-right[
+FUNCTIONS
+
+```r
+# Good
+add_row()
+permute()
+
+# Bad
+row_adder()
+permutation()
+```
+]
+
+Avoid re-using names of common functions and variables. This will cause confusion
+
+```r
+# Bad
+T &lt;- FALSE
+c &lt;- 10
+mean &lt;- function(x) sum(x)
+```
+
+
+
+
+---
+
+# Coding style
+## Assignments
+
+Use `&lt;-`, not `=`, for assignment.
+
+
+```r
+# Good
+x &lt;- 5
+
+# Bad
+x = 5
+```
+
+---
+# Coding style
+
+## Spacing: commas and parentheses
+
+Always put a space after a comma, never before, just like in regular English.
+
+
+```r
+# Good
+x[, 1]
+
+# Bad
+x[,1]
+x[ ,1]
+x[ , 1]
+```
+
+
+Do not put spaces inside or outside parentheses for regular function calls.
+
+
+```r
+# Good
+mean(x, na.rm = TRUE)
+
+# Bad
+mean (x, na.rm = TRUE)
+mean( x, na.rm = TRUE )
+```
+
+---
+# Coding style
+
+## Spacing: commas and parentheses
+Place a space before and after `()` when used with `if`, `for`, or `while`.
+
+
+```r
+# Good
+if (debug) {
+  show(x)
+}
+
+# Bad
+if(debug){
+  show(x)
+}
+```
+
+
+Place a space after `()` used for function arguments:
+
+
+```r
+# Good
+function(x) {}
+
+# Bad
+function (x) {}
+function(x){}
+```
+
+---
+
+# Coding style
+
+## Spacing: Infix operators
+
+Most infix operators (`==`, `+`, `-`, `&lt;-`, etc.) should always be surrounded by spaces:
+
+
+```r
+# Good
+height &lt;- (feet * 12) + inches
+mean(x, na.rm = 10)
+
+# Bad
+height&lt;-feet*12+inches
+mean(x, na.rm=10)
+```
+
+
+Adding extra spaces ok if it improves alignment of `= `or `&lt;-`.
+
+.pull-left[
+
+```r
+# Good
+list(
+  total = a + b + c,
+  mean  = (a + b + c) / n
+)
+```
+]
+
+.pull-right[
+
+
+```r
+# Also fine
+list(
+  total = a + b + c,
+  mean = (a + b + c) / n
+)
+```
+]
+Do not add extra spaces to places where space is not usually allowed.
+
+---
+# Coding style
+
+## Code blocks
+
+Curly braces, `{}`, define the most important hierarchy of R code. Make them easy to see:
+
+* `{` should be the last character on the line. Related code (e.g., an if clause, a function declaration, a trailing comma, …) must be on the same line as the opening brace.
+
+* The contents should be indented by two spaces (or four).
+
+* `}` should be the first character on the line.
+
+.pull-left[
+
+```r
+# Good
+
+if (y == 0) {
+  if (x &gt; 0) {
+    log(x)
+  } else {
+    message("x is negative or zero")
+  }
+} else {
+  y^x
+}
+```
+]
+
+.pull-right[
+
+
+```r
+# Bad
+
+if (y == 0)
+{
+    if (x &gt; 0) {
+      log(x)
+    } else {
+  message("x is negative or zero")
+    }
+} else { y ^ x }
+```
+]
+
+---
+# Coding style
+## Inline statements
+
+It’s ok to drop the curly braces for very simple statements that fit on one line
+
+
+```r
+# Good
+y &lt;- 10
+x &lt;- if (y &lt; 20) "Too low" else "Too high"
+```
+Function calls that affect control flow (like `return()` or `stop()` should always go in their own `{}` block:
+.pull-left[
+
+```r
+# Good
+if (y &lt; 0) {
+  stop("Y is negative")
+}
+
+find_abs &lt;- function(x) {
+  if (x &gt; 0) {
+    return(x)
+  }
+  x * -1
+}
+```
+]
+
+.pull-right[
+
+```r
+# Bad
+if (y &lt; 0) stop("Y is negative")
+
+
+
+find_abs &lt;- function(x) {
+  if (x &gt; 0) return(x)
+  x * -1
+}
+```
+]
+
+---
+# Coding style
+
+## Lines
+
+Strive to limit your code to 80 characters per line. This fits comfortably on a printed page with a reasonably sized font. 
+If a function call is too long to fit on a single line, use one line each for the function name, each argument, and the closing `)`. This makes the code easier to read and to change later.
+
+
+```r
+# Good
+do_something_very_complicated(
+  something = "that",
+  requires = many,
+  arguments = "some of which may be long"
+)
+
+# Bad
+do_something_very_complicated("that", requires, many, arguments,
+                              "some of which may be long"
+                              )
+```
+
+---
+
+# Coding style
+## Lines within functions
+
+If a function definition runs over multiple lines, indent the second line to where the definition starts.
+
+
+```r
+# Good
+long_function_name &lt;- function(a = "a long argument",
+                               b = "another argument",
+                               c = "another long argument") {
+  # As usual code is indented by two spaces.
+}
+
+# Bad
+long_function_name &lt;- function(a = "a long argument",
+  b = "another argument",
+  c = "another long argument") {
+  # Here it's hard to spot where the definition ends and the
+  # code begins
+}
+```
+
+---
+
+# Coding style
+
+## Lines within functions
+
+Short unnamed arguments can also go on the same line as the function name, even if the whole function call spans multiple lines.
+
+
+```r
+map(x, f,
+  extra_argument_a = 10,
+  extra_argument_b = c(1, 43, 390, 210209)
+)
+```
+
+
+You may also place several arguments on the same line if they are closely related to each other, e.g., strings in calls to `paste()` or `stop()`. When building strings, where possible match one line of code to one line of output.
+
+.pull-left[
+
+```r
+# Good
+paste0(
+  "Requirement: ", requires, "\n",
+  "Result: ", result, "\n"
+)
+```
+]
+
+.pull-right[
+
+```r
+# Bad
+paste0(
+  "Requirement: ", requires,
+  "\n", "Result: ",
+  result, "\n")
+```
+]
+
+---
+# Coding style
+
+## Pipes
+
+Pipes (`%&gt;%`) allow to connect several actions in a more readable way. Therefore, you should use `%&gt;%` to emphasise a sequence of actions, rather than the object that the actions are being performed on.
+
+Pipes can be very useful, but you should avoid using the pipe when:
+
+* You need to manipulate more than one object at a time. Reserve pipes for a sequence of steps applied to one primary object.
+
+* There are meaningful intermediate objects that could be given informative names.
+
+* You pipe so many actions that you risk losing the thread of the operations you've done.
+
+---
+# Coding style
+## Pipes
+
+* `%&gt;%` should always have a space before it, and should usually be followed by a new line.
+* After the first step, each line should be indented. 
+
+* This structure makes it easier to add new steps (or rearrange existing steps) and harder to overlook a step.
+
+
+```r
+# Good
+iris %&gt;%
+  group_by(Species) %&gt;%
+  summarize_if(is.numeric, mean) %&gt;%
+  ungroup() %&gt;%
+  gather(measure, value, -Species) %&gt;%
+  arrange(value)
+
+# Bad
+iris %&gt;% group_by(Species) %&gt;% summarize_all(mean) %&gt;%
+ungroup %&gt;% gather(measure, value, -Species) %&gt;%
+arrange(value)
+```
+
+
+---
+# Coding style
+## Pipes
+
+If the arguments to a function don’t all fit on one line, put each argument on its own line and indent:
+
+
+```r
+iris %&gt;%
+  group_by(Species) %&gt;%
+  summarise(
+    Sepal.Length = mean(Sepal.Length),
+    Sepal.Width = mean(Sepal.Width),
+    Species = n_distinct(Species)
+  )
+```
+
+---
+# Coding style
+## Short pipes
+
+A one-step pipe can stay on one line, but you could also consider rewriting it to a regular function call.
+
+.pull-left[
+
+```r
+# Good
+iris %&gt;% arrange(Species)
+
+iris %&gt;% 
+  arrange(Species)
+```
+]
+
+.pull-right[
+
+
+```r
+# Perhaps better
+
+arrange(iris, Species)
+```
+&lt;/br&gt;]
+
+Sometimes it’s useful to include a short pipe as an argument to a function in a longer pipe. Carefully consider whether the code is more readable with a short inline pipe  or if it’s better to move the code outside the pipe.
+
+.pull-left[
+
+```r
+# Good
+x %&gt;%
+  select(a, b, w) %&gt;%
+  left_join(y %&gt;% select(a, b, v), 
+            by = c("a", "b"))
+```
+]
+
+.pull-right[
+
+```r
+# Better
+x_join &lt;- x %&gt;% select(a, b, w)
+y_join &lt;- y %&gt;% select(a, b, v)
+left_join(x_join, y_join, by = c("a", "b"))
+```
+]
+---
+# Coding style
+## Pipe assignments
+
+
+1) Variable name and assignment on separate lines:
+
+
+```r
+iris_long &lt;-
+  iris %&gt;%
+  gather(measure, value, -Species)
+```
+
+2) Variable name and assignment on the same line:
+
+
+```r
+iris_long &lt;- iris %&gt;%
+  gather(measure, value, -Species)
+```
+
+3) Assignment at the end of the pipe with -&gt;:
+
+
+```r
+iris %&gt;%
+  gather(measure, value, -Species) -&gt;
+  iris_long
+```
+
+(3) may be the most natural to write, but makes reading a little harder. I recommend using the 2nd option.
+
+---
+# Coding style
+## ggplot
+
+* Styling suggestions for `+` used to separate `ggplot2` layers are very similar to those for `%&gt;%` in pipelines.
+
+* `+` should always have a space before it, and should be followed by a new line. After the first step, each line should be indented by two spaces.
+
+* If you are creating a ggplot off of a dplyr pipeline, there should only be one level of indentation.
+
+
+```r
+# Good
+iris %&gt;%
+  filter(Species == "setosa") %&gt;%
+  ggplot(aes(x = Sepal.Width, y = Sepal.Length)) +
+  geom_point()
+
+# Bad
+iris %&gt;%
+  filter(Species == "setosa") %&gt;%
+  ggplot(aes(x = Sepal.Width, y = Sepal.Length)) +
+    geom_point()
+```
+
+
+---
+# Coding style
+## ggplot
+
+* If the arguments to a ggplot2 layer don’t all fit on one line, put each argument on its own line and indent:
+
+
+```r
+# Good
+ggplot(aes(x = Sepal.Width, y = Sepal.Length, color = Species)) +
+  geom_point() +
+  labs(
+    x = "Sepal width, in cm",
+    y = "Sepal length, in cm",
+    title = "Sepal length vs. width of irises"
+  ) 
+
+# Bad
+ggplot(aes(x = Sepal.Width, y = Sepal.Length, color = Species)) +
+  geom_point() +
+  labs(x = "Sepal width, in cm", y = "Sepal length, in cm", title = "Sepal length vs. width of irises") 
+```
+
+---
+class: inverse, middle
+# Reproducibility
+
+---
+
+# Reproducibility
+
+## Use functions
+
+* If you’re copy pasting code with few changes, write a function instead. 
+
+* We'll talk about functions later in the course, but you can also check Hadley Wickham’s chapters on functional programming in the R for Data Science book
+
+* It is generally better to choose vectorization over loops as functions require less text and can run more quickly.
+
+When writing functions:
+
+* Write simple functions that do only one thing.
+* Document them well.
+
+---
+
+# Reproducibility
+
+## Avoid `setwd()` and `rm(list = ls())`
+
+* Briefly, `setwd()` relies on a hard coded path that must be changed if anyone else uses the code or if the file is moved on the host machine.
+
+* A better alternative is to use the `here` package, which is flexible across machines and does not require other users to change the path if they are running the script from the same project directory. 
+
+* Many people use `rm(list = ls())` to clean their environment at the start of a script (including myself). 
+
+* However, `rm(list = ls())` does not create a new R session, which means that there may still be hidden dependencies (libraries, functions) that the author of the code is unaware of 
+
+* Check this [nice post](https://www.tidyverse.org/articles/2017/12/workflow-vs-script/) by Jenny Bryan on why `setwd()` and `rm(list = ls())` should be avoided.
+
+---
+
+# Reproducibility
+
+## Keep track of changes
+
+* Version control is a means of recording changes between different versions of a file over time.
+
+* It provides the ability to “roll-back” changes and recall an earlier version of a file.
+
+* It is preferable to back up frequently small changes, rather than backing up after great mdoifications of the code.
+
+* [Git](http://https//guides.github.com/introduction/git-handbook/) and [Github](https://lab.github.com/githubtraining/introduction-to-github) are a particularly useful means of version control as RStudio has a Git integration that makes version control a bit easier for those who are new to it or who less comfortable using the command line.
+
+* This topic is beyond this course, but please read the paper "Good enough practices for scientific computing" or check any tutorial on using Git and GitHub from RStudio if you are interested
+
+
+---
+
+class: inverse, middle
+# Final remarks
+
+---
+
+# Final remarks &amp; Additional resources
+
+* The content of this presentation should be regarded as advices, not as mandatory practices. 
+
+* However, we believe it is on your own benefit that you try to integrate these "good habits" on your day-to-day workflow
+
+* Some of the advices are too advanced for the typical level of a student enrolled in this course. We know, but we pretend that this document may serve you as a guide for your career.
+
+* To know more, these are very useful resources
+
+    * [Advanced R](https://adv-r.hadley.nz/), by Hadley Wickham
+    * [The tidyverse style guide](https://style.tidyverse.org/), by Hadley Wickham
+    * [R for Data Science](https://r4ds.had.co.nz/), by Hadley Wickham
+    * [Software Carpentry: Programming with R](https://swcarpentry.github.io/r-novice-inflammation/)
+    * [What They Forgot to Teach You About R](https://whattheyforgot.org/project-oriented-workflow.html), by Jennifer Bryan and Jim Hester
+    * [RStudio Online Learning Website](https://www.rstudio.com/online-learning/)
+    * [Happy Git and GitHub for UseR](https://happygitwithr.com/), by Jenny Bryan
+    </textarea>
+<style data-target="print-only">@media screen {.remark-slide-container{display:block;}.remark-slide-scaler{box-shadow:none;}}</style>
+<script src="https://remarkjs.com/downloads/remark-latest.min.js"></script>
+<script>var slideshow = remark.create({
+"highlightStyle": "github",
+"highlightLines": true,
+"countIncrementalSlides": false
+});
+if (window.HTMLWidgets) slideshow.on('afterShowSlide', function (slide) {
+  window.dispatchEvent(new Event('resize'));
+});
+(function(d) {
+  var s = d.createElement("style"), r = d.querySelector(".remark-slide-scaler");
+  if (!r) return;
+  s.type = "text/css"; s.innerHTML = "@page {size: " + r.style.width + " " + r.style.height +"; }";
+  d.head.appendChild(s);
+})(document);
+
+(function(d) {
+  var el = d.getElementsByClassName("remark-slides-area");
+  if (!el) return;
+  var slide, slides = slideshow.getSlides(), els = el[0].children;
+  for (var i = 1; i < slides.length; i++) {
+    slide = slides[i];
+    if (slide.properties.continued === "true" || slide.properties.count === "false") {
+      els[i - 1].className += ' has-continuation';
+    }
+  }
+  var s = d.createElement("style");
+  s.type = "text/css"; s.innerHTML = "@media print { .has-continuation { display: none; } }";
+  d.head.appendChild(s);
+})(document);
+// delete the temporary CSS (for displaying all slides initially) when the user
+// starts to view slides
+(function() {
+  var deleted = false;
+  slideshow.on('beforeShowSlide', function(slide) {
+    if (deleted) return;
+    var sheets = document.styleSheets, node;
+    for (var i = 0; i < sheets.length; i++) {
+      node = sheets[i].ownerNode;
+      if (node.dataset["target"] !== "print-only") continue;
+      node.parentNode.removeChild(node);
+    }
+    deleted = true;
+  });
+})();
+// adds .remark-code-has-line-highlighted class to <pre> parent elements
+// of code chunks containing highlighted lines with class .remark-code-line-highlighted
+(function(d) {
+  const hlines = d.querySelectorAll('.remark-code-line-highlighted');
+  const preParents = [];
+  const findPreParent = function(line, p = 0) {
+    if (p > 1) return null; // traverse up no further than grandparent
+    const el = line.parentElement;
+    return el.tagName === "PRE" ? el : findPreParent(el, ++p);
+  };
+
+  for (let line of hlines) {
+    let pre = findPreParent(line);
+    if (pre && !preParents.includes(pre)) preParents.push(pre);
+  }
+  preParents.forEach(p => p.classList.add("remark-code-has-line-highlighted"));
+})(document);</script>
+
+<script>
+(function() {
+  var links = document.getElementsByTagName('a');
+  for (var i = 0; i < links.length; i++) {
+    if (/^(https?:)?\/\//.test(links[i].getAttribute('href'))) {
+      links[i].target = '_blank';
+    }
+  }
+})();
+</script>
+
+<script>
+slideshow._releaseMath = function(el) {
+  var i, text, code, codes = el.getElementsByTagName('code');
+  for (i = 0; i < codes.length;) {
+    code = codes[i];
+    if (code.parentNode.tagName !== 'PRE' && code.childElementCount === 0) {
+      text = code.textContent;
+      if (/^\\\((.|\s)+\\\)$/.test(text) || /^\\\[(.|\s)+\\\]$/.test(text) ||
+          /^\$\$(.|\s)+\$\$$/.test(text) ||
+          /^\\begin\{([^}]+)\}(.|\s)+\\end\{[^}]+\}$/.test(text)) {
+        code.outerHTML = code.innerHTML;  // remove <code></code>
+        continue;
+      }
+    }
+    i++;
+  }
+};
+slideshow._releaseMath(document);
+</script>
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+(function () {
+  var script = document.createElement('script');
+  script.type = 'text/javascript';
+  script.src  = 'https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML';
+  if (location.protocol !== 'file:' && /^https?:/.test(script.src))
+    script.src  = script.src.replace(/^https?:/, '');
+  document.getElementsByTagName('head')[0].appendChild(script);
+})();
+</script>
+  </body>
+</html>
