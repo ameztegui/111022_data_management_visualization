@@ -1,0 +1,29 @@
+---
+title: "Reading: Workflow. Projects in RStudio and RStudio Cloud"
+output: 
+  html_document: 
+    theme: yeti
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+We have mentioned in our slides about Good Coding Practices, that it is **good practice** to **keep all files for a given project in the same project-specific folder**. You can then create sub-folders for specific types of files, such as data, figures, function files, and manuscripts. Using a consistent folder structure and file naming system across projects makes it easier to re-use and share the code, and avoids using hard-code such as `setwd()`.
+
+Some IDEs such as RStudio offer a tool called "Projects", that is specifically designed to work following the abovementioned workflow. To create a new project use the `Create Project` command (available on the Projects menu and on the global toolbar). When we create a new project, RStudio creates a project file within the directory (extension .Rproj), and a hidden directory where it stores temporary files. Working with RStudio projects **has a series of advantages**, such as automatically seting up the working directory, direct access to the project files and folders in the "Files" tab, etc. Moreover, if you share a directory with a colleague, he/she will be able to open the project, and the paths will automatically be adapted to his/her computer. RStudio projects can also be **easily integrated with GitHub**, allowing to easily use version control.
+
+During this course we will always work with RStudio projects, but you won't actually need to create them. However, it is my advice that **you also create an RStudio project for your final data science project**. To learn more about projects workflow and RStudio projects, here you have some references:
+
+## Highly recommended references
+
+- [Workfflow: projects](https://r4ds.had.co.nz/workflow-projects.html), a chapter of Hadley Wickham's "R for data science"). Highly recommended, it summarises why to use projects, how to create them, and what you can do with RStudio Projects.
+
+- [Designing Projects](https://nicercode.github.io/blog/2013-04-05-projects/) by Nice R Code. A series of advices on how to organize files within a project
+
+## Complementary references
+
+- [Using Projects:](https://support.rstudio.com/hc/en-us/articles/200526207-Using-Projects). A description by RStudio on how to create RStudio projects.
+
+- [Project-oriented workflow](https://rstats.wtf/project-oriented-workflow.html) by Jenny Bryan. A chapter of her highly recommended book "What they forgot to teach you about R". 
+

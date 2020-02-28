@@ -1,6 +1,8 @@
 ---
 title: "Welcome to </br>Data Management </br>and Visualization with R"
-author: "Aitor Ameztegui"
+author: 
+    - "Aitor Ameztegui"
+    - "Marcos Rodrigues"
 date: '`r format(Sys.Date(), "%B %Y")`'
 
 

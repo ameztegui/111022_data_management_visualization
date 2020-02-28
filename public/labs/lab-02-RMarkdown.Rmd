@@ -2,8 +2,9 @@
 title: "Lab 02 - Intro to R Markdown"
 date: "111022 | Data management and visualization with R"
 author: 
-  - "Marcos Rodrigues"
   - "Aitor Ameztegui"
+  - "Marcos Rodrigues"
+
 output:
   rmdformats::readthedown:
     highlight: pygments

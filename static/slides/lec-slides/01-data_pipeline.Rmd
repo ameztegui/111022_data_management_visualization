@@ -1,7 +1,9 @@
 ---
-title: "The data science pipeline"
-subtitle: "The tidyverse and the concept of tidy data"
-author: "Aitor Ameztegui"
+title: "The data science pipeline:"
+subtitle: "The tidyverse and the </br>concept of tidy data"
+author: 
+    - "Aitor Ameztegui"
+    - "Marcos Rodrigues"
 output:
   xaringan::moon_reader:
     css: "slides.css"

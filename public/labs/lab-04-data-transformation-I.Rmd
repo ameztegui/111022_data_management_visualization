@@ -2,8 +2,8 @@
 title: "Data transformation (I): Create new variables, filter, select and organize data"
 date: "111022 | Data management and visualization with R"
 author: 
-  - "Marcos Rodrigues"
   - "Aitor Ameztegui"
+  - "Marcos Rodrigues"
 output:
   rmdformats::readthedown:
     highlight: pygments

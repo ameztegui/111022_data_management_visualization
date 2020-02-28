@@ -1,7 +1,9 @@
 ---
 title: "Good coding practices"
 subtitle: "Taking the most of your code"
-author: "Aitor Ameztegui"
+author: 
+    - "Aitor Ameztegui"
+    - "Marcos Rodrigues"
 output:
   xaringan::moon_reader:
     css: "slides.css"
