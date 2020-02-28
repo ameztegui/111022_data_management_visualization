@@ -25,7 +25,7 @@ load('data/data_workshop.Rdata')
 
 ## Reducing variables: `summarise` or `summarize`
 
-Data manipulation means different things to different researchers. Sometimes we want to select certain observations (rows) or variables (columns), other times we want to group the data according to one or more variables, or we want to calculate statistical values from according to a grouping or category scheme.
+Data manipulation means different things to different researchers. Sometimes we want to select certain observations (rows) or variables (columns), other times we want to group the data according to one or more variables, or we want to calculate statistical values from according to a grouping or category scheme. 
 
 The funtion `summarise` allows to calculate statiscal aggregation of one or more variables.
 
