@@ -43,18 +43,18 @@ Before we start, bear in mind that:
 
 For the development of this lab we are going to use several data tables
 
-  1. `plots [11858 x 15]`: contains all plots from the Third Spanish Forest Inventory (IFN3) in Catalonia  
+  1. `plots` [11858 x 15]: contains all plots from the Third Spanish Forest Inventory (IFN3) in Catalonia  
 
-  2. `trees [111756 x 12]`: all trees with dbh > 7.5 cm measured in both the second and the third forest inventory (IFN2 and IFN3)
+  2. `trees` [111756 x 12]: all trees with dbh > 7.5 cm measured in both the second and the third forest inventory (IFN2 and IFN3)
 
-  3. `species [14778 x 15]`: number of trees per hectare in each plot, per species and size class  
+  3. `species` [14778 x 15]: number of trees per hectare in each plot, per species and size class  
 
-  4. `coordinates [11858 x 6]`: X and Y UTM coordinates of each plot.  
+  4. `coordinates` [11858 x 6]: X and Y UTM coordinates of each plot.  
 
-  5. `leaf [10447 x 3]`: leaf biomass and carbon content for those IFN3 plots where they were available .
+  5. `leaf` [10447 x 3]: leaf biomass and carbon content for those IFN3 plots where they were available .
   
 
-So let's see the data we are going to work with:
+## Let's have a look at the data
 
 ```{r}
 plots
@@ -74,9 +74,6 @@ Besides that, it is like a data.frame (it *is* a data.frame). In fact if we see 
 ```{r}
 class(trees)
 ```
-
-
-## Let's have a look at the data
 
 Data inspection must be the first thing we do before starting any kind of analysis. Understanding data is crucial to succeed. The `glimpse` function is perhaps the most informative way to know what our data looks like at a glance:
 
@@ -131,7 +128,7 @@ This dataframe contains information on the plots measured in the National Forest
 - HeiIf3: tree height, in meters, as measured in IFN3.
 
 
-# ![](images/04-data-transformation/dplyr.png){width=20px} Data transformation with dplyr
+# ![](images/03-data-transformation/dplyr.png){width=20px} Data transformation with dplyr
 
 `dplyr` is a essentially a **grammar for data manipulation**, providing a consistent set of *verbs* that help you solve the most common data manipulation challenges:
 
@@ -147,9 +144,9 @@ This dataframe contains information on the plots measured in the National Forest
   
   - `summarise`: do some summary statistics and reduce data
 
-These is a very small subset of what `dplyr` can do. Just a quick check into its *cheatsheet* reveals a wide range of possibilities:
+These is a very small subset of what `dplyr` can do. Just a quick check into its [*cheatsheet*](https://github.com/rstudio/cheatsheets/raw/master/data-transformation.pdf) reveals a wide range of possibilities:
 
-![](images/04-data-transformation/data-transformation-cheatsheet-thumbs.png)
+![](images/03-data-transformation/data-transformation-cheatsheet-thumbs.png)
 
 ### Common structure
 
@@ -168,7 +165,7 @@ verb(data, ...)
 
 Use `filter()` to choose rows/cases/observations where a given condition(s) is `TRUE`. The first argument in `filter`is the dataframe we want it to apply to, and the rest are the criteria for the filtering. If there are several criteria, they can be separated by commas:
 
-![](images/04-data-transformation/filter.png){width=250px;align=center}
+![](images/03-data-transformation/filter.png){width=250px;align=center}
 
 
 Let's see a few basic examples applied to the `trees` table:
@@ -193,7 +190,7 @@ filter(trees, CD %in% c(45, 70))
 
 > The key aspect of `filter` lies on building the *condition* that must be met. Doing so involves the use of `logical operators`:
 
-![](images/04-data-transformation/logical_operators.png){width=250px}
+![](images/03-data-transformation/logical_operators.png){width=250px}
 
 <div class=exercise>
 
@@ -214,7 +211,7 @@ Let's find those plots in IFN3n (`plots` data frame) that:
 
 `Select` is the function in `dplyr` to choose variables (i.e., columns) from a `tibble` or `data.frame`. It keeps only the variables you mention.
 
-![](images/04-data-transformation/select.png){width=250px}
+![](images/03-data-transformation/select.png){width=250px}
 
 ```{r select_data}
 trees
@@ -278,7 +275,7 @@ The last function we are going to cover is `arrange`. This function allows sorti
 
 > As we will see in further sections, sorting data may significantly help in the process of data visualization, and can also be an easy way to inspect the range of data of a particular variable.
 
-![](images/04-data-transformation/arrange.png)
+![](images/03-data-transformation/arrange.png)
 
 1. Sort trees ascending by height in the third forest inventory:
 ```{r arrange_ex}
@@ -306,7 +303,7 @@ arrange(trees, desc(Dist))
 
 `mutate()` allows to create/calculate new columns/variables in our dataset. It is perhaps one of the most used functions given its ability to either create or update variables in a given `tibble` or `data.frame`.
 
-![](images/04-data-transformation/mutate.png)
+![](images/03-data-transformation/mutate.png)
 
 The basic syntax of `mutate` allows to especify the name of variable (`variable_name = data_operation`) and then the operation by which we assign information to it. 
 
