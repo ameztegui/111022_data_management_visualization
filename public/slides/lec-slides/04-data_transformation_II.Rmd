@@ -1,0 +1,344 @@
+---
+title: "Data transformation (II)"
+subtitle: "Piping and conditional transformations"
+author: 
+    - "Aitor Ameztegui"
+    - "Marcos Rodrigues"
+output:
+  xaringan::moon_reader:
+    css: "slides.css"
+    logo: img/sta199-logo-hex.png
+    lib_dir: libs
+    nature:
+      highlightStyle: github
+      highlightLines: true
+      countIncrementalSlides: false
+---
+
+```{r setup, include=FALSE}
+# R options
+options(
+  htmltools.dir.version = FALSE, # for blogdown
+  show.signif.stars = FALSE,     # for regression output
+  warm = 1)
+
+# Set dpi and height for images
+library(knitr)
+opts_chunk$set(fig.height = 2.65, dpi = 300,
+               eval = T) 
+# ggplot2 color palette with gray
+color_palette <- list(gray = "#999999", 
+                      salmon = "#E69F00", 
+                      lightblue = "#56B4E9", 
+                      green = "#009E73", 
+                      yellow = "#F0E442", 
+                      darkblue = "#0072B2", 
+                      red = "#D55E00", 
+                      purple = "#CC79A7")
+# For nonsese...
+htmltools::tagList(rmarkdown::html_dependency_font_awesome())
+```
+
+
+```{r echo=FALSE, message=FALSE, warning=FALSE}
+library(tidyverse)
+library(rvest)
+```
+
+
+# Remember our data set
+
+```{r, echo=FALSE, message=FALSE, warning=FALSE}
+library(tidyverse)
+load('data/data_IFN.Rdata')
+options(width = 85)
+```
+
+```{r tibbles, }
+trees
+```
+
+---
+
+# Remember our data set
+
+```{r, echo=FALSE, message=FALSE, warning=FALSE}
+options(width = 85)
+```
+
+```{r plots, }
+plots
+```
+
+---
+
+# 5 main verbs of dplyr
+
+In our previous lab we covered the 5 main verbs in `dplyr`
+
+  - `filter`: keep the rows that match a condition
+  
+  - `select`: keep columns by name
+  
+  - `arrange`: sort rows
+  
+  - `mutate`: transform existent variables or create new ones
+  
+  - `summarise`: do some summary statistics and reduce data
+
+
+---
+layout: false
+class: inverse, center
+background-image: url(img/pipe.png)
+background-position: middle, center
+background-size: 40% 
+
+# pipes
+
+---
+layout: true
+
+<div class="tweaked-header" style="background-image: url(img/pipe.png)"></div>
+
+---
+
+class: code80
+
+# Data pipelines (`%>%`)
+
+  - Often, we want to use several verbs (filter, arrange, group_by, summarise...)
+
+  - Multiple operations are difficult to read, or require to create multiple intermediate
+    objects:
+
+.pull-left[
+
+```{r bad_left, eval = FALSE}
+diam_especie <- filter(
+  summarise(
+    group_by(
+      filter(
+        trees, !is.na(DiamIf3)
+      ),
+      Codi, Especie
+    ),
+    diam = mean(DiamIf3),
+    n = n()
+  ),
+  n > 5
+)
+```
+
+]
+
+.pull-right[
+
+```{r bad_right, eval = FALSE}
+no_na_trees <- filter(
+  trees, !is.na(DiamIf3)
+)
+no_na_trees_grouped <- group_by(
+  no_na_trees, Codi, Especie
+)
+summarised_no_na_trees <- summarise(
+  no_na_trees_grouped,
+  diam = mean(DiamIf3), n = n()
+)
+final_data <- filter(
+  summarised_no_na_trees, n > 5
+)
+```
+
+]
+
+---
+
+# Data pipelines (`%>%`)
+
+  - Alternative (cleaner and easy to read): *pipe* operator (`%>%`) from `magrittr` package
+  
+  - The result of the left side is passed to the function in the right as first argument:
+  
+  `f(x, y)` is the same as `x %>% f(y)`  
+  `f(x, y, z)` is the same as `x %>% f(y, z)`
+
+  - In the tidyverse `%>%` makes each function to be applied to the data frame resulting
+    from the previous step
+  
+  `filter(df, color == 'blue')` is the same as `df %>% filter(color == 'blue')`  
+  `mutate(df, double = 2*value)` is the same as `df %>% mutate(double = 2*value)`
+
+---
+class: code80
+
+# Data pipelines (`%>%`)
+
+.pull-left[
+
+**Nested functions**
+
+```{r bad_left_2, eval = FALSE}
+diam_especie <- filter(
+  summarise(
+    group_by(
+      filter(
+        trees, !is.na(DiamIf3)
+      ),
+      Codi, Especie
+    ),
+    diam = mean(DiamIf3),
+    n = n()
+  ),
+  n > 5
+)
+```
+
+]
+
+--
+
+.pull-right[
+
+**Pipeline**
+
+```{r ok_right, eval = FALSE}
+diam_especie <- trees %>%
+  filter(!is.na(DiamIf3)) %>%
+  group_by(Codi, Especie) %>%
+  summarise(
+    diam = mean(DiamIf3),
+    n = n()
+  ) %>%
+  filter(n > 5)
+```
+
+]
+
+---
+
+# Data pipelines (`%>%`)
+
+## Exercise 6
+
+Create pipelines to answer the following questions:
+
+  6.1 Which **plots** have the fastest average growth rate?
+  
+  6.2 Which is the plot with the **most species**?
+  
+  6.3 Is there any **relationship** between both variables? <br>
+  *(Optional, some knowledge on `ggplot`is required)*
+
+---
+
+layout: false 
+class: inverse, center
+background-image: url(img/bike.gif)
+background-position: center
+background-size: 60%
+
+# Ok, now on your own!
+
+---
+
+.middle[.center[.font200[
+`grouped mutate`
+]]]
+
+
+
+.center[![](img/group_mutate.png)]
+
+
+---
+
+class: code60
+
+# Grouped `mutate`/`filter`
+
+We will commonly use groups (`group_by`) when summarising variables (*n* inputs, one
+output):
+
+```r
+group_by(Especie) %>% summarise(mean = mean(Diam))
+```
+
+.center[![](img/summary_function.png)]
+
+Sometimes, however, we may be interested in calculating new variables by group, but without
+reducing the dimensions:
+
+.center[![](img/window_function.png)]
+
+---
+class: code60
+
+# Grouped `mutate`/`filter`
+
+Sometimes, however, we may be interested in calculating new variables by group, but without
+reducing the dimensions:
+
+```{r eval = F}
+
+trees %>%
+  group_by(Especie) %>%
+  mutate(
+    std_diam = DiamIf3 - mean(DiamIf3)
+  )
+```
+
+```{r echo=F}
+options(width=100)
+trees %>%
+  group_by(Especie) %>%
+  mutate(
+    std_diam = DiamIf3 - mean(DiamIf3)
+  )
+```
+
+---
+
+# Grouped `mutate`/`filter`
+
+## Exercise 7
+
+  7.1 Identify those trees that grow most as compared to the average in that plot <br>
+  .font80[(Hint: calculate growth, *then* mean growth by plot, and *then* the difference)]
+  
+  7.2 Identify those plots where a species grows much more than the average for the species
+</br>
+</br>
+**Extra (in case you get bored):**  
+
+  7.3 Select IFN plots with pure *Pinus nigra* stands (Especie =
+      025). Note: we consider a forest to be monospecific when > 80% in BA corresponds to
+      a single species
+      
+---
+
+# Targeted transformations
+
+## `mutate_if` and `mutate_at`
+
+The same can be done with `mutate`:
+
+.pull-left[
+```{r mutate_if}
+mutate_if(trees, is.numeric, log)
+```
+]
+
+.pull-right[
+```{r mutate_at}
+mutate_at(
+  trees, vars(one_of(c('Especie', 'Species'))),
+  ~ paste0('sp_', .x)
+)
+```
+]
+
+
+
+
+
