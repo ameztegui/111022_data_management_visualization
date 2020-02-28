@@ -1,0 +1,496 @@
+---
+title: "Lab 03 - Data transformation"
+date: "111022 | Data management and visualization with R"
+output:
+  rmdformats::readthedown:
+    highlight: pygments
+    number_sections: true
+    css: lab.css
+# runtime: shiny_prerendered
+---
+
+
+```{r knitr_init, echo=FALSE, cache=FALSE}
+
+library(knitr)
+
+## Global options
+options(max.print="75")
+opts_chunk$set(echo=TRUE,
+	             cache=FALSE,
+               prompt=FALSE,
+               tidy=TRUE,
+               comment=NA,
+               message=FALSE,
+               warning=FALSE)
+opts_knit$set(width=75)
+```
+
+
+```{r include=FALSE}
+library(tidyverse)
+library(rmdformats)
+library(gapminder)
+
+options(
+  htmltools.dir.version = FALSE, # for blogdown
+  show.signif.stars = FALSE     # for regression output
+  )
+```
+The main goal of this lab is ...
+
+
+We also need to load the dataset we will use for this workshop, which are already uploaded in the RStudio Cloud project. To load it to your R session:
+
+```{r introduccion, message=F, warning=FALSE, results="hide"}
+load("data/data_workshop.Rdata")
+```
+
+This instruction loads 5 datasets with information from the 2nd and 3rd Spanish National Forest Inventory (IFN2 e IFN3) in Catalonia. The data frames are:
+
+* **plots** [11,858 x 15]: all the IFN3 plots in Catalonia, with info about the date and time of measurement, soil texture and soil pH, total canopy cover and tree canopy cover, etc.
+
+* **trees** [111,756 x 12]: contains all the adult trees (diam > 7.5 cm) measured both in IFN2 and IFN3. Contains info about the plot, the species, diameter class, diameter measured at IFN2 and IFN3...
+
+* **species** [14,778 x 15]: contains the number of trees/ha per species and diameter class.
+
+* **coordinates** [11,858 x 6]: contains the X & Y coordinates of each IFN3 plot.
+
+* **leaf** [10447 x 3]: leaf biomass and carbon content for those IFN3 plots where it is  available
+
+The first thing to do when you load a dataset is to have a look at the data, to get familiar with the information they contain. 
+
+```{r see.data}
+plots
+trees
+```
+
+We can get a slightly different view by using the `glimpse`function from the `tibble`package (included in the tidyverse)
+
+```{r glimpse.data}
+glimpse(trees)
+```
+
+For this lab we will mostly use the datasets `trees`, and plots, let's see the variables that they contain:
+
+**PLOTS**
+
+This dataframe contains information on the plots measured in the National Forest Inventory
+
+- Codi (factor): the code of the permanent plot.
+- Provincia (character): the province in which the plot is located. For Catalonia the codes are:
+    - Barcelona: "08"
+    - Girona: "17"
+    - Lleida: "25"
+    - Tarragona "43"
+- Cla (factor): type of plot, depending if it was measured in IFN2 or not
+- Subclase (factor): type of plot, depending if it was measured in IFN2 or not
+- FccTot (integer): canopy cover in the plot
+- FccArb (integer): tree canopy cover in the plot
+- FechaIni (date): date at which the plot was started to measure
+- HoraIni (datetime): date and time at which the plot was started to measure
+- FechaFin (date): date at which the plot was finished to measure
+- HoraFin (datetime): time at which the plot was finished to measure
+- Rocosid (integer): proportion of rocks in surface of the plot
+- Textura (integer): soil texture
+- MatOrg (integer): amount of organic matter in the plot
+- PhSuelo (integer): pH of the soil in the plot
+- FechaPh (date): date at which pH was measured
+
+** TREES**
+
+- Codi (factor): the code of the permanent plot.
+- Provincia (character): the province in which the plot is located. 
+- Especie (factor): the specific identity of the tree, as a code. You can find the meaning of each code [here](https://www.miteco.gob.es/es/biodiversidad/servicios/banco-datos-naturaleza/documentador_bdcampo_ifn3_tcm30-282240.pdf) (pages 24-28)
+- Rumbo: the angle from the center of the plot to the tree, measured in centesimal degrees (so takes values from 0 to 400)
+- Dist: the distance from the center of the plot to the tree, in meters
+- N: number of trees per hectare that this tree represents
+- CD: diameter class, in centimeters and grouped in 5 cm classes
+- DiamIf3: tree diameter, in centimeters, as measured in IFN3
+- DiamIf2: tree diameter, in centimeters, as measured in IFN2
+- HeiIf3: tree height, in meters, as measured in IFN3.
+
+
+
+
+# Data transformation: create new variables, filter, select and organize data
+
+
+We will use the package `dplyr` to transform our data frames in the way we need it in each case. With `dplyr` we can create new variables, select those of interest, execute filters, etc. The `dplyr` package contains 5 main verbs:
+
+* `filter` will keep the rows that match a given set of conditions
+
+* `select` will keep columns based on their name
+
+* `arrange` will sort the data frame based on one or several variables
+
+* `mutate` will create new variables
+
+* `summarise` will create new variables that summarize values of an existing variable (mean, sum, etc.)
+
+All of them, as most fuctions in the tidyverse, have a similar structure: the first argument in the function is the dataframe to which it will be applied, and the rest of arguments specify what to do with this dataframe, depending on the verb we are using. This is a common feature of the `tidyverse`, and also one of its strengths, because many functions share the same structure.
+
+Also, it is important to note that the output of these functions will always be a dataframe (as is the input), and that they do not modify the original dataframe. That is, if we want to store the result of our process, we need to assign the operations to a given R object, that can be the original data frame (in this case, it will overwrite it) or a new one.
+
+## Retain observations with `filter`
+
+ `filter` selects those rows of a data frame that accomplish a certain criterion. The first argument is the data frame, and the rest are the criteria, that can be specified in chain, separated by commas.
+ 
+For example, we can select all those plots that have been measured in Barcelona by typing:
+
+```{r}
+filter(plots, Provincia == "08")
+```
+
+ 
+<div class=exercise>
+**EXERCISE 1:**</br>
+
+To practice with `filter` let's try to find those plots of IFN that: 
+
+* 1.1 Are located in Barcelona (08) or Girona (17). 
+Hint: check the operators `|` and [`%in%`](http://www.datasciencemadesimple.com/in-operator-in-r/)
+
+We have two options:
+
+
+```{r,results="hide"}
+# Option 1
+    filter (plots, Provincia =="08" | Provincia =="17")
+# Option 2
+    filter (plots, Provincia %in% c("08", "17"))
+    
+```
+
+We see that both options produce exactly the same result. But the next option wouldn't be valid, since we need to specify explicitly the variable every time we add a new condition:
+
+``` {r,eval=FALSE, results="hide"}
+filter(plots, Provincia =="08" | "17")
+```
+
+</div>
+
+```{r, eval=TRUE}
+filter(gapminder, country == "Spain")
+```
+
+```{r, eval=TRUE}
+filter(gapminder, year == 1997)
+
+```
+
+We can also use the operator `%in%` to select various cases
+
+```{r, eval=TRUE}
+filter(gapminder, country %in% c("Spain", "France", "Andorra"))
+```
+
+We can use most logical operators (`&`, `|`, `==`, `>`, `<=`, etc.) inside `filter`, to determine if we want to filter several values, observations in which a variables gets a value higher than some threshold, etc. (see Lab # for more examples).
+
+### `select`
+
+`select` allows to retain only some columns, based on their name. As in `filter`, the first argument of `select`is a data frame, and the following arguments are the columns we want to keep.
+
+```{r, eval=TRUE}
+select(gapminder, country)
+```
+
+
+```{r, eval=TRUE}
+select(gapminder, country, year, lifeExp)
+```
+
+We can also decide which columns we DO NOT want to select by adding `-`before the name
+
+```{r, eval=TRUE}
+select(gapminder, -year)
+```
+
+To help us find the columns, there are some specific functions such as `starts_with` or `contains`, that only work within `select`. We can see the list of special functions by typing `help(select_helpers)` 
+
+```{r, eval=TRUE}
+help(select_helpers)
+```
+
+### `arrange`
+
+`arrange` sorts the data frame based on the values of one or more variables (columns). The first argument will be, as usual, the data frame we want to sort, and then we must specify the variables that determine the ordering. If we specify more than 1 variable, the succesive variables will be used to decide order when there are ties (i.e. secondary sorting variables). We can also use `desc(x)` to sort in decreasing order. 
+
+```{r, eval= TRUE}
+arrange(gapminder, lifeExp)
+```
+
+```{r, eval= TRUE}
+arrange(gapminder, desc(lifeExp))
+```
+
+```{r, eval= TRUE}
+arrange(gapminder, desc(year), desc(lifeExp))
+```
+
+
+### `mutate`
+
+`mutate` allows us to create new variables with a certain value or as combination of existing variables. We just need to specify the data frame, and indicate the new variables name and its value, which can be related to existing variables:
+
+```{r}
+gdp_data <- mutate(gapminder, 
+                   fixed_num = 1, 
+                   number = 1:nrow(gapminder), 
+                   code = "foo",
+                   gdp = ((gdpPercap * pop)/10^9))
+
+gdp_data
+
+```
+
+```{r}
+arrange(gdp_data, desc(year), desc(gdp))
+```
+
+As we see, we can combine `mutate` and `arrange` to know which are the richest countries in the world (in terms of gdp).
+
+
+### `summarise`
+`summarise` allows us to make calculations with the variables in the data frame, but using *summary functions*, i.e. functions that transform the variability in a given variable into a single value. Functions such as `sum`, `mean`, `max`,`IQR`, etc. are examples of summary functions. 
+
+```{r}
+summarise(gapminder, mean_life = mean(lifeExp))
+```
+
+However, this function by itself often lacks any interest, cause it would reduce all the data frame to a single value. It is commonly used together with `group_by`, that classifies the data frame in groups based on a categorical variable.
+
+To use `group_by` we just need to indicate the data frame and the variable we want to group it by. To be more efficient, `dplyr` does not create a copy of the data frame, but it creates a hidden variable that indexes the groups, so that when we ask it to perform operations by group, it know to which group belongs each observation. 
+
+In the case of our data frame `gapminder`, there are several groups that could be of interest:
+
+```{r, results="hide"}
+
+# By year
+by_year <- group_by (gapminder, year)
+
+# By country
+by_country <- group_by (gapminder, country)
+
+# By continent
+by_continent <- group_by (gapminder, continent)
+
+# By country and year
+by_country_year <- group_by(gapminder, country, year)
+
+# By continent and year
+by_continent_year <- group_by (gapminder, continent, year)
+```
+
+We can see, by typing `glimpse(by_country)` that the resulting data frame is not different at all from the original, at least apparently. However, if we type `class(by_country)` we see it has now a new class `grouped_df`.
+
+```{r}
+glimpse(by_country)
+```
+
+```{r}
+class(by_country)
+```
+
+Now we can compute summary statistics that are way more interesting:
+
+```{r}
+summarise(by_continent, life= median(lifeExp))
+```
+
+```{r}
+summarise(by_continent_year, life= median(lifeExp))
+```
+
+```{r}
+summarise(by_continent_year, gdp = mean(gdpPercap))
+```
+
+
+
+
+
+# Pipelines (`%>%`)
+
+We will often use several `dplyr` verbs together, creating nested functions. However, when we need to perform several operations, these nested functions can easily get complex and difficult to understand. For example, by having a look at this code, would you be able to say what it will do?
+
+```{r, results="hide"}
+diam_medio_especie <- filter(
+    summarise(
+        group_by(
+            filter(
+                trees,
+                !is.na(DiamIf3)
+            ),
+        Codi, Especie
+        ),
+    diam = mean (DiamIf3),
+    n = n()
+    ),
+n > 5)
+```
+
+The code gets those observations, from the data frame `trees`, that have a value of diameter (`!is.na(DiamIf3)`), it then groups them by plot and species (`group_by(Codi, Especie)`), calculates for each combination the mean diameter (`diam = mean (DiamIf3)`), and the number of trees per plot (`n = n()`), and finally selects only those cases in which there are at least 5 trees (`filter (n>5)`).
+
+Although this syntaxis is not operationally complex, it is hard to understand. Often a solution is to save each step as a different data frame, but this is an important source of errors.
+
+We can however simplify this code using the *pipe* operator (`%>%`) from the `magrittr` package, which is installed and loaded with `tidyr` and `dplyr`. When we use `%>%`, the result of the left side is processed by the righ side function as first argument. In the case of `dplyr` and `tidyr`, since the first argument is always a data frame, `%>%` makes that a function be applied to the data frame resulting from the previous function. Thus, we can express `filter (df, color =="blue)` as `df %>% filter(color == "blue")`. This allows to concatenate several functions in a logical and understandable way, so that the operator `%>%` could be read as *then*. Let's see how this would be in the previous function
+
+```{r, results="hide"}
+diam_medio_especie <- trees %>%             # take the df 'trees' and THEN
+filter(!is.na(DiamIf3)) %>%                 # eliminate NA values and THEN
+group_by(Codi, Especie) %>%                 # group y plot and species and THEN
+summarise(diam=mean(DiamIf3), n = n()) %>%  # calculate mean and number of trees and THEN
+filter(n > 5)                               # filter those with n> 5
+```
+Exercise 6
+Let's do some exercises. Using the pipe operator, let's create pipelines to solve the next exercises:
+
+* Ex.6.1 Which plots have the greatest average growth between IFN2 and IFN3?
+
+We first define the data frame we will work with. *THEN* (`%>%`) we create a new variable with the growth  of each tree, *THEN* we group by plot, *THEN* we calculate, for each plot, the mean growth, and  *THEN* we arrange the results in decreasing order. The resulting code would be:
+```{r}
+trees %>%
+    mutate(growth=DiamIf3-DiamIf2) %>%
+    group_by(Codi) %>%
+    summarise(av_growth=mean(growth), n=n()) %>%
+    arrange(desc(av_growth))
+```
+
+
+* Ex.6.2 Which is the plot with highest species richness?
+
+First, we define thedata frame (`trees`), *THEN* we group by Code, *THEN* we determine the number of species per plot and  *THEN* we arrange in decreasing order:
+
+```{r}
+trees %>%
+    group_by(Codi) %>%
+    summarise (n_species=n_distinct(Especie)) %>%
+    arrange(desc(n_species))
+```
+
+* Ex.6.3 Are both variables (species richness and average growth) related?
+
+First, we would need to indicate the data frame we will work with, *THEN* we will group by plot, *THEN* we will calculate the variables.
+To see the relationship between both variables, we will create a plot with `ggplot2`, just to show how all the packages in the tidyverse relate to each other. The aim of this workshop is not to learn `ggplot2`, so we won't go into further details. To know more about ggplot you can visit this website: [http://ggplot2.org/](http://ggplot2.org/).
+
+```{r, results="hide"}
+trees %>%
+    mutate(growth=DiamIf3-DiamIf2) %>%
+    group_by(Codi) %>%
+        summarise (n_species=n_distinct(Especie),
+                   av_growth=mean(growth)) %>%
+    ggplot(aes(n_species, av_growth)) +
+    geom_point() +
+    geom_smooth(method = "lm")
+```
+
+Here we see one of the advantages of the `tidyverse`, the fact that all the packages and functions can communicate one with another. In this way, we just created a plot without the need of creating intermediate objects or data frames, starting directly from the raw data frame, and chianing orders in a logical and intuitive way. 
+
+# Grouped mutate/grouped filter
+
+Most of the times we use `group_by`, we will do it with the *summary functions*, that is, functions that take n values as input, and  give back 1 value as output. Examples of *summary functions* are `mean()`, `sd()`, `min()`, `sum()`, etc. 
+
+However, some times we will need to do some operation by group, but we will need to produce one output per input, that is n inputs --> n outputs. This can be done using `mutate` or `filter` in combination with `group_by`.
+
+###Exercise 7
+
+Taking this into account, let's try to:
+
+* Ex.7.1 Identify those trees that grow much faster than the average of the plot
+
+```{r, results="hide"}
+trees %>%
+    mutate(growth=DiamIf3-DiamIf2) %>%
+    group_by(Codi) %>%
+    mutate(plot_mean= mean(growth),
+           des = (growth - plot_mean)) %>%
+    arrange(desc(des))
+```
+
+In the previous code we see we first calculate the growth of each tree, and after grouping by plot, we calculate a new variable, where the plot average is substracted from the growth of each tree, and the result is divided by the standard deviation of the plot. We calculate in this way the standardized growth of each tree with respect to the plot, making it easy to identify those trees that grow suspiciously more than the average for their plot.
+
+
+* Ex. 7.2 Identify those plots where a species grows much more than the average for the species
+
+```{r, results="hide"}
+trees %>% 
+    mutate(growth=DiamIf3-DiamIf2) %>%
+    group_by(Especie) %>%
+    mutate(growth_sp = mean(growth)) %>%
+    group_by(Codi, Especie) %>%
+    mutate(growth_sp_plot = mean(growth),
+           inc = (growth_sp_plot /growth_sp))%>%
+    arrange(desc(inc))
+```
+
+As we did before, we first calculate the growth of eaxh tree, we then group by species, so that we can calculate the mean growth for each species (`growth_sp`). Finally, we group again, now for plot and species, to calculate the mean growth of each species on each plot (`growth_sp_plot`). Once we have this, we can calculate the ratio between the two variables, identifying those plots where the species is performing better )assuming no mistakes, of course).
+
+Let's see one last example:
+
+*Ex.7.3 Select those species of the IFN3 occupied by "pure" Pinus nigra stands (Especie = 025)
+Note: a forest is considered as pure stand if more than 80% of their Basal Area corresponds to a single species. Let's see how we would do that:
+```{r}
+# trees %>%
+#     group_by(Codi,Especie) %>%
+#     summarise(BA_sp= sum(BAIf3)) %>%
+#     group_by(Codi) %>%
+#     mutate(BA_tot = sum(BA_sp),
+#            ratio= BA_sp/BA_tot) %>%
+#     filter(Especie=="025", ratio >0.8)
+    
+```
+In this case, we first calculate BA per plot, using `summarise`. We then calculate the sum of BA per plot, but in this case we use `mutate`, because we don't want to aggregate tge data by plot, but calculate them separately for each plot but keeping the rest of the data as it was. Once we have both values, we can filter to select those plots with Pinus nigra, in which percenrage of basal area for that species be > 80%.
+\newpage
+\newpage
+# Joins: working with to tables
+Very often, the information we will work with more than a table. The *join* functions will allow us to work with several data frames, joining them in different ways. Within `dplyr` there are two types of joins:
+
+## Mutating joins
+
+They add the columns of a data frame to the other, depending on whether they share some observations or not. There are four types.
+
+* `left_join(x, y)` adds the columns of `y` to the observations of `x` that are also in `y`. Those that are not present in y will receive the value `NA`. With this function we ensure that we will not lose any observation.
+
+* `right_join(x, y)` adds the columns of `x` to those observations in `y` that are also in `x`. Those that are not present will receive `NA`. It is equivalent to `left_join`, but the columns will be ordered differently.
+
+* `full_join(x,y)` includes all observations in `x` and `y`. If they do not coincide, they assign `NA`.
+
+* `inner_join(x, y)` includes only those observations both in `x` and `y` (repeats rows if it is necessary).
+
+
+## Filtering joins
+
+The second type of joins are the **filtering joins**, that affect only to the observation, not to the variables. That is, they never add new columns, but they keep or delete the rows of the original frame as a function of their correspondence or not with a second data frame. There are only two types:
+
+* `semi_join(x, y)` *keeps* the observations in `x` that match observations in `y`.
+* `anti_join(x, y)` *deletes* the observations in `x` that match observations in `y`.
+
+You can find more information about the join functions typing `vignette("two-table")`.
+
+###Exercise 8
+To try the join functions, let's add the geographic information (X & Y coordinates), contained in the data frame `coordinates` to the data frame `plots`.
+
+
+```{r Ex.8: joins, results="hide"}
+left_join(plots,coordinates, "Codi")
+```
+
+In this case, since we want to keep all the plots in the original `plots`data frame, we use `left_join`. In this case, since the number of observations in `coordinates` and `plots` is the same, the function `inner_join` should give us the same results.
+
+Now we added the coordinates, we can represent in a map any variable in the data frame. We could, for example, represent the values of tree canopy cover (FccArb). We need to load the package "maps". (If we don't have it installed, we can install it typing in the console `install.packages("maps")`).
+
+```{r, results="hide"}
+library(maps)
+```
+
+```{r Ex.8b: joins (cont)}
+left_join(plots,coordinates, "Codi") %>%
+ggplot( aes(CoorX, CoorY)) +
+    geom_point(aes(color=FccArb), size=0.3, alpha=0.6) +
+    scale_color_continuous(low= "white", high="dark green")
+```
+
+Once again, we see we don't even need to create a new data frame with the new information, we can chain the functions in `dplyr` and `ggplot2`, producing the results in a very easy and fast way.
+
+

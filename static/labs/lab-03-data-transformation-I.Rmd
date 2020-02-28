@@ -21,14 +21,19 @@ options(
   digits = 2
   )
 #knitr::opts_chunk$set(eval = FALSE)
-load('data/data_workshop.Rdata')
+load('data/data_IFN.Rdata')
 ```
 
 
 # Introduction
 
 
-The [`tidyverse`](https://cran.r-project.org/web/packages/tidyverse/index.html) is a set of packages created by [Hadley Wickham](https://github.com/hadley), chief scientist at RStudio. The tdyverse was created to facilitate data analysis. It consists of packages for importing and reading data, for organizing and modifying data, for analysis and modeling, and for displaying results. In this lab we are going to cover the very basics of **data manipulation and transformation** with  `dplyr`, which focuses on data transformation, to start handling our datasets towards the desired analysis and/or visualization procedures.
+The [`tidyverse`](https://cran.r-project.org/web/packages/tidyverse/index.html) is a set of packages created by [Hadley Wickham](https://github.com/hadley), chief scientist at RStudio. The tidyverse was created to facilitate data analysis. It consists of packages for importing and reading data, for organizing and modifying data, for analysis and modeling, and for displaying results. In fact, there is a package for each of the main steps in the data analysis pipeline.
+
+
+![](images/03-data-transformation/tidyverse_schema_2.png)
+
+In this lab we are going to cover the very basics of **data manipulation** with  `dplyr`, which focuses on data transformation, to start handling our datasets towards the desired analysis and/or visualization procedures.
 
 Before we start, bear in mind that:
 
@@ -41,7 +46,7 @@ Before we start, bear in mind that:
 
 # Our data
 
-For the development of this lab we are going to use several data tables
+For the development of this lab we are going to use several data tables, that you fin in the RStudio Cloud project of this lab, within the `data` folder. Click on the `data_IFN.rdata`file to open the 
 
   1. `plots` [11858 x 15]: contains all plots from the Third Spanish Forest Inventory (IFN3) in Catalonia  
 
@@ -87,6 +92,8 @@ Nonetheless, we can just invoke the objects to check them, as we did previously:
 trees
 ```
 
+## A more in depth view on the datasets we will use
+
 In this lab we are going to use mostly the datasets `trees` and `plots`. Let's explain the variables they contain:
 
 
@@ -130,7 +137,7 @@ This dataframe contains information on the plots measured in the National Forest
 
 # ![](images/03-data-transformation/dplyr.png){width=20px} Data transformation with dplyr
 
-`dplyr` is a essentially a **grammar for data manipulation**, providing a consistent set of *verbs* that help you solve the most common data manipulation challenges:
+`dplyr` is a essentially a **grammar for data manipulation**, providing a consistent set of *verbs* that help you solve the most common data manipulation challenges. 
 
  The 5 main verbs of dplyr
 
@@ -148,8 +155,6 @@ These is a very small subset of what `dplyr` can do. Just a quick check into its
 
 ![](images/03-data-transformation/data-transformation-cheatsheet-thumbs.png)
 
-### Common structure
-
 Most of the tidyverse verbs/functions share certain elements in common and `dplyr` is certainly not an exception. The basic sintax works like this:
 
 ```r
@@ -157,7 +162,7 @@ verb(data, ...)
 ```
 
 - First argument: data (as `data.frame` or `tbl_df`).
-- The rest of arguments specify what to do with the data`.
+- The rest of arguments specify what to do with the data, and depend on the specific verb.
 - Output is always another data frame (`tbl_df` or `data.frame`).
 - Unless we are assigning (`<-`) the result into an object, functions never modify the original data.
 
@@ -190,7 +195,7 @@ filter(trees, CD %in% c(45, 70))
 
 > The key aspect of `filter` lies on building the *condition* that must be met. Doing so involves the use of `logical operators`:
 
-![](images/03-data-transformation/logical_operators.png){width=250px}
+![](images/03-data-transformation/logical_operators2.png){width=500px}
 
 <div class=exercise>
 
@@ -202,20 +207,19 @@ Let's find those plots in IFN3n (`plots` data frame) that:
   
   1.2 Were measured **in** January 2001
   
-  1.3 It took **more** than 2 hours to measure (7200s)
+  1.3 It took **more** than 2 hours to measure (7200s)</br>
+  Hint: we can include an arithmetic operation between two variables within a `filter` function
 
 </div>
 
 
 ## Selecting columns with `select`
 
-`Select` is the function in `dplyr` to choose variables (i.e., columns) from a `tibble` or `data.frame`. It keeps only the variables you mention.
+`Select` is the function in `dplyr` to choose variables (i.e., columns) from a `tibble` or `data.frame`. It keeps only the variables you mention, but even if we only select one variable, the output is still a data frame. To extract a given columns as a vector we can use the function `pull()`.
 
 ![](images/03-data-transformation/select.png){width=250px}
 
-```{r select_data}
-trees
-```
+Let's see some examples:
 
 1. Selecting a single column/variable:
 
@@ -229,7 +233,7 @@ Selecting all columns but the targeted one. The `-` operator excludes the target
 select(trees, -Codi)
 ```
 
-2. Selecting several columns:
+2. To select several columns:
 
 ```{r select_ex3}
 select(trees, DiamIf2, DiamIf3)
@@ -254,7 +258,8 @@ select(trees,-(Codi:Dist))
 - `matches(x)`: selects all variables whose name contains the regular expression *x*.
 - `num_range("x", 1:5, width = 2)`: selects all variables (numerically) from x01 to x05
 - `one_of ("x", "y", "z")`: selects variables provided in a character vector.
-- `everything()`: selects all variables.
+
+We can check the list of special functions with `help(select)`. 
 
 4. Select columns that start with the string `Diam`:
 
@@ -271,11 +276,12 @@ Think of three or four ways to select the variables that define the start and fi
 
 ## Sorting rows with `arrange`
 
-The last function we are going to cover is `arrange`. This function allows sorting a data table according to the values of a *guiding* variable. Sorting can be done in either *ascending* or *descending* order, both with numerical (increase or decrease) or alphanumerical (alphabetical order) variables.
+`arrange` allows sorting a data frame according to the values of a *guiding* variable. `arrange` sorts the database based on one or more variables. The first argument will be, as always, the data frame that we want to re-sort, and then we specify the variables that determine the sorting order. If we specify more than 1 variable, the successive variables will serve to break the ties of the previous ones. Y Sorting can be done in either *ascending* or *descending* order, both with numerical (increase or decrease) or alphanumerical (alphabetical order) variables.
 
 > As we will see in further sections, sorting data may significantly help in the process of data visualization, and can also be an easy way to inspect the range of data of a particular variable.
 
 ![](images/03-data-transformation/arrange.png)
+Let's see a fe examples:
 
 1. Sort trees ascending by height in the third forest inventory:
 ```{r arrange_ex}
@@ -295,19 +301,22 @@ arrange(trees, desc(Dist))
   
   3.2 Which plots were started to be measured later in the day?
   
-  3.3 Which plots took longer to be measured?
+  3.3 Which plots took longer to be measured?</br>
+  Hint: as we did with `filter`, we can also sort a data frame based on the result of an aithmetic operation between two variables. 
 
 </div>
 
 ## Create new variables with `mutate`
 
-`mutate()` allows to create/calculate new columns/variables in our dataset. It is perhaps one of the most used functions given its ability to either create or update variables in a given `tibble` or `data.frame`.
+`mutate()` allows to create/calculate new columns/variables in our dataset. It is perhaps one of the most used functions given its ability to either create or update variables in a given `tibble` or `data.frame`. We just need to specify the dataframe where we want to crate the variable, and its value:
 
 ![](images/03-data-transformation/mutate.png)
 
 The basic syntax of `mutate` allows to especify the name of variable (`variable_name = data_operation`) and then the operation by which we assign information to it. 
 
-> If the name of the variable already exists, then that variable is replaced and updated with the new values. Otherwise, we will create a new variable. Nonetheless, it would be actually replaced unless we use `<-` to store the result into an object.
+> If the name of the variable already exists, then that variable is replaced and updated with the new values. Otherwise, we will create a new variable. Nonetheless, it would be actually replaced unless we use `<-` to store the result into an object. If we want toc hange the name of a variable without changing its values, we can use the verb `rename`, also available in `dplyr`.
+
+Let's see some examples:
 
 1. Replace `Dist` with its old value times 100:
 
@@ -322,21 +331,15 @@ mutate(
 > Note that several operations can be conducted at once just by separating many operations using `,`:
 
 ```{r mutate_ex2}
-mutate(
-  trees,
-  Alometria = DiamIf3 / HeiIf3,
-  Alometria2 = Alometria * DiamIf2
+mutate(trees,
+       Allometry = DiamIf3 / HeiIf3,
+       Allometry2 = Allometry * DiamIf2
 )
 ```
 
-Similar to `select` we can bring in any special function to `mutate`. One useful function is the conditional operator `if_else`. It allows to implement a conditional structure in which we determine the output value when a condition is met and the value when it happens otherwise:
+> We can even create a variable based on a variable we just created, and that did not exist in the original data frame (e.g. Allometry2 is based on Allometry)
 
-```{r if_else}
-mutate(
-  trees,
-  Especie = if_else(Especie == '021', 'Pinus sylvestris', 'Other')
-)
-```
+
 
 <div class=exercise>
 
@@ -345,6 +348,7 @@ mutate(
   4.1 Get diameter growth (in cm) of each tree between IFN2 (DiamIf2)  and IFN3 (DiamIf3)
 
   4.2 Create two new variables with basal area of each tree (in $m^2$ per hectare), both for IFN2 and IFN3. Which is the species of the fastest-growing tree in basal area?
+  Hint: to solve this exercise you need to combine `mutate`with on of the other verbs we've just covered.
 
 $$
 AB = \frac{\pi}{4} · Diam^{2} · N
@@ -353,25 +357,44 @@ $$
 </div>
 
 
-## `summarise`
+## Reducing variables: `summarise` or `summarize`
+
+Data manipulation means different things to different researchers. Sometimes we want to select certain observations (rows) or variables (columns), other times we want to group the data according to one or more variables, or we want to calculate statistical values from according to a grouping or category scheme. 
 
 `summarise` allows us to make calculations with the variables in the data frame, but using *summary functions*, i.e. functions that transform the variability in a given variable into a single value. Functions such as `sum`, `mean`, `max`,`IQR`, etc. are examples of summary functions. 
 
 ![](images/03-data-transformation/summarise.png)
+We can leverage common statistical/summary functions to summarize numerical variables:
 
+  - Range indicators: `min(x)`, `max(x)`, `quantile(x, p)`
+  
+  - Central measures: `mean(x)`, `median(x)`, 
+  
+  - Dispersion measures: `sd(x)`, `var(x)`, `IQR(x)`
+  
+  - Counts: `n()`, `n_distinct(x)`
+  
+  - Conditional statistics: `sum(x > 10)`, `mean(x > 10)`
+  
+  
 1. Let's get the mean diameter of all trees in the dataset
 
 ```{r, eval = T}
 summarise(trees, mean_d = mean(DiamIf3))
 ```
 
-2. Or get the maximum height of a tree in Catalonia
-
-```{r, eval = T}
-summarise(trees, max_h = max(HeiIf3))
+2. Actually, the `mean` means nothing without the standard deviation. Fortunately, we can concatenate summaries just using `,` to implement additional summaries:
+```{r summarise_ex}
+summarise(trees, mean_if3 = mean(DiamIf3), sd_if3 = sd(DiamIf3))
 ```
 
-However, this function by itself is normally not of much interest, as it would reduce our entire database to a single value. This is why it is often used in conjunction with `group_by`, which classifies the data frame into groups based on a categorical variable. In the case of our database, there are several groups that could be of interest:
+### Grouped summaries: `group_by`
+
+The summary of a variable is important to have an idea about the data. However, summarizing a variable by group gives better information on the distribution of the data. In fact, one of the most common ways in which we create summaries is by grouping on the basis of certain information. That means, we split observations between a number of groups and the calculate the summary statistics for each of them. This is why `summarise` is most often used in conjunction with `group_by`, which classifies the data frame into groups based on a categorical variable.
+
+![](images/03-data-transformation/group_summarise.png)
+
+In the case of our database, there are several groups that could be of interest:
 
 ```{r, results="hide"}
 
@@ -390,15 +413,27 @@ by_CD <- group_by (trees, CD)
 # Per plot and species
 by_plot_species <- group_by (trees, Codi, Especie)
 ```
-You can see, by typing for example `glimpse(by_plot)` that the resulting data frame does not differ at all from the original, apparently, but has a hidden index that identifies to which class belongs each observation.
 
+You can see, by typing for example `glimpse(by_plot)` that the resulting data frame does not differ at all from the original, apparently, but has a hidden index that identifies to which class belongs each observation. Moreover, it has now the class `grouped_df`, that indicates this is a grouped table.
+
+3. Now we can apply `summarise` to get an aggregation value per group category. In this case we will calculate the mean and maximum height per tree species:
+```{r grouped_summ_ex_2}
+summarise(
+  by_species,
+  mean_height_ifn3 = mean(HeiIf3, na.rm = TRUE),
+  max_height_ifn3 = max(HeiIf3, na.rm = TRUE)
+  )
+```
 
 <div class=exercise>
 
 **EXERCISE 5**</br>
 
-Once this is done, what statistics could we calculate to characterize the diameter values for each plot?
-Let's try to calculate the mean, minimum and maximum values, the 90th percentile and the interquartile range for each plot. We will also compute the number of trees measured per plot and the number of different species, using respectively the functions `n()` and `n_distinct(x)`. We should see that the resulting output has fewer rows, namely one per plot (one per each grouping class), and that it only contains the newly created variables.
+What statistics could we calculate to characterize the diameter values of the trees for each plot?
+Let's try to calculate the mean, minimum and maximum values, the 90th percentile and the interquartile range for each plot (remember, you can and *SHOULD* look for help to know how to calculaye these values). We will also compute the number of trees measured per plot and the number of different species, using respectively the functions `n()` and `n_distinct(x)`. We should see that the resulting output has fewer rows, namely one per plot (one per each grouping class), and that it only contains the newly created variables.
 
 </div>
+
+
+
 

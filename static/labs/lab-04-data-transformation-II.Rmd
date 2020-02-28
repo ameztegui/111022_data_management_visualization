@@ -1,14 +1,15 @@
 ---
-title: "Data transformation (I)"
-subtitle: "Create new variables, filter, select and organize data"
-date: "2020-02-01"
+title: "Data transformation (I): Create new variables, filter, select and organize data"
+date: "111022 | Data management and visualization with R"
 author: 
-  - "Marcos Rodrigues"
   - "Aitor Ameztegui"
-output: rmdformats::readthedown
-highlight: pygments
-css: lab.css
-link-citations: yes
+  - "Marcos Rodrigues"
+output:
+  rmdformats::readthedown:
+    highlight: pygments
+    number_sections: true
+    css: lab.css
+# runtime: shiny_prerendered
 ---
 
 ```{r include=FALSE}
@@ -20,92 +21,23 @@ options(
   digits = 2
   )
 #knitr::opts_chunk$set(eval = FALSE)
-load('data/data_workshop.Rdata')
+load('data/data_IFN.Rdata')
 ```
 
-## Reducing variables: `summarise` or `summarize`
-
-Data manipulation means different things to different researchers. Sometimes we want to select certain observations (rows) or variables (columns), other times we want to group the data according to one or more variables, or we want to calculate statistical values from according to a grouping or category scheme. 
-
-The funtion `summarise` allows to calculate statiscal aggregation of one or more variables.
-
-![](images/04-data-transformation/summarise.png)
 
 
-We can leverage common statistical/summary functions to summarize numerical variables:
 
-  - Range indicators: `min(x)`, `max(x)`, `quantile(x, p)`
-  
-  - Central measures: `mean(x)`, `median(x)`, 
-  
-  - Dispersion measures: `sd(x)`, `var(x)`, `IQR(x)`
-  
-  - Counts: `n()`, `n_distinct(x)`
-  
-  - Conditional statistics: `sum(x > 10)`, `mean(x > 10)`
 
-1. Let's get the `mean` height at IFN3:
-```{r summarise_ex2}
-summarise(trees, mean_if3 = mean(DiamIf3))
-```
 
-2. Actually, the `mean` means nothing without the standard deviation. Fortunately, we can concatenate summaries just using `,` to implement additional summaries:
-```{r summarise_ex}
-summarise(trees, mean_if3 = mean(DiamIf3), sd_if3 = sd(DiamIf3))
-```
 
-## Grouped summaries: `group_by`
 
-The summary of a variable is important to have an idea about the data. However, summarizing a variable by group gives better information on the distribution of the data. In fact, one of the most common ways in which we create summaries is by grouping on the basis of certain information. That means, we split observations between a number of groups and the calculate the summary statistics.
 
-![](images/04-data-transformation/group_summarise.png)
 
-Grouped summaries enable the comparison of the behavior of a given variable across categories. Groups can be either numerical or categorical variables, though the second are often more suitable and straightforward towards visualization and plotting.
 
-1. Let's group `trees` at province level:
-```{r grouped_summ_ex}
-unique(trees$Provincia)
-by_province <- group_by(trees, Provincia)
-by_province
-```
 
-2. Now we can apply `summarise` to get an aggregation value per group category:
-```{r grouped_summ_ex_2}
-summarise(
-  by_province,
-  mean_height_ifn3 = mean(HeiIf3, na.rm = TRUE),
-  max_height_ifn3 = max(HeiIf3, na.rm = TRUE),
-  min_height_ifn3 = min(HeiIf3, na.rm = TRUE)
-)
-```
 
-3. Of course, we can concatenate `group_by` and `summarise` using `pipes`:
+##2 PIPES!!!!
 
-```{r grouped_summ_ex_3}
-
-trees %>%
-    group_by(Provincia) %>%
-    summarise(
-          mean_height_ifn3 = mean(HeiIf3, na.rm = TRUE),
-          max_height_ifn3 = max(HeiIf3, na.rm = TRUE),
-          min_height_ifn3 = min(HeiIf3, na.rm = TRUE)
-        )
-```
-
-4. We must bear in mind that we can apply **any function** to that fits the structure of the data. For instance, we can calculate per group correlation coefficients:
-
-```{r grouped_summ_ex_4}
-summarise(
-  by_province,
-  R = cor(HeiIf3, DiamIf3)
-)
-```
-**Exercise 5**
-```
-  5.1 Which species showed the largest increase in diameter between IFN2 and IFN3?
-
-  5.2 Which province gather the largest number of species?
-```
 ## Targeted summaries
 
 ### `summarise_if` and `summarise_at`
