@@ -351,3 +351,24 @@ AB = \frac{\pi}{4} · Diam^{2} · N
 $$
 
 </div>
+
+
+## `summarise`
+
+`summarise` allows us to make calculations with the variables in the data frame, but using *summary functions*, i.e. functions that transform the variability in a given variable into a single value. Functions such as `sum`, `mean`, `max`,`IQR`, etc. are examples of summary functions. 
+
+![](images/03-data-transformation/summarise.png)
+
+1. Let's get the mean diameter of all trees in the dataset
+
+```{r, eval = T}
+summarise(trees, mean_d = mean(DiamIf3))
+```
+
+2. Or get the maximum height of a tree in Catalonia
+
+```{r, eval = T}
+summarise(trees, max_h = max(HeiIf3))
+```
+
+However, this function by itself is normally not of much interest, as it would reduce our entire database to a single value. This is why it is often used in conjunction with `group_by`, which classifies the data frame into groups based on a categorical variable.
