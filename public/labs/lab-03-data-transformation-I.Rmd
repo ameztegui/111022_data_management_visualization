@@ -340,7 +340,7 @@ mutate(
 
 <div class=exercise>
 
-**EXERCISE 4**
+**EXERCISE 4**</br>
 
   4.1 Get diameter growth (in cm) of each tree between IFN2 (DiamIf2)  and IFN3 (DiamIf3)
 
@@ -371,4 +371,34 @@ summarise(trees, mean_d = mean(DiamIf3))
 summarise(trees, max_h = max(HeiIf3))
 ```
 
-However, this function by itself is normally not of much interest, as it would reduce our entire database to a single value. This is why it is often used in conjunction with `group_by`, which classifies the data frame into groups based on a categorical variable.
+However, this function by itself is normally not of much interest, as it would reduce our entire database to a single value. This is why it is often used in conjunction with `group_by`, which classifies the data frame into groups based on a categorical variable. In the case of our database, there are several groups that could be of interest:
+
+```{r, results="hide"}
+
+# Per province
+by_province <- group_by (trees, Provincia)
+
+# Per plot 
+by_plot <- group_by (trees, Codi)
+
+# Per species
+by_species <- group_by (trees, Especie)
+
+# per diameter class
+by_CD <- group_by (trees, CD)
+
+# Per plot and species
+by_plot_species <- group_by (trees, Codi, Especie)
+```
+You can see, by typing for example `glimpse(by_plot)` that the resulting data frame does not differ at all from the original, apparently, but has a hidden index that identifies to which class belongs each observation.
+
+
+<div class=exercise>
+
+**EXERCISE 5**</br>
+
+Once this is done, what statistics could we calculate to characterize the diameter values for each plot?
+Let's try to calculate the mean, minimum and maximum values, the 90th percentile and the interquartile range for each plot. We will also compute the number of trees measured per plot and the number of different species, using respectively the functions `n()` and `n_distinct(x)`. We should see that the resulting output has fewer rows, namely one per plot (one per each grouping class), and that it only contains the newly created variables.
+
+</div>
+
