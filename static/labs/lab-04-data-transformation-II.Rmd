@@ -1,5 +1,5 @@
 ---
-title: "Data transformation (I): Create new variables, filter, select and organize data"
+title: "Data transformation (II): Piping and conditional transformations"
 date: "111022 | Data management and visualization with R"
 author: 
   - "Aitor Ameztegui"
@@ -25,36 +25,148 @@ load('data/data_IFN.Rdata')
 ```
 
 
+# Piping
 
+In the last lab, we have seen how to create new variables with `mutate`, how to select the desired rows and columns with `filter`and `select`, how to sort our datasets with `arrange` or create summarised variables with `summarise`. Most often, however, we will want to apply several of this verbs to a dataframe. For instance, we may want to first calculate the basal area of each tree, then get the total basal area per plot, and then determine the average basal area per plot per dominant species.
 
+The typical way to concatenate different functions in R is to successively apply each verb to the result of the previous operation, using parentheses. This forces us to work "from inside to outside", and the result gets reall hard to read or understand. For instance, let's think what the following commands are doing:
 
-
-
-
-
-
-
-
-
-##2 PIPES!!!!
-
-## Targeted summaries
-
-### `summarise_if` and `summarise_at`
-
-We can apply a summarising function to a group of variables that share some commmon characteristics that can be tested (i.e. numeric variables).
-
-1. `summarise_if` applies the selected function to those variables that meet a condition. For instance, we can get the `mean` of any variable (columnn) containting numerical data:
-
-```{r summarise_if}
-summarise_if(trees, is.numeric, mean)
+```{r bad_left, eval = FALSE}
+diam_especie <- filter(
+  summarise(
+    group_by(
+      filter(
+        trees, !is.na(DiamIf3)
+      ),
+      Codi, Especie
+    ),
+    diam = mean(DiamIf3),
+    n = n()
+  ),
+  n > 5
+)
 ```
 
-2. With `summarise_at` we can limit the summary by name or using the select helpers (`starts_with`, `ends_with`, `one_of`). 
+
+With some effort, we could understand the code, but it is not easy to read. Another option is to create intermediate objects at each step, as follows:
+
+```{r bad_right, eval = FALSE}
+no_na_trees <- filter(
+  trees, !is.na(DiamIf3)
+)
+no_na_trees_grouped <- group_by(
+  no_na_trees, Codi, Especie
+)
+summarised_no_na_trees <- summarise(
+  no_na_trees_grouped,
+  diam = mean(DiamIf3), n = n()
+)
+final_data <- filter(
+  summarised_no_na_trees, n > 5
+)
+```
+
+This approach is easier to understand, but has two main disadvantages:
+
+1. It forces us to create intermediate objects that occupy memory and are not longer used.
+2. Is prone to mistakes if some of the steps causes errors.
+
+The `tidyverse` has adopted a very clever approach, inherited from the `magrittr` package: the *pipe* operator. A *pipe* is just this symbol `%>%`, and makes that the result of the left side is passed to the function in the right as first argument. So  `x %>% f(y)`  is the same as `f(x,y)`, and `x %>% f(y, z)`, would be the same as `f(x, y, z)`. We saw that, in the tidyverse, the first argument was always the data frame at which we apply the operations. This makes that, within the tidyverse `%>%` makes each function to be applied to the data frame resulting from the previous step.
+  
+  `filter(df, color == 'blue')` is the same as `df %>% filter(color == 'blue')`  
+  
+ Tidyverse verbs can thus be applied consecutively to a data frame, in a more intuitive order. So for example, the previous example would be
+ 
+```{r ok_right, eval = FALSE}
+diam_especie <- trees %>%
+  filter(!is.na(DiamIf3)) %>%
+  group_by(Codi, Especie) %>%
+  summarise(
+    diam = mean(DiamIf3),
+    n = n()
+  ) %>%
+  filter(n > 5)
+
+```
+ 
+ If we read the `%>%`operator as **THEN**, it is easy to understand that piece of code:
+
+```{r ok_right_commented, eval = FALSE}
+diam_especie <- trees %>%               # Get the data frame trees and THEN
+  filter(!is.na(DiamIf3)) %>%           # filter those that have diameter value, and THEN
+  group_by(Codi, Especie) %>%           # for each plot and species
+  summarise(                            # calculate 
+    diam = mean(DiamIf3),               # the mean diameter
+    n = n()                             # and the number of trees in the plot
+  ) %>%                                 # AND THEN
+  filter(n > 5)                         # keep only those plots with at leat 5 trees of a given species.
+```
+
+
+<div class=exercise>
+
+**EXERCISE 1:** </br>
+
+Create pipelines to answer the following questions:
+
+  1.1 Which **plots** have the fastest average growth rate?
+  
+  1.2 Which is the plot with the **most species**?
+  
+  1.3 Is there any **relationship** between both variables? <br>
+  *(Optional, some knowledge on `ggplot`is required)*
+
+</div>
+
+# Operate on a selection of variables
+
+When working with our data frames, we will often be in  the need to apply a certain operation to several variables. For instance, we may be interested in calcukating the mean tree diameter and mean tree height per species in each plot. We can do this by separating each variable within the tidyverse with commas, such as here:
+
+```{r}
+trees %>%
+    group_by(Codi, Especie) %>%
+    summarise(mean_d2 = mean(DiamIf2),
+              mean_d3 = mean(DiamIf3),
+              mean_h = mean(HeiIf3))
+```
+
+This code above is perfectly valid. However, when we want to repeat the same operation to several variables, `dplyr`has variants of its verbs that are more convenient:
+
+1. `summarise_all` will apply an operation on all variables
+
+2. `summarise_if` applies the selected function to those variables that meet a condition. For instance, we can get the `mean` of any variable (columnn) containting numerical data:
+
+```{r, eval = T}
+trees %>%
+    group_by(Codi, Especie) %>%
+    summarise_if(is.numeric, mean)
+```
+
+If we only apply a function (in this case, `mean`), dplyr will substitute the name of the original variables by the summary. We can calculate however several functions by providing them as a list, and dplyr will add a suffix to the variable name to identify them.
+
+```{r, eval = T}
+trees %>%
+    group_by(Codi, Especie) %>%
+    summarise_if(is.numeric, .funs= list(mean, sd))
+```
+
+If we want the suffix to be more informative, we can provide names to the functions:
+
+```{r, eval = T}
+trees %>%
+    group_by(Codi, Especie) %>%
+    summarise_if(is.numeric, .funs= list(avg = mean, sd = sd))
+```
+
+3. With `summarise_at` we can limit the summary to certain variables, by name or using the select helpers (`starts_with`, `ends_with`, `one_of`). 
 
 ```{r summarise_at}
-summarise_at(trees, vars(starts_with('Diam')), mean)
+trees %>%
+    group_by(Codi, Especie) %>%
+    summarise_at(vars(starts_with('Dia')), mean)
 ```
+
+> The variants `_at()`, `_if()`, and `_all()` can be applied to any of the main verbs of dplyr. So we have `mutate_at()`, `mutate-if()`, and `mutate_all()`, which can be also very useful, but also `filter_at()`, `filter_if()`, `filter_all()`; `select_if()`, `select_at()`, and `select_all()`, or `filter_if()`, `filter_at()` and `filter_all()`.
 
 
 ## Targeted transformations
@@ -74,17 +186,7 @@ mutate_at(
 )
 ```
 
-**Exercise 6**
 
-```
-Create pipelines to answer the following questions:
-
-  6.1 Which **plots** have the fastest average growth rate?
-  
-  6.2 Which is the plot with the **most species**?
-  
-  6.3 Is there any **relationship** between both variables? <br>
-  *(Optional, some knowledge on `ggplot`is required)*
 ```
 ## Grouped `mutate`/`filter`
 
@@ -94,11 +196,11 @@ We will commonly use groups (`group_by`) when summarising variables (*n* inputs,
 group_by(Especie) %>% summarise(mean = mean(Diam))
 ```
 
-![](images/04-data-transformation/summary_function.png){width=250px}
+![](images/03-data-transformation/summary_function.png){width=250px}
 
 Sometimes, however, we may be interested in calculating new variables by group, but without reducing the dimensions:
 
-![](images/04-data-transformation/window_function.png){width=250px}
+![](images/03-data-transformation/window_function.png){width=250px}
 
 1. In this example we calculate the difference between the diameter of each tree and the average value of the trees of the same species. `DiamIf3` is taken rowwise whereas the `mean` is calculated at species (*Especie*) level thanks to `group_by`. 
 
