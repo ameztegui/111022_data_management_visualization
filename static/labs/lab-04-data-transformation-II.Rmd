@@ -166,73 +166,127 @@ trees %>%
     summarise_at(vars(starts_with('Dia')), mean)
 ```
 
-> The variants `_at()`, `_if()`, and `_all()` can be applied to any of the main verbs of dplyr. So we have `mutate_at()`, `mutate-if()`, and `mutate_all()`, which can be also very useful, but also `filter_at()`, `filter_if()`, `filter_all()`; `select_if()`, `select_at()`, and `select_all()`, or `filter_if()`, `filter_at()` and `filter_all()`.
+> The variants `_at()`, `_if()`, and `_all()` can be applied to any of the main verbs of dplyr. So we have `mutate_at()`, `mutate-if()`, and `mutate_all()`, which can be also very useful and work similarly to the `summarise_*` family, but also `filter_at()`, `filter_if()`, `filter_all()`; `select_if()`, `select_at()`, and `select_all()`, or `arrange_if()`, `arrange_at()` and `arrange_all()`.We even have `group_by_at()` and `group_by_if()`. However, the behavior of these variants can be a little tricky, so check the [`dplyr`website](https://dplyr.tidyverse.org/reference/scoped.html) to get a deeper understanding or their functioning.
+
+<div class=exercise>
+
+**EXERCISE 2:** </br>
+
+Use the scoped variants of `mutate` to:
+
+2.1. Log-transform those columns in trees containing numerical variables
+
+2.2. Calculate the maximum and minimum of all variables that represent a date in the `plots` data frame
 
 
-## Targeted transformations
+</div>
 
-The same targeting approaches can be used with `mutate`:
 
-1. Log-transform those columns containing numerical variable:
-```{r mutate_if}
-mutate_if(trees, is.numeric, log)
+# Grouped `mutate`/`filter`: summary functions vs. window functions
+
+We will commonly use groups (`group_by`) when summarising variables. These are called "summary functions", because they reduce from *n* inputs to one input
+![](images/03-data-transformation/summary_function.png){width=500px}
+
+```{r}
+trees %>% 
+    group_by(Especie) %>% 
+    summarise(mean = mean(DiamIf3))
 ```
 
-2. Recode certain variables. Add *sp_* before the corresponding species code:
-```{r mutate_at}
-mutate_at(
-  trees, vars(one_of(c('Especie', 'Species'))),
-  ~ paste0('sp_', .x)
-)
-```
+Sometimes, however, we may be interested in calculating new variables by group, but without reducing the dimensions. These are called "window functions", because the *n* inputs always give *n* outputs.
 
+![](images/03-data-transformation/window_function.png){width=500px}
 
-```
-## Grouped `mutate`/`filter`
-
-We will commonly use groups (`group_by`) when summarising variables (*n* inputs, one output):
-
-```r
-group_by(Especie) %>% summarise(mean = mean(Diam))
-```
-
-![](images/03-data-transformation/summary_function.png){width=250px}
-
-Sometimes, however, we may be interested in calculating new variables by group, but without reducing the dimensions:
-
-![](images/03-data-transformation/window_function.png){width=250px}
-
-1. In this example we calculate the difference between the diameter of each tree and the average value of the trees of the same species. `DiamIf3` is taken rowwise whereas the `mean` is calculated at species (*Especie*) level thanks to `group_by`. 
+For example, we could add a new variable that is the mean diameter of each species:
 
 ```{r eval = F}
 
 trees %>%
   group_by(Especie) %>%
-  mutate(
-    std_diam = DiamIf3 - mean(DiamIf3)
-  )
+  mutate(avg_d = mean(DiamIf3))
 ```
 
-```{r echo=F}
-options(width=100)
+This function calculates the mean diameter per species but, instead of collapsing our dataframe, adds one column but keeps the number of rows. This can be interesting if we want to calculate, for example, the differences between individual observations and a given value (mean, sd, IQR), to detect outliers:
+
+```{r eval = F}
+
 trees %>%
   group_by(Especie) %>%
-  mutate(
-    std_diam = DiamIf3 - mean(DiamIf3)
-  )
+  mutate(std_diam = DiamIf3 - mean(DiamIf3))
 ```
 
 
-**Exercise 7**
-```
-  7.1 Identify those trees that grew most as compared to the average in that plot <br>
+<div class="exercise" >
+
+**EXERCISE 3**</br>
+
+  3.1 Identify those trees that grew most as compared to the average in that plot <br>
   .font80[(Hint: calculate growth, *then* mean growth by plot, and *then* the difference)]
   
-  7.2 Identify those plots where a species grows much more than the average for the species
-```
+  3.2 Identify those plots where a species grows much more than the average for the species
 
 **Extra (in case you get bored):**  
 
+  3.3 Select IFN plots with pure Pinus nigra stands (Especie = 025). Note: we consider a forest to be monospecific when > 80% in BA corresponds to a single species
+  
+ </div>
+ 
+ 
+ Similarly, `group_by()`can also be used combined with `filter()` to retain, for each group, only those observations that accomplish a certain condition:
+ 
+```{r}
+trees %>%
+    group_by(Codi) %>%
+    filter(n() > 20)
 ```
-  7.3 Select IFN plots with pure Pinus nigra stands (Especie = 025). Note: we consider a forest to be monospecific when > 80% in BA corresponds to a single species
+
+This will return all the observation from those plots where there are at least 20 trees measured.
+
+When doing grouped mutates, two functions that become interesting are `lead()` and `lag()`, which allow you to access the previous and next values in a vector, making it easy to compute differences and trends.
+
+
+# Conditional transformations
+
+Sometimes we may be interested in calculating new variables, but conditioned to certain criteria. We can do this with the `ìf_else()` operator. `if_else()`allows to implement a conditional structure in which we determine the output value when the condition is met, and the value otherwise. For instance, imagine we want to define the name of the species for those trees that are *Pinus sylvestris* (code 021) but we are not interested in the others
+
+```{r}
+trees %>%
+    mutate(sp_name = if_else(Especie == "021", "Pinus sylvestris", "Other"))
 ```
+
+
+<div class="exercise">
+**EXERCISE 4** </br>
+
+Create a new variable that assigns the value "big" to those trees with diameter greater than 40 cm, and "small" otherwise. 
+
+</div>
+
+If we want to create several different outputs, we could combine several `ìf_else()` statements, but the code can get difficult to read easily. An alternative is to use the function `case_when()`. This function allows you to vectorise multiple `if_else()` statements. It is an R equivalent of the SQL CASE WHEN statement. `case_when()` has a more particular notation, since it requires a sequence of two-sided formulas. The left hand side (LHS) determines which values match this case. The right hand side (RHS) provides the replacement value. If no cases match, NA is returned. 
+
+For instance, following the previous example, let's assign its name to *Pinus sylvestris* (021), *Pinus nigra* (025), *Pinus uncinata* (022), and *Pinus halepensis* (024)
+
+
+```{r}
+trees %>%
+    mutate(sp_name = case_when(
+        Especie == "021" ~ "Pinus sylvestris",
+        Especie == "025" ~ "Pinus nigra",
+        Especie == "022" ~ "Pinus uncinata",
+        Especie == "024" ~ "Pinus halepensis",
+        TRUE             ~ "Other" )      # This last statement is needed to indicate what to do when none of the conditions is met
+    )
+```
+
+<div class="exercise">
+**EXERCISE 5** </br>
+
+Use `case_when()` to create a new variable that assigns the value "big" to those trees with diameter greater than 40 cm, "medium" to those between 20 and 40 cm, and "small" otherwise
+
+</div>
+
+
+
+
+
+
