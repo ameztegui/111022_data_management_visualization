@@ -336,7 +336,7 @@ Some considerations to keep in mind when creating objects or working with R in g
 
 So far we have typed instructions directly in the console but this is not the most efficient way to work. 99% of the time you should be writing your commands into a script. A script is nothing more than a text file that contains an ordered set of instructions. This means we can write a file with the instructions we want to execute and then run them at once, or decide which part to run.The advantage of this is straightforward: if you type code into the console, it will be automatically executed, but it won’t be saved. So, for example, if you make a mistake in typing code into the console, you’d have to re-type everything all over again. Instead, if you write all your code in a script and then save it, it will be available at any time needed, and if you need to rerun some analyses you just need to open the required scripts and run all the code within. Working in well-organized, documented scripts that can be rerun multiple times by any user is the basis of reproducible science.
 
-We can create a new script by choosing the menu item: `File, New File, R script`, or with the keyboard shortcut <kbd>Ctrl</kbd> + <kbd>Shift</kbd> + <kbd>N</kbd>. Script files are text files, that can be opened by any text editor. By convention, R scripts have the extension `.R`.
+We can create a new script by choosing the menu item: `File, New File, R script`, or with the keyboard shortcut <kbd>Ctrl</kbd> + <kbd>Alt</kbd> + <kbd>Shift</kbd> + <kbd>N</kbd>. Script files are text files, that can be opened by any text editor. By convention, R scripts have the extension `.R`.
  
 > **Tip: ** </br>
 you should get used as fast as possible to write most of your code in a document in a script. Only type directly into the Console to do quick analyses.
@@ -452,6 +452,8 @@ is_logical(letters)
 is_character(letters)
 is_integer(letters)
 ```
+
+> Note: to install a package in your working directory, you need to type `install.packages("package_name")`. Once installed, you won't need to install it every time, but you will still need to load it every time you start a new session.To do so, type `library(package_name)`.
 
 #### Coercion
 
