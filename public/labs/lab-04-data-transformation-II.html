@@ -173,7 +173,7 @@ final_data &lt;-<span class="st"> </span><span class="kw">filter</span>(
 </div>
 <div id="operate-on-a-selection-of-variables" class="section level1">
 <h1><span class="header-section-number">2</span> Operate on a selection of variables</h1>
-<p>When working with our data frames, we will often be in the need to apply a certain operation to several variables. For instance, we may be interested in calcukating the mean tree diameter and mean tree height per species in each plot. We can do this by separating each variable within the tidyverse with commas, such as here:</p>
+<p>When working with our data frames, we will often be in the need to apply a certain operation to several variables. For instance, we may be interested in calculating the mean tree diameter and mean tree height per species in each plot. We can do this by separating each variable within the tidyverse with commas, such as here:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">trees <span class="op">%&gt;%</span>
 <span class="st">    </span><span class="kw">group_by</span>(Codi, Especie) <span class="op">%&gt;%</span>
 <span class="st">    </span><span class="kw">summarise</span>(<span class="dt">mean_d2 =</span> <span class="kw">mean</span>(DiamIf2),

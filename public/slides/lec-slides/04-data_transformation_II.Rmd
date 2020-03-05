@@ -219,15 +219,15 @@ diam_especie <- trees %>%
 
 # Data pipelines (`%>%`)
 
-## Exercise 6
+## Exercise 1
 
 Create pipelines to answer the following questions:
 
-  6.1 Which **plots** have the fastest average growth rate?
+  1.1 Which **plots** have the fastest average growth rate?
   
-  6.2 Which is the plot with the **most species**?
+  1.2 Which is the plot with the **most species**?
   
-  6.3 Is there any **relationship** between both variables? <br>
+  1.3 Is there any **relationship** between both variables? <br>
   *(Optional, some knowledge on `ggplot`is required)*
 
 ---
@@ -240,103 +240,103 @@ background-size: 60%
 
 # Ok, now on your own!
 
----
+<!-- --- -->
 
-.middle[.center[.font200[
-`grouped mutate`
-]]]
-
-
-
-.center[![](img/group_mutate.png)]
+<!-- .middle[.center[.font200[ -->
+<!-- `grouped mutate` -->
+<!-- ]]] -->
 
 
----
 
-class: code60
+<!-- .center[![](img/group_mutate.png)] -->
 
-# Grouped `mutate`/`filter`
 
-We will commonly use groups (`group_by`) when summarising variables (*n* inputs, one
-output):
+<!-- --- -->
 
-```r
-group_by(Especie) %>% summarise(mean = mean(Diam))
-```
+<!-- class: code60 -->
 
-.center[![](img/summary_function.png)]
+<!-- # Grouped `mutate`/`filter` -->
 
-Sometimes, however, we may be interested in calculating new variables by group, but without
-reducing the dimensions:
+<!-- We will commonly use groups (`group_by`) when summarising variables (*n* inputs, one -->
+<!-- output): -->
 
-.center[![](img/window_function.png)]
+<!-- ```r -->
+<!-- group_by(Especie) %>% summarise(mean = mean(Diam)) -->
+<!-- ``` -->
 
----
-class: code60
+<!-- .center[![](img/summary_function.png)] -->
 
-# Grouped `mutate`/`filter`
+<!-- Sometimes, however, we may be interested in calculating new variables by group, but without -->
+<!-- reducing the dimensions: -->
 
-Sometimes, however, we may be interested in calculating new variables by group, but without
-reducing the dimensions:
+<!-- .center[![](img/window_function.png)] -->
 
-```{r eval = F}
+<!-- --- -->
+<!-- class: code60 -->
 
-trees %>%
-  group_by(Especie) %>%
-  mutate(
-    std_diam = DiamIf3 - mean(DiamIf3)
-  )
-```
+<!-- # Grouped `mutate`/`filter` -->
 
-```{r echo=F}
-options(width=100)
-trees %>%
-  group_by(Especie) %>%
-  mutate(
-    std_diam = DiamIf3 - mean(DiamIf3)
-  )
-```
+<!-- Sometimes, however, we may be interested in calculating new variables by group, but without -->
+<!-- reducing the dimensions: -->
 
----
+<!-- ```{r eval = F} -->
 
-# Grouped `mutate`/`filter`
+<!-- trees %>% -->
+<!--   group_by(Especie) %>% -->
+<!--   mutate( -->
+<!--     std_diam = DiamIf3 - mean(DiamIf3) -->
+<!--   ) -->
+<!-- ``` -->
 
-## Exercise 7
+<!-- ```{r echo=F} -->
+<!-- options(width=100) -->
+<!-- trees %>% -->
+<!--   group_by(Especie) %>% -->
+<!--   mutate( -->
+<!--     std_diam = DiamIf3 - mean(DiamIf3) -->
+<!--   ) -->
+<!-- ``` -->
 
-  7.1 Identify those trees that grow most as compared to the average in that plot <br>
-  .font80[(Hint: calculate growth, *then* mean growth by plot, and *then* the difference)]
-  
-  7.2 Identify those plots where a species grows much more than the average for the species
-</br>
-</br>
-**Extra (in case you get bored):**  
+<!-- --- -->
 
-  7.3 Select IFN plots with pure *Pinus nigra* stands (Especie =
-      025). Note: we consider a forest to be monospecific when > 80% in BA corresponds to
-      a single species
-      
----
+<!-- # Grouped `mutate`/`filter` -->
 
-# Targeted transformations
+<!-- ## Exercise 7 -->
 
-## `mutate_if` and `mutate_at`
+<!--   7.1 Identify those trees that grow most as compared to the average in that plot <br> -->
+<!--   .font80[(Hint: calculate growth, *then* mean growth by plot, and *then* the difference)] -->
 
-The same can be done with `mutate`:
+<!--   7.2 Identify those plots where a species grows much more than the average for the species -->
+<!-- </br> -->
+<!-- </br> -->
+<!-- **Extra (in case you get bored):**   -->
 
-.pull-left[
-```{r mutate_if}
-mutate_if(trees, is.numeric, log)
-```
-]
+<!--   7.3 Select IFN plots with pure *Pinus nigra* stands (Especie = -->
+<!--       025). Note: we consider a forest to be monospecific when > 80% in BA corresponds to -->
+<!--       a single species -->
 
-.pull-right[
-```{r mutate_at}
-mutate_at(
-  trees, vars(one_of(c('Especie', 'Species'))),
-  ~ paste0('sp_', .x)
-)
-```
-]
+<!-- --- -->
+
+<!-- # Targeted transformations -->
+
+<!-- ## `mutate_if` and `mutate_at` -->
+
+<!-- The same can be done with `mutate`: -->
+
+<!-- .pull-left[ -->
+<!-- ```{r mutate_if} -->
+<!-- mutate_if(trees, is.numeric, log) -->
+<!-- ``` -->
+<!-- ] -->
+
+<!-- .pull-right[ -->
+<!-- ```{r mutate_at} -->
+<!-- mutate_at( -->
+<!--   trees, vars(one_of(c('Especie', 'Species'))), -->
+<!--   ~ paste0('sp_', .x) -->
+<!-- ) -->
+<!-- ``` -->
+<!-- ] -->
 
 
 

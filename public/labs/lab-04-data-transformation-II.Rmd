@@ -120,7 +120,7 @@ Create pipelines to answer the following questions:
 
 # Operate on a selection of variables
 
-When working with our data frames, we will often be in  the need to apply a certain operation to several variables. For instance, we may be interested in calcukating the mean tree diameter and mean tree height per species in each plot. We can do this by separating each variable within the tidyverse with commas, such as here:
+When working with our data frames, we will often be in  the need to apply a certain operation to several variables. For instance, we may be interested in calculating the mean tree diameter and mean tree height per species in each plot. We can do this by separating each variable within the tidyverse with commas, such as here:
 
 ```{r}
 trees %>%
