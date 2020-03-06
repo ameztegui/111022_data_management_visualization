@@ -21,6 +21,8 @@ During this course we will always work with RStudio projects, but you won't actu
 
 - [Designing Projects](https://nicercode.github.io/blog/2013-04-05-projects/) by Nice R Code. A series of advices on how to organize files within a project
 
+- [Projects in RStudio](https://resources.rstudio.com/wistia-rstudio-essentials-2/rstudioessentialsmanagingpart1-2) A nice video by RStudio covering the main features of RStudio Projects [37 mins]
+
 ## Complementary references
 
 - [Using Projects:](https://support.rstudio.com/hc/en-us/articles/200526207-Using-Projects). A description by RStudio on how to create RStudio projects.
