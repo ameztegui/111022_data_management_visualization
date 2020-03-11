@@ -1,0 +1,28 @@
+---
+title: "Tidy data: modify your data frame"
+date: "111022 | Data management and visualization with R"
+author: 
+  - "Aitor Ameztegui"
+  - "Marcos Rodrigues"
+output:
+  rmdformats::readthedown:
+    highlight: pygments
+    number_sections: true
+    css: lab.css
+# runtime: shiny_prerendered
+---
+
+```{r include=FALSE}
+library(tidyverse)
+library(knitr)
+options(
+  htmltools.dir.version = FALSE, # for blogdown
+  show.signif.stars = FALSE,     # for regression output
+  digits = 2
+  )
+#knitr::opts_chunk$set(eval = FALSE)
+load('data/data_IFN.Rdata')
+```
+
+
+# Introduction
