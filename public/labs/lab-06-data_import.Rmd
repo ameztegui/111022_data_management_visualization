@@ -1,0 +1,84 @@
+---
+title: "Data import and export: reading and writing in different file types"
+date: "111022 | Data management and visualization with R"
+author: 
+  - "Aitor Ameztegui"
+  - "Marcos Rodrigues"
+output:
+  rmdformats::readthedown:
+    highlight: pygments
+    number_sections: true
+    css: lab.css
+# runtime: shiny_prerendered
+---
+
+```{r include=FALSE}
+library(tidyverse)
+library(knitr)
+options(
+  htmltools.dir.version = FALSE, # for blogdown
+  show.signif.stars = FALSE,     # for regression output
+  digits = 2
+  )
+#knitr::opts_chunk$set(eval = FALSE)
+load('data/data_IFN.Rdata')
+```
+
+```{r, echo=FALSE, message=FALSE, warning=FALSE}
+library(tidyverse)
+load('data/data_IFN.Rdata')
+options(width = 85)
+```
+
+# Introduction
+
+Up to now, we have provided you with the data needed to practice the functions we've learned. But at a point, you will want to upload your own dataset into R, or read data from a website or online database. In this lab we will learn how to read rectangular plain-text files and excel sheets into R, using the packages `readr` (which comes within the `tidyverse`) and `readxls` developed by Jenny Bryan, from RStudio.
+
+# Reading diles from the RStudio IDE
+
+Actually, RStudio has a very nice tool to allow you read files in a variety of formats: plain text, excel, or data from the popular statistical software Stata, SPSS or SAS. To read data in any of these formats, you have to click in the `Import Dataset` option within the `Environment` panel. There you can point to the desired file, give it a name, and set some options about it. This functions comes very handy if you only need to read a few files. But when you need to read dozens of them, or if you want your code to be fully reproducible by others (or by your future self), it is best practice to read the files using code.
+
+# Reading plain text files with `readr`
+
+## readr comes in many flavours
+
+The main purpose of the `readr`package is to transform plain-text files into data frames. Since there are several types of plain-text files, `readr` also has several functions, although their syntax are almost identical. That means that once you master one of them, it is easy to use the rest. The main functions are:
+
+- `read_csv()` to read comma-delimited files
+- `read_csv2()` to read semicolon separated files
+- `read_tsv` to read tab delimited files
+- `read_delim()` to read files with any delimiter.
+
+As we said, the syntax is very similar, and the first argument for all of them is the path to your file. 
+
+```{r}
+datos <- read_csv("data/####.csv")
+```
+
+When you run these functions, R prints out the name of the columns it has identified, and its guess on what type of data they contain. By default, `read_csv()` (and its partners) use the first line of the data to extract the column names. However, some files contain a few lines of metadata at the top of a file. You can force `readr` to skip those lines with the argument `skip = n`, where `n`is the number of lines to skip.
+
+```{r}
+ejemplo de sortie mal
+ejemplo de sortie bien
+```
+
+In other (rare) cases, the data migh have no column names. In that case you can specify the argument `col_names = FALSE` and `readr` will sequentially assign the names `X1` , `X2` ... `Xn` to the variables.
+
+Another interesting option is to define the value that is used in the file to represent missing values (this are the `NA` values in R):
+
+```{r}
+
+```
+
+## Parsing a vector
+
+Sometimes `readr` will not succeed in interpreting the type of variables we are trying to read, and it may, for example, identify as a character vector what should be a numeric one. We can tell R to force the type of variable for a given column using the `parse_*` family of functions. 
+ 
+## Locales
+
+
+# Reading from Excel
+
+# Reading from Google Spreadsheets
+
+# More resources to read files
