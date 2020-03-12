@@ -1,0 +1,186 @@
+---
+title: "Tidy data: modify your data frame"
+date: "111022 | Data management and visualization with R"
+author: 
+  - "Aitor Ameztegui"
+  - "Marcos Rodrigues"
+output:
+  rmdformats::readthedown
+number_sections: true
+css: lab.css
+# runtime: shiny_prerendered
+---
+
+```{r include=FALSE}
+library(tidyverse)
+library(knitr)
+options(
+  htmltools.dir.version = FALSE, # for blogdown
+  show.signif.stars = FALSE,     # for regression output
+  digits = 2
+  )
+#knitr::opts_chunk$set(eval = FALSE)
+load('data/data_IFN.Rdata')
+```
+
+
+# Modify your dataframe: Wide versus long data
+
+## The *tidyverse* and tidy data
+
+Data in **tidy** format eases the processing and analysis, particularly in vectorized languages as R. Data has to meet some requirement in order to be considered *tidy*:
+
+* Each row represents an observation
+* Columns comprise variables
+* Echa combination of row and column gathers a value
+
+![](images/03-data-transformation/tidy.png)
+
+There are 5 examples of messy data we will explore here:
+
+* `Column headers are values, not variable names.`
+* Multiple variables are stored in one column.
+* Variables are stored in both rows and columns.
+* Multiple types of observational units are stored in the same table.
+* A single observational unit is stored in multiple tables.
+
+Illustrating the difference between *wide* and *long* datasets is easiest using an example:
+
+```{r}
+country_long <- data.frame(
+    expand.grid(country = c("Sweden", "Denmark", "Norway"), year = 1994:1996),
+    avgtemp = round(runif(9, 3, 12), 0)
+    )
+country_long
+```
+
+```{r}
+country_wide <- data.frame(
+    country = c("Sweden", "Denmark", "Norway"),
+    avgtemp.1994 = country_long$avgtemp[1:3],
+    avgtemp.1995 = country_long$avgtemp[4:6],
+    avgtemp.1996 = country_long$avgtemp[7:9])
+country_wide 
+```
+
+The long dataset separates the unit of analysis (country-year) into two separate variables while the wide dataset combines one of the keys (year) with the value variable (avgtemp).
+
+## A case for long data
+
+There are many reasons to prefer datasets structured in long form. Repeating some of the points made in @Wickham2014, here are three reasons why you should attempt to structure your data in long form:
+
+1. If you have many value variables, it is difficult to summarize wide-form datasets at a glance (which in turn makes it hard to identify mistakes in the data). For example, imagine we have a dataset with 50 years and 10 value variables of interest - this would result in 500 columns in wide form. Summarizing each column to look for strange observations, or simply understanding which variables are included in the dataset, becomes difficult in this case.
+
+2. Structuring data as key-value pairs - as is done in long-form datasets - facilitates conceptual clarity. For example, in country_long above, it is clear that the unit of analysis is country-year - or, put differently, that the variables country and year jointly constitute the key in the dataset. In wide-form datasets, one of the variables that constitutes the unit of analysis is mixed with a variable that holds values. (Read more about this in Hadley's paper referenced above.)
+
+3. Long-form datasets are often required for advanced statistical analysis and graphing. For example, if you wanted to run a regression with year and/or country fixed effects, you would have to structure your data in long form. Furthermore, many graphing packages, including `ggplot2`, rely on your data being in long form.
+
+```{r cd}
+species
+
+```
+
+## The (old) verbs of tidyr
+
+  - `gather`: Convert data from *wide* to *long* format (columns to id-value pairs)
+  - `spread`: Convert data from *long* to *wide* format (id-value pairs to columns)
+  - `separate`: Convert one column in serveral
+  - `unite`: Join several columns in one
+
+
+## From *wide* to *long*
+
+The function `gather` enables the conversion from *wide* to *long*. The dataframe `n_parcelas`, created with the following chunck of code, stores information about the number of plots in each province.
+
+Each columns contains the number of plots per inventory, thus it is clear example of *untidy* data. Columns are not variables but data.
+
+```{r gather_ex}
+n_parcelas <- tibble(
+  Prov = c('Lleida', 'Girona', 'Barcelona', 'Tarragona'),
+  IFN_2 = c(16, 78, 60, 34),
+  IFN_3 = c(18, 79, 67, 36)
+)
+
+n_parcelas
+```
+
+
+
+Let's create the *tidy* i.e., *long* version of `n_parcelas` using `gather`. The syntax of `gather` takes a data.frame and collapses it into *long* allowing to specify the names of the `key` and `value` columns, and also which `vars` must be collapsed.
+
+> `gather(df, key, value, vars)`
+
+An example is probably worh a 1000 words here:
+
+```{r gather_ex2}
+n_parcelas_tidy <- gather(n_parcelas,IFN, n, IFN_2, IFN_3)
+```
+
+
+```{r}
+n_parcelas_tidy
+
+```
+
+
+```{r}
+n_parcelas_tidy
+
+```
+
+### Going *tidier*
+
+Our current dataset is almost fully tidy but, if we want to be particulary meticulous, our IFN column can be further processed. As it is, it contains the number of the version (either 2^nd or 3^rd inventory). Also, imagine we want to add additional plots that do no belong to the National Forest Inventory program. To address this potential issue, we can split `IFN` into 2 columns, named `source` and  `version` using `separate()`:
+
+> `separate(df, col, into, sep)`
+
+```{r gather_ex3}
+
+n_parcelas_sep <-  separate(n_parcelas_tidy, IFN, c('source', 'version'), sep = '_')
+n_parcelas_sep
+
+```
+
+Likewise, we can go in the opposite direction and merge to columns into one using `unite()`:
+
+> `unite(data, col, vars, sep)`
+
+```{r unite_ex}
+n_parcelas_unite <- unite(n_parcelas_sep, IFN, source, version, sep = '_')
+n_parcelas_unite
+```
+
+> **Exercise 9**
+```
+Use `gather` and `separate` to transform the data frame *species* into a **tidy** format, where each column is a variable and each row an observation.
+```
+
+```{r gather_ex_4, echo=FALSE}
+species
+```
+
+## From *long* to *wide*
+
+In some cases it is not possible working with data in *long* format. For example, that is the case of GIS vector layers in which each rows represents a single spatial entity, thus, having duplicate objects sharing the same location it's topologically inconsistent. 
+
+For example, imagine a dataframe including duplicate plot entries (rows) that we want to spatialize to conduct certain types of spatial analyses (autocorrelation, density estimation...). In this case, we must go with the *wide* format, despite being not optimal.
+
+The function `spread` enables the conversion from *long* back to *wide*:
+
+> `spread(df, key, value, sep)`
+
+
+```{r spread_ex}
+n_parcelas2 <-  spread(n_parcelas_unite, IFN, n)
+```
+
+```{r}
+n_parcelas
+
+```
+]
+
+```{r}
+n_parcelas2
+
+```
