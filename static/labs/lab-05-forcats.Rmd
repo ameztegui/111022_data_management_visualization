@@ -30,9 +30,13 @@ load('data/data_IFN.Rdata')
 options(width = 85)
 ```
 
-# Introduction. Create factors
+# Introduction to factors
 
-In R, factors are  a special case of categorical variables, in which variables have a fixed and known set of possible values. Historically, factors were much easier to work with than characters. As a result, many of the functions in base R automatically convert characters to factors. 
+In R, factors are  a special case of categorical variables, in which variables have a fixed and known set of possible values. Factors have some nice properties that make it easier to work with than characters. As a result, many of the functions in base R automatically convert characters to factors. This can be dangerous if it happens without user's knowledge, that's why tidyverse functions do never convert any character into a factor unless told so. In this lab we are going to see how we can create factors and work with them using functions from the `forcats`package. 
+
+![](images/05-forcats/logo_forcats.png)
+
+You can find more details on the functions of this package in the website [https://forcats.tidyverse.org/](https://forcats.tidyverse.org/).
 
 ## Creating factors
 
@@ -81,7 +85,7 @@ sort(y1)
 
 ```
 
-And any values not in the set (or mistakes) will be silently converted to `NA:
+And any values not in the set (or mistakes) will be converted to `NA:
 ```{r}
 y2 <- factor(x2, levels = month_levels)
 y2
@@ -94,20 +98,17 @@ factor(c("Monday", "Tuesday", "Wednesday", "Thursday", "Friday"))
 
 ```
 
-Sometimes you’d prefer that the order of the levels match the order of the first appearance in the data. You can do that when creating the factor by setting levels to `unique(x)`, or after the fact, with `fct_inorder()`, from the package `forcats`:
+Sometimes you’d prefer that the order of the levels match the order of the first appearance in the data. You can do that with `fct_inorder()`, from the `forcats` package:
 
 ```{r}
-f1 <- factor(x1, levels = unique(x1))
+f1 <- x1 %>% factor() %>% fct_inorder()
 f1
-
-f2 <- x1 %>% factor() %>% fct_inorder()
-f2
 ```
 
 If you ever need to access the set of valid levels directly, you can do so with `levels()`:
 
 ```{r}
-levels(f2)
+levels(f1)
 ```
 
 <div class="exercise">
@@ -115,6 +116,7 @@ levels(f2)
 **EXERCISE 1** </br>
 
 1.1 Create a factor with 10 observations containing values of the 4 main cardinal points. Define the allowed levels for it.
+
 1.2 Make that the levels of the factor do not appear in the order you defined, but in order of appearance.
 
 </div>
@@ -204,7 +206,7 @@ trees %>%
 
 **EXERCISE 2: **</br>
 
-Use the studied functions to produce two **nice** bar charts with the number of plots in which each species dominates in IFN2 and IFN3 **for the province of Lleida**. You can find the dominant species in each plot in the `plots` variable, under the `Dom_sp2` and `Dom_sp3` variables. Is there any change in the ranking within the 10 most common species?
+Use the studied functions to produce two **nice** bar charts with the number of plots in which each species dominates in IFN2 and IFN3 **for the province of Lleida**. You can find the dominant species in each plot in the `plots` dataframe, under the variables `Dom_sp2` and `Dom_sp3`. Is there any change in the ranking within the 10 most common species?
 </div>
 
 
@@ -216,36 +218,44 @@ More powerful than changing the orders of the levels is changing their values. T
 
 ```{r}
 
-trees <- trees %>% 
-    mutate(Province = fct_recode(Provincia,
+trees %>% 
+    mutate(Prov_name = fct_recode(Provincia,
                                  "Barcelona"  = "08",
                                  "Girona" = "17",
                                  "Lleida" = "25",
-                                 "Tarragona" = "43"))
-
-
-
-trees %>% count(Province)
+                                 "Tarragona" = "43")) %>%
+    count(Prov_name)
 
 ```
 
-`fct_recode()` will leave levels that aren’t explicitly mentioned as is, and will warn you if you accidentally refer to a level that doesn’t exist.
+`fct_recode()` will leave levels that aren’t explicitly mentioned as is, and will warn you if you accidentally refer to a level that doesn’t exist:
+
+```{r}
+
+trees %>% 
+    mutate(Prov_name = fct_recode(Provincia,
+                                 "Girona" = "17",
+                                 "Lleida" = "25555")) %>%
+    count(Prov_name)
+
+```
+
+> Beware! We have commented before the difference between an error and a warning. This is a warning, so R will just ignore the wrong values, but will proceed with the rest. Do not ever assume that a piece of code worked well, always look at the output of the console in search for warnings.
 
 To combine groups, you can assign multiple old levels to the same new level. Let's for example assign the name "Other" to any Province other than Lleida or Barcelona:
 
 ```{r}
 
-trees <- trees %>% 
-    mutate(Province2 = fct_recode(Provincia,
+trees %>% 
+    mutate(Prov_name2 = fct_recode(Provincia,
                                  "Barcelona" = "08",
                                  "Lleida" = "25",
                                  "Other" = "17",
-                                 "Other" = "43"))
-trees %>%
-  count(Province2)
+                                 "Other" = "43")) %>%
+  count(Prov_name2)
 ```
 
-You must use this technique with care: if you group together categories that are truly different you will end up with misleading results.
+You must use this technique with care: if you group together categories that are truly different you will end up with misleading results. 
 
 If you want to collapse a lot of levels, `fct_collapse()` is a useful variant of `fct_recode()`. For each new variable, you can provide a vector of old levels. We can also specify the name for all values not explicitly stated. For example, we can use it to identify *Pinus* and *Quercus* species as such:
 
@@ -254,7 +264,7 @@ trees %>%
   mutate(Pinus_Quercus = fct_collapse(Especie,
     Pinus =   c("021", "022", "023", "024", "025", "026", "027", "028", "029"),
     Quercus = c("041", "042", "043", "044", "045", "046", "047", "048", "049"),
-    other_level = "Other_sps")) %>%  # We specify the name of the levels not specified with `other_level`
+    other_level = "Other_sps")) %>%      # We specify the name of the levels not specified with `other_level`
   count(Pinus_Quercus) 
 ```
 
@@ -284,3 +294,19 @@ trees %>%
 If we want to represent the number of plots in which each species dominates as we did in exercise 2, but for all Catalonia, there are so many species that the chart results unreadable. So use the functions we just learned to reduce the number of levels in the `Dom_sp2` and `Dom_sp3` variables. Then make a bar plot (use the code above) to show the 5 main dominant species in IFN2 and the 5 main dominant species in IFN3. Are there any differences between both inventories?
 
 </div>
+
+# Recap and references
+
+To recap, `forcats` provides different functions to work with factors:
+
+- `fct_reorder()`: to reorder a factor by another variable.
+
+- `fct_infreq()`: to reorder a factor by the frequency of values.
+
+- `fct_recode()`: to change the values of a factor by hand.
+
+- `fct_collapse()`: to assign a vector of old values to a new value
+
+- `fct_lump()`: to collapse the least/most frequent values of a factor into “other”.
+
+There are more functions in this package, but we have covered the most important ones. You can find more information in the `forcats` [web](https://forcats.tidyverse.org/), the [vignettes](https://forcats.tidyverse.org/articles/forcats.html) and the references therein.
