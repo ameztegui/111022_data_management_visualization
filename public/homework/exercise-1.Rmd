@@ -1,6 +1,6 @@
 ---
-title: "EC 01 - Exploratory analysis of forest fires in Spain"
-date: "Due: March 7 in class"
+title: "Homework 01 - Exploratory analysis of forest fires in Spain"
+date: "Due: March 27"
 output: 
   html_document: 
     css: hw.css
@@ -32,32 +32,33 @@ options(
 In this exercise you will conduct a *guided* exploratory analysis of forest fire data in Spain. We will use the dataset `fires` which compiles fire records in the period 1974-2015. The dataset contains the following information:
 
 - `CODCUAD`: Grid code. Associates fire occurrence to its spatial location.
-- `IDPIF`: Fire identifire. Unique code to associate each fire event with the remaining informatin in the original database.
+- `IDPIF`: Fire identifire. Unique code to associate each fire event with the remaining information in the original database.
 - `YEAR`: Year of occurrence.
 - `MONTH`: Month of occurrence. Integer values from 1 to 12.
 - `CAUSE`: Ignition source; 1-Natural; 2-Accident; 3-Negligence; 4-Arson; 5-Unknown; and 6-Restarted
+- `BAREA`: burned area
 - `CCAA`: Autonomous region where the fire started.
 
 ```{r, echo=F}
-fires <- as_tibble(read.csv('data/fires.csv'))
+fires <- read_csv('data/fires.csv', locale = locale(encoding = "latin1"))
 fires
 ```
 
 ## Instructions
 
-The exercise consists of a set of 10 questions, valued in 1 point apiece. Each of them must be answered, also including the code employed to address them. To do so, we expect you to deliver an RMarkdown document showing both the answer and the code. Create a project in RStudio cloud with your *name* plus *surname* and *Ex_1*.
+The exercise consists of a set of 10 questions, valued in 1 point apiece. Each of them must be answered, also including the code employed to address them, and some comments you may wish to include. We expect you to deliver an RMarkdown document showing both the answers and the code.
 
 ## Question list
 
 1. Calculate yearly totals of fire counts and burned area. Disregard CAUSE 6 (restared fires).
 
-2. Make a copy of fires dropping fires in 1900.
+2. Make a copy of fires data frame, but dropping fires occurred in 1900.
 
 3. Which MONTH endured the largest amount of fires? 
 
-4. And burned area?
+4. Which MONTH endured the largest amount of burned area?
 
-5. In which MONTH do fires grew larger (percentile 97th)?
+5. In which MONTH do fires grew largest (percentile 97th)?
 
 6. What CAUSE has the highest average fire size?
 
@@ -68,6 +69,8 @@ The exercise consists of a set of 10 questions, valued in 1 point apiece. Each o
 9. Which CCAA has the highest proportion of natural fires?
 
 10. Create a new dataframe with the number of fires per month and cell (CODCUAD). Put data of each month into an individual column.
+
+>**NOTE:** The data needed to solve this questions will be uploaded in RStudio Cloud, under the "Homework 1" project.
 
 
 
