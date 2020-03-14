@@ -261,40 +261,17 @@ div.tocify {
 
 <div id="exercise-1" class="section level2">
 <h2>Exercise 1</h2>
-<p>In this exercise you will conduct a <em>guided</em> exploratory analysis of forest fire data in Spain. We will use the dataset <code>fires</code> which compiles fire records in the period 1974-2015. The dataset contains the following information:</p>
+<p>In this exercise you will conduct a <em>guided</em> exploratory analysis of forest fire data in Spain. We will use the dataset <code>fires</code> which compiles fire records in the period 1974-2015, and is included in the <code>data</code> folder of the RStudio Cloud project. If you don’t know how to import the dataset you should first <a href="https://datamanagement.netlify.com/labs/lab-06-data_import.html">take the lab on “Data import”</a>.</p>
+<p>The dataset contains the following information:</p>
 <ul>
-<li><code>CODCUAD</code>: Grid code. Associates fire occurrence to its spatial location.</li>
-<li><code>IDPIF</code>: Fire identifire. Unique code to associate each fire event with the remaining information in the original database.</li>
-<li><code>YEAR</code>: Year of occurrence.</li>
-<li><code>MONTH</code>: Month of occurrence. Integer values from 1 to 12.</li>
-<li><code>CAUSE</code>: Ignition source; 1-Natural; 2-Accident; 3-Negligence; 4-Arson; 5-Unknown; and 6-Restarted</li>
-<li><code>BAREA</code>: burned area</li>
-<li><code>CCAA</code>: Autonomous region where the fire started.</li>
+<li><p><code>CODCUAD</code>: Grid code. Associates fire occurrence to its spatial location.</p></li>
+<li><p><code>IDPIF</code>: Fire identifire. Unique code to associate each fire event with the remaining information in the original database.</p></li>
+<li><p><code>YEAR</code>: Year of occurrence.</p></li>
+<li><p><code>MONTH</code>: Month of occurrence. Integer values from 1 to 12.</p></li>
+<li><p><code>CAUSE</code>: Ignition source; 1-Natural; 2-Accident; 3-Negligence; 4-Arson; 5-Unknown; and 6-Restarted</p></li>
+<li><p><code>BAREA</code>: burned area</p></li>
+<li><p><code>CCAA</code>: Autonomous region where the fire started.</p></li>
 </ul>
-<pre><code>## Parsed with column specification:
-## cols(
-##   CODCUAD = col_character(),
-##   IDPIF = col_double(),
-##   YEAR = col_double(),
-##   MONTH = col_double(),
-##   CAUSE = col_double(),
-##   BAREA = col_double(),
-##   CCAA = col_character()
-## )</code></pre>
-<pre><code>## # A tibble: 263,195 x 7
-##    CODCUAD      IDPIF  YEAR MONTH CAUSE  BAREA CCAA   
-##    &lt;chr&gt;        &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;  &lt;dbl&gt; &lt;chr&gt;  
-##  1 0101H08 2003150499  2003     5     4   1.4  Galicia
-##  2 0101H08 1981150684  1981     9     4 150    Galicia
-##  3 0101H08 2000151564  2000     8     2   2    Galicia
-##  4 0101H08 2004151450  2004     6     4  71.2  Galicia
-##  5 0101H08 1984154481  1984     6     4   3.5  Galicia
-##  6 0101H08 1982151238  1982     5     5   8    Galicia
-##  7 0101H08 2013150568  2013     9     4  19    Galicia
-##  8 0101H08 2004152749  2004     9     4   9.15 Galicia
-##  9 0101H08 1984154480  1984     6     4   4.5  Galicia
-## 10 0101H08 2003151887  2003     9     4   1.3  Galicia
-## # … with 263,185 more rows</code></pre>
 </div>
 <div id="instructions" class="section level2">
 <h2>Instructions</h2>
@@ -315,7 +292,7 @@ div.tocify {
 <li><p>Create a new dataframe with the number of fires per month and cell (CODCUAD). Put data of each month into an individual column.</p></li>
 </ol>
 <blockquote>
-<p><strong>NOTE:</strong> The data needed to solve this questions will be uploaded in RStudio Cloud, under the “Homework 1” project.</p>
+<p><strong>NOTE:</strong> Remember that the data needed to solve these questions is uploaded in the course’s space in RStudio Cloud, under the “Homework 1” project.</p>
 </blockquote>
 </div>
 
