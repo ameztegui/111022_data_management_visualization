@@ -291,3 +291,7 @@ There is a set of packages to get other types of data into R:
 - For hierarchical data: use `jsonlite` (by Jeroen Ooms) for json, and `xml2` for XML. Jenny Bryan has some excellent worked examples at https://jennybc.github.io/purrr-tutorial/.
 
 - For other file types, try the [R data import/export manual](https://cran.r-project.org/doc/manuals/r-release/R-data.html) and the `rio` package.
+
+You can also find useful information in the [data import cheat sheet](https://github.com/rstudio/cheatsheets/raw/master/data-import.pdf)
+
+![](images/06-data-import/data-import.png)
