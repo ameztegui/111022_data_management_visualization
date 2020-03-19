@@ -309,4 +309,7 @@ To recap, `forcats` provides different functions to work with factors:
 
 - `fct_lump()`: to collapse the least/most frequent values of a factor into “other”.
 
-There are more functions in this package, but we have covered the most important ones. You can find more information in the `forcats` [web](https://forcats.tidyverse.org/), the [vignettes](https://forcats.tidyverse.org/articles/forcats.html) and the references therein.
+There are more functions in this package, but we have covered the most important ones. You can find more information in the `forcats` [web](https://forcats.tidyverse.org/), the [vignettes](https://forcats.tidyverse.org/articles/forcats.html) and the references therein, or in the forcats [cheatsheet](https://github.com/rstudio/cheatsheets/raw/master/factors.pdf).
+
+![](images/05-forcats/factors_cheat.png)
+
