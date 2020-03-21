@@ -141,19 +141,19 @@ $(document).ready(function () {
 <h1>Wide versus long data</h1>
 <p>More generally, we often refer to <em>wide</em> and <em>long</em> data, as two general cases. In long vertical format, every row represents an observation belonging to a particular category. In wide format, however, observations are often spread across several columns. You can think of it as a summary of long data. Wide data is easier to read and interpret as compared to long format. However, long data is generally tidier, and easier to analyze. Illustrating the difference between <em>wide</em> and <em>long</em> datasets is easiest using an example:</p>
 <pre><code>##   country year avgtemp
-## 1  Sweden 1994       7
-## 2 Denmark 1994       7
+## 1  Sweden 1994      12
+## 2 Denmark 1994      10
 ## 3  Norway 1994       3
-## 4  Sweden 1995      11
-## 5 Denmark 1995       8
-## 6  Norway 1995       5
-## 7  Sweden 1996       8
-## 8 Denmark 1996      12
-## 9  Norway 1996       6</code></pre>
+## 4  Sweden 1995       8
+## 5 Denmark 1995       9
+## 6  Norway 1995       8
+## 7  Sweden 1996       5
+## 8 Denmark 1996      10
+## 9  Norway 1996       7</code></pre>
 <pre><code>##   country avgtemp.1994 avgtemp.1995 avgtemp.1996
-## 1  Sweden            7           11            8
-## 2 Denmark            7            8           12
-## 3  Norway            3            5            6</code></pre>
+## 1  Sweden           12            8            5
+## 2 Denmark           10            9           10
+## 3  Norway            3            8            7</code></pre>
 <p>The long dataset separates the unit of analysis (country-year) into two separate variables while the wide dataset combines one of the keys (year) with the value variable (avgtemp).</p>
 <div id="a-case-for-long-data" class="section level2">
 <h2>A case for long data</h2>
