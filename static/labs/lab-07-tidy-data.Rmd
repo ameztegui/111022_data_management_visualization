@@ -5,9 +5,10 @@ author:
   - "Aitor Ameztegui"
   - "Marcos Rodrigues"
 output:
-  rmdformats::readthedown
-number_sections: true
-css: lab.css
+  rmdformats::readthedown:
+    highlight: pygments
+    number_sections: true
+    css: lab.css
 # runtime: shiny_prerendered
 ---
 
