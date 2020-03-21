@@ -1,0 +1,151 @@
+---
+title: "Relational data"
+subtitle: "Working with several data tables"
+author: 
+    - "Aitor Ameztegui"
+    - "Marcos Rodrigues"
+output:
+  xaringan::moon_reader:
+    css: "slides.css"
+    logo: img/sta199-logo-hex.png
+    lib_dir: libs
+    nature:
+      highlightStyle: github
+      highlightLines: true
+      countIncrementalSlides: false
+---
+
+```{r setup, include=FALSE}
+# R options
+options(
+  htmltools.dir.version = FALSE, # for blogdown
+  show.signif.stars = FALSE,     # for regression output
+  warm = 1)
+
+# Set dpi and height for images
+library(knitr)
+library(tidyverse)
+opts_chunk$set(fig.height = 2.65, dpi = 300,
+               eval = T) 
+# ggplot2 color palette with gray
+color_palette <- list(gray = "#999999", 
+                      salmon = "#E69F00", 
+                      lightblue = "#56B4E9", 
+                      green = "#009E73", 
+                      yellow = "#F0E442", 
+                      darkblue = "#0072B2", 
+                      red = "#D55E00", 
+                      purple = "#CC79A7")
+# For nonsese...
+htmltools::tagList(rmarkdown::html_dependency_font_awesome())
+```
+
+# Working with two tables: `*_join`
+
+.middle[.center[![](img/join-setup.png)]]
+--
+.middle[.center[![](img/join-setup2.png)]]
+
+---
+
+# Working with two tables: `*_join`
+
+.middle[.center[![](img/join-setup2.png)]]
+--
+.middle[.center[![](img/join-setup3.png)]]
+---
+
+
+ # Joining data 
+
+ ## Mutating joins
+
+
+
+.pull-left[
+  ![](img/join_left.png)
+  ![](img/join_right.png)
+]
+
+
+.pull-right[
+
+- `left_join(x, y)`: Add observations in y that also appears in x. 
+  Original observations (x) are not lost
+    <br>
+    <br>
+    <br>
+    
+- `right_join(x, y)`: Add observations in x that also appears in y. 
+  Original observations (y) are not lost
+    
+]
+    
+---
+
+
+# Joining data 
+
+## Mutating joins
+
+
+
+.pull-left[
+  ![](img/join_full.png)
+  ![](img/join_inner.png)
+]
+
+
+.pull-right[
+
+- `full_join(x, y)`: All observations, x and y
+    <br>
+    <br>
+    <br>
+    <br>
+  
+- `inner_join(x, y)`: Only observations present in **both** x and y
+
+]
+  
+  
+
+---
+
+
+# Joining data
+
+
+## Filtering joins
+
+
+They do not add columns, but they **affect the observations**
+
+
+.pull-left[
+  ![](img/join_semi.png)
+  ![](img/join_anti.png)
+]
+
+
+.pull-right[
+
+- `semi_join(x, y)`: Keep observations in x that are present in y
+<br>
+<br>
+<br>
+<br>
+  
+- `anti_join(x, y)`: Remove observations in x present in y
+
+]
+
+---
+
+layout: false 
+class: inverse, center
+background-image: url(img/bike.gif)
+background-position: center
+background-size: 60%
+
+# Ok, now on your own!
