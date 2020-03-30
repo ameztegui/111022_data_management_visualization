@@ -1,0 +1,413 @@
+---
+title: "Working with factors"
+subtitle: "the forcats package"
+author: 
+    - "Aitor Ameztegui"
+    - "Marcos Rodrigues"
+output:
+  xaringan::moon_reader:
+    css: "slides.css"
+    logo: img/sta199-logo-hex.png
+    lib_dir: libs
+    nature:
+      highlightStyle: github
+      highlightLines: true
+      countIncrementalSlides: false
+---
+
+```{r setup, include=FALSE}
+# R options
+options(
+  htmltools.dir.version = FALSE, # for blogdown
+  show.signif.stars = FALSE,     # for regression output
+  warm = 1)
+
+# Set dpi and height for images
+library(knitr)
+library(tidyverse)
+opts_chunk$set(fig.height = 2.65, dpi = 300,
+               eval = T) 
+# ggplot2 color palette with gray
+color_palette <- list(gray = "#999999", 
+                      salmon = "#E69F00", 
+                      lightblue = "#56B4E9", 
+                      green = "#009E73", 
+                      yellow = "#F0E442", 
+                      darkblue = "#0072B2", 
+                      red = "#D55E00", 
+                      purple = "#CC79A7")
+# For nonsese...
+htmltools::tagList(rmarkdown::html_dependency_font_awesome())
+load('data/data_IFN.Rdata')
+
+```
+
+# What are factors?
+
+- Factors are  a special case of categorical variables
+
+--
+
+- They have a fixed and known set of possible values. 
+
+--
+
+- Factors have some nice properties that make it easier to work with than characters. As a result, many of the functions in base R automatically convert characters to factors.
+
+</br>
+</br>
+
+.center[![](img/hex-forcats_big.png)]
+
+---
+
+# Factors vs. character strings
+
+Let's create a vector of month values:
+
+```{r}
+
+months_string <- c("Dec", "Apr", "Jan", "Mar")
+
+```
+
+--
+
+Using a string to record this variable has two problems:
+
+--
+
+- The character string doesn’t sort in a useful way (it does in alphabetical order):
+
+```{r}
+sort(months_string)
+```
+
+--
+
+- There are only 12 possible months, but there’s nothing saving you from typos:
+
+```{r}
+bad_spell <- c("Dec", "Apr", "Jam", "Mar")
+bad_spell
+```
+
+---
+class: inverse, middle
+
+# Creating factors
+
+
+---
+
+# Creating factors
+
+To create a factor you must provide a list of the valid levels:
+
+```{r}
+month_levels <- c(
+  "Jan", "Feb", "Mar", "Apr", "May", "Jun", 
+  "Jul", "Aug", "Sep", "Oct", "Nov", "Dec")
+```
+
+--
+
+Now you can create the factor, indicating which levels will be allowed:
+
+```{r}
+months_factor <- factor(months_string, levels = month_levels)
+months_factor
+```
+
+
+---
+
+# Creating factors
+
+Now, if we sort the values:
+
+```{r}
+sort(months_factor)
+```
+
+--
+
+And any values not in the set (or mistakes) will be converted to `NA`:
+
+```{r}
+factor(bad_spell, levels = month_levels)
+```
+
+--
+
+If you omit the levels, they’ll be taken from the data in alphabetical order:
+
+```{r}
+factor(c("Monday", "Tuesday", "Wednesday", "Thursday", "Friday"))
+
+```
+
+---
+
+# Create factors from numeric variables
+
+Sometimes we want to group a numeric/continuous variable into a small subset of categories, i.e., intervals. 
+`ggplot()` has three functions to do so:
+
+- `cut_number()` makes n groups with (approximately) equal numbers of observations 
+- `cut_width()` makes groups of fixed width
+- `cut_interval()` is the most flexible. Allows to makes n groups with equal range or groups of a given width
+
+--
+
+```{r}
+numeric_var <- rnorm(n = 50, mean = 50, sd = 15) # 50 random values with mean 50 and sd 15.
+hist(numeric_var)
+```
+
+
+---
+# Create factors from numeric variables
+## `cut_number()`
+
+```{r}
+cut_number(numeric_var, n = 5)
+```
+
+
+---
+
+# Create factors from numeric variables
+## `cut_width()`
+
+```{r}
+cut_width(numeric_var, width = 15)
+```
+
+---
+# Create factors from numeric variables
+## `cut_interval()`
+
+```{r}
+cut_interval(numeric_var, n = 4)
+```
+
+---
+# Create factors from numeric variables
+## `cut_interval()`
+
+```{r}
+cut_interval(numeric_var, length = 15)
+```
+
+---
+# Create factors from numeric variables
+
+We can to define the names that we will give to the newly created factor by specifying the `labels = ` argument.
+
+```{r}
+cut_interval(numeric_var, n = 4, labels = c("Small", "Medium", "Big", "Bigger"))
+```
+
+---
+class: inverse, middle
+
+# Modify factor order
+
+---
+
+# Modify factor order
+
+It’s often useful to change the order of the factor levels in a visualisation, for example. There are three main functions: 
+
+1. `fct_inorder()` to put them in order of appearance
+2. `fct_reorder()` to change the order based on a variable
+3. `fct_infreq()` to sort the values in frequence order
+
+---
+
+# Modify factor order
+## `fct_inorder()` 
+It sorts the values in appearance order:
+
+```{r}
+  
+   fct_inorder(months_string)
+
+```
+
+---
+
+# Modify factor order
+## `fct_reorder()`
+
+For example, imagine you want to explore the mean height of tree species in Lleida:
+
+```{r}
+# Calculate mean height
+mean_height <- trees %>%
+    filter(Provincia == "25") %>%
+    group_by(Especie) %>%
+    summarise(height = mean(HeiIf3, na.rm = TRUE))
+
+# Plot mean height
+ggplot(mean_height, aes(height, Especie)) + 
+    geom_point() 
+```
+
+---
+
+# Modify factor order
+## `fct_reorder()`
+
+`fct_reorder()` changes the values of a factor based on a 2nd variable (numeric). It takes three arguments:
+
+- `f`, the factor whose levels you want to modify.
+- `x`, a numeric vector that you want to use to reorder the levels.
+- Optionally, `fun`, a function that’s used if there are multiple values of `x` for each value of `f`. The default value is median.
+
+---
+# Modify factor order
+## `fct_reorder()`
+
+```{r}
+
+mean_height %>%
+    mutate(Especie2 = fct_reorder(Especie, height)) %>%
+    ggplot(aes(height, Especie2)) +
+    geom_point()
+```
+
+---
+# Modify factor order
+## `fct_reorder()`
+
+But we may also want to know the mean number of tree species acrosss diameter classes, for example:
+
+```{r, echo = F}
+species_by_CD <- trees %>%
+    mutate(CD_class = as.factor(CD)) %>%            # we must convert it using as.factor()
+    group_by(CD_class) %>%                          # then, for each CD_class
+    summarise(n_species = n_distinct(Especie)) %>%  # we calculate the number of species
+    mutate(CD_class2 = fct_reorder(CD_class, n_species))
+
+ggplot(species_by_CD) +
+    geom_point(aes(CD_class2, n_species))
+
+```
+
+---
+
+# Modify factor order
+## `fct_infreq()`
+
+this is the simplest type of reordering because it doesn’t need any extra variables. It sorts values in increasing frequency: 
+
+.pull-left[
+```{r}
+# Without ordering
+trees %>%
+    filter(Provincia == "25") %>%
+    ggplot() +
+    geom_bar(aes(Especie))
+```
+]
+
+.pull-right[
+```{r}
+
+# In decreasing order
+trees %>%
+    filter(Provincia == "25") %>%
+    mutate(Especie = fct_infreq(Especie)) %>%
+    ggplot() +
+    geom_bar(aes(Especie))
+```
+]
+
+---
+
+class: inverse, middle
+
+# Modify factor levels
+
+---
+
+
+# Modifying factor levels
+
+- `fct_recode()`: to change the values of a factor by hand.
+
+- `fct_collapse()`: to assign a vector of old values to a new value
+
+- `fct_lump()`: to collapse the least/most frequent values of a factor into “other”.
+
+---
+# Modifying factor levels
+## `fct_recode()`
+
+```{r}
+trees %>% 
+    mutate(Prov_name = fct_recode(
+        Provincia,
+        "Barcelona"  = "08",
+        "Girona" = "17",
+        "Lleida" = "25",
+        "Tarragona" = "43")) %>%
+    count(Prov_name)
+
+```
+
+---
+# Modifying factor levels
+## `fct_collapse()`
+
+If you want to collapse a lot of levels, `fct_collapse()` is a useful variant of `fct_recode()`. For each new variable, you can provide a vector of old levels. 
+
+```{r}
+trees %>%
+  mutate(Pinus_Quercus = fct_collapse(
+      Especie,
+      Pinus =   c("021", "022", "023", "024", "025", "026", "027", "028", "029"),
+      Quercus = c("041", "042", "043", "044", "045", "046", "047", "048", "049"),
+      other_level = "Other_sps")) %>%      
+    count(Pinus_Quercus) 
+```
+
+---
+# Modifying factor levels
+## `fct_lump()`
+
+Lump together all the small groups to make a plot or table simpler. There are two main variants of `fct_lump()`:
+
+
+* `fct_lump_min()`: lumps levels that appear fewer than `min` times:
+
+```{r}
+trees %>% 
+    mutate(Main_sps = fct_lump_min(Especie, 10000))%>%
+    count(Main_sps)
+```
+
+---
+# Modifying factor levels
+## `fct_lump()`
+
+* `fct_lump_n()`: lumps all levels except for the `n` most frequent:
+
+```{r}
+trees %>%
+  mutate(Main_sps = fct_lump_n(Especie, 8)) %>%
+  count(Main_sps)
+```
+
+
+---
+
+layout: false 
+class: inverse, center
+background-image: url(img/folks.gif)
+background-position: center
+background-size: 60%
+
+# Ok, now on your own!
