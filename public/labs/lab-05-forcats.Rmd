@@ -134,7 +134,7 @@ cut(numeric_var,
     labels = c("Small", "Medium", "Big", "Biggest"))
 ```
 
-But `ggplot()` has three functions that basically do the same but ar perhaps even more convenient to use:
+But `ggplot()` has three functions that basically do the same but are perhaps even more convenient to use:
 
 - `cut_number()` makes n groups with (approximately) equal numbers of observations 
 
