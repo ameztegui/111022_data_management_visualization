@@ -37,7 +37,7 @@ color_palette <- list(gray = "#999999",
                       red = "#D55E00", 
                       purple = "#CC79A7")
 # For nonsese...
-htmltools::tagList(rmarkdown::html_dependency_font_awesome())
+load('data/data_IFN.rdata')
 ```
 
 # Working with two tables: `*_join`
@@ -48,17 +48,75 @@ htmltools::tagList(rmarkdown::html_dependency_font_awesome())
 
 ---
 
+# The "key" for joining data frames
+
+- The variables used to connect each pair of tables are called **keys**.
+
+- A key is a variable (or set of variables) that uniquely identifies an observation. For example, each plot is uniquely identified by its `Codi`. 
+
+- In other cases, multiple variables may be needed. For example, to identify an observation in `trees` you need four variables: `Codi`, `Especie`, `Rumbo`, and `Dist`
+
+---
+
+# The "key" for joining data frames
+
+There are two types of keys:
+
+* A **primary key** uniquely identifies an observation in its own table. For example, `plots$Codi` is a primary key because it uniquely identifies each IFN plot in the `plots` table.
+
+* A **foreign key** uniquely identifies an observation in another table. For example, `trees$Codi` is a foreign key because it appears in the `trees` table where it matches each tree to a unique plot.
+
+---
+
+# The "key" for joining data frames
+
+There are two types of keys:
+
+* A **primary key** uniquely identifies an observation in its own table. For example, `plots$Codi` is a primary key because it uniquely identifies each IFN plot in the `plots` table.
+
+* A **foreign key** uniquely identifies an observation in another table. For example, `trees$Codi` is a foreign key because it appears in the `trees` table where it matches each tree to a unique plot.
+
+To verify that they do indeed uniquely identify each observation. One way to do that is to `count()` the primary keys and look for entries where `n` is greater than one
+
+```{r}
+plots %>% 
+  count(Codi) %>% 
+  filter(n > 1)
+```
+---
+
 # Working with two tables: `*_join`
 
 .middle[.center[![](img/join-setup2.png)]]
 --
 .middle[.center[![](img/join-setup3.png)]]
+
+
+---
+# Working with two tables
+
+```{r}
+plots
+```
+
+---
+# Working with two tables
+
+```{r}
+coordinates
+```
+
 ---
 
+class:inverse, middle
+
+# Mutating joins
+
+---
 
  # Joining data 
 
- ## Mutating joins
+ ## Mutating joins (1)
 
 
 
@@ -83,12 +141,31 @@ htmltools::tagList(rmarkdown::html_dependency_font_awesome())
     
 ---
 
+# Joining data 
+
+## Mutating joins (1)
+```{r}
+left_join(plots, coordinates, by = "Codi")
+```
+
+
+
+---
 
 # Joining data 
 
-## Mutating joins
+## Mutating joins (1)
+```{r}
+right_join(plots, coordinates, by = "Codi")
+```
 
 
+---
+
+
+# Joining data 
+
+## Mutating joins (2)
 
 .pull-left[
   ![](img/join_full.png)
@@ -108,7 +185,32 @@ htmltools::tagList(rmarkdown::html_dependency_font_awesome())
 
 ]
   
-  
+---
+
+# Joining data 
+
+## Mutating joins (2)
+
+```{r}
+full_join(plots, coordinates, by = "Codi")
+```
+
+---
+
+# Joining data 
+
+## Mutating joins (2)
+
+```{r}
+inner_join(plots, coordinates, by = "Codi")
+```
+
+
+---
+
+class:inverse, middle
+
+# Filtering joins
 
 ---
 
@@ -139,6 +241,27 @@ They do not add columns, but they **affect the observations**
 - `anti_join(x, y)`: Remove observations in x present in y
 
 ]
+
+---
+
+
+# Joining data
+
+## Filtering joins
+```{r}
+semi_join(plots, coordinates, by = "Codi")
+```
+
+
+---
+
+
+# Joining data
+
+## Filtering joins
+```{r}
+anti_join(plots, coordinates, by = "Codi")
+```
 
 ---
 

@@ -263,7 +263,6 @@ The list of species names includes 190 species, but not all of them are present 
 </div>
 
 
-
 # To know more
 
 You can find more information about the join functions typing `vignette("two-table")`, or visiting [dplyr's website](https://dplyr.tidyverse.org/reference/join.html) on joining two tables.
