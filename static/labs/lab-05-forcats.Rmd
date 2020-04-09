@@ -121,6 +121,54 @@ levels(f1)
 
 </div>
 
+## Creating factors from numeric variables
+
+Sometimes we want to group a numeric/continuous variable into a small subset of categories, i.e., intervals. The most basic way to proceed would be using the `cut()` function from base R. `cut()`gets as arguments the original vector, the number of breaks, and the labels we will assign to those breaks. For example:
+
+```{r}
+numeric_var <- rnorm(100, 50, 15) # A numeric vector of 100 random values
+hist(numeric_var)
+
+cut(numeric_var, 
+    breaks = c(0,25,50,75,100), 
+    labels = c("Small", "Medium", "Big", "Biggest"))
+```
+
+But `ggplot()` has three functions that basically do the same but are perhaps even more convenient to use:
+
+- `cut_number()` makes n groups with (approximately) equal numbers of observations 
+
+```{r}
+cut_number(numeric_var, n = 5)
+```
+
+- `cut_width()` makes groups of fixed width
+```{r}
+cut_width(numeric_var, width = 15)
+```
+
+- `cut_interval()` is the most flexible. It allows to makes n groups with equal range or groups of a given width
+```{r}
+cut_interval(numeric_var, n = 4)
+
+cut_interval(numeric_var, length = 15)
+
+```
+Any of the `cut_*()` functions allow to define the names that we will give to the newly created factor by specifying the `labels = ` argument. We must pay attention, however, that the number of labels corresponds to the number of created groups:
+
+```{r}
+cut_interval(numeric_var, n = 4, labels = c("Small", "Medium", "Big", "Bigger"))
+```
+
+<div class = "exercise">
+
+**EXERCISE 2** </br>
+
+Using the `cut_*()`family of functions, create two new variables in the `trees` data frame: one that groups diameters into classes (as does the variable `CD`), and another one that groups heights into classes.
+Hint: of course you can use the `cut_*()` functions inside a `mutate()` order.
+
+</div>
+
 # Modifying factor order
 
 It’s often useful to change the order of the factor levels in a visualisation. For example, imagine you want to explore the mean height of several tree species in Lleida:
@@ -204,7 +252,7 @@ trees %>%
 
 <div class = "exercise">
 
-**EXERCISE 2: **</br>
+**EXERCISE 3: **</br>
 
 Use the studied functions to produce two **nice** bar charts with the number of plots in which each species dominates in IFN2 and IFN3 **for the province of Lleida**. You can find the dominant species in each plot in the `plots` dataframe, under the variables `Dom_sp2` and `Dom_sp3`. Is there any change in the ranking within the 10 most common species?
 </div>
@@ -289,7 +337,7 @@ trees %>%
 
 <div class = "exercise">
 
-**EXERCISE 3**</br>
+**EXERCISE 4**</br>
 
 If we want to represent the number of plots in which each species dominates as we did in exercise 2, but for all Catalonia, there are so many species that the chart results unreadable. So use the functions we just learned to reduce the number of levels in the `Dom_sp2` and `Dom_sp3` variables. Then make a bar plot (use the code above) to show the 5 main dominant species in IFN2 and the 5 main dominant species in IFN3. Are there any differences between both inventories?
 
