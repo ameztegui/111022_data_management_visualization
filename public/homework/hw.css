@@ -80,18 +80,18 @@ strong {
 @media screen and (max-width: 760px) {
 	pre {
 		width: 100%;
-		font-size: 16px;
+		font-size: 13px;
 	}
 }
 
 code {
 	font-family: 'Source Code Pro', Consolas, "Liberation Mono", Menlo, Courier, monospace;
-	font-size: 15px;
+	font-size: 13px;
 	line-height: 1.6;
 }
 
 pre code {
-	font-size: 15px;
+	font-size: 13px;
 }
 
 .marginnote code,
@@ -101,7 +101,7 @@ pre code {
 
 pre {
 		width: 100%;
-		font-size: 16px;
+		font-size: 14px;
 		overflow-x: auto;
 }
 
