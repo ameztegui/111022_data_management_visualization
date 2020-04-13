@@ -1,0 +1,752 @@
+---
+title: "Lab 01 - Intro to R and RStudio"
+date: "111022 | Data management and visualization with R"
+author: 
+  - "Marcos Rodrigues"
+  - "Aitor Ameztegui"
+output:
+  rmdformats::readthedown:
+    highlight: pygments
+    number_sections: true
+    css: lab.css
+# runtime: shiny_prerendered
+---
+
+
+```{r knitr_init, echo=FALSE, cache=FALSE }
+
+library(knitr)
+# library(learnr)
+
+## Global options
+options(max.print="75")
+opts_chunk$set(echo=TRUE,
+	             cache=FALSE,
+               prompt=FALSE,
+               tidy=TRUE,
+               comment=NA,
+               message=FALSE,
+               warning=FALSE)
+opts_knit$set(width=75)
+```
+
+
+---
+
+```{r include=FALSE}
+library(tidyverse)
+library(rmdformats)
+options(
+  htmltools.dir.version = FALSE, # for blogdown
+  show.signif.stars = FALSE     # for regression output
+  )
+```
+
+
+# Introduction. Goal
+
+The main goal of this lab is to introduce you to R and RStudio, the software that we will be using throughout the course to collect data, prepare and transform it, and to produce high quality visualizations and charts that allow us to come to informed conclusions. 
+
+We will assume you don't have any previous experience with either R or RStudio, so in this lab we will cover the very basics, starting from the installation of the software and the first steps. If you *do know* some R, you may find some of the topics quite basic, and you are free to jump to wherever you wish within the document. Note however, that we provide some tips and advices that may be interesting even if you have some experience with R.
+
+> **Important: Before Starting The Lab**</br>
+To avoid the pain of setting up software in different computers with different configurations and OS, we will use RStudio Cloud, a service that allows to create your analyses using RStudio directly from your browser. In this way, there will be no software to install and nothing to configure on your computer. All the data and packages needed to run the lab will be already uploaded. Moreover, the instructors will be able look at your files, reports and assignments, and edit them to provide you feedback,  without the need for data transfer.</br> </br>
+However, it is also good idea to install R and RStudio on your machine, so you can use it beyond this class. Remember that R is the name of the programming language itself and RStudio is an IDE (i.e. an interface), so you won't be able to use RStudio without previously installing R. </br></br>
+[Download and install the latest version of R here](https://www.r-project.org/)</br>
+[Download and install RStudio here](https://www.rstudio.com/products/rstudio/download/#download)</br> </br>
+Please note that if you use the University machines, they already have suitable versions of R and RStudio installed.</br></br>
+
+
+
+# Introduction to RStudio
+
+Throughout this lesson, we’re going to teach you some of the fundamentals of the R language. We’ll be using RStudio: a free, open source R integrated development environment. It provides a built-in editor, works on all platforms (including on servers) and provides many advantages such as integration with version control and project management (see [welcome lecture](https://datamanagement.netlify.com/slides/lec-slides/00-welcome.html) to know more about the advantages of R and RStudio).
+
+As mentioned above, throughout this course we will use RStudio Cloud, a service that allows to use RStudio in your browser. However, the layout, view and functioning of your RStudio Cloud is **EXACTLY** the same as it would the standalone RStudio, so all the instructions can apply to both ways of working.
+
+## Basic layout
+
+When you first open RStudio (or in this case, RStudio Cloud), you will be greeted by three panels:
+
+- The interactive R console (entire left)
+- Environment/History (tabbed in upper right)
+- Files/Plots/Packages/Help/Viewer (tabbed in lower right)
+
+```{r rstudio, echo = FALSE, fig.cap="Basic layout of RStudio"}
+knitr::include_graphics("images/01-intro-r/01_rstudio.png")
+```
+
+### Console
+
+The console is the heart of R, it is where R actually evaluates and executes the code. This console in RStudio is the same as the one you would get if you decided to use R without RStudio.
+The first thing you will see in the R interactive session is a bunch of information, followed by a `>` and a blinking cursor. This is a prompt that tells you that R is ready for new code. 
+
+The console operates on the idea of a “Read, evaluate, print" loop: you type in commands, R tries to execute them, and then returns a result.
+You can type code directly into the console after the prompt and get an immediate response, or copy it from elesewhere and paste it in the console. For example, if you type 1+1 into the console and press enter (do it now), you’ll see that R immediately gives an output of 2.
+
+### Environment/History
+
+The **Environment** tab shows the names of all the data objects (like vectors, matrices, and dataframes) that you’ve defined in your current R session (don't worry, we'll cover this later). You can also see information like the number of observations and rows in data objects. The tab also has a few clickable actions like `Import Dataset` which will open a graphical user interface (GUI) for importing data into R.
+
+The **History** tab of this panel shows a history of all the code you’ve previously evaluated in the Console. Maybe it is not so commonly used as the **Environment** tab, but often it is useful to have the history of code you just ran.
+
+As you get more comfortable with R, you might find the Environment / History panel more and more useful. But at the beginning you will probably just ignore it, so you can even just minimize the window by clicking the minimize button on the top right of the panel.
+
+
+### Files / Plots / Packages / Help
+
+The **Files / Plots / Packages / Help** panel shows you lots of helpful information. Let’s go through each tab in detail:
+
+- **Files:** it gives you access to the file directory on your hard drive, so it is very useful to find and load code scripts. One nice feature of the “Files” panel is that you can use it to set your working directory - if you have all your files in a folder (which you should), you can point to it by clicking “More” and then “Set As Working Directory.” This will easen the process of reading and saving files, because RStudio will point to that directory by default. We’ll talk about working directories in more detail soon.
+
+- **Plots:** this panel shows all the plots that you generate during an R session. There are buttons for opening the plot in a separate window and exporting the plot as a `.pdf` or `.jpeg` (though we will see how to do this with code, because it is way more convenient and customizable). To see how plots are displayed in the `Plots` panel, just copy the code below in the `console`to display an histogram of the petal length of three species of Iris plants, that are included in the iris database (loaded with the basic R installation). When you do, you should see a plot similar to the one in the Figure show up in the Plots panel.
+
+```{r}
+library(ggplot2)
+
+ggplot(iris) +
+  geom_histogram(aes(Petal.Width, color = Species, fill = Species))
+```
+
+- **Packages:** shows a list of all the R packages installed on your harddrive and indicates whether or not they are currently loaded. Packages that are loaded in the current session are checked while those that are installed but not yet loaded are unchecked. We’ll discuss packages in more detail later.
+
+- **Help:** help menu for R functions. You can either type the name of a function in the search window, or use the code to search for a function with the name
+
+Of course, the layout in RStudio can be modified, and the user can set up which panels to see, the color of the code, and many other issues. You can learn more about customizing RStudio [here](https://support.rstudio.com/hc/en-us/articles/200549016-Customizing-RStudio). Anyway, don't worry about the different panels and their functionalities for now. You will learn more about them as we use them during the course, and hopefully you will get very familiar with them.
+
+# Introduction to R
+
+So once we know what we are seeing, we can start using R. As we said in the lectures, R is quite a versatile tool, because it goes from a statistical tool to a complex programming language. Let's see some of the most basic uses, and in the process we will get used to how R works.
+
+## Using R as a calculator
+The simplest thing you could do with R is use it as a calculator, i.e. to do arithmetics. We just did this above. But now, for example, type the following:
+
+```{r}
+156 * 35
+```
+
+You'll see that R will print out the answer, with a preceding [1]. Don’t worry about this for now, we’ll explain that later. For now think of it as indicating output.
+
+If you type in an incomplete command, R will wait for you to complete it. For example, try to write in the console 
+
+`1 + `
+
+Any time you hit <kbd>Return</kbd> and the R session shows a `+` instead of a `>`, it means it’s waiting for you to complete the command. If you want to cancel a command you can press <kbd>Escape</kbd> and RStudio will give you back the `>` prompt. This can also be used to interrupt a long-running job.
+
+When using R as a calculator, the order of operations is the same as you would have learned back in school.
+
+From highest to lowest precedence:
+
+* Parentheses: `(`, `)`
+* Exponents: `^` or `**`
+* Divide: `/`
+* Multiply: `*`
+* Add: `+`
+* Subtract: `-`
+
+
+For example:
+
+```{r}
+3 + 5 * 2
+
+(3 + 5) * 2
+
+```
+
+
+Parenthesis can be used to clarify the sense of the code. However it can easily get unwieldy when not needed. Remember that others (or even yourself!) may later read your code.
+
+```{r}
+3 + 5 * 2 ^ 2       # clear, if you remember the rules
+3 + 5 * (2 ^ 2)     # this is probably easier to understand
+(3 + (5 * (2 ^ 2))) # probably too hard to read
+
+```
+
+You may have noticed that part of the text above has not been processed by R. Actually, anything that follows after the hash symbol `#` is ignored by R when it executes code. The text after the `#` is called a “comment”, and can be very useful to remember the purpose and steps of a given analysis. We will talk more about comments in the lesson on "Good coding practices".
+
+
+## Mathematical functions
+R has many built-in mathematical functions. To call a function, we simply type its name, followed by open and closing parentheses. Anything we type inside the parentheses are called the function’s arguments:
+
+```{r}
+
+# Let's work with some trigonometry functions
+
+sin(1)  # sinus of a number
+
+log(1)  # natural logarithm
+
+log10(10) # base-10 logarithm
+
+exp(0.5) # e^(1/2)
+```
+
+We can also use R functions to calculate the maximum of a series of values, to get the distinct elements of a series of items, or to extract elements from a character string. We will extensively use R functions during the course.
+
+
+```{r}
+max(1:10)
+
+unique(c(3,3,4,5,6,6))
+
+substr("abcdef", 2,4)
+```
+
+
+
+>**Remembering function names and arguments:** </br></br>
+As we said, R has multitude of mathematical functions, and many more are included in the packages. A good function will have a self-explaining name that will be easy to remember. However, don’t worry about trying to remember every function in R. You can simply look them up on Google, or if you can remember the start of the function’s name, type the start of it, then press the <kbd>tab</kbd> key. This will show a list of functions whose name matches what you’ve typed so far. This is known as tab completion, and can save a lot of typing (and reduce the risk of typing errors). Tab completion works both in R and in RStudio. In RStudio this feature is even more useful; a extract of the function’s help file will be shown alongside the function name. Try to type `me`and press <kbd>tab</kbd> </br> </br>
+Moreover, if you press <kbd>tab</kbd> after specifying the name of the function, RStudio will provide a list of the arguments that that function needs. And if you press <kbd>tab</kbd> within quotes, it will provide a list with the folders in your current directory.
+Also, typing a `?` before the name of a command will open the help page for that command, as well as providing a detailed description of the command and how it works, scrolling to the bottom of the help page will usually show a collection of code examples which illustrate command usage. 
+At the beginning you may not find this feature so useful, but as you write more code you will find yourself using it extensively.
+
+## Comparing things
+
+We can also do comparisons in R, and it will tell us if the comparison we are testing is either `TRUE` or `FALSE`. For instance, try the following comparisons:
+
+```{r}
+1 == 1    # equality (note two equals signs, read as "is equal to")
+1 != 2    # inequality (read as "is not equal to")
+2 < 1     # less than
+1 > 0     # greater than
+6 <= 6    # less than or equal to
+1 >= -9   # greater than or equal to
+```
+
+
+> **Tip: Comparing Numbers** </br>
+A word of warning about comparing numbers: you should never use `==` to compare two numbers unless they are integers (a data type which can specifically represent only whole numbers). Computers may only represent decimal numbers with a certain degree of precision, so two numbers which look the same when printed out by R, may actually have different underlying representations and therefore be different by a small margin of error (called Machine numeric tolerance). Instead you should use the `all.equal` function.
+
+
+# Variables and assignment in R
+
+We can store values in variables using the assignment operator `<-`, like this:
+
+```{r}
+x <- 1/10
+```
+
+ `x` now contains the value `0.1`. Notice that assignment does not print a value. Instead, we stored it for later in something called a variable. Variables are shown in the `Environment` tab in RStudio, and are stored in memory until we finish the current R session. To see the content of a variable in the console, we just need to type its name.
+
+```{r}
+x
+```
+
+
+
+> **Tip: assignment** </br>
+It is also possible to use the `=` operator for assignment, as in: `x = 1/40`. This is much less common among R users, and we will see later why it is not a good idea to use it. If you use it, try to change your habits as soon as possible.
+
+The interesting thing is that our variable `x` is now stored in memory, and so it can now be used in place of a number in any calculation that expects a number:
+
+```{r}
+x + 3
+log(x)
+```
+
+Variables can be reassigned as many times as wished, but that means that its previous value will be deleted from memory:
+```{r}
+x <- 100
+```
+
+`x` used to contain the value `0.1` and and now it has the value `100` (see the `Environment` tab in RStudio).
+
+Assignment values can contain the variable being assigned to, and in this case they will take the currently stored value, calculate whatever is contained in the code, and overwrite the previous value with the new one.
+
+```{r}
+
+x <- x *2 # notice how RStudio updates its description of x on the Environment tab
+
+```
+
+> **Warning:** </br>
+Although the possibility of overwriting a variable as a result of an operation is one of the most useful features in R, it comes with danger. When performing complex tasks, It is **extremely easy** to overwrite a variable inadvertently, and all our calculations from that moment onwards run the risk of being erroneous. 
+For example, if you run the code above twice insted of once, `x` will get a value of `400` instead of `200`. If you do this without noticing it, `x`won't have the value you expect it to have. Also, if you make a mistake in the code above and R returns an error message, that means you won't have overwritten the value of `x`, which will sill be `100`. </br> So, **ALWAYS** check the current value of a variable (in the "Environment" panel) before transforming or overwritting it.
+
+
+
+# Objects in R
+
+Anytime we assign a variable and store it in R's memory, we are actually creating an `object`. If you look for the `Environment` tab in one of the panes of RStudio, you will see that `x` and its value have appeared, and are updated as we transform `x` with our code.  
+
+The most simple objects in R are variables such as `x`, but in fact, any entities that are created and manipulated in R can be stored as objects, including data, functions, models, figures... To create an object we just need to assign it a name. We have previously mentioned that R is an object-oriented language. This basically means that it is designed to use objects as the basis of all the tasks. 
+
+Objects are stored and characterized by their name and content, and will have a given set of characteristics depending on the type of object it is. The main objects of variable type in R are:
+
+- **Numeric:** an integer or decimal number depending on whether we specify decimal figures.
+- **Character:** a categorical variable or text.
+- **Vector:** a list of values of the same type.
+- **Factor:** factors are variables in R which take on a limited number of different values; such variables are often refered to as categorical variables.
+- **Matrix:** a particular case of array where  k = 2  (rows, cols).
+- **Data.frame:** table composed of vectors as columns. All the columns must have the same length (nuumber of items)
+- **List:** vector with values of different types.
+
+There are many other types of objects in R, but these are the main cases. For example, another object we are going to work with are `model` objects, which store the output of a given statistical model, like a linear regression model for instance. We will work with them later in the course.
+
+## Creating objects
+
+Try the code below to create different types of objects. See how they are stored and shown in the `Environments` tab
+
+```{r}
+n <- 15             # This is a numeric, integer object
+x <- 1.5            # This is a numeric, decimal object
+name <- "Aitor"     # A character object
+vector <- 1:5        # a numeric vector 
+directions <- c("North", "East", "South", "South","West") # a character 
+cardinal <- factor(directions, levels= c("North", "East", "South", "West"))  # a factor
+cardinal_list <- list("North", "East", "East", "West", 2, 3, 1.4)   # A list can store elements of different types (character, numeric...)
+matriz <- matrix(1:9, nrow = 3, ncol = 3)   # A matrix
+df <- data.frame (vector, directions, cardinal)  # A data frame can contain vectors of different types, but must have the same length
+
+```
+
+We can also store in an object the result of any operation, or refer to another object:
+
+```{r}
+p <- 10+2
+q <- mean(vector)
+```
+
+As you see, the type of object we create depends on the content that we assign. Therefore, if we assign a numeric value, we are creating an object of type number (integer or decimal) and if we assign a text string (any quoted text, either with single or double quotes), we are creating a text type object or string. Once created, the objects are visualized by calling their name (typing the name in the Console). Try to to see how R prints the content of the objects we just created:
+
+```{r}
+n
+x
+name
+vector
+directions
+cardinal
+cardinal_list
+matriz
+df
+```
+
+Some considerations to keep in mind when creating objects or working with R in general lines:
+
+- R is case-sensitive so `radio` ≠ `Radio`
+- If a new value is assigned to an object, it is overwritten and deletes the previous value.
+- Text information (also known as string or character) is entered between quotation marks, either single ('') or double ("").
+- The function `ls()` will show us in the console the objects created so far.
+- If the value obtained from an instruction is not assigned to an object, it will be displayed in the terminal, but **IT WILL NOT BE STORED**.
+
+
+# Saving our commands: Scripts in R
+
+So far we have typed instructions directly in the console but this is not the most efficient way to work. 99% of the time you should be writing your commands into a script. A script is nothing more than a text file that contains an ordered set of instructions. This means we can write a file with the instructions we want to execute and then run them at once, or decide which part to run.The advantage of this is straightforward: if you type code into the console, it will be automatically executed, but it won’t be saved. So, for example, if you make a mistake in typing code into the console, you’d have to re-type everything all over again. Instead, if you write all your code in a script and then save it, it will be available at any time needed, and if you need to rerun some analyses you just need to open the required scripts and run all the code within. Working in well-organized, documented scripts that can be rerun multiple times by any user is the basis of reproducible science.
+
+We can create a new script by choosing the menu item: `File, New File, R script`, or with the keyboard shortcut <kbd>Ctrl</kbd> + <kbd>Alt</kbd> + <kbd>Shift</kbd> + <kbd>N</kbd>. Script files are text files, that can be opened by any text editor. By convention, R scripts have the extension `.R`.
+ 
+> **Tip: ** </br>
+you should get used as fast as possible to write most of your code in a document in a script. Only type directly into the Console to do quick analyses.
+
+Commands within a script won’t be excuted immediately, just when you ask for it. To execute the command in which the cursor is currently you need to press `Ctrl`+`Enter` or clikc `Run` command in the upper part of the script windows. Note that the cursor does not have to be at the start of the command, and that the command can extend over more than one line, it will be executed completely.
+
+However, if a single line does make a complete command, R will just execute one command. After executing one command, the cursor will automatically jump to the next command, making it very efficient to run large pieces of code by just pressing `Ctrl`+`Enter` or clicking `Run` several times. 
+
+To get a better control of the piece of code you want to execute, you can select it and press `Ctrl`+`Enter`, and R will execute the selection.
+
+To run all of the code in the script, press `Ctrl+Shift+Enter` or click `Source`in the bar above the script.
+
+> **Tip: Projects in R studio** </br>
+When we are performing an analysis we will typically be using many files: input data, files containing code to perform the analysis, figures, results. By creating a project in Rstudio we make it easier to manage these files. We'll learn more about RStudio projects and how to use them to easen the workflow in later lessons.
+
+
+# Data types
+
+
+## Vectors
+
+There are two types of vectors:
+
+1. **Atomic vectors**, of which there are six types: logical, integer, double, character, complex, and raw. Integer and double vectors are collectively known as numeric vectors.
+
+2. **Lists**, which are sometimes called recursive vectors because lists can contain other lists.
+
+Atomic vectors are one of the most common object types in R. The chief difference between atomic vectors and lists is that atomic vectors are homogeneous, while lists can be heterogeneous. That means that atomic vectors (hereafter we will called them just 'vectors') can store several values, but they **MUST** necessarily be of the **same type** (all numbers, all text, and so forth), whereas lists can hold elements of different classes. 
+
+Every vector has two properties:
+
+1. Its type (character, integer, double...), which can be determined by the function `typeof()`
+2. Its length, which we can determine with `length()`
+
+
+There are several ways to create vectors. The most common approach is use the function `c()` which allow us to introduce values manually by separatting them with `,`.
+
+```{r}
+v1 <- c(1, 2, 3, 4, 5)
+v1
+
+v2 <- c('spatial','statistics','rules!!')
+v2
+```
+As you see, vectors aren’t limited to storing numbers. However, let us emphasize again that all the data in a vector has to be of the same type: they must be either characters, numbers, or all been logical (TRUE/FALSE)). This is an important property of (atomic) vectors: the type of data the vector holds is a property of the vector, not of each element. Let’s see what what happens if we try to create a vector of numeric and character data:
+
+```{r}
+c(1, 2, "three", "four", 5)
+
+```
+We see that R has coerced the elements containing digits to strings, so that all the elements have the same type.
+
+
+### Main types of atomic vectors
+
+#### Logical
+
+Logical vectors can take only three possible values: `FALSE`, `TRUE`, and `NA` (not available, we'll see about this later on). Logical vectors are usually build with comparison operators:
+
+```{r}
+c(1,2,8,4,5,3,7,8,9) >= 5   # Which elements are bigger or equal than 5
+```
+
+Logical vectors have the particularity that `TRUES` have a value of 1, and `FALSE`of 0. So the sum of the vector gives the number of `TRUE`and the mean gives the proportion of `TRUE`. Try it in your console!
+
+#### Numeric
+Integer and double vectors are known collectively as numeric vectors. In R, numbers are double (with decimals) by default. Anyway, the difference between integer and double is not usually important, so we won't go into further details here. To construct numeric vectors we can use the `c()` function seen above, but there is another option. We can use  `:`, which produces an ordered sequence of numbers by adding 1 starting from the first value and finishing in the last.
+
+```{r}
+v3 <- 1:10
+v3
+
+v4 <- -5:3
+v4
+
+```
+
+
+#### Character vectors
+
+Character vectors are the most complex type of atomic vector, because each element of a character vector is a string, and a string can contain an arbitrary amount of data.
+
+```{r}
+
+v5 <- c("Lleida", "Lleida", "Barcelona", "Madrid", "Lleida", "Madrid")
+v5
+
+```
+
+
+#### Missing values
+
+Vectors, as almost any data object in R, can hold missing values. These are indicated as `NA` (not available). However, note that `NA` inherits the class of the vector, so an `NA` within a numeric vector will still be numeric, whereas an `NA` in a character vector will be of type character.
+
+
+### Working with vectors
+
+We will now see some of the operations we can do with vectors, and the tools we have to work with them
+
+#### Length and test functions
+
+As we said above, the two main characteristics of a vector are its type and length. We can calculate how many elements contains a vector by using the `length()` function:
+
+```{r}
+length(x)
+length(letters)
+```
+
+Sometimes you want to do different things based on the type of vector. One option is to use `typeof()`. Another is to use a test function, which returns a `TRUE` or `FALSE`. Base R provides many functions like `is.vector()` and `is.numeric()`, but they often return surprising results. Instead, it’s safer to use the `is_*` functions provided by the package `purrr`:
+
+```{r}
+is_logical(letters)
+is_character(letters)
+is_integer(letters)
+```
+
+> Note: to install a package in your working directory, you need to type `install.packages("package_name")`. Once installed, you won't need to install it every time, but you will still need to load it every time you start a new session.To do so, type `library(package_name)`.
+
+#### Coercion
+
+We may want to force (coerce) a vector to be of a certain type. We can do this calling a function like `as.logical()`, `as.integer()`, `as.double()`, or `as.character()`.
+
+```{r}
+v6 <- as.character(c(1,2,3,4))
+v6
+
+v7 <- as.integer(c(3.5, 4.3, 6.4, 5.0))
+v7
+
+```
+
+
+#### Scalars and recycling rules
+
+R is sometimes defined as a vectorized language. That means that we can apply functions to each and all of the elements of a vector, and you should never need to perform explicit iteration when performing simple mathematical computations.
+
+For example:
+
+```{r}
+(1:5) * 2    # Multiplies each element of the vector by 2
+2^(1:5) 
+sample(10) + 100
+```
+
+Note, however, that R applies vector recycling, because the shorter vector is repeated, or recycled, to the same length as the longer vector.
+
+It’s intuitive what should happen if you add two vectors of the same length, or a vector and a “scalar”, but what happens if you add two vectors of different lengths?
+
+```{r}
+1:10 + 1:2
+
+```
+
+Here, R will expand the shortest vector to the same length as the longest, so called recycling. 
+This is an useful feature that is important to know, and that can be used to create very succinct, clever code, but can also create some problems.
+
+#### Naming vectors
+We can also assign a vector to an object, as seen above:
+
+```{r}
+x <- 5:10
+```
+
+
+R comes with a few built-in vectors, containing useful common values:
+```{r}
+
+LETTERS
+letters
+month.abb
+month.name
+```
+
+
+Logically, the type of data that is stored in a variable affects what we can do with it:
+
+```{r, error = T}
+LETTERS + 1
+```
+
+#### Subsetting vectors
+
+Having defined a vector, it’s often useful to extract parts of a vector. We do this with the `[]` operator. Using the built in `month.name` vector:
+
+```{r}
+month.name[2]
+month.name[2:4]
+```
+
+Let’s unpick the second example; `2:4` generates the sequence `2,3,4`. This gets passed to the extract operator `[]`. We can also generate this sequence using the `c()` function:
+
+```{r}
+month.name[c(2,3,4)]
+```
+
+>**Tip:** </br>
+In many programming languages (C and Python, for example), the first element of a vector has an index of `0`. In R, the first element is always `1`.
+
+Values are returned in the order that we specify the indices. 
+
+```{r}
+
+month.name[4:2]
+```
+
+We can also extract the same element more than once:
+```{r}
+month.name[c(1,1,2,2,2,4)]
+```
+
+It is also possible to modify the information of a particular position using the combination `name[position]` and the assignment operator `<-`. For example:
+
+```{r}
+month.name[12] <- "Christmas time!"
+month.name
+```
+
+If we use a negative number as the index of a vector, R will return every element except for the one specified:
+
+```{r}
+month.name[-2]
+
+```
+
+We can also skip multiple elements:
+
+```{r}
+month.name[c(-1, -5)]  # or 
+month.name[-c(1,5)]
+```
+
+> **Tip: Order of operations** </br>
+A common error occurs when trying to skip slices of a vector. Most people first try to negate a sequence like so:
+`month.name[-1:3]`
+This gives a somewhat cryptic error:
+`Error in month.name[-1:3]: only 0's may be mixed with negative subscripts`
+But remember the order of operations. `:` is really a function, so what happens is it takes its first argument as -1, and second as 3, so generates the sequence of numbers: -1, 0, 1, 2, 3. Since there is no element at position 0, R sends the error message.
+
+The correct solution is to wrap that function call in brackets, so that the - operator is applied to the sequence:
+
+```{r}
+-(1:3)
+month.name[-(1:3)]
+```
+
+As well as providing a list of indices we want to keep (or delete, if we prefix them with `-`), we can pass a logical vector to R indicating the indices we wish to select:
+
+```{r}
+month.name[c(TRUE, FALSE, TRUE, TRUE, FALSE, FALSE,
+             FALSE, TRUE, TRUE, FALSE, FALSE, TRUE)]
+
+```
+
+The idea of selecting elements of a vector using a logical subsetting vector may seem a bit esoteric, and a lot more typing than just selecting the elements you want by index, but it becomes really useful when we write code to generate the logical vector:
+
+```{r}
+my_vector <- c(10, 3, 6, 7, 9)
+my_vector > 6
+
+```
+
+```{r}
+my_vector[my_vector > 6]
+
+```
+
+> **Tip: Combining logical conditions** </br>
+There are many situations in which you will wish to combine multiple logical criteria. For example, we might want to find all the elements that are between two values. Several operations for combining logical vectors exist in R:
+
+-`&`, the logical "AND” operator: returns `TRUE` if both the left and right are `TRUE`.
+
+-`|`, the logical "OR” operator: returns `TRUE`, if either the left or right (or both) are `TRUE`.
+
+-`!`, the logical "NOT” operator: converts `TRUE` to `FALSE` and `FALSE` to `TRUE`. It can negate a single logical condition (e.g. `!TRUE` becomes `FALSE`), or a whole vector of conditions(e.g. `!c(TRUE, FALSE)` becomes `c(FALSE, TRUE)`).
+
+Additionally, you can compare the elements within a single vector using the `all` function (which returns `TRUE` if every element of the vector is `TRUE`) and the `any` function (which returns `TRUE` if one or more elements of the vector are `TRUE`).
+
+
+## Lists
+
+Lists, sometimes also called recursive vectors, are objects similar to atomic vectors, with the difference that lists **allow to store values of different type**. They can even contain other lists! Lists are created using the `list(value1, value2, ...)` function. For example:
+
+```{r}
+list1 <- list(1,7,'Marcos')
+list1
+```
+
+### Subsetting lists
+
+To access the values stored in the different positions proceed in the same way we did with vectors, ie `name[position]`. However, `[` extracts a sub-list, so the result will always be a list.
+
+```{r}
+list1[3]
+typeof(list1[3])
+
+
+```
+
+`[[`extracts a single component from a list. It removes a level of hierarchy from the list.
+
+```{r}
+list1[[3]]
+typeof(list1[[3]])
+
+```
+
+The distinction between `[` and `[[` is really important for lists, because `[[` drills down into the list while `[` returns a new, smaller list. To see a brilliant metaphore that explains the differences between both operators you can see the well known ["pepper shaker" example](https://r4ds.had.co.nz/vectors.html#lists-of-condiments) at Hadley Wickham's "R for data science"
+
+`$` is a shorthand for extracting named elements of a list. It works similarly to `[[` except that you don’t need to use quotes.
+
+```{r}
+list2 <- list(Name = "Harry", Surname = "Potter", Profession = "Wizard", Age = 24)
+
+list2$Surname
+list2$Age
+
+```
+
+
+
+
+## Data.frames
+
+Data frames are the most common object to store data in R. During this course we will mostly use data frames, and many of the functions we will learn are specifically designed to work with them.
+
+A data frame is a table or a two-dimensional structure (it has rows and columns). Each column typically contains values of one variable, so we could consider that a data frame is a list of vectors of equal length. Each row contains one value from each column.
+
+Data frames must have certain characteristics: 
+- The column names should be non-empty.
+- The row names (if they exist) should be unique.
+- Each column should contain same number of data items.
+
+To create a data frame, we can use the function `data.frame` and provide a list of named vectors:
+
+```{r}
+grades <- data.frame(Name = c("Mark", "Lewis", "Brian", "Matthew"),
+                     Course = c(2,2,1,2),
+                     Grade = c("A", "B", "A+", "C"))
+
+```
+
+We will seldom create data frames manually. Normally, we will call an instruction to read text files containing data or call data objects available in some packages. For example, let's consider the following data frame, available in the `tidyverse` package:
+
+```{r}
+starwars
+```
+
+This dataset contains the names and characteristics (name, height, mass, vehicles... up to 13 variables) of 87 characters that participate in the Star Wars saga. There are numeric and character columns, but all variables have 87 elements.
+
+To subset a data frame, we can also use the `[` operator, but we must now indicate two dimensions: which row(s) we want to subset, and which column(s):
+
+```{r}
+starwars[1,4]
+starwars[4,3]
+```
+
+If we miss one of the dimensions, we will get an error message. However, if we leave an empty space, R will understand that we want to keep all the elements in the selected row or column:
+
+```{r}
+starwars[, 3]   # Will select all rows of column 3
+starwars[4, ]   # will select the fourth row of all columns
+```
+
+As data frames are a succession of named vectors, we can use the name to extract the desired columns:
+
+```{r}
+starwars[ , "gender"]
+starwars[ , c("gender", "birth_year")]
+starwars[2, "homeworld"]
+
+```
+
+Or we can also use the `$` operator to extract a whole column:
+
+```{r}
+starwars$gender
+```
+
+Some useful functions to use with data frames include `str()` to get the names, types, and first values of the columns; and `summary()` to get the descriptive statistics of the numeric variables.
+
+```{r}
+str(starwars)
+summary(starwars)
+```
+
+# Object management
+We have seen so far aspects related to the creation of objects. However we should also know how many objects we have created in our session and how to remove them if necessary. To display all created objects in the current session we use `ls()`. Deleting objects in R is done by the command remove `rm(object_name)`. After doing so, we must call the garbage collector with `gc()` to free-up the occupied memory.
+
+```{r}
+ls()
+
+rm(n)
+gc()
+```
+
+If we want to remove several objects,  we can pass a list object containing the names of all objects to the `rm()` function. To remove all the elements in the current session we can pass the `ls()` to the `rm()`function:
+
+```{r}
+rm(list=ls())
+```
+
+# Functions and arguments
+Up to this point we have seen and executed some instructions in R, generally oriented to the creation of objects or realization of simple arithmetic operations.
+
+However, we have also executed some function-type statements, such as the `length()` function. A function can be defined as a group of instructions that takes an input, uses this input to compute other values and returns a result or output. We will not go into deep details for now. It suffices to know that to execute a function it is enough to invoke the instruction that calls the desired function (length) and to specify the necessary inputs, also knwon as arguments. These inputs are always included between the parentheses of the instruction , as in `length(vector)`. If several arguments are needed we separate them usign `,`. We will devote a full unit of the course to functions.
+
+# To know more
+
+To learn more about some of the topics covered in this lab, I recommend watching the video "Writing code in RStudio", developed by the RStudio team. It contains many of the concepts covered here, and also some more tips and advices to follow:
+
+https://resources.rstudio.com/wistia-rstudio-essentials-2/rstudioessentialsprogrammingpart1-2
+
+Or come see me if you have any doubts.
