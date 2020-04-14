@@ -1,0 +1,657 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+  <head>
+    <title>Working with factors</title>
+    <meta charset="utf-8" />
+    <meta name="author" content="Aitor Ameztegui" />
+    <meta name="author" content="Marcos Rodrigues" />
+    <link href="libs/font-awesome/css/all.css" rel="stylesheet" />
+    <link href="libs/font-awesome/css/v4-shims.css" rel="stylesheet" />
+    <link rel="stylesheet" href="slides.css" type="text/css" />
+  </head>
+  <body>
+    <textarea id="source">
+class: center, middle, inverse, title-slide
+
+# Working with factors
+## the forcats package
+### Aitor Ameztegui
+### Marcos Rodrigues
+
+---
+
+
+
+
+# What are factors?
+
+- Factors are  a special case of categorical variables
+
+--
+
+- They have a fixed and known set of possible values. 
+
+--
+
+- Factors have some nice properties that make it easier to work with than characters. As a result, many of the functions in base R automatically convert characters to factors.
+
+&lt;/br&gt;
+&lt;/br&gt;
+
+.center[![](img/hex-forcats_big.png)]
+
+---
+
+# Factors vs. character strings
+
+Let's create a vector of month values:
+
+
+```r
+months_string &lt;- c("Dec", "Apr", "Jan", "Mar")
+```
+
+--
+
+Using a string to record this variable has two problems:
+
+--
+
+- The character string doesn’t sort in a useful way (it does in alphabetical order):
+
+
+```r
+sort(months_string)
+```
+
+```
+## [1] "Apr" "Dec" "Jan" "Mar"
+```
+
+--
+
+- There are only 12 possible months, but there’s nothing saving you from typos:
+
+
+```r
+bad_spell &lt;- c("Dec", "Apr", "Jam", "Mar")
+bad_spell
+```
+
+```
+## [1] "Dec" "Apr" "Jam" "Mar"
+```
+
+---
+class: inverse, middle
+
+# Creating factors
+
+
+---
+
+# Creating factors
+
+To create a factor you must provide a list of the valid levels:
+
+
+```r
+month_levels &lt;- c(
+  "Jan", "Feb", "Mar", "Apr", "May", "Jun", 
+  "Jul", "Aug", "Sep", "Oct", "Nov", "Dec")
+```
+
+--
+
+Now you can create the factor, indicating which levels will be allowed:
+
+
+```r
+months_factor &lt;- factor(months_string, levels = month_levels)
+months_factor
+```
+
+```
+## [1] Dec Apr Jan Mar
+## Levels: Jan Feb Mar Apr May Jun Jul Aug Sep Oct Nov Dec
+```
+
+
+---
+
+# Creating factors
+
+Now, if we sort the values:
+
+
+```r
+sort(months_factor)
+```
+
+```
+## [1] Jan Mar Apr Dec
+## Levels: Jan Feb Mar Apr May Jun Jul Aug Sep Oct Nov Dec
+```
+
+--
+
+And any values not in the set (or mistakes) will be converted to `NA`:
+
+
+```r
+factor(bad_spell, levels = month_levels)
+```
+
+```
+## [1] Dec  Apr  &lt;NA&gt; Mar 
+## Levels: Jan Feb Mar Apr May Jun Jul Aug Sep Oct Nov Dec
+```
+
+--
+
+If you omit the levels, they’ll be taken from the data in alphabetical order:
+
+
+```r
+factor(c("Monday", "Tuesday", "Wednesday", "Thursday", "Friday"))
+```
+
+```
+## [1] Monday    Tuesday   Wednesday Thursday  Friday   
+## Levels: Friday Monday Thursday Tuesday Wednesday
+```
+
+---
+
+# Create factors from numeric variables
+
+Sometimes we want to group a numeric/continuous variable into a small subset of categories, i.e., intervals. 
+`ggplot()` has three functions to do so:
+
+- `cut_number()` makes n groups with (approximately) equal numbers of observations 
+- `cut_width()` makes groups of fixed width
+- `cut_interval()` is the most flexible. Allows to makes n groups with equal range or groups of a given width
+
+--
+
+
+```r
+numeric_var &lt;- rnorm(n = 50, mean = 50, sd = 15) # 50 random values with mean 50 and sd 15.
+hist(numeric_var)
+```
+
+![](06_data_import_files/figure-html/unnamed-chunk-9-1.png)&lt;!-- --&gt;
+
+
+---
+# Create factors from numeric variables
+## `cut_number()`
+
+
+```r
+cut_number(numeric_var, n = 5)
+```
+
+```
+##  [1] (35.7,48.9] (57.5,65.8] (48.9,57.5] [15,35.7]   (65.8,86.8] (57.5,65.8]
+##  [7] (65.8,86.8] (35.7,48.9] (48.9,57.5] (65.8,86.8] (48.9,57.5] (35.7,48.9]
+## [13] (57.5,65.8] (48.9,57.5] (35.7,48.9] (57.5,65.8] (48.9,57.5] (48.9,57.5]
+## [19] [15,35.7]   [15,35.7]   (65.8,86.8] (35.7,48.9] (65.8,86.8] (48.9,57.5]
+## [25] [15,35.7]   [15,35.7]   (48.9,57.5] [15,35.7]   (65.8,86.8] [15,35.7]  
+## [31] (65.8,86.8] (57.5,65.8] (48.9,57.5] (35.7,48.9] (57.5,65.8] (48.9,57.5]
+## [37] (35.7,48.9] (65.8,86.8] (35.7,48.9] (57.5,65.8] (65.8,86.8] (35.7,48.9]
+## [43] [15,35.7]   (57.5,65.8] (57.5,65.8] (57.5,65.8] (35.7,48.9] (65.8,86.8]
+## [49] [15,35.7]   [15,35.7]  
+## Levels: [15,35.7] (35.7,48.9] (48.9,57.5] (57.5,65.8] (65.8,86.8]
+```
+
+
+---
+
+# Create factors from numeric variables
+## `cut_width()`
+
+
+```r
+cut_width(numeric_var, width = 15)
+```
+
+```
+##  [1] (37.5,52.5] (52.5,67.5] (52.5,67.5] [7.5,22.5]  (67.5,82.5] (52.5,67.5]
+##  [7] (67.5,82.5] (22.5,37.5] (37.5,52.5] (67.5,82.5] (52.5,67.5] (37.5,52.5]
+## [13] (52.5,67.5] (52.5,67.5] (37.5,52.5] (52.5,67.5] (37.5,52.5] (37.5,52.5]
+## [19] (22.5,37.5] [7.5,22.5]  (67.5,82.5] (37.5,52.5] (52.5,67.5] (37.5,52.5]
+## [25] (22.5,37.5] [7.5,22.5]  (52.5,67.5] (22.5,37.5] (52.5,67.5] (22.5,37.5]
+## [31] (67.5,82.5] (52.5,67.5] (37.5,52.5] (37.5,52.5] (52.5,67.5] (37.5,52.5]
+## [37] (37.5,52.5] (82.5,97.5] (37.5,52.5] (52.5,67.5] (67.5,82.5] (37.5,52.5]
+## [43] (22.5,37.5] (52.5,67.5] (52.5,67.5] (52.5,67.5] (37.5,52.5] (67.5,82.5]
+## [49] [7.5,22.5]  [7.5,22.5] 
+## 6 Levels: [7.5,22.5] (22.5,37.5] (37.5,52.5] (52.5,67.5] ... (82.5,97.5]
+```
+
+---
+# Create factors from numeric variables
+## `cut_interval()`
+
+
+```r
+cut_interval(numeric_var, n = 4)
+```
+
+```
+##  [1] (33,50.9]   (50.9,68.8] (50.9,68.8] [15,33]     (68.8,86.8] (50.9,68.8]
+##  [7] (68.8,86.8] (33,50.9]   (50.9,68.8] (68.8,86.8] (50.9,68.8] (33,50.9]  
+## [13] (50.9,68.8] (50.9,68.8] (33,50.9]   (50.9,68.8] (50.9,68.8] (50.9,68.8]
+## [19] (33,50.9]   [15,33]     (50.9,68.8] (33,50.9]   (50.9,68.8] (33,50.9]  
+## [25] [15,33]     [15,33]     (50.9,68.8] [15,33]     (50.9,68.8] (33,50.9]  
+## [31] (68.8,86.8] (50.9,68.8] (33,50.9]   (33,50.9]   (50.9,68.8] (50.9,68.8]
+## [37] (33,50.9]   (68.8,86.8] (33,50.9]   (50.9,68.8] (68.8,86.8] (33,50.9]  
+## [43] (33,50.9]   (50.9,68.8] (50.9,68.8] (50.9,68.8] (33,50.9]   (68.8,86.8]
+## [49] [15,33]     [15,33]    
+## Levels: [15,33] (33,50.9] (50.9,68.8] (68.8,86.8]
+```
+
+---
+# Create factors from numeric variables
+## `cut_interval()`
+
+
+```r
+cut_interval(numeric_var, length = 15)
+```
+
+```
+##  [1] (30,45] (45,60] (45,60] [15,30] (60,75] (60,75] (75,90] (30,45] (45,60]
+## [10] (75,90] (45,60] (30,45] (60,75] (45,60] (45,60] (60,75] (45,60] (45,60]
+## [19] (30,45] [15,30] (60,75] (30,45] (60,75] (45,60] (30,45] [15,30] (45,60]
+## [28] (30,45] (60,75] (30,45] (60,75] (45,60] (45,60] (45,60] (45,60] (45,60]
+## [37] (30,45] (75,90] (45,60] (60,75] (75,90] (45,60] (30,45] (60,75] (60,75]
+## [46] (60,75] (45,60] (60,75] [15,30] [15,30]
+## Levels: [15,30] (30,45] (45,60] (60,75] (75,90]
+```
+
+---
+# Create factors from numeric variables
+
+We can to define the names that we will give to the newly created factor by specifying the `labels = ` argument.
+
+
+```r
+cut_interval(numeric_var, n = 4, labels = c("Small", "Medium", "Big", "Bigger"))
+```
+
+```
+##  [1] Medium Big    Big    Small  Bigger Big    Bigger Medium Big    Bigger
+## [11] Big    Medium Big    Big    Medium Big    Big    Big    Medium Small 
+## [21] Big    Medium Big    Medium Small  Small  Big    Small  Big    Medium
+## [31] Bigger Big    Medium Medium Big    Big    Medium Bigger Medium Big   
+## [41] Bigger Medium Medium Big    Big    Big    Medium Bigger Small  Small 
+## Levels: Small Medium Big Bigger
+```
+
+---
+class: inverse, middle
+
+# Modify factor order
+
+---
+
+# Modify factor order
+
+It’s often useful to change the order of the factor levels in a visualisation, for example. There are three main functions: 
+
+1. `fct_inorder()` to put them in order of appearance
+2. `fct_reorder()` to change the order based on a variable
+3. `fct_infreq()` to sort the values in frequence order
+
+---
+
+# Modify factor order
+## `fct_inorder()` 
+It sorts the values in appearance order:
+
+
+```r
+   fct_inorder(months_string)
+```
+
+```
+## [1] Dec Apr Jan Mar
+## Levels: Dec Apr Jan Mar
+```
+
+---
+
+# Modify factor order
+## `fct_reorder()`
+
+For example, imagine you want to explore the mean height of tree species in Lleida:
+
+
+```r
+# Calculate mean height
+mean_height &lt;- trees %&gt;%
+    filter(Provincia == "25") %&gt;%
+    group_by(Especie) %&gt;%
+    summarise(height = mean(HeiIf3, na.rm = TRUE))
+
+# Plot mean height
+ggplot(mean_height, aes(height, Especie)) + 
+    geom_point() 
+```
+
+![](06_data_import_files/figure-html/unnamed-chunk-16-1.png)&lt;!-- --&gt;
+
+---
+
+# Modify factor order
+## `fct_reorder()`
+
+`fct_reorder()` changes the values of a factor based on a 2nd variable (numeric). It takes three arguments:
+
+- `f`, the factor whose levels you want to modify.
+- `x`, a numeric vector that you want to use to reorder the levels.
+- Optionally, `fun`, a function that’s used if there are multiple values of `x` for each value of `f`. The default value is median.
+
+---
+# Modify factor order
+## `fct_reorder()`
+
+
+```r
+mean_height %&gt;%
+    mutate(Especie2 = fct_reorder(Especie, height)) %&gt;%
+    ggplot(aes(height, Especie2)) +
+    geom_point()
+```
+
+![](06_data_import_files/figure-html/unnamed-chunk-17-1.png)&lt;!-- --&gt;
+
+---
+# Modify factor order
+## `fct_reorder()`
+
+But we may also want to know the mean number of tree species acrosss diameter classes, for example:
+
+![](06_data_import_files/figure-html/unnamed-chunk-18-1.png)&lt;!-- --&gt;
+
+---
+
+# Modify factor order
+## `fct_infreq()`
+
+this is the simplest type of reordering because it doesn’t need any extra variables. It sorts values in increasing frequency: 
+
+.pull-left[
+
+```r
+# Without ordering
+trees %&gt;%
+    filter(Provincia == "25") %&gt;%
+    ggplot() +
+    geom_bar(aes(Especie))
+```
+
+![](06_data_import_files/figure-html/unnamed-chunk-19-1.png)&lt;!-- --&gt;
+]
+
+.pull-right[
+
+```r
+# In decreasing order
+trees %&gt;%
+    filter(Provincia == "25") %&gt;%
+    mutate(Especie = fct_infreq(Especie)) %&gt;%
+    ggplot() +
+    geom_bar(aes(Especie))
+```
+
+![](06_data_import_files/figure-html/unnamed-chunk-20-1.png)&lt;!-- --&gt;
+]
+
+---
+
+class: inverse, middle
+
+# Modify factor levels
+
+---
+
+
+# Modifying factor levels
+
+- `fct_recode()`: to change the values of a factor by hand.
+
+- `fct_collapse()`: to assign a vector of old values to a new value
+
+- `fct_lump()`: to collapse the least/most frequent values of a factor into “other”.
+
+---
+# Modifying factor levels
+## `fct_recode()`
+
+
+```r
+trees %&gt;% 
+    mutate(Prov_name = fct_recode(
+        Provincia,
+        "Barcelona"  = "08",
+        "Girona" = "17",
+        "Lleida" = "25",
+        "Tarragona" = "43")) %&gt;%
+    count(Prov_name)
+```
+
+```
+## # A tibble: 4 x 2
+##   Prov_name     n
+##   &lt;fct&gt;     &lt;int&gt;
+## 1 Barcelona 32828
+## 2 Girona    33570
+## 3 Lleida    35665
+## 4 Tarragona  9693
+```
+
+---
+# Modifying factor levels
+## `fct_collapse()`
+
+If you want to collapse a lot of levels, `fct_collapse()` is a useful variant of `fct_recode()`. For each new variable, you can provide a vector of old levels. 
+
+
+```r
+trees %&gt;%
+  mutate(Pinus_Quercus = fct_collapse(
+      Especie,
+      Pinus =   c("021", "022", "023", "024", "025", "026", "027", "028", "029"),
+      Quercus = c("041", "042", "043", "044", "045", "046", "047", "048", "049"),
+      other_level = "Other_sps")) %&gt;%      
+    count(Pinus_Quercus) 
+```
+
+```
+## Warning: Unknown levels in `f`: 027, 048, 049
+```
+
+```
+## # A tibble: 3 x 2
+##   Pinus_Quercus     n
+##   &lt;fct&gt;         &lt;int&gt;
+## 1 Pinus         67740
+## 2 Quercus       27959
+## 3 Other_sps     16057
+```
+
+---
+# Modifying factor levels
+## `fct_lump()`
+
+Lump together all the small groups to make a plot or table simpler. There are two main variants of `fct_lump()`:
+
+
+* `fct_lump_min()`: lumps levels that appear fewer than `min` times:
+
+
+```r
+trees %&gt;% 
+    mutate(Main_sps = fct_lump_min(Especie, 10000))%&gt;%
+    count(Main_sps)
+```
+
+```
+## # A tibble: 5 x 2
+##   Main_sps     n
+##   &lt;fct&gt;    &lt;int&gt;
+## 1 021      24962
+## 2 024      15308
+## 3 025      12603
+## 4 045      16189
+## 5 Other    42694
+```
+
+---
+# Modifying factor levels
+## `fct_lump()`
+
+* `fct_lump_n()`: lumps all levels except for the `n` most frequent:
+
+
+```r
+trees %&gt;%
+  mutate(Main_sps = fct_lump_n(Especie, 8)) %&gt;%
+  count(Main_sps)
+```
+
+```
+## # A tibble: 9 x 2
+##   Main_sps     n
+##   &lt;fct&gt;    &lt;int&gt;
+## 1 021      24962
+## 2 022       9232
+## 3 023       4064
+## 4 024      15308
+## 5 025      12603
+## 6 045      16189
+## 7 046       7520
+## 8 243       4721
+## 9 Other    17157
+```
+
+
+---
+
+layout: false 
+class: inverse, center
+background-image: url(img/folks.gif)
+background-position: center
+background-size: 60%
+
+# Ok, now on your own!
+    </textarea>
+<style data-target="print-only">@media screen {.remark-slide-container{display:block;}.remark-slide-scaler{box-shadow:none;}}</style>
+<script src="https://remarkjs.com/downloads/remark-latest.min.js"></script>
+<script>var slideshow = remark.create({
+"highlightStyle": "github",
+"highlightLines": true,
+"countIncrementalSlides": false
+});
+if (window.HTMLWidgets) slideshow.on('afterShowSlide', function (slide) {
+  window.dispatchEvent(new Event('resize'));
+});
+(function(d) {
+  var s = d.createElement("style"), r = d.querySelector(".remark-slide-scaler");
+  if (!r) return;
+  s.type = "text/css"; s.innerHTML = "@page {size: " + r.style.width + " " + r.style.height +"; }";
+  d.head.appendChild(s);
+})(document);
+
+(function(d) {
+  var el = d.getElementsByClassName("remark-slides-area");
+  if (!el) return;
+  var slide, slides = slideshow.getSlides(), els = el[0].children;
+  for (var i = 1; i < slides.length; i++) {
+    slide = slides[i];
+    if (slide.properties.continued === "true" || slide.properties.count === "false") {
+      els[i - 1].className += ' has-continuation';
+    }
+  }
+  var s = d.createElement("style");
+  s.type = "text/css"; s.innerHTML = "@media print { .has-continuation { display: none; } }";
+  d.head.appendChild(s);
+})(document);
+// delete the temporary CSS (for displaying all slides initially) when the user
+// starts to view slides
+(function() {
+  var deleted = false;
+  slideshow.on('beforeShowSlide', function(slide) {
+    if (deleted) return;
+    var sheets = document.styleSheets, node;
+    for (var i = 0; i < sheets.length; i++) {
+      node = sheets[i].ownerNode;
+      if (node.dataset["target"] !== "print-only") continue;
+      node.parentNode.removeChild(node);
+    }
+    deleted = true;
+  });
+})();
+// adds .remark-code-has-line-highlighted class to <pre> parent elements
+// of code chunks containing highlighted lines with class .remark-code-line-highlighted
+(function(d) {
+  const hlines = d.querySelectorAll('.remark-code-line-highlighted');
+  const preParents = [];
+  const findPreParent = function(line, p = 0) {
+    if (p > 1) return null; // traverse up no further than grandparent
+    const el = line.parentElement;
+    return el.tagName === "PRE" ? el : findPreParent(el, ++p);
+  };
+
+  for (let line of hlines) {
+    let pre = findPreParent(line);
+    if (pre && !preParents.includes(pre)) preParents.push(pre);
+  }
+  preParents.forEach(p => p.classList.add("remark-code-has-line-highlighted"));
+})(document);</script>
+
+<script>
+(function() {
+  var links = document.getElementsByTagName('a');
+  for (var i = 0; i < links.length; i++) {
+    if (/^(https?:)?\/\//.test(links[i].getAttribute('href'))) {
+      links[i].target = '_blank';
+    }
+  }
+})();
+</script>
+
+<script>
+slideshow._releaseMath = function(el) {
+  var i, text, code, codes = el.getElementsByTagName('code');
+  for (i = 0; i < codes.length;) {
+    code = codes[i];
+    if (code.parentNode.tagName !== 'PRE' && code.childElementCount === 0) {
+      text = code.textContent;
+      if (/^\\\((.|\s)+\\\)$/.test(text) || /^\\\[(.|\s)+\\\]$/.test(text) ||
+          /^\$\$(.|\s)+\$\$$/.test(text) ||
+          /^\\begin\{([^}]+)\}(.|\s)+\\end\{[^}]+\}$/.test(text)) {
+        code.outerHTML = code.innerHTML;  // remove <code></code>
+        continue;
+      }
+    }
+    i++;
+  }
+};
+slideshow._releaseMath(document);
+</script>
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+(function () {
+  var script = document.createElement('script');
+  script.type = 'text/javascript';
+  script.src  = 'https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML';
+  if (location.protocol !== 'file:' && /^https?:/.test(script.src))
+    script.src  = script.src.replace(/^https?:/, '');
+  document.getElementsByTagName('head')[0].appendChild(script);
+})();
+</script>
+  </body>
+</html>
