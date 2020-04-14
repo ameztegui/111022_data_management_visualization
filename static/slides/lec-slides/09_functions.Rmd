@@ -274,11 +274,8 @@ For more complex functions, it is useful to think which are the inputs. For exam
     summarise(mean_growth = mean(growth, na.rm = T))
 ```
 
----
-
-# Create functions
-
-so we could create this function
+--
+...so we could create this function...
 ```{r}
  mean_plot_growth <- function (df) {
     df %>%
@@ -286,9 +283,13 @@ so we could create this function
     group_by(Codi) %>%
     summarise(mean_growth = mean(growth, na.rm = T))
  }
+```
+---
 
+# Create functions
+
+```{r}
 mean_plot_growth(lleida_trees)
-
 ```
 
 ---
@@ -303,7 +304,7 @@ class: inverse, middle
 What if we want to generalize a bit more the function for average growth? For example, if we want let the user  define if they want the mean growth per plot, per species...
 
 ```{r}
- mean_plot_growth3 <- function (df, grouping_var) {
+ mean_plot_growth <- function (df, grouping_var) {
     df %>%
     mutate(growth = DiamIf3- DiamIf2) %>%
     group_by(grouping_var) %>%
@@ -318,17 +319,19 @@ What if we want to generalize a bit more the function for average growth? For ex
 And now we could do:
 
 ```{r, error = T}
-mean_plot_growth3(lleida_trees, Especie)
+mean_plot_growth(lleida_trees, Especie)
 
 ```
 
----
-# Tidy eval: Programming in the tidyverse
+--
 
-## What's happening?
+### What's happening?
+
+--
 
 * Most dplyr functions use non-standard evaluation (NSE). That means they don’t follow the usual R rules of evaluation
 --
+
 * As a consequence, dplyr will first look for the column `grouping_var` in the dataframe. 
 --
 
@@ -340,7 +343,7 @@ mean_plot_growth3(lleida_trees, Especie)
 In this case, with the `{{` operator, we can tunnel data-variables (i.e. columns from the data frames) through arg-variables (function arguments):
 
 ```{r}
- mean_plot_growth3 <- function (df, grouping_var) {
+ mean_plot_growth2 <- function (df, grouping_var) {
     df %>%
     mutate(growth = DiamIf3- DiamIf2) %>%
     group_by({{grouping_var}}) %>%
@@ -352,19 +355,19 @@ In this case, with the `{{` operator, we can tunnel data-variables (i.e. columns
 
 # Tidy eval: Programming in the tidyverse
 
-The tunnel makes it possible to supply variables from the data frame to your wrapper function:
+`{{}}` makes it possible to supply variables from the data frame to your wrapper function:
 
 ```{r}
-mean_plot_growth3(lleida_trees, Especie)
+mean_plot_growth2(lleida_trees, Especie)
 ```
 
 ---
 
 # Tidy eval: Programming in the tidyverse
 
-The tunnel makes it possible to supply variables from the data frame to your wrapper function:
+`{{}}` makes it possible to supply variables from the data frame to your wrapper function:
 ```{r}
-mean_plot_growth3(lleida_trees, Codi)
+mean_plot_growth2(lleida_trees, Codi)
 
 ```
 
@@ -372,8 +375,9 @@ mean_plot_growth3(lleida_trees, Codi)
 
 # Tidy eval: Programming in the tidyverse
 
+`{{}}` makes it possible to supply variables from the data frame to your wrapper function:
 ```{r}
-mean_plot_growth3(lleida_trees, CD)
+mean_plot_growth2(lleida_trees, CD)
 ```
 
 

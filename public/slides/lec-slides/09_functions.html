@@ -347,16 +347,15 @@ rescale(x)
 ```
 
 ```
-##  [1] 4.168624e-01 8.458466e-01 0.000000e+00 9.074943e-01 2.723452e-01
-##  [6] 4.326979e-01 5.101659e-01 2.492182e-01 6.201476e-01 3.706228e-01
-## [11] 6.145635e-01 3.296428e-01 7.019892e-01 7.295801e-01 4.075191e-01
-## [16] 8.317809e-01 9.879558e-01 7.101849e-01 2.868947e-01 7.400500e-01
-## [21] 8.109787e-01 9.349688e-05 8.244382e-01 4.248517e-01 7.653701e-01
-## [26] 6.670872e-01 5.524225e-01 4.160563e-01 8.189637e-01 6.492137e-01
-## [31] 5.437680e-01 4.949246e-01 1.303579e-01 3.606021e-01 3.910457e-01
-## [36] 4.143784e-01 9.080061e-01 7.450874e-01 1.000000e+00 3.424510e-01
-## [41] 2.586626e-01 5.062643e-01 6.483082e-01 8.038931e-01 1.123912e-01
-## [46] 3.568194e-01 7.695611e-01 3.652135e-01 4.837412e-01 6.909810e-01
+##  [1] 0.38577851 0.46288053 0.68428099 0.46466835 0.73319438 0.64864039
+##  [7] 0.57598019 1.00000000 0.78652409 0.56442729 0.14155182 0.64684357
+## [13] 0.33995313 0.21631004 0.71272525 0.51441554 0.49071144 0.83479218
+## [19] 0.50960949 0.24637971 0.67793139 0.62217865 0.88343869 0.31859734
+## [25] 0.46302107 0.41360294 0.88862761 0.38398206 0.34824879 0.55001287
+## [31] 0.25067940 0.79247469 0.26492460 0.30027608 0.68793581 0.32352680
+## [37] 0.22730555 0.53532399 0.44737422 0.08665131 0.49915291 0.70754180
+## [43] 0.36957674 0.60305608 0.00000000 0.09290731 0.82318921 0.68411015
+## [49] 0.25211827 0.53178559
 ```
 
 ---
@@ -403,11 +402,8 @@ For more complex functions, it is useful to think which are the inputs. For exam
     summarise(mean_growth = mean(growth, na.rm = T))
 ```
 
----
-
-# Create functions
-
-so we could create this function
+--
+...so we could create this function...
 
 ```r
  mean_plot_growth &lt;- function (df) {
@@ -416,7 +412,13 @@ so we could create this function
     group_by(Codi) %&gt;%
     summarise(mean_growth = mean(growth, na.rm = T))
  }
+```
+---
 
+# Create functions
+
+
+```r
 mean_plot_growth(lleida_trees)
 ```
 
@@ -450,7 +452,7 @@ What if we want to generalize a bit more the function for average growth? For ex
 
 
 ```r
- mean_plot_growth3 &lt;- function (df, grouping_var) {
+ mean_plot_growth &lt;- function (df, grouping_var) {
     df %&gt;%
     mutate(growth = DiamIf3- DiamIf2) %&gt;%
     group_by(grouping_var) %&gt;%
@@ -466,20 +468,22 @@ And now we could do:
 
 
 ```r
-mean_plot_growth3(lleida_trees, Especie)
+mean_plot_growth(lleida_trees, Especie)
 ```
 
 ```
 ## Error: Column `grouping_var` is unknown
 ```
 
----
-# Tidy eval: Programming in the tidyverse
+--
 
-## What's happening?
+### What's happening?
+
+--
 
 * Most dplyr functions use non-standard evaluation (NSE). That means they don’t follow the usual R rules of evaluation
 --
+
 * As a consequence, dplyr will first look for the column `grouping_var` in the dataframe. 
 --
 
@@ -492,7 +496,7 @@ In this case, with the `{{` operator, we can tunnel data-variables (i.e. columns
 
 
 ```r
- mean_plot_growth3 &lt;- function (df, grouping_var) {
+ mean_plot_growth2 &lt;- function (df, grouping_var) {
     df %&gt;%
     mutate(growth = DiamIf3- DiamIf2) %&gt;%
     group_by({{grouping_var}}) %&gt;%
@@ -504,11 +508,11 @@ In this case, with the `{{` operator, we can tunnel data-variables (i.e. columns
 
 # Tidy eval: Programming in the tidyverse
 
-The tunnel makes it possible to supply variables from the data frame to your wrapper function:
+`{{}}` makes it possible to supply variables from the data frame to your wrapper function:
 
 
 ```r
-mean_plot_growth3(lleida_trees, Especie)
+mean_plot_growth2(lleida_trees, Especie)
 ```
 
 ```
@@ -539,10 +543,10 @@ mean_plot_growth3(lleida_trees, Especie)
 
 # Tidy eval: Programming in the tidyverse
 
-The tunnel makes it possible to supply variables from the data frame to your wrapper function:
+`{{}}` makes it possible to supply variables from the data frame to your wrapper function:
 
 ```r
-mean_plot_growth3(lleida_trees, Codi)
+mean_plot_growth2(lleida_trees, Codi)
 ```
 
 ```
@@ -566,9 +570,10 @@ mean_plot_growth3(lleida_trees, Codi)
 
 # Tidy eval: Programming in the tidyverse
 
+`{{}}` makes it possible to supply variables from the data frame to your wrapper function:
 
 ```r
-mean_plot_growth3(lleida_trees, CD)
+mean_plot_growth2(lleida_trees, CD)
 ```
 
 ```
