@@ -44,6 +44,21 @@ trees %>% filter(Provincia == "17") -> girona_trees
 trees %>% filter(Provincia == "43") -> tarragona_trees
 ```
 
+# Avoid repetition and copy-pasting
+
+![](img/repeat_code.png)
+
+--
+
+* One tool for reducing duplication is **functions**, which reduce duplication by identifying repeated patterns of code and extract them out into independent pieces 
+
+--
+
+* Another tool for reducing duplication is **iteration**, which helps you when you need to do the same thing to multiple inputs: repeating the same operation on different columns, or on different datasets. 
+
+
+
+---
 # When to use functions?
 
 Whenever we find ourselves copypasting more than 3 times:
