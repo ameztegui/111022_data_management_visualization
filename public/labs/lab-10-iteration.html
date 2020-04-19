@@ -104,10 +104,13 @@ $(document).ready(function () {
       <li><a href="#introduction">Introduction</a></li>
       <li><a href="#for-loops"><code>for</code> loops</a></li>
       <li><a href="#iteration-with-purrr">Iteration with <code>purrr</code></a><ul>
-      <li><a href="#the-map-functions">The map functions</a></li>
-      <li><a href="#the-family-of-map-functions">The family of map functions</a></li>
-      <li><a href="#mapping-over-multiple-arguments">Mapping over multiple arguments</a></li>
-      <li><a href="#map-and-apply">map and <code>apply</code></a></li>
+      <li><a href="#map">map</a></li>
+      <li><a href="#map-variants">map variants</a></li>
+      <li><a href="#walk">walk</a></li>
+      </ul></li>
+      <li><a href="#functional-sequences">Functional sequences</a></li>
+      <li><a href="#functions">Functions</a><ul>
+      <li><a href="#tidy-eval-programming-in-the-tidyverse">Tidy eval: Programming in the tidyverse</a></li>
       </ul></li>
       <li><a href="#to-know-more">To know more</a></li>
       </ul>
@@ -117,365 +120,366 @@ $(document).ready(function () {
 <div id="main">
 <div id="introduction" class="section level1">
 <h1>Introduction</h1>
-<p>In the <a href="https://datamanagement.netlify.com/labs/lab09_functions.html">lab on functions</a>, we talked about how important it is to reduce duplication and avoid copying-and-pasting. One tool for reducing duplication is <strong>functions</strong>, which reduce duplication by identifying repeated patterns of code and extract them out into independent pieces that can be easily reused and updated. Another tool for reducing duplication is <strong>iteration</strong>, which helps you when you need to do the same thing to multiple inputs: repeating the same operation on different columns, or on different datasets.</p>
-<p>In this lab we will learn about two important iteration paradigms: imperative programming and functional programming (Wickham and Grolemund, 2016). On the imperative side you have tools like <code>for</code> loops and <code>while</code> loops, which make iteration very explicit. However, <code>for</code> loops are quite verbose, and can get complicated whenever we want to iterate over several vectors. Functional programming (FP) offers tools to solve many common iteration problems with less code, more ease, and fewer errors.</p>
 </div>
 <div id="for-loops" class="section level1">
 <h1><code>for</code> loops</h1>
-<p>Loops are used in programming to iterate over a vector. The most common type of loops in R are <code>for</code> loops, although there are other looping functions such as <code>while</code> or <code>repeat</code>. <code>for</code> loops have the following syntax:</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="cf">for</span> (i <span class="cf">in</span> sequence)
-    {
-    body
-    }</code></pre></div>
-<p>Here, <strong>sequence</strong> is a vector. This determines what to loop over: each run of the loop will assign <strong>i</strong> to a different value in <strong>sequence</strong>, until it has gone through all the values of the vector: i.e. <code>sequence[1], sequence[2], ..., sequence[n]</code>. At each iteration, the loop applies the code that is inside the curly braces: the <strong>body</strong> of the loop. These can be placed either immediately after the test condition or beneath it, preferably followed by an indentation. The code in <strong>body</strong> is run repeatedly, each time with a different value for <code>i</code>. The first iteration will run <code>body</code> for <code>i = sequence[1]</code>, the second will run <code>body</code> for <code>i = sequence[2]</code>, and so on.</p>
-<div class="figure">
-<img src="data:image/jpeg;base64,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" />
-
-</div>
-<p>Let’s see an easy example. Suppose you want to do several printouts of the following form: “The year is [year]”, where [year] is equal to 2015, 2016, up to 2020. You can do this as follows:</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">print</span>(<span class="kw">paste</span>(<span class="st">&quot;The year is&quot;</span>, <span class="dv">2015</span>))</code></pre></div>
-<pre><code>## [1] &quot;The year is 2015&quot;</code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">print</span>(<span class="kw">paste</span>(<span class="st">&quot;The year is&quot;</span>, <span class="dv">2016</span>))</code></pre></div>
-<pre><code>## [1] &quot;The year is 2016&quot;</code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">print</span>(<span class="kw">paste</span>(<span class="st">&quot;The year is&quot;</span>, <span class="dv">2017</span>))</code></pre></div>
-<pre><code>## [1] &quot;The year is 2017&quot;</code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">print</span>(<span class="kw">paste</span>(<span class="st">&quot;The year is&quot;</span>, <span class="dv">2018</span>))</code></pre></div>
-<pre><code>## [1] &quot;The year is 2018&quot;</code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">print</span>(<span class="kw">paste</span>(<span class="st">&quot;The year is&quot;</span>, <span class="dv">2019</span>))</code></pre></div>
-<pre><code>## [1] &quot;The year is 2019&quot;</code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">print</span>(<span class="kw">paste</span>(<span class="st">&quot;The year is&quot;</span>, <span class="dv">2020</span>))</code></pre></div>
-<pre><code>## [1] &quot;The year is 2020&quot;</code></pre>
-<p>You immediately see this requires copying the same code chunk over and over. This violates the <em>don’t repeat yourself</em> principle. In this case, we can automate the repetitive part with a loop:</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="cf">for</span> (i <span class="cf">in</span> <span class="dv">2015</span><span class="op">:</span><span class="dv">2020</span>){
-  <span class="kw">print</span>(<span class="kw">paste</span>(<span class="st">&quot;The year is&quot;</span>, i))
-}</code></pre></div>
-<pre><code>## [1] &quot;The year is 2015&quot;
-## [1] &quot;The year is 2016&quot;
-## [1] &quot;The year is 2017&quot;
-## [1] &quot;The year is 2018&quot;
-## [1] &quot;The year is 2019&quot;
-## [1] &quot;The year is 2020&quot;</code></pre>
-<p>Let’s see another example: do you remember our pseudofunction “mean_growth”, from the <a href="https://datamanagement.netlify.app/labs/lab09_functions.html">last lab</a>?</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"> mean_growth &lt;-<span class="st"> </span><span class="cf">function</span> (df, grouping_var) {
-    df <span class="op">%&gt;%</span>
-<span class="st">    </span><span class="kw">mutate</span>(<span class="dt">growth =</span> DiamIf3<span class="op">-</span><span class="st"> </span>DiamIf2) <span class="op">%&gt;%</span>
-<span class="st">    </span><span class="kw">group_by</span>(Provincia, {{grouping_var}}) <span class="op">%&gt;%</span>
-<span class="st">    </span><span class="kw">summarise</span>(<span class="dt">mean_growth =</span> <span class="kw">mean</span>(growth, <span class="dt">na.rm =</span> T))
- }</code></pre></div>
-<p>Imagine we want to apply this over a vector of 50 provinces. Of course we could repeat 50 times this code:</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">mean_growth</span>(lleida_trees, Especie)
-<span class="kw">mean_growth</span>(barcelona_trees, Especie)
-<span class="kw">mean_growth</span>(madrid_trees, Especie)
-...
-<span class="co"># and so on</span></code></pre></div>
-<p>but we could instead use a <code>for</code> loop, that will apply the function along a list or a vector. We must first create the vector of dataframes over which we want to apply the functions, in this case a list. We will create a toy example with only 4 provinces:</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">provinces &lt;-<span class="st"> </span><span class="kw">list</span>(lleida_trees, barcelona_trees,
-               girona_trees, tarragona_trees)</code></pre></div>
-<p>and then we can create the <code>for</code> loop:</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">output &lt;-<span class="st"> </span><span class="kw">list</span>()                      
-<span class="cf">for</span> (i <span class="cf">in</span> <span class="kw">seq_along</span>(provinces)) {
-    output[[i]] &lt;-<span class="st"> </span><span class="kw">mean_growth</span>(provinces[[i]], Especie)
-}
-
-<span class="kw">str</span>(output)</code></pre></div>
-<pre><code>## List of 4
-##  $ : tibble [18 × 3] (S3: grouped_df/tbl_df/tbl/data.frame)
-##   ..$ Provincia  : chr [1:18] &quot;25&quot; &quot;25&quot; &quot;25&quot; &quot;25&quot; ...
-##   ..$ Especie    : Factor w/ 91 levels &quot;004&quot;,&quot;008&quot;,&quot;012&quot;,..: 9 10 11 13 14 18 26 28 29 32 ...
-##   ..$ mean_growth: num [1:18] 2.88 3.09 2.44 2.99 2.93 ...
-##   ..- attr(*, &quot;groups&quot;)= tibble [1 × 2] (S3: tbl_df/tbl/data.frame)
-##   .. ..$ Provincia: chr &quot;25&quot;
-##   .. ..$ .rows    :List of 1
-##   .. .. ..$ : int [1:18] 1 2 3 4 5 6 7 8 9 10 ...
-##   .. ..- attr(*, &quot;.drop&quot;)= logi TRUE
-##  $ : tibble [66 × 3] (S3: grouped_df/tbl_df/tbl/data.frame)
-##   ..$ Provincia  : chr [1:66] &quot;08&quot; &quot;08&quot; &quot;08&quot; &quot;08&quot; ...
-##   ..$ Especie    : Factor w/ 91 levels &quot;004&quot;,&quot;008&quot;,&quot;012&quot;,..: 1 2 3 4 7 8 10 11 12 13 ...
-##   ..$ mean_growth: num [1:66] 2.25 1.37 1.25 3.95 3.02 ...
-##   ..- attr(*, &quot;groups&quot;)= tibble [1 × 2] (S3: tbl_df/tbl/data.frame)
-##   .. ..$ Provincia: chr &quot;08&quot;
-##   .. ..$ .rows    :List of 1
-##   .. .. ..$ : int [1:66] 1 2 3 4 5 6 7 8 9 10 ...
-##   .. ..- attr(*, &quot;.drop&quot;)= logi TRUE
-##  $ : tibble [78 × 3] (S3: grouped_df/tbl_df/tbl/data.frame)
-##   ..$ Provincia  : chr [1:78] &quot;17&quot; &quot;17&quot; &quot;17&quot; &quot;17&quot; ...
-##   ..$ Especie    : Factor w/ 91 levels &quot;004&quot;,&quot;008&quot;,&quot;012&quot;,..: 2 3 4 5 6 7 8 10 11 12 ...
-##   ..$ mean_growth: num [1:78] 1.32 3.27 5.4 0 3.12 ...
-##   ..- attr(*, &quot;groups&quot;)= tibble [1 × 2] (S3: tbl_df/tbl/data.frame)
-##   .. ..$ Provincia: chr &quot;17&quot;
-##   .. ..$ .rows    :List of 1
-##   .. .. ..$ : int [1:78] 1 2 3 4 5 6 7 8 9 10 ...
-##   .. ..- attr(*, &quot;.drop&quot;)= logi TRUE
-##  $ : tibble [36 × 3] (S3: grouped_df/tbl_df/tbl/data.frame)
-##   ..$ Provincia  : chr [1:36] &quot;43&quot; &quot;43&quot; &quot;43&quot; &quot;43&quot; ...
-##   ..$ Especie    : Factor w/ 91 levels &quot;004&quot;,&quot;008&quot;,&quot;012&quot;,..: 1 2 3 4 5 10 12 13 14 15 ...
-##   ..$ mean_growth: num [1:36] 0.6 1 5.175 1.51 0.983 ...
-##   ..- attr(*, &quot;groups&quot;)= tibble [1 × 2] (S3: tbl_df/tbl/data.frame)
-##   .. ..$ Provincia: chr &quot;43&quot;
-##   .. ..$ .rows    :List of 1
-##   .. .. ..$ : int [1:36] 1 2 3 4 5 6 7 8 9 10 ...
-##   .. ..- attr(*, &quot;.drop&quot;)= logi TRUE</code></pre>
-<p>The output will be a list with as many elements as provinces we have applied the statement to. With a few extra lines, we could even keep all the genereated information as one single dataframe:</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">output &lt;-<span class="st"> </span><span class="kw">data.frame</span>()
-<span class="cf">for</span> (i <span class="cf">in</span> <span class="kw">seq_along</span>(provinces)) {
-    temp_output &lt;-<span class="st"> </span><span class="kw">mean_growth</span>(provinces[[i]], Especie)
-    output &lt;-<span class="st"> </span><span class="kw">bind_rows</span>(output, temp_output)
-}
-
-<span class="kw">glimpse</span>(output)</code></pre></div>
-<pre><code>## Rows: 198
-## Columns: 3
-## $ Provincia   &lt;chr&gt; &quot;25&quot;, &quot;25&quot;, &quot;25&quot;, &quot;25&quot;, &quot;25&quot;, &quot;25&quot;, &quot;25&quot;, &quot;25&quot;, &quot;25&quot;, &quot;25…
-## $ Especie     &lt;fct&gt; 019, 021, 022, 024, 025, 031, 042, 044, 045, 050, 070, 07…
-## $ mean_growth &lt;dbl&gt; 2.9, 3.1, 2.4, 3.0, 2.9, 4.0, 2.4, 2.2, 1.5, 4.5, 3.1, 2.…</code></pre>
-<p>Here, we create an empty data frame to store the results. At each iteration, we append the results of the iteration to the data frame (this is what <code>bind_rows</code> does), so we sequentially grow the data frame <code>output</code>. However, this is highly inefficient because in each iteration, R has to copy all the data from previous iterations. If the sequence is long, the for loop will easily become very slow.</p>
-<p>A better solution is to save the results in a list and then combine the elements into a data frame using <code>bind_rows()</code>.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">output &lt;-<span class="st"> </span><span class="kw">list</span>()
-<span class="cf">for</span> (i <span class="cf">in</span> <span class="kw">seq_along</span>(provinces)) {
-    output[[i]] &lt;-<span class="st"> </span><span class="kw">mean_growth</span>(provinces[[i]], Especie)
-}
-
-<span class="kw">bind_rows</span>(output)</code></pre></div>
-<pre><code>## # A tibble: 198 x 3
-## # Groups:   Provincia [4]
-##    Provincia Especie mean_growth
-##    &lt;chr&gt;     &lt;fct&gt;         &lt;dbl&gt;
-##  1 25        019            2.88
-##  2 25        021            3.09
-##  3 25        022            2.44
-##  4 25        024            2.99
-##  5 25        025            2.93
-##  6 25        031            4.04
-##  7 25        042            2.39
-##  8 25        044            2.24
-##  9 25        045            1.46
-## 10 25        050            4.53
-## # … with 188 more rows</code></pre>
-<!-- <div class = "exercise"> -->
-<!-- **EXERCISE 1:** </br>  -->
-<!-- 1. Create a for loop that computes the mean of every column in the `iris` dataset. -->
-<!-- </div> -->
 </div>
 <div id="iteration-with-purrr" class="section level1">
 <h1>Iteration with <code>purrr</code></h1>
-<p>For loops are not as important in R as they are in other languages because R is a functional programming language. This means that it’s possible to wrap up <code>for</code> loops in a function, and call that function instead of using the <code>for</code> loop directly.</p>
-<p>The idea of passing a function to another function is an extremely powerful idea, and it’s one of the behaviours that makes R a functional programming language. It might take you a while to wrap your head around the idea, but it’s worth the investment. We are going to use the <code>purrr</code> package, which provides functions that eliminate the need for many common <code>for</code> loops, and is integrated in the <em>tidyverse</em>. The <em>apply</em> family of functions in base R (<code>apply()</code>, <code>lapply()</code>, <code>tapply()</code>, <code>sapply()</code>, etc.) solve a similar problem, but <code>purrr</code> is more consistent easier to learn, particularly if this is your first approach to functional programming.</p>
-<p>The goal of using <code>purrr</code> (or <code>apply</code>) functions instead of <code>for</code> loops is to allow you to break common list manipulation challenges into independent pieces. How can you solve the problem for a single element of the list? Once you’ve solved that problem, <code>purrr</code> takes care of generalising your solution to every element in the list. This structure makes it easier to solve new problems. It also makes it easier to understand your solutions to old problems when you re-read your old code.</p>
-<div id="the-map-functions" class="section level2">
-<h2>The map functions</h2>
-<p>The <code>map()</code> family of functions - implemented in <code>purrr</code> - loop a given function over a vector, doing something to each element of the vector and saving the results. So <code>map</code> takes a vector and a function as input, and applies the function to each piece of the vector, returning a new vector with the same length (and the same names) as the input. Let’s see an example:</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">x &lt;-<span class="st"> </span><span class="kw">list</span>(<span class="dt">x1 =</span> <span class="kw">rnorm</span>(<span class="dv">100</span>, <span class="dv">10</span>, <span class="dv">1</span>),
-          <span class="dt">x2 =</span> <span class="kw">rnorm</span>(<span class="dv">50</span>, <span class="dv">20</span>, <span class="dv">5</span>),
-          <span class="dt">x3 =</span> <span class="kw">rnorm</span>(<span class="dv">100</span>, <span class="dv">50</span>, <span class="dv">10</span>))
+<div id="map" class="section level2">
+<h2>map</h2>
+</div>
+<div id="map-variants" class="section level2">
+<h2>map variants</h2>
+</div>
+<div id="walk" class="section level2">
+<h2>walk</h2>
+<p>So far we have seen how to transform one or several data frames in order to get the information we need for our data science project. We have learned how to create new variables, filter observations, join several tables or calculate summary statistics, among many other tools. These are operations that we will apply very often, and sometimes you may be in the need to apply a given sequence of steps repeteadly. In those cases, you may consider writing a function.</p>
+<p>Writing good functions is a difficult task, and can be a lifetime journey. At the beginning, it will take you more time to create the function than to repeat the needed ope¡ration 3, 4 or even 10 times. But functions allow you to automate common tasks in a more powerful and general way than copy-and-pasting.</p>
+<p>Writing a function has three main big advantages over using copy-and-paste (Wickham &amp; Grolemund, 2016):</p>
+<ol style="list-style-type: decimal">
+<li><p>You eliminate the chance of making incidental mistakes when you copy and paste (i.e. updating a variable name in one place, but not in another).</p></li>
+<li><p>As requirements change, you only need to update code in one place, instead of many.</p></li>
+<li><p>You can give a function an evocative name that makes your code easier to understand.</p></li>
+</ol>
+</div>
+</div>
+<div id="functional-sequences" class="section level1">
+<h1>Functional sequences</h1>
+<p>The <code>magrittr</code> package, where the pipe operator (<code>%&gt;%</code>) was designed, allows for saving piped sequences of operations as pseudo-functions in a readable format. We just need to string functions together with pipes and replace the initial object (a data frame) with the dot placeholder (<code>.</code>) This creates a function in its own right, but a special case called functional sequence. The dot may be considered as the unique argument of the pseudofunction, and will pass the dataframe to which the pseudofunction will be applied to.</p>
+<p>Let’s see an example: imagine that we had the information about the trees in the National Forest Inventory separated by provinces. In fact, you don’t have to imagine too much, because this is actually how the information is provided by the Ministry. Now, let’s say we want to calculate the mean tree growth per plot for each of the 50 provinces in Spain. Of course, we can do it one by one, as in:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">lleida_trees <span class="op">%&gt;%</span>
+<span class="st">    </span><span class="kw">mutate</span>(<span class="dt">growth =</span> DiamIf3<span class="op">-</span><span class="st"> </span>DiamIf2) <span class="op">%&gt;%</span>
+<span class="st">    </span><span class="kw">group_by</span>(Codi) <span class="op">%&gt;%</span>
+<span class="st">    </span><span class="kw">summarise</span>(<span class="dt">mean_growth =</span> <span class="kw">mean</span>(growth, <span class="dt">na.rm =</span> T))
 
-<span class="kw">map</span>(x, mean)</code></pre></div>
-<pre><code>## $x1
-## [1] 9.8
-## 
-## $x2
-## [1] 20
-## 
-## $x3
-## [1] 48</code></pre>
-<p>You see we have three vectors of different lengths as input, and <code>map()</code> calculates the mean of each of them. Let’s see another example:</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">y &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="dv">5</span>, <span class="dv">10</span>, <span class="dv">20</span>)
-<span class="kw">map</span>(y, rnorm)</code></pre></div>
-<pre><code>## [[1]]
-## [1] -0.745 -0.880 -0.418  0.057  0.371
-## 
-## [[2]]
-##  [1] -0.68 -0.81  0.24 -0.29  0.88  0.33 -0.20 -0.14 -0.14  0.97
-## 
-## [[3]]
-##  [1] -0.41799 -0.14530 -1.80841  0.67267 -0.20584 -0.31607  0.91452 -0.11536
-##  [9]  0.13482  0.33080 -0.06597 -1.06739 -0.37034 -1.04451 -0.67927 -0.47419
-## [17] -0.20158 -0.45768 -0.00095  1.92639</code></pre>
-<p>Here, map will asign out vector <em>y</em> as the first argument of the function (in this case, <code>rnorm()</code>). All the other argument that the function may require take default values. For instance, if we check the help of <code>rnorm()</code>:</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">?rnorm</code></pre></div>
-<p>We see that by default, <code>mean = 0</code> and <code>sd = 1</code>. If we want to provide explicitly any extra argument for the function, they will be passed after the function:</p>
-<p><code>map(.x = vector, .f = function, ...)</code></p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">y &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="dv">5</span>, <span class="dv">10</span>, <span class="dv">20</span>)
-<span class="kw">map</span>(y, rnorm, <span class="dv">10</span>, <span class="dv">1</span>)</code></pre></div>
-<pre><code>## [[1]]
-## [1]  8.3 10.1 10.6  9.1  9.3
-## 
-## [[2]]
-##  [1]  9.9  9.6  8.0  9.2 10.3  9.6  8.3 11.9 10.0 11.3
-## 
-## [[3]]
-##  [1]  9.6  9.0  8.6 10.5 10.5 11.1 11.0 11.7 10.4  8.8 11.2 10.8  9.3 10.6 10.0
-## [16]  9.7 11.2  8.7  8.9  9.4</code></pre>
-<p>Now we see how <code>map()</code> works, let’s see how we can use these functions to easily calculate the mean growth per species to each province:</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">map</span>(provinces, mean_growth, Especie)</code></pre></div>
-<pre><code>## [[1]]
-## # A tibble: 18 x 3
-## # Groups:   Provincia [1]
-##    Provincia Especie mean_growth
-##    &lt;chr&gt;     &lt;fct&gt;         &lt;dbl&gt;
-##  1 25        019            2.88
-##  2 25        021            3.09
-##  3 25        022            2.44
-##  4 25        024            2.99
-##  5 25        025            2.93
-##  6 25        031            4.04
-##  7 25        042            2.39
-##  8 25        044            2.24
-##  9 25        045            1.46
-## 10 25        050            4.53
-## 11 25        070            3.13
-## 12 25        071            2.84
-## 13 25        073            1.75
-## 14 25        078            1.83
-## 15 25        090            1.25
-## 16 25        243            2.13
-## 17 25        255            2.64
-## 18 25        976            2.30
-## 
-## [[2]]
-## # A tibble: 66 x 3
-## # Groups:   Provincia [1]
-##    Provincia Especie mean_growth
-##    &lt;chr&gt;     &lt;fct&gt;         &lt;dbl&gt;
-##  1 08        004            2.25
-##  2 08        008            1.37
-##  3 08        012            1.25
-##  4 08        013            3.95
-##  5 08        016            3.02
-##  6 08        017           10.1 
-##  7 08        021            3.26
-##  8 08        022            2.66
-##  9 08        023            3.57
-## 10 08        024            4.34
-## # … with 56 more rows
-## 
-## [[3]]
-## # A tibble: 78 x 3
-## # Groups:   Provincia [1]
-##    Provincia Especie mean_growth
-##    &lt;chr&gt;     &lt;fct&gt;         &lt;dbl&gt;
-##  1 17        008            1.32
-##  2 17        012            3.27
-##  3 17        013            5.4 
-##  4 17        014            0   
-##  5 17        015            3.12
-##  6 17        016            2.82
-##  7 17        017            7.76
-##  8 17        021            3.68
-##  9 17        022            2.59
-## 10 17        023            4.49
-## # … with 68 more rows
-## 
-## [[4]]
-## # A tibble: 36 x 3
-## # Groups:   Provincia [1]
-##    Provincia Especie mean_growth
-##    &lt;chr&gt;     &lt;fct&gt;         &lt;dbl&gt;
-##  1 43        004           0.600
-##  2 43        008           1.00 
-##  3 43        012           5.18 
-##  4 43        013           1.51 
-##  5 43        014           0.983
-##  6 43        021           2.90 
-##  7 43        023           4.41 
-##  8 43        024           3.63 
-##  9 43        025           2.88 
-## 10 43        026           5.58 
-## # … with 26 more rows</code></pre>
-<p>The result will be a list of <code>n</code>elements, <code>n</code> being the number of provinces, and each element of the list will contain a data frame with the result. We can then easily collapse the list into a data frame:</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">map</span>(provinces, mean_growth, Especie) <span class="op">%&gt;%</span>
-<span class="st">    </span><span class="kw">bind_rows</span>()</code></pre></div>
-<pre><code>## # A tibble: 198 x 3
-## # Groups:   Provincia [4]
-##    Provincia Especie mean_growth
-##    &lt;chr&gt;     &lt;fct&gt;         &lt;dbl&gt;
-##  1 25        019            2.88
-##  2 25        021            3.09
-##  3 25        022            2.44
-##  4 25        024            2.99
-##  5 25        025            2.93
-##  6 25        031            4.04
-##  7 25        042            2.39
-##  8 25        044            2.24
-##  9 25        045            1.46
-## 10 25        050            4.53
-## # … with 188 more rows</code></pre>
-</div>
-<div id="the-family-of-map-functions" class="section level2">
-<h2>The family of map functions</h2>
-<p>The <code>purrr</code> package provides a family of functions to loop over a vector, and since we often are not interested in having the results in a list, there is one function for each type of output:</p>
-<ul>
-<li><code>map()</code> makes a list</li>
-<li><code>map_dbl()</code> makes a double (numeric) vector</li>
-<li><code>map_chr()</code> makes a character vector</li>
-<li><code>map_df()</code> makes a data frame</li>
-<li><code>map_lgl()</code> makes a logical vector</li>
-<li><code>map_int()</code> makes an integer vector</li>
-</ul>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">map</span>(x, mean)</code></pre></div>
-<pre><code>## $x1
-## [1] 9.8
-## 
-## $x2
-## [1] 20
-## 
-## $x3
-## [1] 48</code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">map_dbl</span>(x, mean)</code></pre></div>
-<pre><code>##   x1   x2   x3 
-##  9.8 20.4 48.5</code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">map_df</span>(x, mean)</code></pre></div>
-<pre><code>## # A tibble: 1 x 3
-##      x1    x2    x3
-##   &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;
-## 1  9.76  20.4  48.5</code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">map_chr</span>(x, mean)</code></pre></div>
-<pre><code>##          x1          x2          x3 
-##  &quot;9.762865&quot; &quot;20.382798&quot; &quot;48.473028&quot;</code></pre>
-<p>Of course, not all kinds of inputs allow each kind of <code>map_*()</code> function, and we have to use them with common sense. This allows to avoid a step in our aim of calculating mean growth per species in each province, because we can use <code>map_df()</code> to get the output directly as a data frame:</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">map_df</span>(provinces, mean_growth, Especie) <span class="op">%&gt;%</span><span class="st"> </span>
-<span class="st">    </span><span class="kw">glimpse</span>()</code></pre></div>
-<pre><code>## Rows: 198
-## Columns: 3
-## Groups: Provincia [4]
-## $ Provincia   &lt;chr&gt; &quot;25&quot;, &quot;25&quot;, &quot;25&quot;, &quot;25&quot;, &quot;25&quot;, &quot;25&quot;, &quot;25&quot;, &quot;25&quot;, &quot;25&quot;, &quot;25…
-## $ Especie     &lt;fct&gt; 019, 021, 022, 024, 025, 031, 042, 044, 045, 050, 070, 07…
-## $ mean_growth &lt;dbl&gt; 2.9, 3.1, 2.4, 3.0, 2.9, 4.0, 2.4, 2.2, 1.5, 4.5, 3.1, 2.…</code></pre>
-</div>
-<div id="mapping-over-multiple-arguments" class="section level2">
-<h2>Mapping over multiple arguments</h2>
-<p>Often you have multiple related inputs that you need iterate along in parallel. <code>purrr</code> provides the function <code>map2()</code>. The arguments that vary for each call come <em>before</em> the function, the arguments that are the same for every call come <em>after</em>.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">map2</span>(<span class="dt">.x =</span> , <span class="dt">.y =</span> , <span class="dt">.f =</span> , <span class="dt">... =</span> )</code></pre></div>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">n &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="dv">5</span>,<span class="dv">10</span>,<span class="dv">20</span>)
-means &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="dv">10</span>,<span class="dv">20</span>,<span class="dv">50</span>)
+barcelona_trees <span class="op">%&gt;%</span>
+<span class="st">    </span><span class="kw">mutate</span>(<span class="dt">growth =</span> DiamIf3<span class="op">-</span><span class="st"> </span>DiamIf2) <span class="op">%&gt;%</span>
+<span class="st">    </span><span class="kw">group_by</span>(Codi) <span class="op">%&gt;%</span>
+<span class="st">    </span><span class="kw">summarise</span>(<span class="dt">mean_growth =</span> <span class="kw">mean</span>(growth, <span class="dt">na.rm =</span> T))
 
-<span class="kw">map2</span>(n, means, rnorm)</code></pre></div>
-<pre><code>## [[1]]
-## [1] 11.3  9.4  9.4  9.6  9.9
+<span class="co"># and so on</span></code></pre></div>
+<p>However, this is not too efficient for the 3 reasons mentioned above. Imagine if, after typing the code above for 50 times, we decide it is better to calculate the median growth besides the average growth. So instead, we can save the sequence of operations as this:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"> mean_plot_growth &lt;-<span class="st"> </span>. <span class="op">%&gt;%</span>
+<span class="st">    </span><span class="kw">mutate</span>(<span class="dt">growth =</span> DiamIf3<span class="op">-</span><span class="st"> </span>DiamIf2) <span class="op">%&gt;%</span>
+<span class="st">    </span><span class="kw">group_by</span>(Codi) <span class="op">%&gt;%</span>
+<span class="st">    </span><span class="kw">summarise</span>(<span class="dt">mean_growth =</span> <span class="kw">mean</span>(growth, <span class="dt">na.rm =</span> T))</code></pre></div>
+<p>The sequence has been stored as an R object, if we print it in the console we will see it has the class <code>functional sequence</code> and it will print the ordered sequence of operations it executes:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">mean_plot_growth</code></pre></div>
+<pre><code>## Functional sequence with the following components:
 ## 
-## [[2]]
-##  [1] 21 21 20 21 20 21 20 20 20 21
+##  1. mutate(., growth = DiamIf3 - DiamIf2)
+##  2. group_by(., Codi)
+##  3. summarise(., mean_growth = mean(growth, na.rm = T))
 ## 
-## [[3]]
-##  [1] 51 49 51 50 51 52 50 50 48 48 49 50 49 49 50 50 51 49 51 50</code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">map2</span>(n, means, rnorm, <span class="dt">sd =</span> <span class="dv">10</span>)</code></pre></div>
-<pre><code>## [[1]]
-## [1] -12.3  15.3   3.5   2.0  20.0
-## 
-## [[2]]
-##  [1] 11.8 20.3  5.8 31.2 30.0 10.6 31.8  8.9 21.2 25.1
-## 
-## [[3]]
-##  [1] 63 47 54 57 40 50 53 55 41 64 58 46 60 45 50 50 55 49 58 56</code></pre>
-<p>If we need to iterate over more than 2 vectors, we also have the function <code>pmap()</code>, that takes any number of vector inputs as a list.</p>
+## Use 'functions' to extract the individual functions.</code></pre>
+<p>So we can now apply the pseudofunctions to any dataframe:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">mean_plot_growth</span>(lleida_trees)</code></pre></div>
+<pre><code>## # A tibble: 2,235 x 2
+##    Codi   mean_growth
+##    &lt;fct&gt;        &lt;dbl&gt;
+##  1 250001        3.59
+##  2 250002        3.73
+##  3 250003        8.40
+##  4 250004        2.69
+##  5 250005        2.91
+##  6 250006        2.85
+##  7 250007        2.83
+##  8 250008        2.56
+##  9 250010        2.05
+## 10 250011        8.36
+## # … with 2,225 more rows</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">mean_plot_growth</span>(barcelona_trees)</code></pre></div>
+<pre><code>## # A tibble: 2,429 x 2
+##    Codi   mean_growth
+##    &lt;fct&gt;        &lt;dbl&gt;
+##  1 080001        3.33
+##  2 080002        3.63
+##  3 080003        5.93
+##  4 080004        6.55
+##  5 080005        2.08
+##  6 080006        2.28
+##  7 080007        2.45
+##  8 080008        1.79
+##  9 080009        1.86
+## 10 080010        3.33
+## # … with 2,419 more rows</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">mean_plot_growth</span>(tarragona_trees)</code></pre></div>
+<pre><code>## # A tibble: 936 x 2
+##    Codi   mean_growth
+##    &lt;fct&gt;        &lt;dbl&gt;
+##  1 430002        5.59
+##  2 430003        3.55
+##  3 430006        2.40
+##  4 430007        2.55
+##  5 430009        1.20
+##  6 430010        2.28
+##  7 430011        2.40
+##  8 430012        4.12
+##  9 430013        2.88
+## 10 430014        2.70
+## # … with 926 more rows</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">girona_trees <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">mean_plot_growth</span>()     <span class="co"># different flavour of the same operation</span></code></pre></div>
+<pre><code>## # A tibble: 2,113 x 2
+##    Codi   mean_growth
+##    &lt;fct&gt;        &lt;dbl&gt;
+##  1 170004        2.99
+##  2 170005        1.86
+##  3 170006        1.75
+##  4 170007        3.14
+##  5 170008        1.68
+##  6 170009        1.48
+##  7 170010        2.40
+##  8 170012        2.11
+##  9 170013        1.55
+## 10 170014        5.38
+## # … with 2,103 more rows</code></pre>
+<p>We still need to call the function several times, but if we decide to change anything, we just need to modify it in the pseudo-function and rerun the code.</p>
+<p>We can even combine the functional sequence with any other <code>tidyverse</code> functions:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># This will apply the operation only to Pinus sylvestris trees</span>
+    lleida_trees <span class="op">%&gt;%</span>
+<span class="st">        </span><span class="kw">filter</span>(Especie <span class="op">==</span><span class="st"> &quot;021&quot;</span>) <span class="op">%&gt;%</span>
+<span class="st">        </span><span class="kw">mean_plot_growth</span>()</code></pre></div>
+<pre><code>## # A tibble: 923 x 2
+##    Codi   mean_growth
+##    &lt;fct&gt;        &lt;dbl&gt;
+##  1 250029        3.93
+##  2 250034        4.48
+##  3 250040        2.38
+##  4 250044        1.88
+##  5 250045        2.03
+##  6 250051        2.29
+##  7 250052        2.37
+##  8 250053        5.31
+##  9 250054        3.6 
+## 10 250058        3.13
+## # … with 913 more rows</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># This will apply the operation to all plots but will retain only those plots that grow in average more than 5 cm between both inventories.</span>
+    lleida_trees <span class="op">%&gt;%</span>
+<span class="st">        </span><span class="kw">mean_plot_growth</span>() <span class="op">%&gt;%</span>
+<span class="st">        </span><span class="kw">filter</span>(mean_growth <span class="op">&gt;=</span><span class="st"> </span><span class="dv">5</span>)</code></pre></div>
+<pre><code>## # A tibble: 228 x 2
+##    Codi   mean_growth
+##    &lt;fct&gt;        &lt;dbl&gt;
+##  1 250003        8.40
+##  2 250011        8.36
+##  3 250016       12.4 
+##  4 250021        5.54
+##  5 250024        7.66
+##  6 250032        5.34
+##  7 250037        6.16
+##  8 250043       12.0 
+##  9 250049        7.75
+## 10 250069        5.41
+## # … with 218 more rows</code></pre>
+<p>We can use this functionality of <code>magrittr</code> to create functions that can then be applied with any of the variants of <code>mutate</code> such as <code>mutate_at</code> or <code>mutate_if</code>. Imagine we want to calculate (for some reason) the squared root of the log of the diameters measured in the inventory:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># We create our function</span>
+log_sqr &lt;-<span class="st"> </span>. <span class="op">%&gt;%</span>
+<span class="st">    </span><span class="kw">log</span>() <span class="op">%&gt;%</span>
+<span class="st">    </span><span class="kw">sqrt</span>()
+
+<span class="co"># We apply it to diameter variables</span>
+trees <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">    </span><span class="kw">mutate_at</span>(<span class="dt">.vars=</span><span class="kw">c</span>(<span class="st">&quot;DiamIf2&quot;</span>, <span class="st">&quot;DiamIf3&quot;</span>),
+              <span class="dt">.funs =</span> log_sqr)</code></pre></div>
+<pre><code>## # A tibble: 111,756 x 10
+##    Codi   Provincia Especie Rumbo  Dist      N    CD DiamIf3 DiamIf2 HeiIf3
+##    &lt;fct&gt;  &lt;chr&gt;     &lt;fct&gt;   &lt;dbl&gt; &lt;dbl&gt;  &lt;dbl&gt; &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt;  &lt;dbl&gt;
+##  1 080001 08        022         7  8.3   31.8     20    1.74    1.71    9  
+##  2 080002 08        476        38  9.1   31.8     35    1.88    1.87    9  
+##  3 080003 08        021        25  7     31.8     25    1.79    1.69   11  
+##  4 080004 08        021        28  8.89  31.8     15    1.68    1.59    9.5
+##  5 080006 08        021        19 11.2   14.1     35    1.88    1.85   13  
+##  6 080007 08        021        32 12     14.1     35    1.87    1.83   10  
+##  7 080008 08        243        40  7.8   31.8     15    1.65    1.61    6  
+##  8 080009 08        045        16  5.09  31.8     20    1.69    1.65    7  
+##  9 080010 08        243        47 26.9    5.09    65    2.05    2.05   16.5
+## 10 080013 08        022        44  2.7  127.      15    1.65    1.59    9.5
+## # … with 111,746 more rows</code></pre>
 </div>
-<div id="map-and-apply" class="section level2">
-<h2>map and <code>apply</code></h2>
-<p>If you are familiar with the <code>apply</code>family of functions in base R, you might have noticed that <code>purrr</code> functions share many similarities. For example, <code>lapply()</code> is almost identical to <code>map()</code>. The advantage of map functions is not efficiency or speed, but rather more consistent names and arguments, making them easier to learn and master. But if you feel comfortable using the àpply`family of functions, just continue to use them, there is nothing wrong in that.</p>
+<div id="functions" class="section level1">
+<h1>Functions</h1>
+<p>Although <code>magrittr</code> functional sequences can act as functions and are an easy and efficient way of programming within the tidyverse, they are not “real” functions as it is commonly understood in R. A true R function should work in any environment, not only with piped operations, and typically has the following look:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">my_function &lt;-<span class="st"> </span><span class="cf">function</span> (argument1, argument2) {
+    operation1
+    operation2
+    output
+}</code></pre></div>
+<p>Imagine, for example, that we want to rescale the diameters in the “trees” dataframe.</p>
+<blockquote>
+<p>Rescaling a variable means make it have a range from 0 to 1. We can achieve this by substracting each value from the minimum and dividing the result by the range:</p>
+</blockquote>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">rescale &lt;-<span class="st"> </span><span class="cf">function</span> (x) {
+    (x<span class="op">-</span><span class="kw">min</span>(x, <span class="dt">na.rm =</span> T)) <span class="op">/</span><span class="st"> </span>(<span class="kw">max</span>(x, <span class="dt">na.rm =</span> T)<span class="op">-</span><span class="st"> </span><span class="kw">min</span>(x, <span class="dt">na.rm =</span> T))
+}</code></pre></div>
+<p>And this could be applied in the same way as we did before with the log_sqr2 pseudo-function:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">trees <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">    </span><span class="kw">mutate_at</span>(<span class="dt">.vars=</span><span class="kw">c</span>(<span class="st">&quot;DiamIf2&quot;</span>, <span class="st">&quot;DiamIf3&quot;</span>),
+              <span class="dt">.funs =</span> rescale) </code></pre></div>
+<pre><code>## # A tibble: 111,756 x 10
+##    Codi   Provincia Especie Rumbo  Dist      N    CD DiamIf3 DiamIf2 HeiIf3
+##    &lt;fct&gt;  &lt;chr&gt;     &lt;fct&gt;   &lt;dbl&gt; &lt;dbl&gt;  &lt;dbl&gt; &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt;  &lt;dbl&gt;
+##  1 080001 08        022         7  8.3   31.8     20  0.0650  0.0581    9  
+##  2 080002 08        476        38  9.1   31.8     35  0.135   0.127     9  
+##  3 080003 08        021        25  7     31.8     25  0.0879  0.0512   11  
+##  4 080004 08        021        28  8.89  31.8     15  0.0475  0.0262    9.5
+##  5 080006 08        021        19 11.2   14.1     35  0.135   0.119    13  
+##  6 080007 08        021        32 12     14.1     35  0.130   0.105    10  
+##  7 080008 08        243        40  7.8   31.8     15  0.0381  0.0293    6  
+##  8 080009 08        045        16  5.09  31.8     20  0.0508  0.0398    7  
+##  9 080010 08        243        47 26.9    5.09    65  0.304   0.302    16.5
+## 10 080013 08        022        44  2.7  127.      15  0.0386  0.0260    9.5
+## # … with 111,746 more rows</code></pre>
+<p>There are three key steps to creating a new function:</p>
+<ol style="list-style-type: decimal">
+<li><p>You need to pick a name for the function. Here we’ve used rescale because this function rescales a vector to lie between 0 and 1.</p></li>
+<li><p>You list the inputs, or arguments, to the function inside function. Here we have just one argument, the variable to rescale. If we had more the call would look like function(x, y, z).</p></li>
+<li><p>You place the code you have developed in the body of the function, a <code>{</code> block that immediately follows <code>function(...)</code>.</p></li>
+</ol>
+<p>Converting a more complicated piece of code into a function can be more challenging. A good tip is to first analyse the code. How many inputs does it have?</p>
+<p>If we analyse the example above (<code>mean_plot_growth</code>) we could say it only has one input, the dataframe (which was there represented by the dot placeholder). To make the inputs more clear, it’s a good idea to rewrite the code using temporary variables with general names. Here this code only requires a single data frame, so we’ll call it df:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">df &lt;-<span class="st"> </span>lleida_trees
+df <span class="op">%&gt;%</span>
+<span class="st">    </span><span class="kw">mutate</span>(<span class="dt">growth =</span> DiamIf3<span class="op">-</span><span class="st"> </span>DiamIf2) <span class="op">%&gt;%</span>
+<span class="st">    </span><span class="kw">group_by</span>(Codi) <span class="op">%&gt;%</span>
+<span class="st">    </span><span class="kw">summarise</span>(<span class="dt">mean_growth =</span> <span class="kw">mean</span>(growth, <span class="dt">na.rm =</span> T))</code></pre></div>
+<pre><code>## # A tibble: 2,235 x 2
+##    Codi   mean_growth
+##    &lt;fct&gt;        &lt;dbl&gt;
+##  1 250001        3.59
+##  2 250002        3.73
+##  3 250003        8.40
+##  4 250004        2.69
+##  5 250005        2.91
+##  6 250006        2.85
+##  7 250007        2.83
+##  8 250008        2.56
+##  9 250010        2.05
+## 10 250011        8.36
+## # … with 2,225 more rows</code></pre>
+<p>So once we have identified the inputs, we convert them in arguments of the function, as in:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"> mean_plot_growth2 &lt;-<span class="st"> </span><span class="cf">function</span> (df) {
+    df <span class="op">%&gt;%</span>
+<span class="st">    </span><span class="kw">mutate</span>(<span class="dt">growth =</span> DiamIf3<span class="op">-</span><span class="st"> </span>DiamIf2) <span class="op">%&gt;%</span>
+<span class="st">    </span><span class="kw">group_by</span>(Codi) <span class="op">%&gt;%</span>
+<span class="st">    </span><span class="kw">summarise</span>(<span class="dt">mean_growth =</span> <span class="kw">mean</span>(growth, <span class="dt">na.rm =</span> T))
+}</code></pre></div>
+<p>and so we can now apply the function to any dataframe that has the variables <em>Codi</em>, <em>DiamIf3</em>, <em>DiamIf2</em>, <em>Especie</em>…</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">mean_plot_growth2</span>(lleida_trees)</code></pre></div>
+<pre><code>## # A tibble: 2,235 x 2
+##    Codi   mean_growth
+##    &lt;fct&gt;        &lt;dbl&gt;
+##  1 250001        3.59
+##  2 250002        3.73
+##  3 250003        8.40
+##  4 250004        2.69
+##  5 250005        2.91
+##  6 250006        2.85
+##  7 250007        2.83
+##  8 250008        2.56
+##  9 250010        2.05
+## 10 250011        8.36
+## # … with 2,225 more rows</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">mean_plot_growth2</span>(barcelona_trees)</code></pre></div>
+<pre><code>## # A tibble: 2,429 x 2
+##    Codi   mean_growth
+##    &lt;fct&gt;        &lt;dbl&gt;
+##  1 080001        3.33
+##  2 080002        3.63
+##  3 080003        5.93
+##  4 080004        6.55
+##  5 080005        2.08
+##  6 080006        2.28
+##  7 080007        2.45
+##  8 080008        1.79
+##  9 080009        1.86
+## 10 080010        3.33
+## # … with 2,419 more rows</code></pre>
+<div id="tidy-eval-programming-in-the-tidyverse" class="section level2">
+<h2>Tidy eval: Programming in the tidyverse</h2>
+<p>What if we want to generalize a bit more the function for average growth? One option could be to convert the grouping variable in an argument of the function, so that the user could define if they want the mean growth per plot, per species… Let’s try this</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"> mean_plot_growth3 &lt;-<span class="st"> </span><span class="cf">function</span> (df, grouping_var) {
+    df <span class="op">%&gt;%</span>
+<span class="st">    </span><span class="kw">mutate</span>(<span class="dt">growth =</span> DiamIf3<span class="op">-</span><span class="st"> </span>DiamIf2) <span class="op">%&gt;%</span>
+<span class="st">    </span><span class="kw">group_by</span>(grouping_var) <span class="op">%&gt;%</span>
+<span class="st">    </span><span class="kw">summarise</span>(<span class="dt">mean_growth =</span> <span class="kw">mean</span>(growth, <span class="dt">na.rm =</span> T))
+}</code></pre></div>
+<p>And now we could do:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">mean_plot_growth3</span>(lleida_trees, Especie)</code></pre></div>
+<pre><code>## Error: Column `grouping_var` is unknown</code></pre>
+<p>But hey!, we get an error message saying that it cannot recognize which column is “grouping_var”. This is because most dplyr functions use non-standard evaluation (NSE). This is a catch-all term that means they don’t follow the usual R rules of evaluation. This has two main benefits for dplyr code:</p>
+<ol style="list-style-type: decimal">
+<li><p>Operations on data frames can be expressed succinctly because you don’t need to repeat the name of the data frame. For example, you can write <code>filter(df, x == 1, y == 2, z == 3)</code> instead of <code>df[df$x == 1 &amp; df$y ==2 &amp; df$z == 3, ]</code>.</p></li>
+<li><p><code>dplyr</code> can choose to compute results in a different way to base R. This is important for database backends because <code>dplyr</code> itself doesn’t do any work, but instead generates the SQL that tells the database what to do.</p></li>
+</ol>
+<p>As a consequence, dplyr will first look for the column <code>grouping_var</code> in the dataframe, without noticing that <code>grouping_var</code> should in this case take the value specified in the function. That means that whenever we want to use a <code>dplyr</code> verb within a function, we must operate a bit differently. In this case, with the <code>{{</code> operator, you can tunnel data-variables (i.e. columns from the data frames) through arg-variables (function arguments):</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"> mean_plot_growth3 &lt;-<span class="st"> </span><span class="cf">function</span> (df, grouping_var) {
+    df <span class="op">%&gt;%</span>
+<span class="st">    </span><span class="kw">mutate</span>(<span class="dt">growth =</span> DiamIf3<span class="op">-</span><span class="st"> </span>DiamIf2) <span class="op">%&gt;%</span>
+<span class="st">    </span><span class="kw">group_by</span>({{grouping_var}}) <span class="op">%&gt;%</span>
+<span class="st">    </span><span class="kw">summarise</span>(<span class="dt">mean_growth =</span> <span class="kw">mean</span>(growth, <span class="dt">na.rm =</span> T))
+ }</code></pre></div>
+<p>The tunnel makes it possible to supply variables from the data frame to your wrapper function:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">mean_plot_growth3</span>(lleida_trees, Especie)</code></pre></div>
+<pre><code>## # A tibble: 18 x 2
+##    Especie mean_growth
+##    &lt;fct&gt;         &lt;dbl&gt;
+##  1 019            2.88
+##  2 021            3.09
+##  3 022            2.44
+##  4 024            2.99
+##  5 025            2.93
+##  6 031            4.04
+##  7 042            2.39
+##  8 044            2.24
+##  9 045            1.46
+## 10 050            4.53
+## 11 070            3.13
+## 12 071            2.84
+## 13 073            1.75
+## 14 078            1.83
+## 15 090            1.25
+## 16 243            2.13
+## 17 255            2.64
+## 18 976            2.30</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">mean_plot_growth3</span>(lleida_trees, Codi)</code></pre></div>
+<pre><code>## # A tibble: 2,235 x 2
+##    Codi   mean_growth
+##    &lt;fct&gt;        &lt;dbl&gt;
+##  1 250001        3.59
+##  2 250002        3.73
+##  3 250003        8.40
+##  4 250004        2.69
+##  5 250005        2.91
+##  6 250006        2.85
+##  7 250007        2.83
+##  8 250008        2.56
+##  9 250010        2.05
+## 10 250011        8.36
+## # … with 2,225 more rows</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">mean_plot_growth3</span>(lleida_trees, CD)</code></pre></div>
+<pre><code>## # A tibble: 13 x 2
+##       CD mean_growth
+##    &lt;dbl&gt;       &lt;dbl&gt;
+##  1    10        1.36
+##  2    15        2.15
+##  3    20        3.03
+##  4    25        3.00
+##  5    30        3.25
+##  6    35        3.34
+##  7    40        3.41
+##  8    45        2.88
+##  9    50        3.09
+## 10    55        3.55
+## 11    60        3.74
+## 12    65        3.78
+## 13    70        4.33</code></pre>
 </div>
 </div>
 <div id="to-know-more" class="section level1">
 <h1>To know more</h1>
-<p>Once you master <code>map</code> functions you will find they can help solve complex iteration problems in much less time and with much less code. However, <code>map</code> functions represent an additional step in the ladder of abstraction, and can take some time to fully comprehend how they work and their potential uses. To know more about the details and functionalities of <code>purrr</code>you can check the website <a href="https://purrr.tidyverse.org/" class="uri">https://purrr.tidyverse.org/</a> or check Wickham’s <a href="https://r4ds.had.co.nz/iteration.html">chapter on iteration</a>.</p>
+<p>There’s a lot more to know about tidy evaluation, and more operators in the <code>rlang</code> package, but these are only needed for advanced uses of R that go beyond the scope of this course. You can read more at <a href="https://tidyeval.tidyverse.org" class="uri">https://tidyeval.tidyverse.org</a>, and you can learn more on tidy eval and tunneling variables by reading this blog post in the <a href="https://www.tidyverse.org/blog/2020/02/glue-strings-and-tidy-eval/">tidyverse blog</a>, or checking the <a href="https://cran.r-project.org/web/packages/dplyr/vignettes/programming.html">programming vignette</a> for <code>dplyr</code>. To get an even more advanced understanding on meta programming with tidy eval, I recommned the chapter on the second edition of the book <a href="http://adv-r.hadley.nz/">“Advanced R”</a> or the 1-hour <a href="https://resources.rstudio.com/webinars/tidyeval">webinar by RStudio</a>.</p>
+<p>To know more about functions and programming in general, check the <a href="https://r4ds.had.co.nz/functions.html">“Functions” chapter</a> in R for data Science, or the <a href="http://adv-r.hadley.nz/">“Advanced R”</a> book.</p>
 </div>
 </div>
 

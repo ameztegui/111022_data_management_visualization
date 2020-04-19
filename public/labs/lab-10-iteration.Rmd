@@ -1,0 +1,452 @@
+---
+title: "Iteration"
+date: "111022 | Data management and visualization with R"
+author: 
+  - "Aitor Ameztegui"
+  - "Marcos Rodrigues"
+output:
+  rmdformats::readthedown
+number_sections: true
+css: lab.css
+# runtime: shiny_prerendered
+---
+
+```{r include=FALSE}
+library(tidyverse)
+library(sf)
+library(knitr)
+options(
+  htmltools.dir.version = FALSE, # for blogdown
+  show.signif.stars = FALSE,     # for regression output
+  digits = 2
+  )
+#knitr::opts_chunk$set(eval = FALSE)
+load('data/data_IFN.rdata')
+trees %>% filter(Provincia == "25") -> lleida_trees
+trees %>% filter(Provincia == "08") -> barcelona_trees
+trees %>% filter(Provincia == "17") -> girona_trees
+trees %>% filter(Provincia == "43") -> tarragona_trees
+
+```
+
+
+# Introduction
+
+In the lab on functions and functional programming, we talked about how important it is to reduce duplication in your code by creating functions instead of copying-and-pasting. 
+
+One tool for reducing duplication is functions, which reduce duplication by identifying repeated patterns of code and extract them out into independent pieces that can be easily reused and updated. Another tool for reducing duplication is iteration, which helps you when you need to do the same thing to multiple inputs: repeating the same operation on different columns, or on different datasets. 
+
+In this chapter you’ll learn about two important iteration paradigms: imperative programming and functional programming. On the imperative side you have tools like for loops and while loops, which are a great place to start because they make iteration very explicit, so it’s obvious what’s happening.
+
+However, for loops are quite verbose, and require quite a bit of bookkeeping code that is duplicated for every for loop. Functional programming (FP) offers tools to extract out this duplicated code, so each common for loop pattern gets its own function. Once you master the vocabulary of FP, you can solve many common iteration problems with less code, more ease, and fewer errors.
+
+# `for` loops
+
+https://www.r-bloggers.com/for-loops-and-how-to-avoid-them/
+
+Let’s get back to the conceptual meaning of a loop. Suppose you want to do several printouts of the following form: The year is [year] where [year] is equal to 2010, 2011, up to 2015. You can do this as follows:
+
+print(paste("The year is", 2010))
+"The year is 2010"
+print(paste("The year is", 2011))
+"The year is 2011"
+print(paste("The year is", 2012))
+"The year is 2012"
+print(paste("The year is", 2013))
+"The year is 2013"
+print(paste("The year is", 2014))
+"The year is 2014"
+print(paste("The year is", 2015))
+"The year is 2015"
+You immediately see this is rather tedious: you repeat the same code chunk over and over. This violates the DRY principle, known in every programming language: Don’t Repeat Yourself, at all cost. In this case, by making use of a for loop in R, you can automate the repetitive part:
+
+for (i in 2010:2015){
+  print(paste("The year is", i))
+}
+"The year is 2010"
+"The year is 2011"
+"The year is 2012"
+"The year is 2013"
+"The year is 2014"
+"The year is 2015"
+"The year is 2010"
+"The year is 2011"
+"The year is 2012"
+"The year is 2013"
+"The year is 2014"
+"The year is 2015"
+
+
+---
+
+
+Loops are used in programming to repeat a specific block of code. In this article, you will learn to create a for loop in R programming.
+
+A for loop is used to iterate over a vector in R programming.
+
+Syntax of for loop
+
+```{r}
+for (val in sequence)
+{
+statement
+}
+```
+
+
+Here, sequence is a vector and val takes on each of its value during the loop. In each iteration, statement is evaluated.
+
+![](images/10-iteration/for-loop.jpg)
+Below is an example to count the number of even numbers in a vector.
+
+x <- c(2,5,3,9,8,11,6)
+count <- 0
+for (val in x) {
+if(val %% 2 == 0)  count = count+1
+}
+print(count)
+Output
+
+[1] 3
+In the above example, the loop iterates 7 times as the vector x has 7 elements.
+
+In each iteration, val takes on the value of corresponding element of x.
+
+We have used a counter to count the number of even numbers in x. We can see that x contains 3 even numbers.
+
+----
+“Looping”, “cycling”, “iterating” or just replicating instructions is an old practice that originated well before the invention of computers. It is nothing more than automating a multi-step process by organizing sequences of actions or ‘batch’ processes and by grouping the parts that need to be repeated.
+
+All modern programming languages provide special constructs that allow for the repetition of instructions or blocks of instructions.
+
+Broadly speaking, there are two types of these special constructs or loops in modern programming languages. Some loops execute for a prescribed number of times, as controlled by a counter or an index, incremented at each iteration cycle. These are part of the for loop family.
+
+On the other hand, some loops are based on the onset and verification of a logical condition. The condition is tested at the start or the end of the loop construct. These variants belong to the while or repeat family of loops, respectively.
+
+![](images/10-iteration/for_loops.png)
+
+For Loops Explained
+This loop structure, made of the rectangular box ‘init’ (or initialization), the diamond or rhombus decision, and the rectangular box i1 is executed a known number of times.
+
+In flowchart terms, rectangular boxes mean something like “do something which does not imply decisions”. Rhombi or diamonds, on the other hand, are called “decision symbols” and therefore translate into questions which only have two possible logical answers, namely, True (T) or False (F).
+
+Note that, to keep things simple, other possible symbols have been omitted from the figure.
+
+One or more instructions within the initialization rectangle are followed by the evaluation of the condition on a variable which can assume values within a specified sequence. In the figure, this is represented by the diamond: the symbols mean “does the variable v’s current value belong to the sequence seq?”.
+
+In other words, you are testing whether v’s current value is within a specified range. You normally define this range in the initialization, with something like 1:100 to ensure that the loop starts.
+
+If the condition is not met and the resulting outcome is False, the loop is never executed. This is indicated by the loose arrow on the right of the for loop structure. The program will then execute the first instruction found after the loop block.
+
+If the condition is verified, an instruction -or block of instructions- i1 is executed. And perhaps this block of instructions is another loop. In such cases, you speak of a nested loop.
+
+Once this is done, the condition is then evaluated again. This is indicated by the lines going from i1 back to the top, immediately after the initialization box. In R -and in Python, it is possible to express this in plain English, by asking whether our variable belongs to a range of values or not.
+
+Note that in other languages, for example in C, the condition is made more explicit with the use of a logical operator, such as greater or less than, equal to, …
+
+Here is an example of a simple for loop:
+
+
+
+
+The for block is contained within curly braces. These can be placed either immediately after the test condition or beneath it, preferably followed by an indentation. None of this is compulsory, but the curly braces definitely enhance the readability of your code and allow to spot the loop block and potential errors within it easily.
+
+
+Note that the vector of the squares, usq, is initialized. This would not be necessary in plain RStudio code, but in the markup version, knitr would not compile because a reference to the vector is not found before its use in the loop, thus throwing an error within RStudio. For more information on knitr, go to this page.
+
+
+
+
+## Example
+
+remember our pseudofunction "mean_plot_growth"? Imagine we want to compute the mean g
+
+```{r}
+ mean_plot_growth3 <- function (df, grouping_var) {
+    df %>%
+    mutate(growth = DiamIf3- DiamIf2) %>%
+    group_by(Provincia, {{grouping_var}}) %>%
+    summarise(mean_growth = mean(growth, na.rm = T))
+ }
+```
+
+we could copy paste
+
+```{r}
+mean_plot_growth3(lleida_trees, Especie)
+mean_plot_growth3(barcelona_trees, Especie)
+```
+
+But that breaks our rule of thumb: never copy and paste more than twice. Instead, we could use a for loop:
+
+```{r}
+provinces <- list(lleida_trees, barcelona_trees,
+               girona_trees, tarragona_trees)
+```
+
+and then create a `for` loop.
+
+```{r}
+output <- list()                      # Output
+for (i in seq_along(provinces)) {
+    output[[i]] <- mean_plot_growth3(provinces[[i]], Especie)
+}
+```
+
+Every for loop has three components:
+
+* **The output:** output <- vector("double", length(x)). Before you start the loop, you must always allocate sufficient space for the output. This is very important for efficiency: if you grow the for loop at each iteration using c() (for example), your for loop will be very slow.
+
+A general way of creating an empty vector of given length is the vector() function. It has two arguments: the type of the vector (“logical”, “integer”, “double”, “character”, etc) and the length of the vector.
+
+
+```{r}
+output
+```
+
+Como data frame:
+
+```{r}
+output <- data.frame(Provincia = NA, 
+                     Especie = NA,
+                     mean_growth = NA)
+for (i in seq_along(provinces)) {
+    temp_output <- mean_plot_growth3(provinces[[i]], Especie)
+    output <- bind_rows(output, temp_output)
+}
+
+output
+```
+
+
+* **The sequence:** i in seq_along(df). This determines what to loop over: each run of the for loop will assign i to a different value from `seq_along(df)`. 
+
+* **The body:** output[[i]] <- median(df[[i]]). This is the code that does the work. It’s run repeatedly, each time with a different value for i. The first iteration will run output[[1]] <- median(df[[1]]), the second will run output[[2]] <- median(df[[2]]), and so on.
+
+That’s all there is to the for loop! Now is a good time to practice creating some basic (and not so basic) for loops using the exercises below. Then we’ll move on some variations of the for loop that help you solve other problems that will crop up in practice.
+
+
+
+# Iteration with `purrr`
+
+## map
+
+## map variants
+
+## walk
+
+So far we have seen how to transform one or several data frames in order to get the information we need for our data science project. We have learned how to create new variables, filter observations, join several tables or calculate summary statistics, among many other tools. These are operations that we will apply very often, and sometimes you may be in the need to apply a given sequence of steps repeteadly. In those cases, you  may consider writing a function. 
+
+Writing good functions is a difficult task, and can be a lifetime journey. At the beginning, it will take you more time to create the function than to repeat the needed ope¡ration 3, 4 or even 10 times. But functions allow you to automate common tasks in a more powerful and general way than copy-and-pasting.
+
+Writing a function has three main big advantages over using copy-and-paste (Wickham & Grolemund, 2016):
+
+1. You eliminate the chance of making incidental mistakes when you copy and paste (i.e. updating a variable name in one place, but not in another).
+
+2. As requirements change, you only need to update code in one place, instead of many.
+
+3. You can give a function an evocative name that makes your code easier to understand.
+
+# Functional sequences
+
+The `magrittr` package, where the pipe operator (`%>%`) was designed, allows for saving piped sequences of operations as pseudo-functions in a readable format. We just need to string functions together with pipes and replace the initial object (a data frame) with the dot placeholder (`.`) This creates a function in its own right, but a special case called functional sequence.  The dot may be considered as the unique argument of the pseudofunction, and will pass the dataframe to which the pseudofunction will be applied to. 
+
+Let's see an example: imagine that we had the information about the trees in the National Forest Inventory separated by provinces. In fact, you don't have to imagine too much, because this is actually how the information is provided by the Ministry. Now, let's say we want to calculate the mean tree growth per plot for each of the 50 provinces in Spain. Of course, we can do it one by one, as in:
+
+```{r, eval = FALSE}
+lleida_trees %>%
+    mutate(growth = DiamIf3- DiamIf2) %>%
+    group_by(Codi) %>%
+    summarise(mean_growth = mean(growth, na.rm = T))
+
+barcelona_trees %>%
+    mutate(growth = DiamIf3- DiamIf2) %>%
+    group_by(Codi) %>%
+    summarise(mean_growth = mean(growth, na.rm = T))
+
+# and so on
+```
+
+However, this is not too efficient for the 3 reasons mentioned above. Imagine if, after typing the code above for 50 times, we decide it is better to calculate the median growth besides the average growth. So instead, we can save the sequence of operations as this:
+
+
+```{r}
+ mean_plot_growth <- . %>%
+    mutate(growth = DiamIf3- DiamIf2) %>%
+    group_by(Codi) %>%
+    summarise(mean_growth = mean(growth, na.rm = T))
+```
+
+The sequence has been stored as an R object, if we print it in the console we will see it has the class `functional sequence` and it will print the ordered sequence of operations it executes:
+
+```{r}
+mean_plot_growth
+```
+
+So we can now apply the pseudofunctions to any dataframe:
+
+```{r}
+mean_plot_growth(lleida_trees)
+mean_plot_growth(barcelona_trees)
+mean_plot_growth(tarragona_trees)
+girona_trees %>% mean_plot_growth()     # different flavour of the same operation
+
+```
+
+We still need to call the function several times, but if we decide to change anything, we just need to modify it in the pseudo-function and rerun the code.
+
+We can even combine the functional sequence with any other `tidyverse` functions:
+
+```{r ejemplo functional sequence 3}
+
+# This will apply the operation only to Pinus sylvestris trees
+    lleida_trees %>%
+        filter(Especie == "021") %>%
+        mean_plot_growth()
+
+# This will apply the operation to all plots but will retain only those plots that grow in average more than 5 cm between both inventories.
+    lleida_trees %>%
+        mean_plot_growth() %>%
+        filter(mean_growth >= 5)
+```
+
+We can use this functionality of `magrittr` to create functions that can then be applied with any of the variants of `mutate` such as `mutate_at` or `mutate_if`. Imagine we want to calculate (for some reason) the squared root of the log of the diameters measured in the inventory:
+
+```{r}
+
+# We create our function
+log_sqr <- . %>%
+    log() %>%
+    sqrt()
+
+# We apply it to diameter variables
+trees %>% 
+    mutate_at(.vars=c("DiamIf2", "DiamIf3"),
+              .funs = log_sqr)
+```
+
+
+# Functions
+
+Although `magrittr` functional sequences can act as functions and are an easy and efficient way of programming within the tidyverse, they are not "real" functions as it is commonly understood in R. A true R function should work in any environment, not only with piped operations, and typically has the following look:
+
+```{r, eval = FALSE}
+
+my_function <- function (argument1, argument2) {
+    operation1
+    operation2
+    output
+}
+```
+
+Imagine, for example, that we want to rescale the diameters in the "trees" dataframe.
+
+>Rescaling a variable means make it have a range from 0 to 1. We can achieve this by substracting each value from the minimum and dividing the result by the range:
+
+
+```{r}
+rescale <- function (x) {
+    (x-min(x, na.rm = T)) / (max(x, na.rm = T)- min(x, na.rm = T))
+}
+```
+
+And this could be applied in the same way as we did before with the log_sqr2 pseudo-function:
+
+```{r}
+trees %>% 
+    mutate_at(.vars=c("DiamIf2", "DiamIf3"),
+              .funs = rescale) 
+```
+
+There are three key steps to creating a new function:
+
+1. You need to pick a name for the function. Here we’ve used rescale because this function rescales a vector to lie between 0 and 1.
+
+2. You list the inputs, or arguments, to the function inside function. Here we have just one argument, the variable to rescale. If we had more the call would look like function(x, y, z).
+
+3. You place the code you have developed in the body of the function, a `{` block that immediately follows `function(...)`.
+
+Converting a more complicated piece of code into a function can be more challenging. A good tip is to first analyse the code. How many inputs does it have?
+
+If we analyse the example above (`mean_plot_growth`) we could say it only has one input, the dataframe (which was there represented by the dot placeholder). To make the inputs more clear, it’s a good idea to rewrite the code using temporary variables with general names. Here this code only requires a single data frame, so we’ll call it df:
+
+```{r}
+df <- lleida_trees
+df %>%
+    mutate(growth = DiamIf3- DiamIf2) %>%
+    group_by(Codi) %>%
+    summarise(mean_growth = mean(growth, na.rm = T))
+```
+
+So once we have identified the inputs, we convert them in arguments of the function, as in:
+
+```{r}
+ mean_plot_growth2 <- function (df) {
+    df %>%
+    mutate(growth = DiamIf3- DiamIf2) %>%
+    group_by(Codi) %>%
+    summarise(mean_growth = mean(growth, na.rm = T))
+}
+```
+
+and so we can now apply the function to any dataframe that has the variables *Codi*, *DiamIf3*, *DiamIf2*, *Especie*...
+
+```{r}
+mean_plot_growth2(lleida_trees)
+mean_plot_growth2(barcelona_trees)
+
+```
+
+## Tidy eval: Programming in the tidyverse
+
+What if we want to generalize a bit more the function for average growth? One option could be to convert the grouping variable in an argument of the function, so that the user could define if they want the mean growth per plot, per species... Let's try this
+
+```{r}
+ mean_plot_growth3 <- function (df, grouping_var) {
+    df %>%
+    mutate(growth = DiamIf3- DiamIf2) %>%
+    group_by(grouping_var) %>%
+    summarise(mean_growth = mean(growth, na.rm = T))
+}
+```
+
+And now we could do:
+
+```{r, error = T}
+mean_plot_growth3(lleida_trees, Especie)
+
+```
+But hey!, we get an error message saying that it cannot recognize which column is "grouping_var". This is because most dplyr functions use non-standard evaluation (NSE). This is a catch-all term that means they don’t follow the usual R rules of evaluation. This has two main benefits for dplyr code:
+
+1. Operations on data frames can be expressed succinctly because you don’t need to repeat the name of the data frame. For example, you can write `filter(df, x == 1, y == 2, z == 3)` instead of `df[df$x == 1 & df$y ==2 & df$z == 3, ]`.
+
+2. `dplyr` can choose to compute results in a different way to base R. This is important for database backends because `dplyr` itself doesn’t do any work, but instead generates the SQL that tells the database what to do.
+
+As a consequence, dplyr will first look for the column `grouping_var` in the dataframe, without noticing that `grouping_var` should in this case take the value specified in the function.  That means that whenever we want to use a `dplyr` verb within a function, we must operate a bit differently. In this case, with the `{{` operator, you can tunnel data-variables (i.e. columns from the data frames) through arg-variables (function arguments):
+
+```{r}
+ mean_plot_growth3 <- function (df, grouping_var) {
+    df %>%
+    mutate(growth = DiamIf3- DiamIf2) %>%
+    group_by({{grouping_var}}) %>%
+    summarise(mean_growth = mean(growth, na.rm = T))
+ }
+```
+
+The tunnel makes it possible to supply variables from the data frame to your wrapper function:
+
+```{r}
+mean_plot_growth3(lleida_trees, Especie)
+mean_plot_growth3(lleida_trees, Codi)
+mean_plot_growth3(lleida_trees, CD)
+```
+
+
+
+# To know more
+
+There's a lot more to know about tidy evaluation, and more operators in the `rlang` package, but these are only needed for advanced uses of R that go beyond the scope of this course. You can read more at https://tidyeval.tidyverse.org, and you can learn more on tidy eval and tunneling variables by reading this blog post in the [tidyverse blog](https://www.tidyverse.org/blog/2020/02/glue-strings-and-tidy-eval/), or checking the [programming vignette](https://cran.r-project.org/web/packages/dplyr/vignettes/programming.html) for `dplyr`. To get an even more advanced understanding on meta programming with tidy eval, I recommned the chapter on the second edition of the book ["Advanced R"](http://adv-r.hadley.nz/) or the 1-hour [webinar by RStudio](https://resources.rstudio.com/webinars/tidyeval).
+
+To know more about functions and programming in general, check the ["Functions" chapter](https://r4ds.had.co.nz/functions.html) in R for data Science, or the ["Advanced R"](http://adv-r.hadley.nz/) book.
+
+ 
