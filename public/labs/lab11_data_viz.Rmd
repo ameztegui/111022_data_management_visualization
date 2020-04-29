@@ -1,0 +1,281 @@
+---
+title: "Principles of figure design"
+date: "111022 | Data management and visualization with R"
+author: 
+  - "Aitor Ameztegui"
+  - "Marcos Rodrigues"
+bibliography: "references/biblio.bib"
+output:
+  rmdformats::readthedown:
+    highlight: pygments
+    number_sections: true
+    css: lab.css
+# runtime: shiny_prerendered
+---
+
+
+```{r knitr_init, echo=FALSE, cache=FALSE, warning=FALSE}
+
+library(knitr)
+
+## Global options
+options(max.print="75")
+opts_chunk$set(echo=TRUE,
+	             cache=FALSE,
+               prompt=FALSE,
+               tidy=TRUE,
+               comment=NA,
+               message=FALSE,
+               warning=FALSE)
+opts_knit$set(width=75)
+```
+
+
+```{r include=FALSE}
+library(tidyverse)
+library(rmdformats)
+library(tidyverse)
+library(cowplot)
+library(sf)
+library(raster)
+library(rgdal)
+library(forcats)
+library(patchwork)
+library(lubridate)
+library(gridExtra)
+library(ggpubr)
+
+options(
+  htmltools.dir.version = FALSE, # for blogdown
+  show.signif.stars = FALSE     # for regression output
+  )
+```
+
+The main goal of this lab is to introduce the most basic concepts about data visualization. The contents of this *lab* have been adapted/taken from @wickham2009 and @wilke2019fundamentals.
+
+
+# Data visualization
+
+**Data visualization** is part art and part science. The challenge is to *get the art right without getting the science wrong* and vice versa. A data visualization first and foremost has to accurately **convey the data**. It must not mislead or distort. If one number is twice as large as another, but in the visualization they look to be about the same, then the visualization is wrong. At the same time, a data visualization should be **aesthetically pleasing**. Good visual presentations tend to enhance the message of the visualization. If a figure contains jarring colors, imbalanced visual elements, or other features that distract, then the viewer will find it harder to inspect the figure and interpret it correctly.
+
+Scientists frequently (though not always!) know how to visualize data without being grossly misleading. However, they may not have a well developed sense of visual aesthetics, and they may inadvertently make visual choices that detract from their desired message. Designers, on the other hand, may prepare visualizations that look beautiful but play fast and loose with the data. 
+
+In this lab we attempt to cover the key theoretical principles,and concepts required to visualize data for publications, reports, or presentations. We are not going tocover any instruction on *how* to make figures yet but try to summarize the most basic points to **plan in advance the kind of representation we should be targeting**.
+
+## Ugly, bad, and wrong figures {-}
+
+Throughout this book, I frequently show different versions of the same figures, some as examples of how to make a good visualization and some as examples of how not to. To provide a simple visual guideline of which examples should be emulated and which should be avoided, I am clearly labeling problematic figures as "ugly", "bad", or "wrong":
+
+- **ugly**---A figure that has aesthetic problems but otherwise is clear and informative.
+- **bad**---A figure that has problems related to perception; it may be unclear, confusing, overly complicated, or deceiving.
+- **wrong**---A figure that has problems related to mathematics; it is objectively incorrect.
+
+
+Examples of ugly, bad, and wrong figures. (a) A bar plot showing three values (A = 3, B = 5, and C = 4). This is a reasonable visualization with no major flaws. (b) An ugly version of part (a). While the plot is technically correct, it is not aesthetically pleasing. The colors are too bright and not useful. The background grid is too prominent. The text is displayed using three different fonts in three different sizes. (c) A bad version of part (a). Each bar is shown with its own *y*-axis scale. Because the scales don't align, this makes the figure misleading. One can easily get the impression that the three values are closer together than they actually are. (d) A wrong version of part (a). Without an explicit *y* axis scale, the numbers represented by the bars cannot be ascertained. The bars appear to be of lengths 1, 3, and 2, even though the values displayed are meant to be 3, 5, and 4.
+
+
+```{r ugly-bad-wrong-examples, fig.asp = 3/4, fig.cap = '(ref:ugly-bad-wrong-examples)',echo=FALSE,message=FALSE,warning=FALSE}
+df <- tibble(
+  type = c("A", "B", "C"),
+  value = c(3, 5, 4),
+  expand = c(4, 5, 4.5)
+)
+p1 <- ggplot(df, aes(type, value)) + 
+  geom_col(fill = "#56B4E9", width = 0.65, alpha = 0.9) +
+  scale_y_continuous(limits = c(0, 5.2), expand = c(0, 0)) +
+  scale_x_discrete(name = NULL) +
+  coord_cartesian(clip = "off") +
+  #theme_dviz_hgrid(12) +
+  theme(
+    axis.line = element_blank(),
+    panel.background = element_rect(fill = 'white'),
+    panel.grid.major.y = element_line(colour = 'gray'),
+    plot.margin = margin(18, 12, 0, 0)
+  )
+p2 <- ggplot(df, aes(type, value)) + 
+  geom_col(fill = c("#CCFF00FF", "#00FFFFFF", "#CC00FFFF"), width = 0.75) +
+  scale_y_continuous(limits = c(0, 5.2), expand = c(0, 0)) +
+  scale_x_discrete(name = NULL) +
+  coord_cartesian(clip = "off") +
+  #theme_dviz_hgrid(12) +
+  theme(
+    axis.line = element_blank(),
+    #panel.background = element_rect(fill = 'white'),
+    axis.title = element_text(family = "Comic Sans MS", size = 15),
+    axis.text.x = element_text(family = "Times", size = 10),
+    axis.text.y = element_text(family = "Arial", size = 13),
+    panel.grid = element_line(color = "black"),
+    axis.ticks = element_line(color = "black"),
+    plot.margin = margin(18, 12, 1.5, 1.5)
+  )
+p3 <- ggplot(df, aes(type, value)) + 
+  geom_col(fill = "#56B4E9", width = 0.65, alpha = 0.9) +
+  geom_point(aes(y = expand), shape = NA) +
+  scale_y_continuous(expand = c(0, 0)) +
+  scale_x_discrete(name = NULL) +
+  facet_wrap(~type, scales = "free") +
+  coord_cartesian(clip = "off") +
+  #theme_dviz_hgrid(12) +
+  theme(
+    axis.line = element_blank(),
+    panel.grid.major.y = element_line(colour = 'gray'),
+    strip.text = element_blank(),
+    panel.background = element_rect(fill = 'white'),
+    plot.margin = margin(18, 12, 1.5, 1.5)
+  )
+p3a <- ggplot(df, aes(type, value)) + 
+  geom_col(color = "black", fill = NA, width = .5) +
+  scale_y_continuous(limits = c(0, 5.2), expand = c(0, 0)) +
+  scale_x_discrete(name = NULL) +
+  coord_cartesian(clip = "off") +
+  #theme_dviz_grid(12) +
+  background_grid(
+    major = "y", minor = "none",
+    colour.major = "grey30", colour.minor = "black",
+    size.major = 0.5,
+    size.minor = 0.2
+  ) +
+  theme(
+    axis.ticks = element_line(color = "grey30"),
+    plot.margin = margin(18, 12, 1.5, 1.5)
+  )
+p4 <- ggplot(df, aes(type, value)) + 
+  geom_col(fill = "#56B4E9", width = 0.65, alpha = 0.9) +
+  coord_cartesian(xlim = c(0.4, 3.6), ylim = c(2, 6.2), expand = FALSE, clip = "on") +
+  scale_y_continuous(breaks = 2:4, name = "", labels = c("", "", "")) +
+  scale_x_discrete(name = NULL) +
+  #theme_dviz_hgrid(12) +
+  theme(
+    panel.grid.major.y = element_blank(),
+    axis.ticks.y = element_blank(),
+    panel.background = element_rect(fill = 'white'),
+    #panel.grid.major.y = element_line(colour = 'gray'),
+    plot.margin = margin(18, 12, 1.5, 1.5)
+  )
+plot_grid(
+  p1, NULL, stamp_ugly(p2),
+  NULL, NULL, NULL,
+  stamp_bad(p3), NULL, stamp_wrong(p4),
+  rel_widths = c(1, .1, 1),
+  rel_heights = c(1, .15, 1),
+  labels = c("a", "", "b", "", "", "", "c", "", "d")
+)
+```
+
+# Visualizing data: Mapping data onto aesthetics {#aesthetic-mapping}
+
+> "The simple graph has brought more information to the data analyst's mind than any other device." --- John Tukey
+Whenever we visualize data, we take data values and convert them in a systematic and logical way into the visual elements that make up the final graphic. Even though there are many different types of data visualizations, and on first glance a scatter plot, a pie chart, and a heatmap don't seem to have much in common, all these visualizations can be described with a common language that captures how data values are turned into blobs of ink on paper or colored pixels on screen. The key insight is the following: All data visualizations map data values into quantifiable features of the resulting graphic. We refer to these features as *aesthetics.*
+
+## Aesthetics and types of data
+
+Aesthetics describe every aspect of a given graphical element. A critical component of every graphical element is of course its *position,* which describes where the element is located. In standard 2d graphics, we describe positions by an *x* and  *y* value, but other coordinate systems and one- or three-dimensional visualizations are possible. Next, all graphical elements have a *shape*, a *size*, and a *color.* Even if we are preparing a black-and-white drawing, graphical elements need to have a color to be visible, for example black if the background is white or white if the background is black. Finally, to the extent we are using lines to visualize data, these lines may have different widths or dash--dot patterns. Beyond this handful of examples, there are many other aesthetics we may encounter in a data visualization. For example, if we want to display text, we may have to specify font family, font face, and font size, and if graphical objects overlap, we may have to specify whether they are partially transparent.
+
+Commonly used aesthetics in data visualization are position, shape, size, color, line width, line type. Some of these aesthetics can represent both continuous and discrete data (position, size, line width, color) while others can usually only represent discrete data (shape, line type).
+
+```{r common-aesthetics, fig.width = 6, fig.asp = 0.45, fig.cap = '(ref:common-aesthetics)',echo=FALSE,message=FALSE,warning=FALSE}
+aes_pos <- ggdraw() + 
+  geom_segment(data = data.frame(x = c(0, 0.5),
+                                 xend = c(1, 0.5),
+                                 y = c(0.5, 0),
+                                 yend = c(0.5, 1)),
+                aes(x = x, y = y, xend = xend, yend = yend),
+                arrow = arrow(length = grid::unit(12, "pt")), size = .75) +
+  draw_text("y", .5, 1, size = 12, vjust = 1, hjust = 2.5) +
+  draw_text("x", 1, .5, size = 12, vjust = 2, hjust = 1) + 
+  coord_cartesian(xlim = c(-.2, 1.2), ylim = c(-.2, 1.2))
+aes_color <- ggdraw() +
+  geom_tile(data = data.frame(x = 0.15 + .2333*(0:3)),
+            aes(x, y = .5, fill = factor(x)), width = .2, height = .6) +
+  scale_fill_brewer(guide = "none")
+aes_shape <- ggdraw() +
+  geom_point(data = data.frame(x = (.5 + 0:3)/4),
+             aes(x, y = .5, shape = factor(x)), size = 8, fill = "grey80") +
+  scale_shape_manual(values = 21:24)
+aes_size <- ggdraw() +
+  geom_point(data = data.frame(x = (.5 + 0:3)/4),
+             aes(x, y = .5, size = factor(x)), shape = 21, fill = "grey80") +
+  scale_size_manual(values = c(2, 5, 8, 11))
+aes_lwd <- ggdraw() +
+  geom_segment(data = data.frame(x = rep(0.05, 4),
+                                 xend = rep(0.95, 4),
+                                 y = (1.5 + 0:3)/6,
+                                 yend = (1.5 + 0:3)/6,
+                                 size = 4:1),
+               aes(x = x, y = y, xend = xend, yend = yend, size = size)) +
+  scale_size_identity()
+aes_ltp <- ggdraw() +
+  geom_segment(data = data.frame(x = rep(0.05, 4),
+                                 xend = rep(0.95, 4),
+                                 y = (1.5 + 0:3)/6,
+                                 yend = (1.5 + 0:3)/6,
+                                 linetype = 4:1),
+               aes(x = x, y = y, xend = xend, yend = yend, linetype = linetype), size = 1) +
+  scale_linetype_identity()
+plot_grid(aes_pos, aes_shape, aes_size,
+          aes_color, aes_lwd, aes_ltp,
+          ncol = 3,
+          labels = c("position", "shape", "size", "color", "line width", "line type"),
+          label_x = 0.05, label_y = 0.95, hjust = 0, vjust = 1)
+```
+
+
+All aesthetics fall into one of two groups: Those that can represent continuous data and those that can not. Continuous data values are values for which arbitrarily fine intermediates exist. For example, time duration is a continuous value. Between any two durations, say 50 seconds and 51 seconds, there are arbitrarily many intermediates, such as 50.5 seconds, 50.51 seconds, 50.50001 seconds, and so on. By contrast, number of persons in a room is a discrete value. A room can hold 5 persons or 6, but not 5.5. For the examples in Figure \@ref(fig:common-aesthetics), position, size, color, and line width can represent continuous data, but shape and line type can usually only represent discrete data.
+
+Next we'll consider the types of data we may want to represent in our visualization. You may think of data as numbers, but numerical values are only two out of several types of data we may encounter. In addition to continuous and discrete numerical values, data can come in the form of discrete categories, in the form of dates or times, and as text (Table \@ref(tab:basic-data-types)). When data is numerical we also call it *quantitative* and when it is categorical we call it *qualitative*. Variables holding qualitative data are *factors*, and the different categories are called *levels*. The levels of a factor are most commonly without order (as in the example of "dog", "cat", "fish" in Table \@ref(tab:basic-data-types)), but factors can also be ordered, when there is an intrinsic order among the levels of the factor (as in the example of "good", "fair", "poor" in Table \@ref(tab:basic-data-types)).
+
+##Visualizing amounts
+
+The most common approach to visualizing amounts (i.e., numerical values shown for some set of categories) is using bars, either vertically or horizontally arranged. However, instead of using bars, we can also place dots at the location where the corresponding bar would end.
+
+![](images/0X-ggplot/amounts-1.png)
+
+If there are two or more sets of categories for which we want to show amounts, we can group or stack the bars. We can also map the categories onto the *x* and *y* axis and show amounts by color, via a heatmap. 
+
+![](images/0X-ggplot/amounts_multi-1.png)
+## Distributions
+
+Histograms and density plots provide the most intuitive visualizations of a distribution, but both require arbitrary parameter choices and can be misleading. Cumulative densities and quantile-quantile (q-q) plots (Chapter \@ref(ecdf-qq)) always represent the data faithfully but can be more difficult to interpret.
+
+![](images/0X-ggplot//single-distributions-1.png)
+
+Boxplots, violins, strip charts, and sina plots are useful when we want to visualize many distributions at once and/or if we are primarily interested in overall shifts among the distributions . Stacked histograms and overlapping densities allow a more in-depth comparison of a smaller number of distributions, though stacked histograms can be difficult to interpret and are best avoided. Ridgeline plots can be a useful alternative to violin plots and are often useful when visualizing very large numbers of distributions or changes in distributions over time.
+
+![](images/0X-ggplot//multiple-distributions-1.png)
+
+## Proportions
+
+Proportions can be visualized as pie charts, side-by-side bars, or stacked bars, and as in the case for amounts, bars can be arranged either vertically or horizontally. Pie charts emphasize that the individual parts add up to a whole and highlight simple fractions. However, the individual pieces are more easily compared in side-by-side bars. Stacked bars look awkward for a single set of proportions, but can be useful when comparing multiple sets of proportions (see below).
+
+![](images/0X-ggplot//proportions-1.png)
+
+When visualizing multiple sets of proportions or changes in proportions across conditions, pie charts tend to be space-inefficient and often obscure relationships. Grouped bars work well as long as the number of conditions compared is moderate, and stacked bars can work for large numbers of conditions. Stacked densitiesare appropriate when the proportions change along a continuous variable.
+
+![](images/0X-ggplot//proportions-comp-1.png)
+
+
+
+## *x*--*y* relationships
+
+Scatterplots represent the archetypical visualization when we want to show one quantitative variable relative to another. If we have three quantitative variables, we can map one onto the dot size, creating a variant of the scatterplot called bubble chart. For paired data, where the variables along the *x* and the *y* axes are measured in the same units, it is generally helpful to add a line indicating *x* = *y*. Paired data can also be shown as a slope graph of paired points connected by straight lines.
+
+![](images/0X-ggplot//basic-scatter-1.png)
+
+For large numbers of points, regular scatterplots can become uninformative due to overplotting. In this case, contour lines, 2D bins, or hex bins may provide an alternative. When we want to visualize more than two quantities, on the other hand, we may choose to plot correlation coefficients in the form of a correlogram instead of the underlying raw data.
+
+![](images/0X-ggplot//xy-binning-1.png)
+
+## Uncertainty {#directory-uncertainty}
+
+Error bars are meant to indicate the range of likely values for some estimate or measurement. They extend horizontally and/or vertically from some reference point representing the estimate or measurement. Reference points can be shown in various ways, such as by dots or by bars. Graded error bars show multiple ranges at the same time, where each range corresponds to a different degree of confidence. They are in effect multiple error bars with different line thicknesses plotted on top of each other.
+
+![](images/0X-ggplot//errorbars-1.png)
+
+<div class = "exercise">
+**EXERCISE 1:</br>**
+Go back to exercise 1 in the syllabus. Think about one or two approaches to convert the results for each questions into plots.
+
+Write an Rmd document explaining your choices.
+</div>
+
+# References
