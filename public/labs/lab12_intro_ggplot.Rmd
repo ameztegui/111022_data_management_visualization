@@ -261,7 +261,8 @@ pp
 
 Each of these geoms is two dimensional and requires both `x` and `y` aesthetics. That means we must `map` two variables at least, one to each dimension. Nonetheless, we coudl have included additional aesthetics such as `color`/`fill` (or `color`) and `size`. We will cover all of them in the next sections.
 
-### Exercises
+<div class = "exercise">
+**EXERCISES:</br>**
 
 1.  What geoms would you use to draw each of the following named plots?
     
@@ -275,5 +276,7 @@ Each of these geoms is two dimensional and requires both `x` and `y` aesthetics.
 3. What's the difference between `geom_path()` and `geom_line()`?
 
 4. What low-level geoms are used to draw `geom_smooth()`?
+
+</div>
 
 # References
