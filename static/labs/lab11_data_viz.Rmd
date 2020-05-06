@@ -14,42 +14,20 @@ output:
 ---
 
 
-```{r knitr_init, echo=FALSE, cache=FALSE, warning=FALSE}
+```{r knitr_init, include = FALSE, echo=FALSE, cache=FALSE, warning=FALSE}
 
 library(knitr)
-
-## Global options
-options(max.print="75")
-opts_chunk$set(echo=TRUE,
-	             cache=FALSE,
-               prompt=FALSE,
-               tidy=TRUE,
-               comment=NA,
-               message=FALSE,
-               warning=FALSE)
-opts_knit$set(width=75)
-```
-
-
-```{r include=FALSE}
-library(tidyverse)
-library(rmdformats)
 library(tidyverse)
 library(cowplot)
-library(sf)
-library(raster)
-library(rgdal)
-library(forcats)
-library(patchwork)
-library(lubridate)
-library(gridExtra)
-library(ggpubr)
 
+## Global options
 options(
   htmltools.dir.version = FALSE, # for blogdown
-  show.signif.stars = FALSE     # for regression output
+  show.signif.stars = FALSE,     # for regression output
+  digits = 2
   )
 ```
+
 
 The main goal of this lab is to introduce the most basic concepts about data visualization. The contents of this *lab* have been adapted/taken from @wickham2009 and @wilke2019fundamentals.
 
@@ -224,7 +202,7 @@ All aesthetics fall into one of two groups: Those that can represent continuous 
 
 Next we'll consider the types of data we may want to represent in our visualization. You may think of data as numbers, but numerical values are only two out of several types of data we may encounter. In addition to continuous and discrete numerical values, data can come in the form of discrete categories, in the form of dates or times, and as text (Table \@ref(tab:basic-data-types)). When data is numerical we also call it *quantitative* and when it is categorical we call it *qualitative*. Variables holding qualitative data are *factors*, and the different categories are called *levels*. The levels of a factor are most commonly without order (as in the example of "dog", "cat", "fish" in Table \@ref(tab:basic-data-types)), but factors can also be ordered, when there is an intrinsic order among the levels of the factor (as in the example of "good", "fair", "poor" in Table \@ref(tab:basic-data-types)).
 
-##Visualizing amounts
+## Visualizing amounts
 
 The most common approach to visualizing amounts (i.e., numerical values shown for some set of categories) is using bars, either vertically or horizontally arranged. However, instead of using bars, we can also place dots at the location where the corresponding bar would end.
 

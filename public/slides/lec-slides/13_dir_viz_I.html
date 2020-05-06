@@ -1,0 +1,460 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+  <head>
+    <title>Directory of visualizations</title>
+    <meta charset="utf-8" />
+    <meta name="author" content="Aitor Ameztegui" />
+    <meta name="author" content="Marcos Rodrigues" />
+    <link href="libs/font-awesome/css/all.css" rel="stylesheet" />
+    <link href="libs/font-awesome/css/v4-shims.css" rel="stylesheet" />
+    <link rel="stylesheet" href="slides.css" type="text/css" />
+  </head>
+  <body>
+    <textarea id="source">
+class: center, middle, inverse, title-slide
+
+# Directory of visualizations
+### Aitor Ameztegui
+### Marcos Rodrigues
+### May 2020
+
+---
+
+
+
+
+
+
+# Visualizing amounts
+
+There are several ways (`geoms`) to visualize quantities or amounts. We are going to plot the annual evolution of number of fires in Spain using different approaches. The idea is to explore the temporal evolution and to determine which were the most fire-affected years.
+
+## Line plots - time series
+
+Let's begin with some of the most basic plots we can build, the *line plot*. In the following example we **map the `YEAR` into the x-axis**  and the **amount of fires into the y-axis**. We use lines (`geom_line`) as constructor element.
+
+
+```r
+fires %&gt;%
+  group_by(YEAR) %&gt;%
+  summarise(n=n())%&gt;%
+  ggplot(aes(x=YEAR,y=n)) +
+    geom_line()
+```
+
+---
+
+# Visualizing amounts
+
+## Barplots
+
+We can swicth to barplots if we prefer so. We just need to replace `geom_line` with `geom_bar` or `geom_col`. 
+
+`geom_bar` has been the most common way to create a barpot so far. It requires passing a `stat` parameter to inform about the kind of information with want to display. The most common stats we will use in combination with `geom_bar` are:
+
+- `identity`: passes the exact value to be mapped into the y-axis.
+
+- `count`: computes de frequency of observations per group.
+
+---
+# Visualizing amounts
+
+## Barplots with `geom_bar`
+
+```r
+fires %&gt;%
+  filter(YEAR&gt;=1974) %&gt;%
+  ggplot(aes(x=YEAR)) +
+    geom_bar(stat = 'count') +
+    ggtitle('Barplot with count')
+```
+---
+# Visualizing amounts
+## Barplots with `geom_col`
+
+```r
+fires %&gt;%
+  filter(YEAR&gt;=1974) %&gt;%
+  group_by(YEAR) %&gt;%
+  summarise(n=n())%&gt;%
+  ggplot(aes(x=YEAR,y=n)) +
+    geom_col() +
+    ggtitle('Barplot with geom_col')
+```
+---
+# Visualizing amounts
+## Grouped barplots 
+
+
+```r
+fires %&gt;%
+  filter(YEAR&gt;=1974) %&gt;%
+  group_by(MONTH,CAUSE) %&gt;%
+  summarise(n=n())%&gt;%
+  ggplot(aes(x=MONTH,y=n,fill=CAUSE)) +
+    geom_col() +
+    ggtitle('Fire counts by cause')
+```
+## Grouped barplots (grouping with factor)
+
+```r
+fires %&gt;%
+  filter(YEAR&gt;=1974) %&gt;%
+  group_by(MONTH,CAUSE) %&gt;%
+  summarise(n=n())%&gt;%
+  ggplot(aes(x=MONTH,y=n,fill=factor(CAUSE))) +
+    geom_col() +
+    ggtitle('Fire counts by cause')
+```
+
+---
+# Visualizing amounts
+## Grouped barplots (position dodge)
+
+
+```r
+fires %&gt;%
+  filter(YEAR&gt;=1974) %&gt;%
+  group_by(MONTH,CAUSE) %&gt;%
+  summarise(n=n())%&gt;%
+  ggplot(aes(x=MONTH,y=n,fill=factor(CAUSE))) +
+    geom_col(position="dodge2") +
+    ggtitle('Fire counts by cause')
+```
+
+---
+# Visualizing amounts
+
+## Dot plots
+
+Another alternative that is frequently quite helpful and clear is using points to mark the position of the amount. However, the main goal of this kind of plot shouldn't be displaying the temporal evolution of a phenomena but an ordered sequence of values, so that we highlight the highest amounts. To arrange axis according we use the `reorder` function inside the `ggplot` call:
+
+
+```r
+fires %&gt;%
+  filter(YEAR&gt;=1974) %&gt;%
+  group_by(YEAR) %&gt;%
+  summarise(n=n())%&gt;%
+  ggplot(aes(y=reorder(YEAR,n),x=n)) +
+    geom_point() +
+    ggtitle('Reordered points')
+```
+---
+
+# Visualizing amounts
+## Heatmaps
+
+There is a *special* type of approach to visualiza amounts, the *heatmaps*. The rationale behind heatmaps is using color to visualize quantities instead of position or size, as we did in barplots and dotplots. 
+
+
+```r
+fires %&gt;%
+  filter(YEAR&gt;=1974) %&gt;%
+  group_by(YEAR,MONTH) %&gt;%
+  summarise(n=n())%&gt;%
+  ggplot() +
+    geom_tile(aes(x=MONTH,y=YEAR,fill=n))
+```
+
+---
+# Visualizing proportions
+
+We often want to show how some group, entity, or amount breaks down into individual pieces that each represent a proportion of the whole. Visualizing proportions can be challenging, in particular when the whole is broken into many different pieces or when we want to see changes in proportions over time or across conditions.
+
+The archetypal such visualization is the pie chart. Unfortunately, to best of our recollection there is no *geom_pie* or such and creating a pie chart using `ggplot` is actually done by *distording* the representation space from a cartesian into a polar coordinate space. Basically, we build a barplot and the *rotate* it into the polar space. Likewise, since we represent proportions instead of raw values, we must express the desired variables as such, which often involves some previous data management.
+
+---
+# Visualizing proportions
+
+
+```r
+fires %&gt;%
+  filter(CAUSE!=6)%&gt;%
+  group_by(CAUSE) %&gt;%
+  summarise(n=n(),BA=sum(BAREA)) %&gt;%
+  mutate(f=round(n/sum(n)*100,1)) %&gt;%
+  arrange(desc(f)) %&gt;%
+  ggplot(aes(x=2 ,y=f, fill=CAUSE))+
+    geom_bar(width = 1, stat = "identity", color = "white") +
+    coord_polar("y", start = 0)
+```
+---
+# Visualizing proportions
+
+
+```r
+fires %&gt;%
+  filter(YEAR&gt;1974) %&gt;%
+  mutate(LARGE = ifelse(BAREA&gt;500,"Large Fire","Regular")) %&gt;% #Large vs Regular
+  group_by(YEAR,LARGE) %&gt;%
+  summarise(BA=sum(BAREA)) %&gt;%
+  mutate(fracc = BA / sum(BA)) %&gt;% #Fraction of burned area
+  ggplot(aes(x=YEAR,y=fracc,group=LARGE,fill=LARGE)) +
+    geom_bar(stat = 'identity')
+```
+
+---
+# Visualizing proportions
+
+
+```r
+fires %&gt;%
+  filter(YEAR&gt;1974) %&gt;%
+  mutate(LARGE = ifelse(BAREA&gt;500,"Large Fire","Regular")) %&gt;%
+  group_by(YEAR,LARGE) %&gt;%
+  summarise(n=n(),BA=sum(BAREA)) %&gt;%
+  mutate(fracc = BA / sum(BA)) %&gt;%
+  ggplot(aes(x=YEAR,y=fracc,group=LARGE,fill=LARGE)) +
+    geom_area()
+```
+
+---
+
+# Visualizing distributions
+
+## Single distributions
+
+### Histograms
+
+A histogram representation displays the distribution a variable by grouping all observations into bins with comparable ranges and then counting the number of observatins in each bin. 
+
+
+```r
+fires %&gt;%
+    ggplot(aes(x=BAREA)) +
+    geom_histogram()
+
+fires %&gt;%
+    ggplot(aes(x=log(BAREA))) +
+    geom_histogram(bins=50)
+
+fires %&gt;%
+    ggplot(aes(x=log(BAREA))) +
+    geom_histogram(bins=50,size=0.5)
+```
+
+---
+# Visualizing distributions
+
+## Single distributions
+
+### Density plots
+
+```r
+fires %&gt;%
+    mutate(BA = log(BAREA)) %&gt;%
+    ggplot(aes(x=BA)) +
+    geom_density()
+    stat_ecdf(geom = "step")
+```
+### Cumulative distributions
+
+```r
+fires %&gt;%
+    mutate(BA = log(BAREA)) %&gt;%
+    ggplot(aes(x=BA)) + 
+    stat_ecdf(geom = "step")
+```
+
+---
+# Visualizing distributions
+
+## Multiple categories
+
+### Barplot
+
+```r
+fires %&gt;%
+    mutate(BA = log(BAREA)) %&gt;%
+    ggplot(aes(x=BA,group=CAUSE,fill=factor(CAUSE))) +
+    geom_histogram()
+```
+
+### Density plot
+
+
+```r
+fires %&gt;%
+    mutate(BA = log(BAREA)) %&gt;%
+    ggplot(aes(x=BA,group=MONTH,fill=factor(MONTH))) +
+    geom_density(alpha=0.7)
+```
+
+---
+# Visualizing distributions
+
+## Boxplots
+
+A  boxplot is a method for graphically depicting groups of numerical data through their quartiles.
+
+
+
+```r
+fires %&gt;%
+    filter(YEAR&gt;1900) %&gt;%
+    group_by(YEAR,MONTH) %&gt;%
+    summarise(BA = sum(BAREA)) %&gt;%
+    ggplot() +
+    geom_boxplot(aes(y=BA))
+```
+
+
+
+```r
+fires %&gt;%
+    filter(YEAR&gt;1900) %&gt;%
+    group_by(YEAR,MONTH) %&gt;%
+    summarise(BA = sum(BAREA)) %&gt;%
+    ggplot() +
+    geom_boxplot(aes(x=BA,y=MONTH,group=MONTH,fill=factor(MONTH)))
+```
+
+---
+# Visualizing distributions
+## Violin plots
+
+Violin plots are somewhat similar to boxplot but instead the show *actual* density plots mirrored over one axis:
+
+
+```r
+fires %&gt;%
+    filter(YEAR&gt;1900) %&gt;%
+    group_by(YEAR,MONTH,CAUSE) %&gt;%
+    summarise(BA = sum(BAREA)) %&gt;%
+    ggplot() +
+    geom_violin(aes(y=log(BA),x=CAUSE,fill=factor(CAUSE)))
+```
+
+
+```r
+fires %&gt;%
+    filter(YEAR&gt;1900) %&gt;%
+    group_by(YEAR,MONTH,CAUSE) %&gt;%
+    summarise(BA = sum(BAREA)) %&gt;%
+    ggplot() +
+    geom_violin(aes(y=log(BA),x=CAUSE,fill=factor(CAUSE))) +
+    geom_boxplot(aes(y=log(BA),x=CAUSE,group=CAUSE), width = 0.3)
+```
+---
+# Visualizing distributions
+## Ridge line plots
+
+These are fancy but not common. Ridge line plots are an alternative to multiple group density plots. The are not always a good choice but when fit the purpose are quite stylish way to represent data. Here we show an example displaying monthly distribution of burned area.
+
+
+```r
+fires %&gt;%
+    filter(YEAR&gt;1900) %&gt;%
+    group_by(YEAR,MONTH) %&gt;%
+    summarise(BA = sum(BAREA)) %&gt;%
+    ggplot() +
+    ggridges::geom_density_ridges(aes(x=BA,y=factor(MONTH),fill=factor(MONTH))) 
+```
+    </textarea>
+<style data-target="print-only">@media screen {.remark-slide-container{display:block;}.remark-slide-scaler{box-shadow:none;}}</style>
+<script src="https://remarkjs.com/downloads/remark-latest.min.js"></script>
+<script>var slideshow = remark.create({
+"highlightStyle": "github",
+"highlightLines": true,
+"countIncrementalSlides": false
+});
+if (window.HTMLWidgets) slideshow.on('afterShowSlide', function (slide) {
+  window.dispatchEvent(new Event('resize'));
+});
+(function(d) {
+  var s = d.createElement("style"), r = d.querySelector(".remark-slide-scaler");
+  if (!r) return;
+  s.type = "text/css"; s.innerHTML = "@page {size: " + r.style.width + " " + r.style.height +"; }";
+  d.head.appendChild(s);
+})(document);
+
+(function(d) {
+  var el = d.getElementsByClassName("remark-slides-area");
+  if (!el) return;
+  var slide, slides = slideshow.getSlides(), els = el[0].children;
+  for (var i = 1; i < slides.length; i++) {
+    slide = slides[i];
+    if (slide.properties.continued === "true" || slide.properties.count === "false") {
+      els[i - 1].className += ' has-continuation';
+    }
+  }
+  var s = d.createElement("style");
+  s.type = "text/css"; s.innerHTML = "@media print { .has-continuation { display: none; } }";
+  d.head.appendChild(s);
+})(document);
+// delete the temporary CSS (for displaying all slides initially) when the user
+// starts to view slides
+(function() {
+  var deleted = false;
+  slideshow.on('beforeShowSlide', function(slide) {
+    if (deleted) return;
+    var sheets = document.styleSheets, node;
+    for (var i = 0; i < sheets.length; i++) {
+      node = sheets[i].ownerNode;
+      if (node.dataset["target"] !== "print-only") continue;
+      node.parentNode.removeChild(node);
+    }
+    deleted = true;
+  });
+})();
+// adds .remark-code-has-line-highlighted class to <pre> parent elements
+// of code chunks containing highlighted lines with class .remark-code-line-highlighted
+(function(d) {
+  const hlines = d.querySelectorAll('.remark-code-line-highlighted');
+  const preParents = [];
+  const findPreParent = function(line, p = 0) {
+    if (p > 1) return null; // traverse up no further than grandparent
+    const el = line.parentElement;
+    return el.tagName === "PRE" ? el : findPreParent(el, ++p);
+  };
+
+  for (let line of hlines) {
+    let pre = findPreParent(line);
+    if (pre && !preParents.includes(pre)) preParents.push(pre);
+  }
+  preParents.forEach(p => p.classList.add("remark-code-has-line-highlighted"));
+})(document);</script>
+
+<script>
+(function() {
+  var links = document.getElementsByTagName('a');
+  for (var i = 0; i < links.length; i++) {
+    if (/^(https?:)?\/\//.test(links[i].getAttribute('href'))) {
+      links[i].target = '_blank';
+    }
+  }
+})();
+</script>
+
+<script>
+slideshow._releaseMath = function(el) {
+  var i, text, code, codes = el.getElementsByTagName('code');
+  for (i = 0; i < codes.length;) {
+    code = codes[i];
+    if (code.parentNode.tagName !== 'PRE' && code.childElementCount === 0) {
+      text = code.textContent;
+      if (/^\\\((.|\s)+\\\)$/.test(text) || /^\\\[(.|\s)+\\\]$/.test(text) ||
+          /^\$\$(.|\s)+\$\$$/.test(text) ||
+          /^\\begin\{([^}]+)\}(.|\s)+\\end\{[^}]+\}$/.test(text)) {
+        code.outerHTML = code.innerHTML;  // remove <code></code>
+        continue;
+      }
+    }
+    i++;
+  }
+};
+slideshow._releaseMath(document);
+</script>
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+(function () {
+  var script = document.createElement('script');
+  script.type = 'text/javascript';
+  script.src  = 'https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML';
+  if (location.protocol !== 'file:' && /^https?:/.test(script.src))
+    script.src  = script.src.replace(/^https?:/, '');
+  document.getElementsByTagName('head')[0].appendChild(script);
+})();
+</script>
+  </body>
+</html>
