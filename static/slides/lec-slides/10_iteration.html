@@ -1,0 +1,701 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+  <head>
+    <title>Iteration</title>
+    <meta charset="utf-8" />
+    <meta name="author" content="Aitor Ameztegui" />
+    <meta name="author" content="Marcos Rodrigues" />
+    <link rel="stylesheet" href="slides.css" type="text/css" />
+  </head>
+  <body>
+    <textarea id="source">
+class: center, middle, inverse, title-slide
+
+# Iteration
+### Aitor Ameztegui
+### Marcos Rodrigues
+
+---
+
+
+
+
+# Avoid repetition and copy-pasting
+
+* One tool for reducing duplication is **functions**, which reduce duplication by identifying repeated patterns of code and extract them out into independent pieces 
+
+* Another tool for reducing duplication is **iteration**, which helps you when you need to do the same thing to multiple inputs: repeating the same operation on different columns, or on different datasets. 
+    * **Imperative programming:** tools like `for` loops and `while` loops, which are a great place to start because they make iteration very explicit.
+    * **Functional programming (FP):** offers tools to solve many common iteration problems with less code, more ease, and fewer errors.
+
+---
+class: inverse, middle
+
+# `for` loops
+
+---
+
+# `for` loops
+
+.pull-left[
+
+```r
+for (i in sequence)
+    {
+    body
+}
+```
+]
+
+.pull-right[
+![](img/for-loop.jpg)
+]
+---
+
+# `for` loops
+
+Suppose you want to do several printouts of the following form: 
+"The year is [year]", where [year] is equal to 2015, 2016, up to 2020. You can do this as follows:
+
+
+```r
+print(paste("The year is", 2015))
+```
+
+```
+## [1] "The year is 2015"
+```
+
+```r
+print(paste("The year is", 2016))
+```
+
+```
+## [1] "The year is 2016"
+```
+
+```r
+print(paste("The year is", 2017))
+```
+
+```
+## [1] "The year is 2017"
+```
+
+```r
+print(paste("The year is", 2018))
+```
+
+```
+## [1] "The year is 2018"
+```
+
+```r
+print(paste("The year is", 2019))
+```
+
+```
+## [1] "The year is 2019"
+```
+
+```r
+print(paste("The year is", 2020))
+```
+
+```
+## [1] "The year is 2020"
+```
+
+---
+# `for` loops
+
+
+```r
+for (i in 2015:2020){
+  print(paste("The year is", i))
+}
+```
+
+```
+## [1] "The year is 2015"
+## [1] "The year is 2016"
+## [1] "The year is 2017"
+## [1] "The year is 2018"
+## [1] "The year is 2019"
+## [1] "The year is 2020"
+```
+
+---
+
+# `for` loops
+
+
+```r
+ mean_growth &lt;- function (df, grouping_var) {
+    df %&gt;%
+    mutate(growth = DiamIf3- DiamIf2) %&gt;%
+    group_by(Provincia, {{grouping_var}}) %&gt;%
+    summarise(mean_growth = mean(growth, na.rm = T))
+ }
+```
+
+--
+
+
+```r
+provinces &lt;- list(lleida_trees, barcelona_trees,
+               girona_trees, tarragona_trees)
+```
+
+
+```r
+output &lt;- list()                      # Output
+for (i in seq_along(provinces)) {
+    output[[i]] &lt;- mean_growth(provinces[[i]], Especie)
+}
+```
+
+---
+
+# `for` loops
+
+
+```r
+glimpse(output)
+```
+
+```
+## List of 4
+##  $ : tibble [18 × 3] (S3: grouped_df/tbl_df/tbl/data.frame)
+##   ..$ Provincia  : chr [1:18] "25" "25" "25" "25" ...
+##   ..$ Especie    : Factor w/ 91 levels "004","008","012",..: 9 10 11 13 14 18 26 28 29 32 ...
+##   ..$ mean_growth: num [1:18] 2.88 3.09 2.44 2.99 2.93 ...
+##   ..- attr(*, "groups")= tibble [1 × 2] (S3: tbl_df/tbl/data.frame)
+##   .. ..- attr(*, ".drop")= logi TRUE
+##  $ : tibble [66 × 3] (S3: grouped_df/tbl_df/tbl/data.frame)
+##   ..$ Provincia  : chr [1:66] "08" "08" "08" "08" ...
+##   ..$ Especie    : Factor w/ 91 levels "004","008","012",..: 1 2 3 4 7 8 10 11 12 13 ...
+##   ..$ mean_growth: num [1:66] 2.25 1.37 1.25 3.95 3.02 ...
+##   ..- attr(*, "groups")= tibble [1 × 2] (S3: tbl_df/tbl/data.frame)
+##   .. ..- attr(*, ".drop")= logi TRUE
+##  $ : tibble [78 × 3] (S3: grouped_df/tbl_df/tbl/data.frame)
+##   ..$ Provincia  : chr [1:78] "17" "17" "17" "17" ...
+##   ..$ Especie    : Factor w/ 91 levels "004","008","012",..: 2 3 4 5 6 7 8 10 11 12 ...
+##   ..$ mean_growth: num [1:78] 1.32 3.27 5.4 0 3.12 ...
+##   ..- attr(*, "groups")= tibble [1 × 2] (S3: tbl_df/tbl/data.frame)
+##   .. ..- attr(*, ".drop")= logi TRUE
+##  $ : tibble [36 × 3] (S3: grouped_df/tbl_df/tbl/data.frame)
+##   ..$ Provincia  : chr [1:36] "43" "43" "43" "43" ...
+##   ..$ Especie    : Factor w/ 91 levels "004","008","012",..: 1 2 3 4 5 10 12 13 14 15 ...
+##   ..$ mean_growth: num [1:36] 0.6 1 5.175 1.51 0.983 ...
+##   ..- attr(*, "groups")= tibble [1 × 2] (S3: tbl_df/tbl/data.frame)
+##   .. ..- attr(*, ".drop")= logi TRUE
+```
+
+---
+
+# `for` loops
+
+If we want the output in data frame...
+
+
+```r
+output &lt;- tibble()
+for (i in seq_along(provinces)) {
+    temp_output &lt;- mean_growth(provinces[[i]], Especie)
+    output &lt;- bind_rows(output, temp_output)
+}
+
+glimpse(output)
+```
+
+```
+## Rows: 198
+## Columns: 3
+## $ Provincia   &lt;chr&gt; "25", "25", "25", "25", "25", "25", "25", "25", "25", "25…
+## $ Especie     &lt;fct&gt; 019, 021, 022, 024, 025, 031, 042, 044, 045, 050, 070, 07…
+## $ mean_growth &lt;dbl&gt; 2.882647, 3.090275, 2.438845, 2.990442, 2.925836, 4.03572…
+```
+
+--
+
+### .red[This is highly inefficient!!!!]
+
+---
+
+# `for` loops
+
+If we want the output in data frame...
+
+
+```r
+output &lt;- list()
+for (i in seq_along(provinces)) {
+    output[[i]] &lt;- mean_growth(provinces[[i]], Especie)
+}
+
+bind_rows(output) %&gt;% glimpse()
+```
+
+```
+## Rows: 198
+## Columns: 3
+## Groups: Provincia [4]
+## $ Provincia   &lt;chr&gt; "25", "25", "25", "25", "25", "25", "25", "25", "25", "25…
+## $ Especie     &lt;fct&gt; 019, 021, 022, 024, 025, 031, 042, 044, 045, 050, 070, 07…
+## $ mean_growth &lt;dbl&gt; 2.882647, 3.090275, 2.438845, 2.990442, 2.925836, 4.03572…
+```
+
+
+### .green[Much better!!]
+---
+
+class: inverse, middle
+
+# Functional programming: iteration with purrr
+
+![](img/purrr.png)
+
+
+---
+# The principles of functional programming
+
+- R is a functional programming language: i.e. it’s possible to wrap up `for` loops in a function, and call that function instead of using the loop directly.
+
+- The idea of passing a function to another function is an extremely powerful idea (It might take you a while to wrap your head around the idea), 
+
+- The `purrr` package provides functions that eliminate the need for many common `for` loops, and is integrated in the *tidyverse*.
+
+- The goal of using `purrr` (or `apply`) functions instead of `for` loops is to allow you to break common list manipulation challenges into independent pieces.
+    - How can you solve the problem for a single element of the list?
+    - Once you’ve solved that problem, `purrr` takes care of generalising your solution to every element in the list. 
+
+---
+
+# The map functions
+
+The `map()` family of functions take a vector and a function as input, and apply the function to each piece of the vector, returning a new vector with the same length (and the same names) as the input. 
+
+
+```r
+x &lt;- list(x1 = rnorm(100, 10, 1),
+          x2 = rnorm(50, 20, 5),
+          x3 = rnorm(100, 50, 10))
+```
+
+--
+
+```r
+map(x, mean)
+```
+
+```
+## $x1
+## [1] 10.00785
+## 
+## $x2
+## [1] 19.18107
+## 
+## $x3
+## [1] 49.90433
+```
+
+
+---
+# The map functions
+
+Let's see another example:
+
+
+```r
+y &lt;- c(5, 10, 20)
+```
+
+--
+
+
+```r
+map(y, rnorm)
+```
+
+```
+## [[1]]
+## [1]  0.5524495 -0.8763153 -0.4927703  0.3860059  0.1834298
+## 
+## [[2]]
+##  [1] -0.2299797  0.7593643  2.0179937  0.8358958  1.0181700  1.0051043
+##  [7] -0.8647452  2.3300535 -0.8542872 -0.1083361
+## 
+## [[3]]
+##  [1]  1.0451441  1.6947714 -0.8353064  0.7961245  0.6217182 -0.1949800
+##  [7] -0.4225395 -1.8895566  0.2773033  1.5141308  1.7890871 -0.7165152
+## [13] -0.6147670 -0.9134849  0.7197409  0.9351860 -0.8406143 -0.7219492
+## [19]  0.8783049 -1.8295121
+```
+---
+# The map functions
+
+We can add extra arguments *after* the function:
+
+
+```r
+y &lt;- c(5, 10, 20)
+map(y, rnorm, 10, 1)
+```
+
+```
+## [[1]]
+## [1]  9.143940 10.850779  9.077289  9.523715  8.719950
+## 
+## [[2]]
+##  [1]  9.189871 10.085075 11.103338  9.878812 10.881820  8.574682  9.172652
+##  [8] 11.980586 10.561740  9.959678
+## 
+## [[3]]
+##  [1] 12.362135 10.690489  9.095923 10.761787  8.844683  9.812150  8.888964
+##  [8]  8.970596  9.986564  9.535356  9.783538 11.576999  9.041142 10.151853
+## [15] 10.521948  9.889638  9.526801 10.703266 11.230536 10.976777
+```
+
+---
+# The map functions
+
+Map always produces a list as output:
+
+
+```r
+map(provinces, mean_growth, Especie) %&gt;% glimpse()
+```
+
+```
+## List of 4
+##  $ : tibble [18 × 3] (S3: grouped_df/tbl_df/tbl/data.frame)
+##   ..$ Provincia  : chr [1:18] "25" "25" "25" "25" ...
+##   ..$ Especie    : Factor w/ 91 levels "004","008","012",..: 9 10 11 13 14 18 26 28 29 32 ...
+##   ..$ mean_growth: num [1:18] 2.88 3.09 2.44 2.99 2.93 ...
+##   ..- attr(*, "groups")= tibble [1 × 2] (S3: tbl_df/tbl/data.frame)
+##   .. ..- attr(*, ".drop")= logi TRUE
+##  $ : tibble [66 × 3] (S3: grouped_df/tbl_df/tbl/data.frame)
+##   ..$ Provincia  : chr [1:66] "08" "08" "08" "08" ...
+##   ..$ Especie    : Factor w/ 91 levels "004","008","012",..: 1 2 3 4 7 8 10 11 12 13 ...
+##   ..$ mean_growth: num [1:66] 2.25 1.37 1.25 3.95 3.02 ...
+##   ..- attr(*, "groups")= tibble [1 × 2] (S3: tbl_df/tbl/data.frame)
+##   .. ..- attr(*, ".drop")= logi TRUE
+##  $ : tibble [78 × 3] (S3: grouped_df/tbl_df/tbl/data.frame)
+##   ..$ Provincia  : chr [1:78] "17" "17" "17" "17" ...
+##   ..$ Especie    : Factor w/ 91 levels "004","008","012",..: 2 3 4 5 6 7 8 10 11 12 ...
+##   ..$ mean_growth: num [1:78] 1.32 3.27 5.4 0 3.12 ...
+##   ..- attr(*, "groups")= tibble [1 × 2] (S3: tbl_df/tbl/data.frame)
+##   .. ..- attr(*, ".drop")= logi TRUE
+##  $ : tibble [36 × 3] (S3: grouped_df/tbl_df/tbl/data.frame)
+##   ..$ Provincia  : chr [1:36] "43" "43" "43" "43" ...
+##   ..$ Especie    : Factor w/ 91 levels "004","008","012",..: 1 2 3 4 5 10 12 13 14 15 ...
+##   ..$ mean_growth: num [1:36] 0.6 1 5.175 1.51 0.983 ...
+##   ..- attr(*, "groups")= tibble [1 × 2] (S3: tbl_df/tbl/data.frame)
+##   .. ..- attr(*, ".drop")= logi TRUE
+```
+
+
+---
+# The map functions
+
+If we want a data frame...
+
+
+```r
+map(provinces, mean_growth, Especie) %&gt;%
+    bind_rows()
+```
+
+```
+## # A tibble: 198 x 3
+## # Groups:   Provincia [4]
+##    Provincia Especie mean_growth
+##    &lt;chr&gt;     &lt;fct&gt;         &lt;dbl&gt;
+##  1 25        019            2.88
+##  2 25        021            3.09
+##  3 25        022            2.44
+##  4 25        024            2.99
+##  5 25        025            2.93
+##  6 25        031            4.04
+##  7 25        042            2.39
+##  8 25        044            2.24
+##  9 25        045            1.46
+## 10 25        050            4.53
+## # … with 188 more rows
+```
+---
+
+# The family of map functions
+
+The `purrr` package provides a family of functions to loop over a vector, and since we often are not interested in having the results in a list, there is one function for each type of output:
+
+- `map()` makes a list
+- `map_dbl()` makes a double (numeric) vector
+- `map_chr()` makes a character vector
+- `map_df()` makes a data frame
+- `map_lgl()` makes a logical vector
+- `map_int()` makes an integer vector
+
+---
+# The family of map functions
+
+
+```r
+map(x, mean)
+```
+
+```
+## $x1
+## [1] 10.00785
+## 
+## $x2
+## [1] 19.18107
+## 
+## $x3
+## [1] 49.90433
+```
+
+---
+# The family of map functions
+
+```r
+map_dbl(x, mean)
+```
+
+```
+##       x1       x2       x3 
+## 10.00785 19.18107 49.90433
+```
+
+
+```r
+map_df(x, mean)
+```
+
+```
+## # A tibble: 1 x 3
+##      x1    x2    x3
+##   &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;
+## 1  10.0  19.2  49.9
+```
+
+
+```r
+map_chr(x, mean)
+```
+
+```
+##          x1          x2          x3 
+## "10.007854" "19.181065" "49.904329"
+```
+
+
+
+---
+# The family of map functions
+
+
+```r
+map_df(provinces, mean_growth, Especie) 
+```
+
+```
+## # A tibble: 198 x 3
+## # Groups:   Provincia [4]
+##    Provincia Especie mean_growth
+##    &lt;chr&gt;     &lt;fct&gt;         &lt;dbl&gt;
+##  1 25        019            2.88
+##  2 25        021            3.09
+##  3 25        022            2.44
+##  4 25        024            2.99
+##  5 25        025            2.93
+##  6 25        031            4.04
+##  7 25        042            2.39
+##  8 25        044            2.24
+##  9 25        045            1.46
+## 10 25        050            4.53
+## # … with 188 more rows
+```
+
+---
+
+# Mapping over multiple arguments
+
+Often you have multiple related inputs that you need iterate along in parallel. `purrr` provides the function `map2()`. The arguments that vary for each call come *before* the function, the arguments that are the same for every call come *after*.
+
+
+```r
+map2(.x = , .y = , .f = , ... = )
+```
+
+---
+
+# Mapping over multiple arguments
+
+
+
+```r
+n &lt;- c(5,10,20)
+means &lt;- c(10,20,50)
+
+map2(n, means, rnorm)
+```
+
+```
+## [[1]]
+## [1]  9.428870 10.868095 12.074761  8.123598 10.187970
+## 
+## [[2]]
+##  [1] 19.51645 19.65746 21.17519 19.50106 19.20842 22.11692 18.78171 19.16142
+##  [9] 17.70887 20.65318
+## 
+## [[3]]
+##  [1] 50.39054 51.44056 48.54556 49.89909 49.16401 49.62969 51.25937 50.29789
+##  [9] 51.05439 50.20078 50.21010 51.24496 51.61721 47.92436 49.31917 49.49065
+## [17] 50.48152 50.89630 50.27834 48.79020
+```
+
+---
+
+
+```r
+n &lt;- c(5,10,20)
+means &lt;- c(10,20,50)
+
+map2(n, means, rnorm, sd = 10)
+```
+
+```
+## [[1]]
+## [1]  5.940725 10.916959 -9.677783 10.985651 11.371187
+## 
+## [[2]]
+##  [1] 17.837258 16.623239  8.949142 17.899695 13.972799 -3.303624 26.121500
+##  [8] 27.136877 24.771267 19.099933
+## 
+## [[3]]
+##  [1] 51.86153 63.24041 51.48435 46.29132 51.29357 44.62487 38.48410 67.29836
+##  [9] 54.85581 69.23022 49.03070 42.41028 45.16000 47.07487 48.92135 41.24633
+## [17] 57.33027 63.30097 43.98465 44.97289
+```
+
+
+```
+
+---
+layout: false 
+class: inverse, center
+background-image: url(img/folks.gif)
+background-position: center
+background-size: 60%
+
+# Ok, now on your own!
+    </textarea>
+<style data-target="print-only">@media screen {.remark-slide-container{display:block;}.remark-slide-scaler{box-shadow:none;}}</style>
+<script src="https://remarkjs.com/downloads/remark-latest.min.js"></script>
+<script>var slideshow = remark.create({
+"highlightStyle": "github",
+"highlightLines": true,
+"countIncrementalSlides": false
+});
+if (window.HTMLWidgets) slideshow.on('afterShowSlide', function (slide) {
+  window.dispatchEvent(new Event('resize'));
+});
+(function(d) {
+  var s = d.createElement("style"), r = d.querySelector(".remark-slide-scaler");
+  if (!r) return;
+  s.type = "text/css"; s.innerHTML = "@page {size: " + r.style.width + " " + r.style.height +"; }";
+  d.head.appendChild(s);
+})(document);
+
+(function(d) {
+  var el = d.getElementsByClassName("remark-slides-area");
+  if (!el) return;
+  var slide, slides = slideshow.getSlides(), els = el[0].children;
+  for (var i = 1; i < slides.length; i++) {
+    slide = slides[i];
+    if (slide.properties.continued === "true" || slide.properties.count === "false") {
+      els[i - 1].className += ' has-continuation';
+    }
+  }
+  var s = d.createElement("style");
+  s.type = "text/css"; s.innerHTML = "@media print { .has-continuation { display: none; } }";
+  d.head.appendChild(s);
+})(document);
+// delete the temporary CSS (for displaying all slides initially) when the user
+// starts to view slides
+(function() {
+  var deleted = false;
+  slideshow.on('beforeShowSlide', function(slide) {
+    if (deleted) return;
+    var sheets = document.styleSheets, node;
+    for (var i = 0; i < sheets.length; i++) {
+      node = sheets[i].ownerNode;
+      if (node.dataset["target"] !== "print-only") continue;
+      node.parentNode.removeChild(node);
+    }
+    deleted = true;
+  });
+})();
+// adds .remark-code-has-line-highlighted class to <pre> parent elements
+// of code chunks containing highlighted lines with class .remark-code-line-highlighted
+(function(d) {
+  const hlines = d.querySelectorAll('.remark-code-line-highlighted');
+  const preParents = [];
+  const findPreParent = function(line, p = 0) {
+    if (p > 1) return null; // traverse up no further than grandparent
+    const el = line.parentElement;
+    return el.tagName === "PRE" ? el : findPreParent(el, ++p);
+  };
+
+  for (let line of hlines) {
+    let pre = findPreParent(line);
+    if (pre && !preParents.includes(pre)) preParents.push(pre);
+  }
+  preParents.forEach(p => p.classList.add("remark-code-has-line-highlighted"));
+})(document);</script>
+
+<script>
+(function() {
+  var links = document.getElementsByTagName('a');
+  for (var i = 0; i < links.length; i++) {
+    if (/^(https?:)?\/\//.test(links[i].getAttribute('href'))) {
+      links[i].target = '_blank';
+    }
+  }
+})();
+</script>
+
+<script>
+slideshow._releaseMath = function(el) {
+  var i, text, code, codes = el.getElementsByTagName('code');
+  for (i = 0; i < codes.length;) {
+    code = codes[i];
+    if (code.parentNode.tagName !== 'PRE' && code.childElementCount === 0) {
+      text = code.textContent;
+      if (/^\\\((.|\s)+\\\)$/.test(text) || /^\\\[(.|\s)+\\\]$/.test(text) ||
+          /^\$\$(.|\s)+\$\$$/.test(text) ||
+          /^\\begin\{([^}]+)\}(.|\s)+\\end\{[^}]+\}$/.test(text)) {
+        code.outerHTML = code.innerHTML;  // remove <code></code>
+        continue;
+      }
+    }
+    i++;
+  }
+};
+slideshow._releaseMath(document);
+</script>
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+(function () {
+  var script = document.createElement('script');
+  script.type = 'text/javascript';
+  script.src  = 'https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML';
+  if (location.protocol !== 'file:' && /^https?:/.test(script.src))
+    script.src  = script.src.replace(/^https?:/, '');
+  document.getElementsByTagName('head')[0].appendChild(script);
+})();
+</script>
+  </body>
+</html>

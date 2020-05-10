@@ -1,0 +1,383 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+  <head>
+    <title>Fundamentals of data visualization</title>
+    <meta charset="utf-8" />
+    <meta name="author" content="Aitor Ameztegui" />
+    <meta name="author" content="Marcos Rodrigues" />
+    <link href="libs/font-awesome/css/all.css" rel="stylesheet" />
+    <link href="libs/font-awesome/css/v4-shims.css" rel="stylesheet" />
+    <link rel="stylesheet" href="slides.css" type="text/css" />
+  </head>
+  <body>
+    <textarea id="source">
+class: center, middle, inverse, title-slide
+
+# Fundamentals of data visualization
+### Aitor Ameztegui
+### Marcos Rodrigues
+### April 2020
+
+---
+
+
+
+
+
+
+
+# Data visualization
+
+**Data visualization** is part art and part science. The challenge is to *get the art right without getting the science wrong*. Data visualization serves two main purposes:
+
+- **Explore** or understand data.
+- Convey and **communicate** an idea.
+
+A proper representation of data has to:
+
+- **Convey the data**, i.e., it must not mislead or distort.
+
+- **Be aesthetically pleasing**. Good visual displys tend to enhance the message.
+
+**Data visualization requires data management**. It is quite difficult to diplay information that makes sense or proves a point if we do not know how to **organize data properly**.
+
+
+---
+
+# The bad, the ugly and the wrong
+
+These are the three points we must avoid when making a figure:
+
+- **bad**: A figure that has problems related to perception; it may be unclear, confusing, overly complicated, or deceiving.
+
+- **ugly**: A figure that has aesthetic problems but otherwise is clear and informative.
+
+- **wrong**: A figure that has problems related to mathematics; it is objectively incorrect.
+
+&gt; "The simplest graph has brought more information to the data analyst's mind than any other device."
+
+---
+
+# The bad, the ugly and the wrong
+
+![(ref:ugly-bad-wrong-examples)](11_intro_viz_files/figure-html/ugly-bad-wrong-examples-1.png)
+
+---
+
+# Aesthetics and types of data
+
+Aesthetics describe every aspect of a given graphical element. All aesthetics fall into one of two groups: (i) those that can represent continuous data (*quantitative*) and (ii) those that can not (*categorical* or *discrete*).
+
+![(ref:common-aesthetics)](11_intro_viz_files/figure-html/common-aesthetics-1.png)
+---
+
+# Basic data visualization types
+
+- Amounts or quantities
+- Distributions
+- Relationships
+- Time series
+- Uncertainty
+
+---
+
+# Visualizing amounts
+
+![](img/viz/amounts-1.png)
+
+![](img/viz/amounts_multi-1.png)
+
+---
+
+# Distributions
+
+![](img/viz/single-distributions-1.png)
+
+![](img/viz/multiple-distributions-1.png)
+
+---
+
+# Proportions
+
+![](img/viz/proportions-1.png)
+
+![](img/viz/proportions-comp-1.png)
+
+---
+
+# Relationships
+
+![](img/viz/basic-scatter-1.png)
+
+![](img/viz/xy-binning-1.png)
+
+---
+
+# Uncertainty
+
+![](img/viz/errorbars-1.png)
+---
+
+# What's ggplot?
+
+`ggplot2` is a package belonging to the tidyverse suite that provides a **complete set of tools to visualize tidy data**.
+
+`ggplot2` is an R package for producing statistical, or data, graphics. it's grammar, based on the Grammar of Graphics [@wilkinson:2006], is made up of a set of independent components that can be composed in many different ways. 
+
+![](img/hex-ggplot2.png)
+---
+# What's ggplot?
+
+Same as any other `package` within the `tidyverse`, there is a lot of documentation and resources to back us up during the learning process:
+![](img/viz/ggplot_cheatsheet.png)
+
+---
+
+# Why use ggplot2?
+
+There are many reasons to learn `ggplot`. You will probably learn a few more while progressing through the course but here goes the main ones:
+
+- Automatic legends, colors schemes, etc.
+
+- Easy superposition, facetting, etc.
+
+- Nice rendering (yet, I don't like the default grey theme).
+
+- **Store any ggplot2 object for modification or future recall.** 
+
+- Lots of users (less bugs, much help on Stack Overflow).
+
+- Lots of [extensions](https://mode.com/blog/r-ggplot-extension-packages) to extend `ggplot`'s functionality.
+
+- Nice saving options into multiple image formats.
+
+---
+
+# Learning ggplot
+
+There are 3 essential elements to any ggplot call:
+
+1. A `data` object or `pipeline flow` including the information we want to represent/deliver/communicate.
+2. An `aesthetic` that tells ggplot **which variables** are being mapped to the x axis, y axis and  other attributes of the graph (color, size or shape). Intuitively, the aesthetic can be thought of as what you are graphing.
+3. A `geom` or geometry that tells ggplot about the basic structure of the graph. Intuitively, the geom can be thought of as how you are graphing 
+
+---
+
+# The syntax of `ggplot2`
+
+`ggplot2` is designed to work iteratively. You can start with a layer showing the raw data then add layers of annotations and statistical summaries.
+
+```
+ggplot(data = &lt;DATA&gt;,
+       mapping = aes(&lt;MAPPINGS&gt;)) + 
+  &lt;GEOM_FUNCTION&gt;(
+     stat = &lt;STAT&gt;, 
+     position = &lt;POSITION&gt;
+  ) +
+  &lt;COORDINATE_FUNCTION&gt; +
+  &lt;FACET_FUNCTION&gt; +
+  &lt;THEMES&gt;
+```
+
+---
+
+# The syntax of `ggplot2`
+
+```
+ggplot() + 
+  &lt;GEOM_FUNCTION&gt;(
+     data = &lt;DATA&gt;,
+     mapping = aes(&lt;MAPPINGS&gt;),
+     stat = &lt;STAT&gt;, 
+     position = &lt;POSITION&gt;
+  ) +
+  &lt;COORDINATE_FUNCTION&gt; +
+  &lt;FACET_FUNCTION&gt; +
+  &lt;THEMES&gt;
+```
+---
+
+# The syntax of `ggplot2`
+
+Of course, there are many other elements we can add to a plot.
+
+```
+ggplot() + 
+  ...
+  &lt;SCALES&gt; +
+  &lt;ANNOTATIONS&gt; +
+  ...
+```
+
+---
+
+# The syntax of `ggplot2`
+
+```
+p &lt;- ggplot() + 
+       &lt;GEOM_FUNCTION&gt;(
+         data = &lt;DATA&gt;,
+         mapping = aes(&lt;MAPPINGS&gt;),
+         stat = &lt;STAT&gt;, 
+         position = &lt;POSITION&gt;
+       )
+       
+p +   &lt;COORDINATE_FUNCTION&gt; +
+  &lt;FACET_FUNCTION&gt; +
+  &lt;THEMES&gt;
+
+```
+---
+
+# Basic plots with `ggplot2`
+
+The `geoms` are the fundamental building blocks of ggplot2.
+
+*   `geom_area()` draws an __area plot__.
+*   `geom_bar(stat = "identity")` makes a __bar chart__.
+*   `geom_line()` or  `geom_path()` make a __line plot__. 
+*   `geom_point()` produces a __scatterplot__ or used instead of bars to show ammounts.
+*   `geom_polygon()` draws polygons, i.e., are filled paths. 
+*   `geom_rect()`, `geom_tile()` and `geom_raster()` draw rectangles. 
+
+&gt; Each `geom` requires/allows to map an specific set of aesthetics.
+
+---
+
+```r
+df &lt;- data.frame(
+  x = c(3, 1, 5), 
+  y = c(2, 4, 6), 
+  label = c("a","b","c")
+)
+p &lt;- ggplot(df, aes(x, y, label = label)) + 
+  labs(x = NULL, y = NULL) + # Hide axis label
+  theme(plot.title = element_text(size = 12)) # Shrink plot title
+
+p + geom_point() + ggtitle("point")
+p + geom_text() + ggtitle("text")
+p + geom_bar(stat = "identity") + ggtitle("bar")
+p + geom_tile() + ggtitle("raster")
+```
+---
+![](11_intro_viz_files/figure-html/unnamed-chunk-2-1.png)&lt;!-- --&gt;
+
+---
+
+```r
+p + geom_line() + ggtitle("line")
+p + geom_area() + ggtitle("area")
+p + geom_path() + ggtitle("path")
+p + geom_polygon() + ggtitle("polygon")
+```
+
+---
+![](11_intro_viz_files/figure-html/unnamed-chunk-4-1.png)&lt;!-- --&gt;
+    </textarea>
+<style data-target="print-only">@media screen {.remark-slide-container{display:block;}.remark-slide-scaler{box-shadow:none;}}</style>
+<script src="https://remarkjs.com/downloads/remark-latest.min.js"></script>
+<script>var slideshow = remark.create({
+"highlightStyle": "github",
+"highlightLines": true,
+"countIncrementalSlides": false
+});
+if (window.HTMLWidgets) slideshow.on('afterShowSlide', function (slide) {
+  window.dispatchEvent(new Event('resize'));
+});
+(function(d) {
+  var s = d.createElement("style"), r = d.querySelector(".remark-slide-scaler");
+  if (!r) return;
+  s.type = "text/css"; s.innerHTML = "@page {size: " + r.style.width + " " + r.style.height +"; }";
+  d.head.appendChild(s);
+})(document);
+
+(function(d) {
+  var el = d.getElementsByClassName("remark-slides-area");
+  if (!el) return;
+  var slide, slides = slideshow.getSlides(), els = el[0].children;
+  for (var i = 1; i < slides.length; i++) {
+    slide = slides[i];
+    if (slide.properties.continued === "true" || slide.properties.count === "false") {
+      els[i - 1].className += ' has-continuation';
+    }
+  }
+  var s = d.createElement("style");
+  s.type = "text/css"; s.innerHTML = "@media print { .has-continuation { display: none; } }";
+  d.head.appendChild(s);
+})(document);
+// delete the temporary CSS (for displaying all slides initially) when the user
+// starts to view slides
+(function() {
+  var deleted = false;
+  slideshow.on('beforeShowSlide', function(slide) {
+    if (deleted) return;
+    var sheets = document.styleSheets, node;
+    for (var i = 0; i < sheets.length; i++) {
+      node = sheets[i].ownerNode;
+      if (node.dataset["target"] !== "print-only") continue;
+      node.parentNode.removeChild(node);
+    }
+    deleted = true;
+  });
+})();
+// adds .remark-code-has-line-highlighted class to <pre> parent elements
+// of code chunks containing highlighted lines with class .remark-code-line-highlighted
+(function(d) {
+  const hlines = d.querySelectorAll('.remark-code-line-highlighted');
+  const preParents = [];
+  const findPreParent = function(line, p = 0) {
+    if (p > 1) return null; // traverse up no further than grandparent
+    const el = line.parentElement;
+    return el.tagName === "PRE" ? el : findPreParent(el, ++p);
+  };
+
+  for (let line of hlines) {
+    let pre = findPreParent(line);
+    if (pre && !preParents.includes(pre)) preParents.push(pre);
+  }
+  preParents.forEach(p => p.classList.add("remark-code-has-line-highlighted"));
+})(document);</script>
+
+<script>
+(function() {
+  var links = document.getElementsByTagName('a');
+  for (var i = 0; i < links.length; i++) {
+    if (/^(https?:)?\/\//.test(links[i].getAttribute('href'))) {
+      links[i].target = '_blank';
+    }
+  }
+})();
+</script>
+
+<script>
+slideshow._releaseMath = function(el) {
+  var i, text, code, codes = el.getElementsByTagName('code');
+  for (i = 0; i < codes.length;) {
+    code = codes[i];
+    if (code.parentNode.tagName !== 'PRE' && code.childElementCount === 0) {
+      text = code.textContent;
+      if (/^\\\((.|\s)+\\\)$/.test(text) || /^\\\[(.|\s)+\\\]$/.test(text) ||
+          /^\$\$(.|\s)+\$\$$/.test(text) ||
+          /^\\begin\{([^}]+)\}(.|\s)+\\end\{[^}]+\}$/.test(text)) {
+        code.outerHTML = code.innerHTML;  // remove <code></code>
+        continue;
+      }
+    }
+    i++;
+  }
+};
+slideshow._releaseMath(document);
+</script>
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+(function () {
+  var script = document.createElement('script');
+  script.type = 'text/javascript';
+  script.src  = 'https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML';
+  if (location.protocol !== 'file:' && /^https?:/.test(script.src))
+    script.src  = script.src.replace(/^https?:/, '');
+  document.getElementsByTagName('head')[0].appendChild(script);
+})();
+</script>
+  </body>
+</html>

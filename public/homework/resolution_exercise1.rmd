@@ -1,0 +1,204 @@
+---
+title: "Resolution exercise 1"
+output: 
+  html_document: 
+    css: ec.css
+    theme: yeti
+    toc: true
+    toc_float: true
+    fig_caption: false
+---
+
+```{r echo = F, warning = F , message = F}
+knitr::opts_chunk$set(echo = TRUE, message = F)
+library(tidyverse)
+fires <- read.csv('data/fires.csv')
+```
+
+
+1.  Calculate yearly totals of fire counts and burned area. Disregard CAUSE 6 (restared fires)
+
+```{r question1}
+fires %>%
+    filter(CAUSE != 6) %>% 
+    group_by(YEAR) %>%
+    summarise(N=n(),BA=sum(BAREA))
+  
+```
+
+2. Make a copy of fires data frame, but dropping fires occurred in 1900
+
+```{r question2}
+
+fires <- filter(fires, YEAR != "1900")
+
+
+```
+
+3. Which MONTH endured the largest amount of fires?
+
+
+```{r question3a}
+fires %>%
+    group_by(MONTH) %>%
+    summarise(N=n()) %>%
+    arrange(desc(N)) %>%
+    slice(1)
+
+```
+
+```{r question3b}
+fires %>%
+    group_by(MONTH) %>%
+    summarise(N=n_distinct(IDPIF)) %>%
+    arrange(desc(N)) %>%
+    slice(1)
+
+```
+> The month with the largest amount of fires is August
+
+4. Which MONTH endured the largest amount of burned area?
+
+```{r question4}
+fires %>%
+    group_by(MONTH) %>%
+    summarise(BA=sum(BAREA)) %>%
+    arrange(desc(BA)) %>%
+    slice(1)
+
+```
+
+> The month with the largest amount of burned area is also August, mounth 8, with 2177498.34 ha
+
+5. In which MONTH do fires grew largest (percentile 97th)?
+
+```{r question 5}
+fires %>%
+    group_by(MONTH) %>%
+    summarise(P=quantile(BAREA,0.97)) %>%
+    arrange(desc(P)) %>%
+    slice(1)
+
+```
+
+> The month with the largest fires growth was also August, mounth 8, with 239.8500, followed by July.
+
+6. What CAUSE has the highest average fire size?
+
+Here you could either use the `mean' function or calculate the ratio between burned area and fire size.
+
+```{r question 6}
+fires %>%
+    group_by(CAUSE) %>%
+    summarise(N=n(),BA=sum(BAREA),AvgSIZE = BA/N,mean(BAREA))
+
+```
+
+7. Which was the largest fire occurred in each CCAA?
+
+The simplest way to solve this is just calculating the maximum with `summarise` after grouping by CCAA.
+
+```{r question 7}
+fires %>% 
+  group_by(CCAA) %>% 
+  summarise(fire_size = max(BAREA)) 
+
+```
+
+Alternatively, you can use a grouped mutate to determine the rank position of each fire event and then filter the highest ranked fire. The only advantage of this is that we can inquire for the 2nd, 3th or any other rank position just modifying the filter.
+
+```{r}
+fires %>%
+    group_by(CCAA) %>%
+    na.omit() %>%
+    mutate(Rank = rank(-BAREA, ties.method = "first")) %>%
+    filter(Rank == 1)
+
+```
+
+8. Which CCAA has the highest amount of natural fires?
+
+```{r question 8, warning= F}
+fires %>%
+    filter(CAUSE == 1) %>%
+    group_by(CCAA) %>%
+    summarise(N=n()) %>%
+    arrange(desc(N))
+  
+```
+
+> The CCAA with highest amount of natural fires is Castilla y Le?n with 1393
+
+9. Which CCAA has the highest proportion of natural fires?
+
+```{r question 9, warning = F}
+fires %>% 
+  group_by(CCAA) %>% 
+  mutate(nFires = n()) %>% 
+  select(CAUSE, CCAA, nFires) %>% 
+  filter(CAUSE == "1") %>% 
+  mutate(nNaturalFires = n()) %>% 
+  mutate(proportion = nNaturalFires/nFires) %>% 
+  arrange(desc(proportion))
+
+```
+
+```{r}
+fires %>%
+    group_by(CCAA,CAUSE) %>%
+    summarise(N=n()) %>%
+    mutate(Prop = round((N/sum(N)*100),2)) %>%
+    filter(CAUSE == 1) %>%
+    arrange(desc(Prop))
+```
+
+> The province of Aragon has the highest proportion of natural fires = 16%
+
+10. Create a new dataframe with the number of fires per month and cell (CODCUAD). Put data of each month into an individual column.
+
+Without looking for additional commands, the easiest way to solve this exercise is using repeated calls of `mutate` to calculate fire counts per month.
+
+```{r question 10}
+
+new_func <- function(x) {
+  if (length(x[!is.na(x)])==0){
+    return(0)
+  } else{
+    x[!is.na(x)]
+  }
+}
+
+NewDataFrame <- fires %>%
+  group_by(CODCUAD,MONTH) %>%
+  summarise(Number = n_distinct(IDPIF))%>%
+  mutate(Jan = ifelse(MONTH==1,Number,NA),
+         Feb = ifelse(MONTH==2,Number,NA),
+         Mar = ifelse(MONTH==3,Number,NA),
+         Apr = ifelse(MONTH==4,Number,NA),
+         May = ifelse(MONTH==5,Number,NA),
+         Jun = ifelse(MONTH==6,Number,NA),
+         Jul = ifelse(MONTH==7,Number,NA),
+         Aug = ifelse(MONTH==8,Number,NA),
+         Sep = ifelse(MONTH==9,Number,NA),
+         Oct = ifelse(MONTH==10,Number,NA),
+         Nov = ifelse(MONTH==11,Number,NA),
+         Dec = ifelse(MONTH==12,Number,NA)) %>%
+    select(c(-MONTH,-Number)) %>%
+  ungroup()%>%
+  group_by(CODCUAD) %>%
+  summarise_all(list(new_func))
+
+NewDataFrame
+```
+
+The most efficient way to approach this is actually using `tidyr` pivoting functions. As an overall reminder, in the tidyverse we seldom repeat instructions because there usually is an easier way to address repetitive tasks.
+
+```{r}
+fires_cell_month <- fires %>%
+    group_by(CODCUAD,MONTH) %>%
+    summarise(N=n()) %>%
+    pivot_wider(names_from = MONTH, values_from = N)
+
+fires_cell_month
+```
+

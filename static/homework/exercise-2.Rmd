@@ -1,0 +1,185 @@
+---
+title: "Homework 02 - US National Parks Visitors"
+date: "Due: April 27"
+output: 
+  html_document: 
+    css: hw.css
+    theme: yeti
+    toc: true
+    toc_float: true
+    fig_caption: false
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE, message = F)
+```
+
+```{r include=FALSE}
+library(tidyverse)
+library(knitr)
+options(
+  htmltools.dir.version = FALSE, # for blogdown
+  show.signif.stars = FALSE,     # for regression output
+  digits = 2
+  )
+#knitr::opts_chunk$set(eval = FALSE)
+
+```
+
+```{r, include = F, eval = F}
+# download the data from the tidy tuesday package
+
+# Install via devtools::install_github("thebioengineer/tidytuesdayR")
+
+tuesdata <- tidytuesdayR::tt_load(2019, week = 38)
+national_parks <- tuesdata$national_parks %>%
+    filter(year != "Total") %>%
+    mutate(parkname = if_else(is.na(parkname), unit_name, parkname)) 
+write_csv(national_parks, path = "data/hw2/national_parks.csv")
+
+gas_price <- tuesdata$gas_price
+write_csv(gas_price, path = "data/hw2/gas_price.csv")
+
+state_pop <- tuesdata$state_pop %>% 
+    pivot_wider(names_from = year, values_from = pop) %>% 
+    rename(state_code = state)
+write_csv(state_pop, path = "data/hw2/state_pop.csv")
+
+```
+![](img/tt_logo.png)
+
+# Introduction
+
+For this homework we are going to use data on US National Parks, provided by [dataisplural/data.world](dataisplural/data.world) for ["Tidy Tuesday"](https://github.com/rfordatascience/tidytuesday). Tidy Tuesday is a weekly data project aimed at the R ecosystem. Every week, a data set is released, and participants are encouraged to summarize and arrange data to make meaningful charts with `ggplot2`, `tidyr`, `dplyr`, and other tools in the tidyverse ecosystem, and to share both the results and the code used to generate the results. I strongly encourage you to participate in any Tidy Tuesday edition, as it is an extraordinary way of practicing the tidyverse tools and of learning by seeing other people's code and approaches. You can access all the editions of the tidyverse here: 
+https://github.com/rfordatascience/tidytuesday
+
+The data we are going to use was part of the Tidy Tuesday challenge on September 2019, and it contains information on yearly number of visitors for all the National Park Service sites in the United States, from 1900 to 2015. In addition to the national parks, NPS sites include national historic sites, national monuments, national lakeshores and seashores, and so on, but today we are going to focus on the 60 national parks. 
+
+We will import the different data sets into our R project, and you will be asked to solve a set of questions. Each of them must be answered, also including the code employed to address them, and some comments you may wish to include. As usual, we expect you to deliver an RMarkdown document showing both the answers and the code. But first, let's see what the data contains:
+
+>**NOTE:** Remember that the data needed to solve these questions is uploaded in the course's space in RStudio Cloud, under the "Homework 2" project.
+
+# Data Dictionary
+
+## `national_parks.csv`
+
+|variable          |class     |description |
+|:-----------------|:---------|:-----------|
+|year_raw          |integer | Year of record |
+|gnis_id           |character | ID for shapefile and long-lat lookup |
+|geometry          |character | Geometric shape for shapefile |
+|metadata          |character | URL to metadata about the park |
+|number_of_records |double    | Number of records |
+|parkname          |character | Full park name |
+|region            |character | US Region where park is located |
+|state             |character | State abbreviation |
+|unit_code         |character | Park code abbreviation |
+|unit_name         |character | Park Unit name |
+|unit_type         |character | Park unit type |
+|visitors          |double    | Number of visitors |
+
+## `state_pop.csv`
+
+|variable |class     |description |
+|:------------|:---------|:-----------|
+|state_code   |character | State abbreviation |
+|1900:2015    |numeric   | Population of the state for the given year
+
+## `gas_price.csv`
+
+|variable     |class  |description |
+|:------------|:------|:-----------|
+|year         |double | Year (Jan 1st) |
+|gas_current  |double | Gas price in that year (dollars/gallon) |
+|gas_constant |double | Gas price (constant 2015 dollars/gallon) |
+
+
+# Question list
+
+1. Import all the provided data frames into R. Since we are going to work only with National Parks, filter those NPS sites that correspond to this category and save the filtered object.
+
+```{r, eval = T}
+national_parks <- read_csv("data/hw2/national_parks.csv") %>%
+        filter(unit_type == "National Park")
+
+state_pop <- read_csv("data/hw2/state_pop.csv")
+gas_price <- read_csv("data/hw2/gas_price.csv")
+state_names <- read_csv2("data/hw2/state_names.csv")
+```
+
+
+2. Calculate the average number of yearly visitors for each National Park (remember to use only those national sites that are true "National Parks"). Create a bar plot representing the number of visits only for the 15 most visited parks, and be sure that the most visited Parks appear in order according to the number of visitors. 
+(Hint: you can use `ggplot() + geom_col()` to make the plot. See the code in Lab05 to see an example of column plot, and check [here](https://ggplot2.tidyverse.org/reference/geom_bar.html) in case you need more details on how `geom_col` works).
+
+```{r}
+most_visited <- national_parks %>%
+    group_by(parkname) %>%
+    summarise(visit = mean(visitors, na.rm = T)) %>%
+    arrange(desc(visit)) %>%
+    slice(1:15) 
+
+most_visited %>%
+    mutate(parkname = fct_reorder(parkname, visit)) %>%
+    ggplot() +
+    geom_col(aes(x = visit, y = parkname))
+```
+
+3. Import the state names from the file included in the `data` folder into R, and join the information into the `national_parks` dataframe.
+
+```{r}
+state_names <- read_csv2("data/hw2/state_names.csv")
+national_parks <- left_join(national_parks, state_names,
+                            by = c("state" = "code"))
+```
+
+4. Which states had in 2015 the highest number of national parks? Create a barplot in which only the 10 states with the highest number of parks are kept, while the other states are grouped into an "Other" category, and be sure that the states are ordered by the number of parks they have.
+(Hint: you can use `ggplot() + geom_bar()` to make the plot. See the code in Lab05 for an example of bar plot, and check [here](https://ggplot2.tidyverse.org/reference/geom_bar.html) in case you need more details on how `geom_bar` works).
+
+```{r}
+
+national_parks %>% 
+    filter(unit_type == "National Park",
+           year == 2015) %>%
+    mutate(state_name = fct_lump_n(state_name, 10)) %>%
+    ggplot() +
+    geom_bar(aes(fct_infreq(state_name)))
+
+```
+
+5. Join the information on annual gas prices into the national parks dataset. Then, do the same to the `state_pop` data frame (Hint: you will need to transform it into tidy format, so that you can join this information):
+
+```{r}
+
+national_parks2 <- national_parks %>%
+    left_join(gas_price)
+    
+state_pop <- state_pop %>%
+    pivot_longer(cols = `1900`:`2015`, names_to = "year", values_to = "pop") %>%
+    mutate(year = as.numeric(year))
+
+
+national_parks3 <- left_join(national_parks2, state_pop, 
+                             by = c("state" = "state_code",
+                                      "year" = "year"))
+```
+
+6. RELACION ENTRE POBLACION DEL ESTADO Y VISTANTES DE LOS PN DE ESE ESTADO? ENTRE VISITANTES ANUALES Y PRECIO DE LA GASOLINA?
+
+```{r}
+
+national_parks3 %>%
+    group_by(state) %>%
+    summarise(visit = sum(visitors),
+              pop = mean(pop, na.rm = T)) %>%
+    ggplot() +
+    geom_point(aes(pop, visit))
+
+
+national_parks3 %>%
+    group_by(year) %>%
+    summarise(visit = sum(visitors),
+              gas_price = mean(gas_constant, na.rm = T)) %>%
+    ggplot() +
+    geom_point(aes(gas_price, visit, color = year))
+```
+

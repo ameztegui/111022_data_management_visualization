@@ -1,0 +1,282 @@
+---
+title: "How ggplot works"
+date: "111022 | Data management and visualization with R"
+author: 
+  - "Aitor Ameztegui"
+  - "Marcos Rodrigues"
+bibliography: "references/biblio.bib"
+output:
+  rmdformats::readthedown:
+    highlight: pygments
+    number_sections: true
+    css: lab.css
+# runtime: shiny_prerendered
+---
+
+
+```{r knitr_init, echo=FALSE, cache=FALSE, warning=FALSE}
+
+library(knitr)
+
+## Global options
+options(max.print="75")
+opts_chunk$set(echo=TRUE,
+	             cache=FALSE,
+               prompt=FALSE,
+               tidy=TRUE,
+               comment=NA,
+               message=FALSE,
+               warning=FALSE)
+opts_knit$set(width=75)
+```
+
+
+```{r include=FALSE}
+library(tidyverse)
+library(rmdformats)
+library(tidyverse)
+library(cowplot)
+library(sf)
+library(raster)
+library(rgdal)
+library(forcats)
+library(patchwork)
+library(lubridate)
+library(gridExtra)
+library(ggpubr)
+options(
+  htmltools.dir.version = FALSE, # for blogdown
+  show.signif.stars = FALSE     # for regression output
+  )
+```
+
+The main goal of this lab is to introduce you to R the `ggplot2` package to provide some basic insights on its syntax for plotting. The contents of this *lab* have been adapted/taken from @wickham2009 and @wilke2019fundamentals.
+
+# What's ggplot?
+
+`ggplot2` is a package belonging to the tidyverse suite that provides a **complete set of tools to visualize tidy data**. `ggplot2`, is a graphing library in R that makes beautiful graphs, though its syntax can be formidably complex, with a somewhat steep learning curve.
+
+That being said, learning ggplot2 is worth the effort for a couple of reasons. First, the graphs are beautiful. Second, ggplot2's syntax, though seemingly arcane at times, forces you to think about the nature of your data, and the ideas that you are graphing. Lastly, a little bit of knowledge about ggplot2 can go a long way, and can build a powerful foundation for future learning.
+
+`ggplot2` started in 2005, is an attempt to take the good things about base and lattice graphics and improve on them with a strong underlying model which supports the production of any kind of statistical graphic, based on the principles outlined above. The solid underlying model of ggplot2 makes it easy to describe a wide range of graphics with a compact syntax, and independent components make extension easy. Like lattice, ggplot2 uses grid to draw the graphics, which means you can exercise much low-level control over the appearance of the plot. 
+
+> `ggplot2` is an R package for producing statistical, or data, graphics. it's grammar, based on the Grammar of Graphics [@wilkinson:2006], is made up of a set of independent components that can be composed in many different ways. 
+
+This makes ggplot2 very powerful because you are not limited to a set of pre-specified graphics, but you can create new graphics that are precisely tailored for your problem. This may sound overwhelming, but because there is a simple set of core principles and very few special cases, ggplot2 is also easy to learn (although it may take a little time to forget your preconceptions from other graphics tools).
+
+> `ggplot2` provides beautiful, hassle-free plots that take care of fiddly details like drawing legends. 
+
+In fact, its carefully chosen defaults mean that you can produce publication-quality graphics in seconds. However, if you do have special formatting requirements, it's comprehensive theming system makes it easy to do what you want. Ultimately, this means that rather than spending your time making your graph look pretty, you can instead focus on creating the graph that best reveal the message in your data.
+
+`ggplot2` is designed to work iteratively. You can start with a layer showing the raw data then add layers of annotations and statistical summaries. It allows you to produce graphics using the same structured thinking that you use to design an analysis, reducing the distance between a plot in your head and one on the page. It is especially helpful for students who have not yet developed the structured approach to analysis used by experts.
+
+**Learning the grammar not only will help you create graphics that you know about now, but will also help you to think about new graphics** that would be even better. Without the grammar, there is no underlying theory, so most graphics packages are just a big collection of special cases. For example, in base R, if you design a new graphic, it's composed of raw plot elements like points and lines, and it's hard to design new components that combine with existing plots. In `ggplot2`, the expressions used to create a new graphic are composed of higher-level elements like representations of the raw data and statistical transformations, and can easily be combined with new datasets and other plots.
+
+
+## How does ggplot2 fit in with other R graphics?
+
+There are a number of other graphics systems available in R: base graphics, grid graphics and trellis/lattice graphics. How does ggplot2 differ from them?
+
+- *Base* graphics were written by Ross Ihaka based on experience implementing the  graphics driver and partly looking at @chambers:1983. Base graphics has a pen on paper model: you can only draw on top of the plot, you cannot modify or delete existing content. There is no (user accessible) representation of the graphics, apart from their appearance on the screen. Base graphics includes both tools for drawing primitives and entire plots. Base graphics functions are generally fast, but have limited scope. If you've created a single scatterplot, or histogram, or a set of boxplots in the past, you've probably used base graphics.
+
+- The development of `grid` graphics, a much richer system of graphical primitives, started in 2000. Grid is developed by Paul Murrell, growing out of his PhD work [@murrell:1998]. Grid grobs (graphical objects) can be represented independently of the plot and modified later. A system of viewports (each containing its own coordinate system) makes it easier to layout complex graphics. Grid provides drawing primitives, but no tools for producing statistical graphics. 
+
+- The `lattice` package, developed by Deepayan Sarkar, uses grid graphics to implement the trellis graphics system of @cleveland:1993 and is a considerable improvement over base graphics. You can easily produce conditioned plots and some plotting details (e.g., legends) are taken care of automatically. However, lattice graphics lacks a formal model, which can make it hard to extend. Lattice graphics are explained in depth in @sarkar:2008.
+
+- Work on `ggvis`, the successor to `ggplot2`, started in 2014. It takesthe foundational ideas of ggplot2 but extends them to the web and interactivegraphics. The syntax is similar, but it's been re-designed from scratch to take advantage of what I've learned in the 10 years since creating ggplot2.The most exciting thing about ggvis is that it's interactive and dynamic, soplots automatically re-draw themselves when the underlying data or plotspecification changes. However, ggvis is work in progress and currently cancreate only a fraction of the plots in ggplot2 can. Stay tuned for updates!index{ggvis}
+  
+- `htmlwidgets`, <http://www.htmlwidgets.org>, provides a common framework for accessing web visualisation tools from R. Packages built on top of htmlwidgets include leaflet (<https://rstudio.github.io/leaflet/>, maps), dygraph (<http://rstudio.github.io/dygraphs/>, time series) andnetworkD3 (<http://christophergandrud.github.io/networkD3/>, networks).htmlwidgets is to ggvis what the many specialised graphic packages are to ggplot2: it provides graphics honed for specific purposes.
+
+- `plotly`, is and R package for creating interactive web-based graphs via plotly's JavaScript graphing library, *plotly.js*. The plotly R library contains the `ggplotly` function , which will convert `ggplot2 figures into a Plotly object. Furthermore, you have the option of manipulating the Plotly object with the style function.
+
+
+## Why use ggplot2?
+
+There are many reasons to learn `ggplot`. You will probably learn a few more while progressing through the course but here goes the main ones:
+
+- **Automatic legends, colors schemes, etc.**
+
+- Easy superposition, **facetting**, etc.
+
+- Nice rendering (yet, I don't like the default grey theme).
+
+- **Store any ggplot2 object for modification or future recall.** 
+
+- Lots of users (less bugs, much help on Stack Overflow).
+
+- Lots of [extensions](https://mode.com/blog/r-ggplot-extension-packages) to extend `ggplot`'s functionality.
+
+- Nice saving options into multiple image formats.
+
+
+# Learning ggplot
+
+There are 3 essential elements to any ggplot call:
+
+1. A `data` object or `pipeline flow` including the information we want to represent/deliver/communicate.
+
+2. An `aesthetic` that tells ggplot which variables are being mapped to the x axis, y axis, (and often other attributes of the graph, such as the color fill). Intuitively, the aesthetic can be thought of as what you are graphing.
+
+3. A `geom` or geometry that tells ggplot about the basic structure of the graph. Intuitively, the geom can be thought of as how you are graphing 
+
+We can customize our plots adding other options, such as a graph title, axis labels and overall theme for the graph.
+
+The basic syntax and elements of a ggplot call are something close to this:
+
+```
+ggplot(data = <DATA>,
+       mapping = aes(<MAPPINGS>)) + 
+  <GEOM_FUNCTION>(
+     stat = <STAT>, 
+     position = <POSITION>
+  ) +
+  <COORDINATE_FUNCTION> +
+  <FACET_FUNCTION> +
+  <THEMES>
+```
+The above example maps all `aesthetics` in the global call, so that the mapped variables are passed to the subsequent `geoms` unless we specify otherwise. The next structure maps the aesthetics into an specific `geom`:
+
+```
+ggplot() + 
+  <GEOM_FUNCTION>(
+     data = <DATA>,
+     mapping = aes(<MAPPINGS>),
+     stat = <STAT>, 
+     position = <POSITION>
+  ) +
+  <COORDINATE_FUNCTION> +
+  <FACET_FUNCTION> +
+  <THEMES>
+```
+> Note that, same to `dplyr`, there is a *linking command* that allows connecting instructions. The baseline is the same as with `%>%`, though in `ggplot` uses `+` instead.
+
+Of course, same as any other `package` within the `tidyverse`, there is a lot of documentation and resources to back us up during the learning process. Take a loof at the [reference guide](https://ggplot2.tidyverse.org/reference/) from the tidyverse site, visit the [sthda website](http://www.sthda.com/english/wiki/ggplot2-essentials) or check `ggplot2`'s cheatsheet:
+![](images/0X-ggplot/ggplot_cheatsheet.png)
+
+## Pipelines and `ggplot2`
+
+As already mentioned, `ggplot2` is a member of the tidyverse, thus it has being design to be operable from `dplyr`s pipelines. That means we can use any number of verbs to manipulate a data frame and then pass it to `ggplot()` using `%>%`. After that we keep using the regular `+` operator to concatenate plot instructions:
+
+```{r, eval=FALSE}
+data.frame %>%
+  ggplot(aes(x=variable)) +
+    geom_histogram()
+```
+
+# Basic plots with `ggplot2`
+
+The `geoms` are the fundamental building blocks of ggplot2. The allow us to decide in which way we want to picture out our data. As you can see, most of these geoms are associated with a named plot: when that geom is used by itself in a plot, that plot has a special name.
+
+*   `geom_area()` draws an __area plot__, which is a line plot filled to the y-axis (filled lines). Multiple groups will be stacked on top of each other. 
+  
+*   `geom_bar(stat = "identity")` makes a __bar chart__. We need `stat = "identity"` because the default stat automatically counts values (so is essentially a 1d geom). 
+    The identity stat leaves the data unchanged. Multiple bars in the same location will be stacked on top of one another.
+  
+*   `geom_line()` makes a __line plot__.  The `group` aesthetic determines which observations are connected. `geom_line()` connects points from left to right; `geom_path()` is similar but connects points in the order they appear in the data.
+    Both `geom_line()` and `geom_path()` also understand the aesthetic `linetype`, which maps a categorical variable to solid, dotted and dashed lines.
+    
+*   `geom_point()` produces a __scatterplot__. `geom_point()` also understands the `shape` aesthetic.
+
+*   `geom_polygon()` draws polygons, which are filled paths. Each vertex of the polygon requires a separate row in the data.  It is often useful to merge a data frame of polygon coordinates with the data just prior to plotting.
+
+*   `geom_rect()`, `geom_tile()` and `geom_raster()` draw rectangles. `geom_rect()` is parameterised by the four corners of the rectangle, `xmin`, `ymin`, `xmax` and `ymax`. `geom_tile()` is exactly the same, but parameterised by the center of the rect and its size, `x`, `y`, `width` and `height`. `geom_raster()` is a fast special case of `geom_tile()` used when all the tiles are the same size.
+
+The most common `geoms` are shown in the code below.
+
+
+```{r geom-basic, eval=F} 
+df <- data.frame(
+  x = c(3, 1, 5), 
+  y = c(2, 4, 6), 
+  label = c("a","b","c")
+)
+p <- ggplot(df, aes(x, y, label = label)) + 
+  labs(x = NULL, y = NULL) + # Hide axis label
+  theme(plot.title = element_text(size = 12)) # Shrink plot title
+
+p + geom_point() + ggtitle("point")
+p + geom_text() + ggtitle("text")
+p + geom_bar(stat = "identity") + ggtitle("bar")
+p + geom_tile() + ggtitle("raster")
+
+```
+
+```{r echo=FALSE}
+
+df <- data.frame(
+  x = c(3, 1, 5), 
+  y = c(2, 4, 6), 
+  label = c("a","b","c")
+)
+p <- ggplot(df, aes(x, y, label = label)) + 
+  labs(x = NULL, y = NULL) + # Hide axis label
+  theme(plot.title = element_text(size = 12)) # Shrink plot title
+
+p1 <- p + geom_point() + ggtitle("point")
+p2 <- p + geom_text() + ggtitle("text")
+p3 <- p + geom_bar(stat = "identity") + ggtitle("bar")
+p4 <- p + geom_tile() + ggtitle("raster")
+
+pp <- ggarrange(
+p1,p2,p3,p4,ncol=2,nrow = 2
+)
+
+pp
+
+```
+
+
+```{r, eval=FALSE}
+p + geom_line() + ggtitle("line")
+p + geom_area() + ggtitle("area")
+p + geom_path() + ggtitle("path")
+p + geom_polygon() + ggtitle("polygon")
+```
+
+
+```{r echo=FALSE}
+
+df <- data.frame(
+  x = c(3, 1, 5), 
+  y = c(2, 4, 6), 
+  label = c("a","b","c")
+)
+p <- ggplot(df, aes(x, y, label = label)) + 
+  labs(x = NULL, y = NULL) + # Hide axis label
+  theme(plot.title = element_text(size = 12)) # Shrink plot title
+
+p1 <- p + geom_line() + ggtitle("line")
+p2 <- p + geom_area() + ggtitle("area")
+p3 <- p + geom_path() + ggtitle("path")
+p4 <- p + geom_polygon() + ggtitle("polygon")
+
+pp <- ggarrange(
+p1,p2,p3,p4,ncol=2,nrow = 2
+)
+
+pp
+
+```
+
+
+Each of these geoms is two dimensional and requires both `x` and `y` aesthetics. That means we must `map` two variables at least, one to each dimension. Nonetheless, we coudl have included additional aesthetics such as `color`/`fill` (or `color`) and `size`. We will cover all of them in the next sections.
+
+<div class = "exercise">
+**EXERCISES:</br>**
+
+1.  What geoms would you use to draw each of the following named plots?
+    
+- Scatterplot
+- Line chart
+- Histogram
+- Bar chart
+
+2.  What's the difference between `geom_path()` and `geom_polygon()`?
+
+3. What's the difference between `geom_path()` and `geom_line()`?
+
+4. What low-level geoms are used to draw `geom_smooth()`?
+
+</div>
+
+# References
