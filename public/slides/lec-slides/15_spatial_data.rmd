@@ -1,0 +1,131 @@
+---
+title: "Visualization of spatial information: maps"
+author: 
+    - "Aitor Ameztegui"
+    - "Marcos Rodrigues"
+date: '`r format(Sys.Date(), "%B %Y")`'
+
+
+output:
+  xaringan::moon_reader:
+    css: "slides.css"
+    logo: img/udl_logo.png
+    lib_dir: libs
+    nature:
+      highlightStyle: github
+      highlightLines: true
+      countIncrementalSlides: false
+---
+
+```{r setup, include=FALSE}
+# R options
+options(
+  htmltools.dir.version = FALSE, # for blogdown
+  show.signif.stars = FALSE,     # for regression output
+  warm = 1
+  )
+# Set dpi and height for images
+library(knitr)
+opts_chunk$set(fig.heigth = 2.5, figure.width=3.5, dpi = 300) 
+# ggplot2 color palette with gray
+color_palette <- list(gray = "#999999", 
+                      salmon = "#E69F00", 
+                      lightblue = "#56B4E9", 
+                      green = "#009E73", 
+                      yellow = "#F0E442", 
+                      darkblue = "#0072B2", 
+                      red = "#D55E00", 
+                      purple = "#CC79A7")
+# For nonsese...
+htmltools::tagList(rmarkdown::html_dependency_font_awesome())
+```
+
+```{r echo=FALSE, message=FALSE, warning=FALSE, include = FALSE}
+library(tidyverse)
+library(sf)
+library(rgdal)
+
+fires <- read.csv('data/fires.csv')
+grid <- read_sf('data/Fires_grid_CCAA.shp')
+```
+
+# Accessing spatial data
+
+The `sf` package will allow us, among other things, to access information contained in spatial vector layers (points, lines and polygons).
+
+The coolest thing about `sf` it's not that it translates vector layers into `data.frames`. The best thing above all is that **it is fully compatible with `dplyr`**.
+
+```{r, eval = F}
+#install.packages('sf')
+library(raster)
+grid <- read_sf('data/Fires_grid_CCAA.shp')
+```
+---
+# The elements of a map
+
+- Legend: symbology key to understand the elements and data in a map (or plot)
+- Scale: representation of the unit ratio map-reality
+- North: indication of the geographical norht position to understand the arrangment of the map.
+
+---
+
+# Mapping vector data
+
+```{r}
+#First we summarise number of fires and burned area by CODCUAD
+fire.features.grid <- fires %>%
+  filter(YEAR>1994,BAREA>1) %>%
+  group_by(CODCUAD,.drop = F) %>%
+  summarise(N = n(),BA = sum(BAREA))
+
+#Then we join the fire dataset to the grid
+grid %>%
+    left_join(fire.features.grid,by=c('Cod_Cuad'='CODCUAD')) %>%
+    ggplot() +
+        geom_sf(aes(fill=log(BA)))
+    
+```
+
+# Reading raster layers
+
+The information in raster format is basically a 2-dimensional matrix, in which each of the grids or pixels is given a numerical value that represents either a category o parameter.
+
+The `raster` package provides utilities for manipulating geographic information in raster format.
+
+```{r eval=FALSE}
+# install.packages('raster', dep = TRUE)
+library(raster)
+dem <- raster('data/dem_rioja.tif')
+```
+
+# Mapping raster layers
+
+```{r}
+library(raster)
+dem <- raster('data/dem_rioja.tif')
+
+raster::as.data.frame(dem, xy = TRUE) %>%
+    ggplot() +
+        geom_raster(aes(x=x,y=y,fill=dem_rioja))
+
+```
+
+```{r}
+library(rasterVis)
+gplot(dem) +
+    geom_tile(aes(fill=value)) 
+```
+
+# Adding scale and norht arrows
+
+```{r}
+library(ggspatial)
+crs(dem)<-"+proj=utm +zone=30 +ellps=intl +units=m +no_defs"
+gplot(dem) +
+    geom_tile(aes(fill=value)) +
+    annotation_scale(location = "bl", width_hint = 0.2) +         #scale
+    annotation_north_arrow(location = "bl", which_north = "true", #north
+                         pad_x = unit(0.25, "in"), 
+                         pad_y = unit(0.25, "in"),
+                         style = north_arrow_fancy_orienteering)
+```

@@ -1,0 +1,186 @@
+---
+title: "Directory of visualizations (II)"
+author: 
+    - "Aitor Ameztegui"
+    - "Marcos Rodrigues"
+date: '`r format(Sys.Date(), "%B %Y")`'
+output:
+  xaringan::moon_reader:
+    css: "slides.css"
+    logo: img/udl_logo.png
+    lib_dir: libs
+    nature:
+      highlightStyle: github
+      highlightLines: true
+      countIncrementalSlides: false
+---
+
+```{r setup, include=FALSE}
+# R options
+options(
+  htmltools.dir.version = FALSE, # for blogdown
+  show.signif.stars = FALSE,     # for regression output
+  warm = 1
+  )
+# Set dpi and height for images
+library(knitr)
+opts_chunk$set(fig.heigth = 2.5, figure.width=3.5, dpi = 300) 
+# ggplot2 color palette with gray
+color_palette <- list(gray = "#999999", 
+                      salmon = "#E69F00", 
+                      lightblue = "#56B4E9", 
+                      green = "#009E73", 
+                      yellow = "#F0E442", 
+                      darkblue = "#0072B2", 
+                      red = "#D55E00", 
+                      purple = "#CC79A7")
+# For nonsese...
+htmltools::tagList(rmarkdown::html_dependency_font_awesome())
+```
+
+```{r echo=FALSE, message=FALSE, warning=FALSE}
+library(tidyverse)
+library(sf)
+
+fires <- read.csv('data/fires.csv')
+grid <- read_sf('data/Fires_grid_CCAA.shp')
+```
+
+# Visualizing relationships
+
+It is usually the case we are interested in visualizing how two (or more) numerical/continuous variables relate one another. In other words, we may be interested in **visualizing relationships**.
+
+## Scatter plots
+
+The scatter plot is the most widespread way to represent the association between two variables. The concept is quite simple, we use the values of the two variables as coordinates to mark their position in a two-dimensional space. 
+
+---
+
+# Visualizing relationships
+
+Building a scatter plot in `ggplot` is easy. In fact we have already used the kind of geom we need, the `geom_point`. Instead of passing a continuous variable and a discrete one, we now map two continuous variables instead into the `x` and `y` aesthetics.
+
+```{r, eval=F}
+fires %>%
+    group_by(YEAR,MONTH) %>%
+    summarise(BA=sum(BAREA),N=n()) %>%
+    ggplot() +
+        geom_point(aes(x=BA,y=N))
+            
+```
+
+---
+# Visualizing relationships
+
+Of course, we can keep adding layers to the scatter plot in pursue of more complex relationships. For instace, we can map `CAUSE` into color or shape to investigate differences between causes:
+
+```{r, eval=F}
+fires %>%
+    group_by(YEAR,MONTH,CAUSE) %>%
+    summarise(BA=sum(BAREA),N=n()) %>%
+    ggplot() +
+        geom_point(aes(x=BA,y=N,color = factor(CAUSE)))
+            
+```
+
+```{r, eval=F}
+fires %>%
+    group_by(YEAR,MONTH,CAUSE) %>%
+    summarise(BA=sum(BAREA),N=n()) %>%
+    ggplot() +
+        geom_point(aes(x=BA,y=N,color = factor(CAUSE),shape=factor(CAUSE)), size=0.5)
+```
+
+---
+# Visualizing relationships
+
+We can map a third continuous variable into `size`. This kind of representation is called *bubble plot*. 
+
+```{r, eval=F}
+fires %>%
+    group_by(YEAR,MONTH,CAUSE) %>%
+    summarise(BA=sum(BAREA),N=n(),P95=quantile(BAREA,.95)) %>%
+    ggplot() +
+        geom_point(aes(y=BA,x=N,color = factor(CAUSE),size=P95))
+```
+
+---
+# Visualizing relationships
+
+## Density plots
+
+- Isolines: we display lines joining locations with equal densities `geom_density_2d`.
+- 2d-bins plots: we construct square bins and map counts into them.
+- hexbin plots: same as 2d-bins but using hexagons as binning shape.
+
+---
+# Visualizing relationships
+
+We use `geom_density_2d` to visualize densities:
+
+```{r, eval=F}
+p <- fires %>%
+    group_by(YEAR,MONTH) %>%
+    summarise(BA=sum(BAREA),N=n()) %>%
+    ggplot(aes(x=log(BA),y=log(N))) +
+        geom_point(size = 0.8) +
+        geom_density_2d()
+```
+
+```{r, eval=F}
+p + geom_density_2d(aes(color = ..level..))
+```
+
+```{r, eval=F}
+p + stat_density_2d(aes(x=log(BA),y=log(N),
+                            fill = after_stat(level)), 
+                        geom = "polygon")
+```
+
+---
+# Visualizing relationships
+
+We use `geom_bin_2d` or `geom_hex` to visualize *binned* densities:
+
+```{r, eval=F}
+fires %>%
+    group_by(YEAR,MONTH) %>%
+    summarise(BA=sum(BAREA),N=n()) %>%
+    ggplot() +
+        geom_bin_2d(aes(x=BA,y=N))
+```
+
+```{r, eval=F}
+fires %>%
+    group_by(YEAR,MONTH) %>%
+    summarise(BA=sum(BAREA),N=n()) %>%
+    ggplot() +
+        geom_hex(aes(x=BA,y=N))
+```
+
+# Visualizing trends
+
+we use `geom_smooth` to fit a linear profile and visualize trends:
+
+```{r, eval=F}
+fires %>%
+    filter(YEAR>1900) %>%
+    group_by(YEAR) %>%
+    summarize(N=n()) %>%
+    ggplot(aes(x=YEAR,y=N)) +
+        geom_line() +
+        geom_smooth()
+```
+
+# Visualizing trends
+
+Smoothing profiles can be fitter for any kind of relationship, not necessarily temporal:
+
+```{r, eval=F}
+fires %>%
+    group_by(YEAR,MONTH,CAUSE) %>%
+    summarise(BA=sum(BAREA),N=n()) %>%
+    ggplot() +
+        geom_point(aes(x=BA,y=N,color = factor(CAUSE),shape=factor(CAUSE)), size=0.5) +
+    geom_smooth(aes(x=BA,y=N,color = factor(CAUSE)))
+```
