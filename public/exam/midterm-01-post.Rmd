@@ -1,6 +1,6 @@
 ---
 title: "Data Management and Visualization | Spring 2020 Midterm 01"
-date: "**Due: TO determine**"
+date: "**Due: 18 may at 11:30**"
 output: 
   html_document: 
     css: hw.css

@@ -71,7 +71,7 @@ grid <- read_sf('data/Fires_grid_CCAA.shp')
 
 # Mapping vector data
 
-```{r}
+```{r, eval = F}
 #First we summarise number of fires and burned area by CODCUAD
 fire.features.grid <- fires %>%
   filter(YEAR>1994,BAREA>1) %>%
@@ -86,6 +86,28 @@ grid %>%
     
 ```
 
+---
+
+# Mapping vector data
+
+
+```{r, echo = F}
+#First we summarise number of fires and burned area by CODCUAD
+fire.features.grid <- fires %>%
+  filter(YEAR>1994,BAREA>1) %>%
+  group_by(CODCUAD,.drop = F) %>%
+  summarise(N = n(),BA = sum(BAREA))
+
+#Then we join the fire dataset to the grid
+grid %>%
+    left_join(fire.features.grid,by=c('Cod_Cuad'='CODCUAD')) %>%
+    ggplot() +
+        geom_sf(aes(fill=log(BA)))
+    
+```
+
+
+---
 # Reading raster layers
 
 The information in raster format is basically a 2-dimensional matrix, in which each of the grids or pixels is given a numerical value that represents either a category o parameter.
@@ -98,9 +120,11 @@ library(raster)
 dem <- raster('data/dem_rioja.tif')
 ```
 
+---
+
 # Mapping raster layers
 
-```{r}
+```{r, message = F, eval = F}
 library(raster)
 dem <- raster('data/dem_rioja.tif')
 
@@ -110,15 +134,33 @@ raster::as.data.frame(dem, xy = TRUE) %>%
 
 ```
 
-```{r}
+---
+
+# Mapping raster layers
+
+```{r, message = F, echo = F}
+library(raster)
+dem <- raster('data/dem_rioja.tif')
+
+raster::as.data.frame(dem, xy = TRUE) %>%
+    ggplot() +
+        geom_raster(aes(x=x,y=y,fill=dem_rioja))
+
+```
+
+---
+
+```{r, warning = F, message = F, eval = F}
 library(rasterVis)
 gplot(dem) +
     geom_tile(aes(fill=value)) 
 ```
 
+---
+
 # Adding scale and norht arrows
 
-```{r}
+```{r, warning = F, message = F, eval = F}
 library(ggspatial)
 crs(dem)<-"+proj=utm +zone=30 +ellps=intl +units=m +no_defs"
 gplot(dem) +

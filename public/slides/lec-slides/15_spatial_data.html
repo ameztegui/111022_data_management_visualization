@@ -63,8 +63,15 @@ grid %&gt;%
         geom_sf(aes(fill=log(BA)))
 ```
 
-![](15_spatial_data_files/figure-html/unnamed-chunk-3-1.png)&lt;!-- --&gt;
+---
 
+# Mapping vector data
+
+
+![](15_spatial_data_files/figure-html/unnamed-chunk-4-1.png)&lt;!-- --&gt;
+
+
+---
 # Reading raster layers
 
 The information in raster format is basically a 2-dimensional matrix, in which each of the grids or pixels is given a numerical value that represents either a category o parameter.
@@ -78,31 +85,13 @@ library(raster)
 dem &lt;- raster('data/dem_rioja.tif')
 ```
 
+---
+
 # Mapping raster layers
 
 
 ```r
 library(raster)
-```
-
-```
-## 
-## Attaching package: 'raster'
-```
-
-```
-## The following object is masked from 'package:dplyr':
-## 
-##     select
-```
-
-```
-## The following object is masked from 'package:tidyr':
-## 
-##     extract
-```
-
-```r
 dem &lt;- raster('data/dem_rioja.tif')
 
 raster::as.data.frame(dem, xy = TRUE) %&gt;%
@@ -110,38 +99,22 @@ raster::as.data.frame(dem, xy = TRUE) %&gt;%
         geom_raster(aes(x=x,y=y,fill=dem_rioja))
 ```
 
-![](15_spatial_data_files/figure-html/unnamed-chunk-5-1.png)&lt;!-- --&gt;
+---
+
+# Mapping raster layers
+
+![](15_spatial_data_files/figure-html/unnamed-chunk-7-1.png)&lt;!-- --&gt;
+
+---
 
 
 ```r
 library(rasterVis)
-```
-
-```
-## Loading required package: lattice
-```
-
-```
-## Loading required package: latticeExtra
-```
-
-```
-## 
-## Attaching package: 'latticeExtra'
-```
-
-```
-## The following object is masked from 'package:ggplot2':
-## 
-##     layer
-```
-
-```r
 gplot(dem) +
     geom_tile(aes(fill=value)) 
 ```
 
-![](15_spatial_data_files/figure-html/unnamed-chunk-6-1.png)&lt;!-- --&gt;
+---
 
 # Adding scale and norht arrows
 
@@ -157,16 +130,6 @@ gplot(dem) +
                          pad_y = unit(0.25, "in"),
                          style = north_arrow_fancy_orienteering)
 ```
-
-```
-## Using plotunit = 'm'
-```
-
-```
-## Warning in f(...): True north is not meaningful without coord_sf()
-```
-
-![](15_spatial_data_files/figure-html/unnamed-chunk-7-1.png)&lt;!-- --&gt;
     </textarea>
 <style data-target="print-only">@media screen {.remark-slide-container{display:block;}.remark-slide-scaler{box-shadow:none;}}</style>
 <script src="https://remarkjs.com/downloads/remark-latest.min.js"></script>
