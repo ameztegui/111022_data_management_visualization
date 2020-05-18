@@ -1,6 +1,6 @@
 ---
 title: "Data Management and Visualization | Spring 2020 Midterm 01"
-date: "**Due: TO determine**"
+date: "**Due: 18 may at 11:30**"
 output: 
   html_document: 
     css: hw.css
@@ -47,7 +47,7 @@ Good luck to everyone!
 
 ### Question 1
 
-**Cal Fire uses the Imperial system of units. That means that fire surfaces are provided in acres (`gis_acres`). Create a new field in the data frame that contains the surface of each wildfire in hectares (of course, you can google to know which is the conversion rate)**
+Cal Fire uses the Imperial system of units. That means that fire surfaces are provided in acres (`gis_acres`). Create a new field in the data frame that contains the surface of each wildfire in hectares (of course, you can google to know which is the conversion rate)
 
 ```{r}
 calfire <- calfire %>%
@@ -56,7 +56,7 @@ calfire <- calfire %>%
 
 ### Question 2
 
-**Our dataset contains information on when the fire was detected, and when it was controlled. Make a table listing the fires that burned for the most time. For how long were they burning? Are they mostly recent fires or ancient fires? Do you see anything worth commenting?**
+Our dataset contains information on when the fire was detected, and when it was controlled. Make a table listing the fires that burned for the most time. For how long were they burning? Are they mostly recent fires or ancient fires? Do you see anything worth commenting?
 
 ```{r}
 calfire %>%
@@ -66,7 +66,7 @@ calfire %>%
 
 ### Question 3
 
-**The dataset also contains information on the Federal Agency that was responsible for the detection of the fire. Which is the most efficient agency (i.e. the one that controls the fires in the average shortest time)? *Hint: exclude previously thiose fires with a negative burning time, which clearly correspond to mistakes* **
+The dataset also contains information on the Federal Agency that was responsible for the detection of the fire. Which is the most efficient agency (i.e. the one that controls the fires in the average shortest time)? *Hint: exclude previously thiose fires with a negative burning time, which clearly correspond to mistakes*
 
 ```{r}
 calfire %>%
@@ -79,7 +79,7 @@ calfire %>%
 ```
 
 ### Question 4
-**Make a table that lists in descending order the number of wildfires per year. Which year had the highest number of wildfires? Do the same for the total burnt area per year (in hectares). Are the first 5 years in both tables the same? Why do you think it's so?**
+Make a table that lists in descending order the number of wildfires per year. Which year had the highest number of wildfires? Do the same for the total burnt area per year (in hectares). Are the first 5 years in both tables the same? Why do you think it's so?
 
 ```{r}
 calfire %>% group_by(year_) %>%
@@ -94,7 +94,7 @@ calfire %>% group_by(year_) %>%
 
 ### Question 5
 
-**It is often the case that a few wildfires are responsible for the largest amount of burned area, whereas the vast majority of fires only burn a small share of the total burnt surface. To assess if this is true also in California, create a factor that contains classes of fire size (of width = 10000 ha), and determine the number of fires within each class and the total amount of burnt area for each of the classes. Is the abovementioned statement true for California?**
+It is often the case that a few wildfires are responsible for the largest amount of burned area, whereas the vast majority of fires only burn a small share of the total burnt surface. To assess if this is true also in California, create a factor that contains classes of fire size (of width = 10000 ha), and determine the number of fires within each class and the total amount of burnt area for each of the classes. Is the abovementioned statement true for California?
 
 ```{r}
 calfire %>%
@@ -107,7 +107,7 @@ calfire %>%
 
 ### Question 6:
 
-**Create a new variable that specifies in words the cause of each wildfire, knowing that causes 1 and 17 are "natural", cause 14 (or not specified) are "unknown", and the rest are variants of "human" caused fires.**
+Create a new variable that specifies in words the cause of each wildfire, knowing that causes 1 and 17 are "natural", cause 14 (or not specified) are "unknown", and the rest are variants of "human" caused fires.
 
 
 ```{r}
@@ -119,7 +119,7 @@ calfire <- calfire %>%
 
 ### Question 7:
 
-**Now we have grouped the causes, make a table that lists the years in descending order of the total number of human-caused fires**
+Now we have grouped the causes, make a table that lists the years in descending order of the total number of human-caused fires
 
 ```{r}
 calfire %>%
@@ -131,7 +131,7 @@ calfire %>%
 
 ### Question 8
 
-**Calculate the proportion of human-caused wildfires each year. Make a table that lists in descending order of the proportion of human-caused fires per year**
+Calculate the proportion of human-caused wildfires each year. Make a table that lists in descending order of the proportion of human-caused fires per year
 
 ```{r}
 calfire_causes <- calfire %>%
@@ -146,7 +146,7 @@ calfire_causes %>%
 
 ### EXTRA CREDIT
 
-**Is there a trend in the proportion of human-caused fires with time? And in the proportion of fires with unkown cause with time? What do you think can explain these trends? *Hint: you can use ggplot to assess the relationship between those variables***
+Is there a trend in the proportion of human-caused fires with time? And in the proportion of fires with unkown cause with time? What do you think can explain these trends? *Hint: you can use ggplot to assess the relationship between those variables*
 
 ```{r}
 
@@ -158,8 +158,8 @@ calfire_causes %>%
 
 ### Question 9
 
-**The file `calfire_damage.csv` contains information on the number of structures damaged each year by the wildfires in California. Import the file into R, join the information on the damaged structures with the `calfire` data frame and answer the following questions:**
-**- Is the number of damaged structures related to the size of the largest fire per year? *Hint: you can either produce a table with both variables per year or a chart using `plot()` or `geom_point()` from ggplot2***
+The file `calfire_damage.csv` contains information on the number of structures damaged each year by the wildfires in California. Import the file into R, join the information on the damaged structures with the `calfire` data frame and answer the following questions:**
+**- Is the number of damaged structures related to the size of the largest fire per year? *Hint: you can either produce a table with both variables per year or a chart using `plot()` or `geom_point()` from ggplot2*
 
 ```{r}
 
@@ -176,7 +176,7 @@ inner_join(calfire, calfire_damage,
 
 ### Question 10
 
-**The `cal_fire_incident` contains information of the total number of fires per year across the continental United States, the total of acres burned, and the total damage caused by the fires, in dollars. Import the file into R, reclassify the variable years into decades, and determine which was the most catastrophic decade in total number of fires, in total damage, and in acres burned. Moreover, determine in which decade there was a higher mean damage per fire.**
+The `cal_fire_incident` contains information of the total number of fires per year across the continental United States, the total of acres burned, and the total damage caused by the fires, in dollars. Import the file into R, reclassify the variable years into decades, and determine which was the most catastrophic decade in total number of fires, in total damage, and in acres burned. Moreover, determine in which decade there was a higher mean damage per fire.
 
 ```{r}
 us_fires <- read_csv(here("static/exam/data/US_fire_incidents.txt"),
