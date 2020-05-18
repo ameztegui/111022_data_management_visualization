@@ -1,0 +1,297 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+  <head>
+    <title>Directory of visualizations (II)</title>
+    <meta charset="utf-8" />
+    <meta name="author" content="Aitor Ameztegui" />
+    <meta name="author" content="Marcos Rodrigues" />
+    <link href="libs/font-awesome/css/all.css" rel="stylesheet" />
+    <link href="libs/font-awesome/css/v4-shims.css" rel="stylesheet" />
+    <link rel="stylesheet" href="slides.css" type="text/css" />
+  </head>
+  <body>
+    <textarea id="source">
+class: center, middle, inverse, title-slide
+
+# Directory of visualizations (II)
+### Aitor Ameztegui
+### Marcos Rodrigues
+### May 2020
+
+---
+
+
+
+
+
+
+# Visualizing relationships
+
+It is usually the case we are interested in visualizing how two (or more) numerical/continuous variables relate one another. In other words, we may be interested in **visualizing relationships**.
+
+## Scatter plots
+
+The scatter plot is the most widespread way to represent the association between two variables. The concept is quite simple, we use the values of the two variables as coordinates to mark their position in a two-dimensional space. 
+
+---
+
+# Visualizing relationships
+
+Building a scatter plot in `ggplot` is easy. In fact we have already used the kind of geom we need, the `geom_point`. Instead of passing a continuous variable and a discrete one, we now map two continuous variables instead into the `x` and `y` aesthetics.
+
+
+```r
+fires %&gt;%
+    group_by(YEAR,MONTH) %&gt;%
+    summarise(BA=sum(BAREA),N=n()) %&gt;%
+    ggplot() +
+        geom_point(aes(x=BA,y=N))
+```
+
+---
+# Visualizing relationships
+
+Of course, we can keep adding layers to the scatter plot in pursue of more complex relationships. For instace, we can map `CAUSE` into color or shape to investigate differences between causes:
+
+
+```r
+fires %&gt;%
+    group_by(YEAR,MONTH,CAUSE) %&gt;%
+    summarise(BA=sum(BAREA),N=n()) %&gt;%
+    ggplot() +
+        geom_point(aes(x=BA,y=N,color = factor(CAUSE)))
+```
+
+
+```r
+fires %&gt;%
+    group_by(YEAR,MONTH,CAUSE) %&gt;%
+    summarise(BA=sum(BAREA),N=n()) %&gt;%
+    ggplot() +
+        geom_point(aes(x=BA,y=N,color = factor(CAUSE),shape=factor(CAUSE)), size=0.5)
+```
+
+---
+# Visualizing relationships
+
+We can map a third continuous variable into `size`. This kind of representation is called *bubble plot*. 
+
+
+```r
+fires %&gt;%
+    group_by(YEAR,MONTH,CAUSE) %&gt;%
+    summarise(BA=sum(BAREA),N=n(),P95=quantile(BAREA,.95)) %&gt;%
+    ggplot() +
+        geom_point(aes(y=BA,x=N,color = factor(CAUSE),size=P95))
+```
+
+---
+# Visualizing relationships
+
+## Density plots
+
+- Isolines: we display lines joining locations with equal densities `geom_density_2d`.
+- 2d-bins plots: we construct square bins and map counts into them.
+- hexbin plots: same as 2d-bins but using hexagons as binning shape.
+
+---
+# Visualizing relationships
+
+We use `geom_density_2d` to visualize densities:
+
+
+```r
+p &lt;- fires %&gt;%
+    group_by(YEAR,MONTH) %&gt;%
+    summarise(BA=sum(BAREA),N=n()) %&gt;%
+    ggplot(aes(x=log(BA),y=log(N))) +
+        geom_point(size = 0.8) +
+        geom_density_2d()
+```
+
+
+```r
+p + geom_density_2d(aes(color = ..level..))
+```
+
+
+```r
+p + stat_density_2d(aes(x=log(BA),y=log(N),
+                            fill = after_stat(level)), 
+                        geom = "polygon")
+```
+
+---
+# Visualizing relationships
+
+We use `geom_bin_2d` or `geom_hex` to visualize *binned* densities:
+
+
+```r
+fires %&gt;%
+    group_by(YEAR,MONTH) %&gt;%
+    summarise(BA=sum(BAREA),N=n()) %&gt;%
+    ggplot() +
+        geom_bin_2d(aes(x=BA,y=N))
+```
+
+
+```r
+fires %&gt;%
+    group_by(YEAR,MONTH) %&gt;%
+    summarise(BA=sum(BAREA),N=n()) %&gt;%
+    ggplot() +
+        geom_hex(aes(x=BA,y=N))
+```
+
+# Visualizing trends
+
+we use `geom_smooth` to fit a linear profile and visualize trends:
+
+
+```r
+fires %&gt;%
+    filter(YEAR&gt;1900) %&gt;%
+    group_by(YEAR) %&gt;%
+    summarize(N=n()) %&gt;%
+    ggplot(aes(x=YEAR,y=N)) +
+        geom_line() +
+        geom_smooth()
+```
+
+# Visualizing trends
+
+Smoothing profiles can be fitter for any kind of relationship, not necessarily temporal:
+
+
+```r
+fires %&gt;%
+    group_by(YEAR,MONTH,CAUSE) %&gt;%
+    summarise(BA=sum(BAREA),N=n()) %&gt;%
+    ggplot() +
+        geom_point(aes(x=BA,y=N,color = factor(CAUSE),shape=factor(CAUSE)), size=0.5) +
+    geom_smooth(aes(x=BA,y=N,color = factor(CAUSE)))
+```
+    </textarea>
+<style data-target="print-only">@media screen {.remark-slide-container{display:block;}.remark-slide-scaler{box-shadow:none;}}</style>
+<script src="https://remarkjs.com/downloads/remark-latest.min.js"></script>
+<script>var slideshow = remark.create({
+"highlightStyle": "github",
+"highlightLines": true,
+"countIncrementalSlides": false
+});
+if (window.HTMLWidgets) slideshow.on('afterShowSlide', function (slide) {
+  window.dispatchEvent(new Event('resize'));
+});
+(function(d) {
+  var s = d.createElement("style"), r = d.querySelector(".remark-slide-scaler");
+  if (!r) return;
+  s.type = "text/css"; s.innerHTML = "@page {size: " + r.style.width + " " + r.style.height +"; }";
+  d.head.appendChild(s);
+})(document);
+
+(function(d) {
+  var el = d.getElementsByClassName("remark-slides-area");
+  if (!el) return;
+  var slide, slides = slideshow.getSlides(), els = el[0].children;
+  for (var i = 1; i < slides.length; i++) {
+    slide = slides[i];
+    if (slide.properties.continued === "true" || slide.properties.count === "false") {
+      els[i - 1].className += ' has-continuation';
+    }
+  }
+  var s = d.createElement("style");
+  s.type = "text/css"; s.innerHTML = "@media print { .has-continuation { display: none; } }";
+  d.head.appendChild(s);
+})(document);
+// delete the temporary CSS (for displaying all slides initially) when the user
+// starts to view slides
+(function() {
+  var deleted = false;
+  slideshow.on('beforeShowSlide', function(slide) {
+    if (deleted) return;
+    var sheets = document.styleSheets, node;
+    for (var i = 0; i < sheets.length; i++) {
+      node = sheets[i].ownerNode;
+      if (node.dataset["target"] !== "print-only") continue;
+      node.parentNode.removeChild(node);
+    }
+    deleted = true;
+  });
+})();
+(function() {
+  "use strict"
+  // Replace <script> tags in slides area to make them executable
+  var scripts = document.querySelectorAll(
+    '.remark-slides-area .remark-slide-container script'
+  );
+  if (!scripts.length) return;
+  for (var i = 0; i < scripts.length; i++) {
+    var s = document.createElement('script');
+    var code = document.createTextNode(scripts[i].textContent);
+    s.appendChild(code);
+    var scriptAttrs = scripts[i].attributes;
+    for (var j = 0; j < scriptAttrs.length; j++) {
+      s.setAttribute(scriptAttrs[j].name, scriptAttrs[j].value);
+    }
+    scripts[i].parentElement.replaceChild(s, scripts[i]);
+  }
+})();
+(function() {
+  var links = document.getElementsByTagName('a');
+  for (var i = 0; i < links.length; i++) {
+    if (/^(https?:)?\/\//.test(links[i].getAttribute('href'))) {
+      links[i].target = '_blank';
+    }
+  }
+})();
+// adds .remark-code-has-line-highlighted class to <pre> parent elements
+// of code chunks containing highlighted lines with class .remark-code-line-highlighted
+(function(d) {
+  const hlines = d.querySelectorAll('.remark-code-line-highlighted');
+  const preParents = [];
+  const findPreParent = function(line, p = 0) {
+    if (p > 1) return null; // traverse up no further than grandparent
+    const el = line.parentElement;
+    return el.tagName === "PRE" ? el : findPreParent(el, ++p);
+  };
+
+  for (let line of hlines) {
+    let pre = findPreParent(line);
+    if (pre && !preParents.includes(pre)) preParents.push(pre);
+  }
+  preParents.forEach(p => p.classList.add("remark-code-has-line-highlighted"));
+})(document);</script>
+
+<script>
+slideshow._releaseMath = function(el) {
+  var i, text, code, codes = el.getElementsByTagName('code');
+  for (i = 0; i < codes.length;) {
+    code = codes[i];
+    if (code.parentNode.tagName !== 'PRE' && code.childElementCount === 0) {
+      text = code.textContent;
+      if (/^\\\((.|\s)+\\\)$/.test(text) || /^\\\[(.|\s)+\\\]$/.test(text) ||
+          /^\$\$(.|\s)+\$\$$/.test(text) ||
+          /^\\begin\{([^}]+)\}(.|\s)+\\end\{[^}]+\}$/.test(text)) {
+        code.outerHTML = code.innerHTML;  // remove <code></code>
+        continue;
+      }
+    }
+    i++;
+  }
+};
+slideshow._releaseMath(document);
+</script>
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+(function () {
+  var script = document.createElement('script');
+  script.type = 'text/javascript';
+  script.src  = 'https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML';
+  if (location.protocol !== 'file:' && /^https?:/.test(script.src))
+    script.src  = script.src.replace(/^https?:/, '');
+  document.getElementsByTagName('head')[0].appendChild(script);
+})();
+</script>
+  </body>
+</html>

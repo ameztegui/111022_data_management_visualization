@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+  <head>
+    <title>Visualization of spatial information: maps</title>
+    <meta charset="utf-8" />
+    <meta name="author" content="Aitor Ameztegui" />
+    <meta name="author" content="Marcos Rodrigues" />
+    <link href="libs/font-awesome/css/all.css" rel="stylesheet" />
+    <link href="libs/font-awesome/css/v4-shims.css" rel="stylesheet" />
+    <link rel="stylesheet" href="slides.css" type="text/css" />
+  </head>
+  <body>
+    <textarea id="source">
+class: center, middle, inverse, title-slide
+
+# Visualization of spatial information: maps
+### Aitor Ameztegui
+### Marcos Rodrigues
+### May 2020
+
+---
+
+
+
+
+
+
+# Accessing spatial data
+
+The `sf` package will allow us, among other things, to access information contained in spatial vector layers (points, lines and polygons).
+
+The coolest thing about `sf` it's not that it translates vector layers into `data.frames`. The best thing above all is that **it is fully compatible with `dplyr`**.
+
+
+```r
+#install.packages('sf')
+library(raster)
+grid &lt;- read_sf('data/Fires_grid_CCAA.shp')
+```
+---
+# The elements of a map
+
+- Legend: symbology key to understand the elements and data in a map (or plot)
+- Scale: representation of the unit ratio map-reality
+- North: indication of the geographical norht position to understand the arrangment of the map.
+
+---
+
+# Mapping vector data
+
+
+```r
+#First we summarise number of fires and burned area by CODCUAD
+fire.features.grid &lt;- fires %&gt;%
+  filter(YEAR&gt;1994,BAREA&gt;1) %&gt;%
+  group_by(CODCUAD,.drop = F) %&gt;%
+  summarise(N = n(),BA = sum(BAREA))
+
+#Then we join the fire dataset to the grid
+grid %&gt;%
+    left_join(fire.features.grid,by=c('Cod_Cuad'='CODCUAD')) %&gt;%
+    ggplot() +
+        geom_sf(aes(fill=log(BA)))
+```
+
+---
+
+# Mapping vector data
+
+
+![](15_spatial_data_files/figure-html/unnamed-chunk-4-1.png)&lt;!-- --&gt;
+
+
+---
+# Reading raster layers
+
+The information in raster format is basically a 2-dimensional matrix, in which each of the grids or pixels is given a numerical value that represents either a category o parameter.
+
+The `raster` package provides utilities for manipulating geographic information in raster format.
+
+
+```r
+# install.packages('raster', dep = TRUE)
+library(raster)
+dem &lt;- raster('data/dem_rioja.tif')
+```
+
+---
+
+# Mapping raster layers
+
+
+```r
+library(raster)
+dem &lt;- raster('data/dem_rioja.tif')
+
+raster::as.data.frame(dem, xy = TRUE) %&gt;%
+    ggplot() +
+        geom_raster(aes(x=x,y=y,fill=dem_rioja))
+```
+
+---
+
+# Mapping raster layers
+
+![](15_spatial_data_files/figure-html/unnamed-chunk-7-1.png)&lt;!-- --&gt;
+
+---
+
+
+```r
+library(rasterVis)
+gplot(dem) +
+    geom_tile(aes(fill=value)) 
+```
+
+---
+
+# Adding scale and norht arrows
+
+
+```r
+library(ggspatial)
+crs(dem)&lt;-"+proj=utm +zone=30 +ellps=intl +units=m +no_defs"
+gplot(dem) +
+    geom_tile(aes(fill=value)) +
+    annotation_scale(location = "bl", width_hint = 0.2) +         #scale
+    annotation_north_arrow(location = "bl", which_north = "true", #north
+                         pad_x = unit(0.25, "in"), 
+                         pad_y = unit(0.25, "in"),
+                         style = north_arrow_fancy_orienteering)
+```
+    </textarea>
+<style data-target="print-only">@media screen {.remark-slide-container{display:block;}.remark-slide-scaler{box-shadow:none;}}</style>
+<script src="https://remarkjs.com/downloads/remark-latest.min.js"></script>
+<script>var slideshow = remark.create({
+"highlightStyle": "github",
+"highlightLines": true,
+"countIncrementalSlides": false
+});
+if (window.HTMLWidgets) slideshow.on('afterShowSlide', function (slide) {
+  window.dispatchEvent(new Event('resize'));
+});
+(function(d) {
+  var s = d.createElement("style"), r = d.querySelector(".remark-slide-scaler");
+  if (!r) return;
+  s.type = "text/css"; s.innerHTML = "@page {size: " + r.style.width + " " + r.style.height +"; }";
+  d.head.appendChild(s);
+})(document);
+
+(function(d) {
+  var el = d.getElementsByClassName("remark-slides-area");
+  if (!el) return;
+  var slide, slides = slideshow.getSlides(), els = el[0].children;
+  for (var i = 1; i < slides.length; i++) {
+    slide = slides[i];
+    if (slide.properties.continued === "true" || slide.properties.count === "false") {
+      els[i - 1].className += ' has-continuation';
+    }
+  }
+  var s = d.createElement("style");
+  s.type = "text/css"; s.innerHTML = "@media print { .has-continuation { display: none; } }";
+  d.head.appendChild(s);
+})(document);
+// delete the temporary CSS (for displaying all slides initially) when the user
+// starts to view slides
+(function() {
+  var deleted = false;
+  slideshow.on('beforeShowSlide', function(slide) {
+    if (deleted) return;
+    var sheets = document.styleSheets, node;
+    for (var i = 0; i < sheets.length; i++) {
+      node = sheets[i].ownerNode;
+      if (node.dataset["target"] !== "print-only") continue;
+      node.parentNode.removeChild(node);
+    }
+    deleted = true;
+  });
+})();
+(function() {
+  "use strict"
+  // Replace <script> tags in slides area to make them executable
+  var scripts = document.querySelectorAll(
+    '.remark-slides-area .remark-slide-container script'
+  );
+  if (!scripts.length) return;
+  for (var i = 0; i < scripts.length; i++) {
+    var s = document.createElement('script');
+    var code = document.createTextNode(scripts[i].textContent);
+    s.appendChild(code);
+    var scriptAttrs = scripts[i].attributes;
+    for (var j = 0; j < scriptAttrs.length; j++) {
+      s.setAttribute(scriptAttrs[j].name, scriptAttrs[j].value);
+    }
+    scripts[i].parentElement.replaceChild(s, scripts[i]);
+  }
+})();
+(function() {
+  var links = document.getElementsByTagName('a');
+  for (var i = 0; i < links.length; i++) {
+    if (/^(https?:)?\/\//.test(links[i].getAttribute('href'))) {
+      links[i].target = '_blank';
+    }
+  }
+})();
+// adds .remark-code-has-line-highlighted class to <pre> parent elements
+// of code chunks containing highlighted lines with class .remark-code-line-highlighted
+(function(d) {
+  const hlines = d.querySelectorAll('.remark-code-line-highlighted');
+  const preParents = [];
+  const findPreParent = function(line, p = 0) {
+    if (p > 1) return null; // traverse up no further than grandparent
+    const el = line.parentElement;
+    return el.tagName === "PRE" ? el : findPreParent(el, ++p);
+  };
+
+  for (let line of hlines) {
+    let pre = findPreParent(line);
+    if (pre && !preParents.includes(pre)) preParents.push(pre);
+  }
+  preParents.forEach(p => p.classList.add("remark-code-has-line-highlighted"));
+})(document);</script>
+
+<script>
+slideshow._releaseMath = function(el) {
+  var i, text, code, codes = el.getElementsByTagName('code');
+  for (i = 0; i < codes.length;) {
+    code = codes[i];
+    if (code.parentNode.tagName !== 'PRE' && code.childElementCount === 0) {
+      text = code.textContent;
+      if (/^\\\((.|\s)+\\\)$/.test(text) || /^\\\[(.|\s)+\\\]$/.test(text) ||
+          /^\$\$(.|\s)+\$\$$/.test(text) ||
+          /^\\begin\{([^}]+)\}(.|\s)+\\end\{[^}]+\}$/.test(text)) {
+        code.outerHTML = code.innerHTML;  // remove <code></code>
+        continue;
+      }
+    }
+    i++;
+  }
+};
+slideshow._releaseMath(document);
+</script>
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+(function () {
+  var script = document.createElement('script');
+  script.type = 'text/javascript';
+  script.src  = 'https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML';
+  if (location.protocol !== 'file:' && /^https?:/.test(script.src))
+    script.src  = script.src.replace(/^https?:/, '');
+  document.getElementsByTagName('head')[0].appendChild(script);
+})();
+</script>
+  </body>
+</html>

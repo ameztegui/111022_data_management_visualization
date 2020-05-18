@@ -1,0 +1,211 @@
+---
+title: "Data Management and Visualization | Spring 2020 Midterm 01"
+date: "**Due: 18 may at 11:30**"
+output: 
+  html_document: 
+    css: hw.css
+    fig_height: 4
+    fig_width: 7
+    
+
+---
+
+```{r load-packages, message=FALSE, echo = F}
+# set the echo option to FALSE to see how the document looks with the code suppressed
+knitr::opts_chunk$set(echo = F, eval = F)
+
+## Load packages
+library(tidyverse)
+library(here)
+```
+
+## Academic Honesty Statement
+
+**THIS IS AN INDIVIDUAL ASSESSMENT, THIS DOCUMENT AND YOUR ANSWERS ARE FOR YOUR EYES ONLY. ANY VIOLATION OF THIS POLICY WILL BE IMMEDIATELY REPORTED TO THE MASTER CONDUCT BOARD.**
+
+*Copy the text below, replacing the underscores with your name, and paste it in the report you submit, acknowledging that you have read and understood the abovementioned honesty statement.*
+
+I, ____________, hereby state that I have not communicated with or gained information in any way from my classmates or anyone other than the Professors during this exam, and that all work is my own.
+
+## Data
+For this midterm, we will analyze trends in California wildfires, using the California Department of Forestry and Fire Protection (Cal Fire) Fire Perimeters Geodatabase. The main file we will use is the calfire data frame, which contains information on each wildfire bigger than 10 acres, the agency responsible for the management, the fire name, alarm and contention date, the surface affected and the cause, among other variables. To load this data frame, **be sure to include this code** at the beginning of your report:
+
+```{r, echo = T}
+load("./data/calfire.rdata")
+```
+
+We will also use information on the damages caused by wildfires in California and the US, that we will load when needed.
+
+All these data have been gathered by the Cal Fire and pre-processed and released by BuzzFeed news for the "Tidy Tuesday" visualization initiative (https://github.com/rfordatascience/tidytuesday)
+
+## Instructions
+We expect you to produce a complete, **knittable Rmarkdown document** that contains the text of the questions, the code chunks needed to answer them, and **some comments on the results obtained**. There are **10 questions**, each will be valued **1 point**, and one optional question that provides 1 extra credit if solved. You will have a total of **1.5 hours** to complete the exam. During this time, we will be available in the forum of the virtual campus of the UdL to solve any doubt. Once the time has expired, we will access your RStudio Cloud project and **copy the Rmarkdown file as it is at that moment**, with no possibility of later changes. If you finish before the time allowed, please let us know. We will value not only the final result and the code, but also the appropriate formatting and coding style (see below). 
+
+Good luck to everyone!
+
+## Questions
+
+### Question 1
+
+Cal Fire uses the Imperial system of units. That means that fire surfaces are provided in acres (`gis_acres`). Create a new field in the data frame that contains the surface of each wildfire in hectares (of course, you can google to know which is the conversion rate)
+
+```{r}
+calfire <- calfire %>%
+    mutate(sup_ha = gis_acres / 2.471)
+```
+
+### Question 2
+
+Our dataset contains information on when the fire was detected, and when it was controlled. Make a table listing the fires that burned for the most time. For how long were they burning? Are they mostly recent fires or ancient fires? Do you see anything worth commenting?
+
+```{r}
+calfire %>%
+    mutate(burning_time = cont_date-alarm_date) %>%
+    arrange(desc(burning_time))
+```
+
+### Question 3
+
+The dataset also contains information on the Federal Agency that was responsible for the detection of the fire. Which is the most efficient agency (i.e. the one that controls the fires in the average shortest time)? *Hint: exclude previously thiose fires with a negative burning time, which clearly correspond to mistakes* 
+
+```{r}
+calfire %>%
+    mutate(burning_time = cont_date - alarm_date) %>%
+    filter(burning_time > 0) %>%
+    group_by(agency) %>%
+    summarise(n = n(),
+              burning_time = mean(burning_time, na.rm = T)) %>%
+    arrange(burning_time)
+```
+
+### Question 4
+Make a table that lists in descending order the number of wildfires per year. Which year had the highest number of wildfires? Do the same for the total burnt area per year (in hectares). Are the first 5 years in both tables the same? Why do you think it's so?
+
+```{r}
+calfire %>% group_by(year_) %>%
+    count() %>%
+    arrange(desc(n))
+
+calfire %>% group_by(year_) %>% 
+    summarise(area = sum(sup_ha)) %>%
+    arrange(desc(area))
+                  
+```
+
+### Question 5
+
+It is often the case that a few wildfires are responsible for the largest amount of burned area, whereas the vast majority of fires only burn a small share of the total burnt surface. To assess if this is true also in California, create a factor that contains classes of fire size (of width = 10000 ha), and determine the number of fires within each class and the total amount of burnt area for each of the classes. Is the abovementioned statement true for California?
+
+```{r}
+calfire %>%
+    mutate(fire_size = cut_width(sup_ha, 10000)) %>%
+    group_by(fire_size) %>%
+    summarise(n = n(),
+              total_area = sum(sup_ha))
+
+```
+
+### Question 6:
+
+Create a new variable that specifies in words the cause of each wildfire, knowing that causes 1 and 17 are "natural", cause 14 (or not specified) are "unknown", and the rest are variants of "human" caused fires.
+
+
+```{r}
+calfire <- calfire %>%
+  mutate(cause2 = case_when(cause == 1 | cause == 17 ~ "Natural",
+                            cause == 14 | is.na(cause) ~ "Unknown",
+                            TRUE ~ "Human"))
+```
+
+### Question 7:
+
+Now we have grouped the causes, make a table that lists the years in descending order of the total number of human-caused fires
+
+```{r}
+calfire %>%
+    group_by(year_, cause2) %>%
+    count() %>%
+    filter(cause2 == "Human") %>%
+    arrange(desc(n))
+```
+
+### Question 8
+
+Calculate the proportion of human-caused wildfires each year. Make a table that lists in descending order of the proportion of human-caused fires per year
+
+```{r}
+calfire_causes <- calfire %>%
+    group_by(year_, cause2) %>%
+    summarise(n_cause = n()) %>%
+    mutate(prop_cause = n_cause/sum(n_cause)) 
+
+calfire_causes %>%
+    filter(cause2 == "Human") %>%
+    arrange(desc(prop_cause))
+```
+
+### EXTRA CREDIT
+
+Is there a trend in the proportion of human-caused fires with time? And in the proportion of fires with unkown cause with time? What do you think can explain these trends? *Hint: you can use ggplot to assess the relationship between those variables*
+
+```{r}
+
+calfire_causes %>%
+    ggplot() +
+    geom_point(aes(year_, prop_cause, color = cause2))
+
+```
+
+### Question 9
+
+The file `calfire_damage.csv` contains information on the number of structures damaged each year by the wildfires in California. Import the file into R, join the information on the damaged structures with the `calfire` data frame and answer the following questions:
+- Is the number of damaged structures related to the size of the largest fire per year? *Hint: you can either produce a table with both variables per year or a chart using `plot()` or `geom_point()` from ggplot2*
+
+```{r}
+
+calfire_damage <- read_csv(here("static/exam/data/calfire_damage.txt"))
+
+inner_join(calfire, calfire_damage,
+                          by = c("year_" = "year"))%>%
+    group_by(year_) %>%
+    summarise(size= max(sup_ha),
+              struct = mean(structures)) %>%
+    ggplot() +
+    geom_point(aes(year_, struct))
+```
+
+### Question 10
+
+The `cal_fire_incident` contains information of the total number of fires per year across the continental United States, the total of acres burned, and the total damage caused by the fires, in dollars. Import the file into R, reclassify the variable years into decades, and determine which was the most catastrophic decade in total number of fires, in total damage, and in acres burned. Moreover, determine in which decade there was a higher mean damage per fire.
+
+```{r}
+us_fires <- read_csv(here("static/exam/data/US_fire_incidents.txt"),
+                                   skip = 1)
+
+us_fires %>%
+    mutate(decades = cut_width(YEAR, 10)) %>%
+    group_by(decades) %>%
+    summarise(n = sum(n_fires),
+              acres = sum(acres_burned),
+              damage = sum(dollars_damage),
+              mean_damage = damage/n)
+    
+```
+
+## Coding Style and Organization
+
+In addition to the answers, and the code needed to generate them, **10% of the final grade will be determined by the coding style and organization**. In this category we will value a variety of features, including, but not limited to the following:
+
+- Content:
+    + Questions answered in order
+    + A written explanation of approach included for each question, if needed
+    + Appropriate formatting of text and headings: fonts not larger than necessary, headings used properly, etc.
+
+- Code formatting:
+    + Rmarkdown document knits correctly and produces the desired output
+    + Use tidyverse code
+    + Spaces around `=`, after `#`, after `,`, etc.
+    + New line for each `dplyr` function (lines end in `%>%`) or `ggplot` layer (lines end in `+`)
+    + Proper indentation of pipes and ggplot layers
+    + No unwanted / commented out code left behind in the document
+
