@@ -1,0 +1,151 @@
+---
+title: "Data Management and Visualization | Spring 2020 Midterm 02"
+date: "**Due: XX june at XX:XX**"
+output: 
+  html_document: 
+    css: hw.css
+    fig_height: 4
+    fig_width: 7
+    
+
+---
+
+```{r load-packages, message=FALSE, echo = F, warning=F}
+# set the echo option to FALSE to see how the document looks with the code suppressed
+knitr::opts_chunk$set(message = F, warning = F)
+## Load packages
+library(tidyverse)
+# library(here)
+fires <- read.csv('data/fires.csv')
+```
+
+## Academic Honesty Statement
+
+**THIS IS AN INDIVIDUAL ASSESSMENT, THIS DOCUMENT AND YOUR ANSWERS ARE FOR YOUR EYES ONLY. ANY VIOLATION OF THIS POLICY WILL BE IMMEDIATELY REPORTED TO THE MASTER CONDUCT BOARD.**
+
+*Copy the text below, replacing the underscores with your name, and paste it in the report you submit, acknowledging that you have read and understood the abovementioned honesty statement.*
+
+I, ____________, hereby state that I have not communicated with or gained information in any way from my classmates or anyone other than the Professors during this exam, and that all work is my own.
+
+## Data
+For this midterm, we will analyze fire regimes in Spain, using the Spanish EGIF fire database. The main file we will use is the `fires` data frame, which contains information on each wildfire occurred in Spain since 1974. The aim of this midterm exam is **to analyze, critisize and improve a set of plots** already designed.
+
+## Instructions
+We expect you to produce a complete, **knittable Rmarkdown document** that contains the text of the questions, the code chunks needed to answer them, and **some comments on the results obtained**. There are **2 exercises** each one valued *5 points* apiece.
+
+You will have a total of **1.5 hours** to complete the exam. During this time, we will be available in the forum of the virtual campus of the UdL to solve any doubt. Once the time has expired, we will access your RStudio Cloud project and **copy the Rmarkdown file as it is at that moment**, with no possibility of later changes. If you finish before the time allowed, please let us know. We will value not only the final result and the code, but also the appropriate formatting and coding style (see below). 
+
+Good luck to everyone!
+
+## Exercises
+
+### Exercise 1
+
+Two different researches have been working on visual representations of fire regimes in Spain. They have been instructed to conduct an analysis that reflects the temporal variability of burned area (annual and monthly), paying attention to the main sources of ignition.
+
+You are in charge to decide which one of them (see \@ref(figure1) and \@ref(figure2))is the most appropriate and suggest any improvement to you deem necessary. For each figure, you must write a report listing and discussing about the main aesthetics involved. Then, suggest improvements for both figures and elaborate on which one works best and why.
+
+```{r figure1, echo=F,eval=T}
+
+library(ggrepel)
+library(ggpubr)
+
+p.year <- fires %>%
+  filter(BAREA>0,YEAR>1974) %>%
+  group_by(YEAR,CAUSE) %>%
+  summarise(n=n(),BA=sum(BAREA))%>%
+    ggplot(aes(x=YEAR,y=BA,
+             color = factor(CAUSE),shape = factor(CAUSE))) +
+      geom_line() +
+      scale_color_brewer(palette = 'Set1', name = '') +
+      labs(x='Year',y = 'Burned area') +
+      theme_bw() +
+      theme(legend.position = 'none')
+
+p.month <- fires %>%
+  filter(BAREA>0,YEAR>1974) %>%
+  group_by(MONTH,CAUSE) %>%
+  summarise(BA=sum(BAREA)) %>%
+    ggplot(aes(x=MONTH,y=BA,fill=factor(CAUSE))) +
+      geom_col(position = 'dodge') +
+      labs(x='Year',y = 'Burned area') +
+      scale_fill_brewer(name = '') +
+      theme_minimal() +
+      theme(legend.position = 'right')
+
+mycols <- c("#0073C2FF", "#EFC000FF", "#868686FF", "#CD534CFF","darkgreen")
+p.prop <- fires %>%
+  filter(CAUSE!=6)%>%
+  group_by(CAUSE) %>%
+  summarise(n=n(),BA=sum(BAREA)) %>%
+  mutate(f=round(n/sum(n)*100,1)) %>%
+  arrange(desc(CAUSE)) %>%
+  mutate(lab.ypos = cumsum(f) -0.5 *f) %>%
+    ggplot(aes(x=2 ,y=f, fill=factor(CAUSE)))+
+      geom_col(width = 1, color = "white") +
+      coord_polar("y", start = 0)+
+      geom_text(aes(y = lab.ypos, label = paste(f,'%')), color = "white",size=3)+
+      scale_fill_manual(values = mycols,name='') +
+      theme_void()+
+      xlim(0.5, 2.5) +
+      theme(legend.position = 'none')
+
+
+ggarrange(
+  p.year,                # First row with line plot
+  # Second row with box and dot plots
+  ggarrange(p.prop, p.month, ncol = 2, labels = c("B", "C")), 
+  nrow = 2, 
+  labels = "A"       # Label of the line plot
+  ) 
+```
+
+
+```{r figure2}
+
+fires %>%
+  filter(YEAR>1900,CAUSE!=6) %>%
+    mutate(C = recode(CAUSE, '1' = 'Lightning', 
+                        '2' = 'Unintended',
+                        '3' = 'Unintended',
+                        '4' = 'Arson',
+                        '5' = 'Unknown')) %>%
+  mutate(C=fct_reorder(C,CAUSE)) %>%
+  group_by(YEAR,MONTH,C) %>%
+    summarise(BA=sum(BAREA)) %>%
+    ggplot(aes(x=MONTH,y=YEAR,fill=log(BA))) +
+        geom_tile() +
+        scale_fill_viridis_c() +
+        facet_wrap(~C) +
+        theme_bw()
+        
+
+```
+
+*SOLUTION:*
+
+Figure 1 is more difficult to read, even if we solve all the issues listed as follows:
+  - Colors do no match CAUSE from one plot to another
+  - Themes are different
+  - Lines in plot A overlap each other
+  - MONTHS in plot C are used as numbers instead of factors
+  
+Aesthetics involved:
+  - Position. Year and MONTH are mapped into x-axis. Burned area is passed to y axis.
+  - Color. Discrete color scale is used to represent CAUSE
+  - Size. Passed to y axis in the barplot
+
+Figure 2 is better. Possible improvements:
+  - Remove panel grid
+  - Use bins instead of continuous color ramp
+  - Pick a different color scaler
+  
+Aesthetics involved:
+  - Position. Year is mapped into y-axis and MONTH into x-axis. 
+  - Color. A sequential color scale is used to represent CAUSE
+
+
+### Exercise 2
+
+Now, you are going to take the role of one those two researches responsible for the figures in exercise 1. Use the code for the one you thought it was the worst. You must follow your own recommendations and try to implement them. Explain how you approach each change and, in case you don't succeed, provide insights into the way you think the plot code should be modified.
+
