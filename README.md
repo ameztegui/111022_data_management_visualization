@@ -5,7 +5,8 @@ Course website is at http://datamanagement.netlify.com
 
 # Citation
 To reference these course materials, please cite as:
-Ameztegui A, Rodrigues M. (2020) Data Management and Visualuzation with R [Course Materials]. University of Lleida, Master's Degree Erasmus Mundus in Spatial and Ecological Modelling in European Forestry.
+
+Ameztegui A, Rodrigues M. (2020) Data Management and Visualuzation with R [Course Materials]. University of Lleida, Master's Degree Erasmus Mundus in Spatial and Ecological Modelling in European Forestry (111022).
 
 # Attribution
 
