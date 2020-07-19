@@ -3,6 +3,10 @@ Course website and materials for 111022 - Data Management and Visualization with
 
 Course website is at http://datamanagement.netlify.com
 
+# Citation
+To reference these course materials, please cite as:
+Ameztegui A, Rodrigues M. (2020) Data Management and Visualuzation with R [Course Materials]. University of Lleida, Master's Degree Erasmus Mundus in Spatial and Ecological Modelling in European Forestry.
+
 # Attribution
 
 - This website design is based on [Sta199 by Muge Cetinkaya](http://www2.stat.duke.edu/courses/Spring18/Sta199/).
