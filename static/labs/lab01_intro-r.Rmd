@@ -49,12 +49,22 @@ The main goal of this lab is to introduce you to R and RStudio, the software tha
 
 We will assume you don't have any previous experience with either R or RStudio, so in this lab we will cover the very basics, starting from the installation of the software and the first steps. If you *do know* some R, you may find some of the topics quite basic, and you are free to jump to wherever you wish within the document. Note however, that we provide some tips and advices that may be interesting even if you have some experience with R.
 
+# What are R and RStudio?
+
+## Installing R and RStudio
+
+## Using R via RStudio
+
+## RStudio Cloud to avoid local installation
+
+
 > **Important: Before Starting The Lab**</br>
 To avoid the pain of setting up software in different computers with different configurations and OS, we will use RStudio Cloud, a service that allows to create your analyses using RStudio directly from your browser. In this way, there will be no software to install and nothing to configure on your computer. All the data and packages needed to run the lab will be already uploaded. Moreover, the instructors will be able look at your files, reports and assignments, and edit them to provide you feedback,  without the need for data transfer.</br> </br>
 However, it is also good idea to install R and RStudio on your machine, so you can use it beyond this class. Remember that R is the name of the programming language itself and RStudio is an IDE (i.e. an interface), so you won't be able to use RStudio without previously installing R. </br></br>
 [Download and install the latest version of R here](https://www.r-project.org/)</br>
 [Download and install RStudio here](https://www.rstudio.com/products/rstudio/download/#download)</br> </br>
 Please note that if you use the University machines, they already have suitable versions of R and RStudio installed.</br></br>
+
 
 
 
@@ -108,13 +118,17 @@ ggplot(iris) +
   geom_histogram(aes(Petal.Width, color = Species, fill = Species))
 ```
 
-- **Packages:** shows a list of all the R packages installed on your harddrive and indicates whether or not they are currently loaded. Packages that are loaded in the current session are checked while those that are installed but not yet loaded are unchecked. We’ll discuss packages in more detail later.
+- **Packages:** shows a list of all the R packages installed on your hard drive and indicates whether or not they are currently loaded. Packages that are loaded in the current session are checked while those that are installed but not yet loaded are unchecked. We’ll discuss packages in more detail later.
 
 - **Help:** help menu for R functions. You can either type the name of a function in the search window, or use the code to search for a function with the name
 
 Of course, the layout in RStudio can be modified, and the user can set up which panels to see, the color of the code, and many other issues. You can learn more about customizing RStudio [here](https://support.rstudio.com/hc/en-us/articles/200549016-Customizing-RStudio). Anyway, don't worry about the different panels and their functionalities for now. You will learn more about them as we use them during the course, and hopefully you will get very familiar with them.
 
+
+
 # Introduction to R
+
+## Basic concepts and terminology
 
 So once we know what we are seeing, we can start using R. As we said in the lectures, R is quite a versatile tool, because it goes from a statistical tool to a complex programming language. Let's see some of the most basic uses, and in the process we will get used to how R works.
 
@@ -331,6 +345,15 @@ Some considerations to keep in mind when creating objects or working with R in g
 - The function `ls()` will show us in the console the objects created so far.
 - If the value obtained from an instruction is not assigned to an object, it will be displayed in the terminal, but **IT WILL NOT BE STORED**.
 
+# Errors, warnings and messages
+
+# What are R packages?
+
+## Package installation
+
+## Package loading
+
+## Package use
 
 # Saving our commands: Scripts in R
 
@@ -742,6 +765,7 @@ rm(list=ls())
 Up to this point we have seen and executed some instructions in R, generally oriented to the creation of objects or realization of simple arithmetic operations.
 
 However, we have also executed some function-type statements, such as the `length()` function. A function can be defined as a group of instructions that takes an input, uses this input to compute other values and returns a result or output. We will not go into deep details for now. It suffices to know that to execute a function it is enough to invoke the instruction that calls the desired function (length) and to specify the necessary inputs, also knwon as arguments. These inputs are always included between the parentheses of the instruction , as in `length(vector)`. If several arguments are needed we separate them usign `,`. We will devote a full unit of the course to functions.
+
 
 # To know more
 
