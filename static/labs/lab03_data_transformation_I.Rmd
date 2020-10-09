@@ -15,6 +15,7 @@ output:
 ```{r include=FALSE}
 library(tidyverse)
 library(knitr)
+library(learnr)
 options(
   htmltools.dir.version = FALSE, # for blogdown
   show.signif.stars = FALSE,     # for regression output
