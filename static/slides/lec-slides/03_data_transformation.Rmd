@@ -120,7 +120,7 @@ options(width = 85)
 ```
 
 ```{r species, }
-species
+ungroup(species)
 ```
 
 
