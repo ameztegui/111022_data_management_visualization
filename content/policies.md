@@ -3,43 +3,34 @@ title: "Policies"
 markup: "mmark"
 ---
 
-### Class:
-
-Class time is designed to be as interactive as possible. As instructors, we are here to introduce you the concepts, tools and techniques, and to assist you through your learning process, but it is up to you to make use of them. Programming is a skill that is best learned by doing, so as much as possible you will be working on a variety of tasks and activities throughout each class. 
-The classes will be held in a computer room, but if you prefer, you can bring your own laptop to class, fully charged. Please **refrain from texting** or using your computer for anything other than coursework during class.
-
-
 ### Course components:
 
 #### **Lectures**
 
-Usually, every session will start with a (hopefully short) lecture in which we set up the goals and expectations for the session, and introduce the tools we will use. Then, depending on the class format, the content may vary.
-
-#### **Labs**
-
-The objective of the labs is to give you hands-on experience with data analysis using modern statistical software. The labs will also provide you with tools that you will need to complete the final project successfully. Some of the labs will be provided for you to complete them at home, and other will be like workshops that we will complete in class.
-
-If so, we will start the labs together, but they are self paced tutorials with examples, so from a point you will work on your own (although you are free, and even encouraged, to discuss with your teammates or ask us any question).
-
-The labs will include some short exercises you will need to complete, by creating a "lab report" (we'll see how). You are not forced to finish the lab in class, you can finish it later at home, but we expect you to have finished it before the next class session.
-
+Usually we will provide you with all the materials, readings and links to be able to learn by yourself. However, some "theory" will be needed, so we will organize a few symmetric videoconferences (live) where we will introduce some basic concepts on course organization nad data management. 
 
 #### **Readings**
 
-During the course we will recommend some external readings to expand or consolidate concepts seen in class. These are usually not mandatory, but highly recommended, and we may discuss the contents during the classes.
+In some sessions we will recommend some external readings to expand or consolidate concepts. These are usually not mandatory, but highly recommended.
+
+
+#### **Labs**
+
+The objective of the labs is to give you hands-on experience with data analysis using modern statistical software. The labs are thoroughly documented, self-paced tutorials with examples. All the labs include some short exercises you will need to complete, by creating a "lab report" (we'll see how). You can do the lab report at any time, but always before the next unit is released.
+
 
 #### **Homework**
 
-Beyond the in class activities, you will be assigned some larger data analysis tasks throughout the semester. These assignments will be completed individually, and we will set the deadlines as the course progresses.
+Beyond the in class activities, you will be assigned larger data analysis tasks throughout the semester. These assignments will be completed individually, and we will define a deadline. 
 
 
 #### **Exams**
 
-There will be two midterms that you will need to complete individually. Each exam will ask you to complete a number of small programming and or analysis tasks related to the material presented in the class. The exact structure and content of the exams will be discussed in more detail before they are assigned.
+There will be two midterms that you have to complete individually. Each exam will ask you to complete a number of small programming and/or analysis tasks related to the material presented in the course. The exact structure and content of the exams will be discussed in more detail before they are assigned.
 
-#### **Final Project:**
+####  **Office hours** 
 
-You will be responsible for the completion of an open ended final project for this course, the goal of which is to tackle an "interesting" problem using the tools and techniques covered in this class. You are supposed to use your own dataset (ideally it will come from your master's thesis), but we can provide you with some data if needed. At the end of the semester, you must present the results (and the code you used to get them) to your classmates. Additional details on the project will be provided as the course progresses.
+We strongly encourage that you learn how to get help from the R community. You can also use the virtual campus forum tool. If some concepts are not fully understood by most of you, we can organize virtual "office hours".
 
 
 ### Grading:
@@ -49,29 +40,21 @@ Your final grade will be comprised of the following:
 {.table .table-condensed .table-striped .text-left}
  <span></span>        | <span></span>
 ----------------------|----------------
-Labs                  | 15%
-Homework              | 15%
-Midterm 1             | 10%
-Midterm 2             | 10%
-Final project         | 40%
-Participation & Peer evaluation       | 10%
+Labs                  | 20%
+Homework              | 40%
+Midterm 1             | 20%
+Midterm 2             | 20%
 
-Class attendance in lectures and labs is not mandatory, but is a firm expectation; frequent absences or tardiness will be considered a legitimate cause for grade reduction.
-
-Excused absences do not excuse you from assigned homework, it is your responsibility to make alternative arrangements to turn in any assignments in a timely fashion.
 
 
 ### Late / missed work policy
 
 - Late work policy for homework assignments:
-    - late, but within 48 hours of due date/time: -20%
+    - late, but within 72 hours of due date/time: -20%
     - any later: no credit
     
-- Late work will not be accepted for the final project.
 
-- You must complete the final project and be in class to present it in order to pass this course.
-
-- Please talk to us in case of illness, or personal or family issues that interferes with your ability to attend or complete classes.
+- Please talk to us in case of illness, or personal or family issues that interferes with your ability to complete assignments.
 
 
 ### Academic integrity:
