@@ -1,10 +1,11 @@
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<html lang="" xml:lang="">
   <head>
     <title>Welcome to Data Management and Visualization with R</title>
     <meta charset="utf-8" />
     <meta name="author" content="Aitor Ameztegui" />
     <meta name="author" content="Marcos Rodrigues" />
+    <script src="libs/header-attrs/header-attrs.js"></script>
     <link href="libs/font-awesome/css/all.css" rel="stylesheet" />
     <link href="libs/font-awesome/css/v4-shims.css" rel="stylesheet" />
     <link rel="stylesheet" href="slides.css" type="text/css" />
@@ -16,7 +17,7 @@ class: center, middle, inverse, title-slide
 # Welcome to </br>Data Management </br>and Visualization with R
 ### Aitor Ameztegui
 ### Marcos Rodrigues
-### febrero 2020
+### octubre 2020
 
 ---
 
@@ -33,7 +34,7 @@ class: center, middle, inverse, title-slide
 &lt;i class="fa fa-envelope"&gt;&lt;/i&gt; &amp;nbsp; [aitor.ameztegui@udl.cat](mailto:aitor.ameztegui@udl.cat) &lt;br&gt;
 &lt;i class="fa fa-university"&gt;&lt;/i&gt; &amp;nbsp; Building 4, Bureau 2.04.2 &lt;br&gt;
 &lt;i class="fa fa-phone"&gt;&lt;/i&gt; &amp;nbsp; 973702539 &lt;br&gt; 
-&lt;i class="fa fa-calendar"&gt;&lt;/i&gt; &amp;nbsp; Thur 11:30 - 13:30  &lt;br&gt; 
+&lt;i class="fa fa-calendar"&gt;&lt;/i&gt; &amp;nbsp; Tue 11:00 - 12:30  &lt;br&gt; 
 or upon request
 &lt;br&gt;&lt;br&gt;]
 
@@ -220,6 +221,121 @@ https://sibecol2019-twitter.netlify.com/
 
 (Originally published at [Forestalia blog](http://www.forestaliablog.com/2019/02/congresos-cientificos-y-twitter-iv-un-analisis-de-sibecol2019/) Code available in the course's RStudio cloud Site)
 
+
+
+---
+
+class: center, middle, inverse
+
+# Course structure and policies
+
+---
+
+# Class meetings
+
+- Fully online
+
+- There will be some lectures, introducing some basic concepts
+
+- Via symmetric meetings, using the VC
+
+- The course is based on a hands-on approach --&gt; lots of learn-by-doing
+
+&lt;/br&gt;&lt;/br&gt;&lt;/br&gt;&lt;/br&gt;&lt;/br&gt;
+.center[**All the info, links and materials will be posted at &lt;/br&gt;[datamanagement.netlify.com](https://datamanagement.netlify.com)**]
+
+
+---
+
+# Course components
+
+&lt;i class="fa fa-laptop  fa-lg"&gt;&lt;/i&gt; .bold[Lectures:] only a few, but some "theory" will be needed. 
+
+--
+
+&lt;i class="fa fa-code  fa-lg"&gt;&lt;/i&gt; .bold[Labs:] 
+- They're self paced tutorials with examples
+- There will be some questions/exercises you will need to answer, by creating a "lab report" (we'll see how). 
+
+--
+
+
+&lt;i class="fa fa-book fa-lg"&gt;&lt;/i&gt; .bold[Readings:] In some lectures we will recommend some external readings to expand or consolidate concepts seen in class
+
+--
+
+&lt;i class="fa fa-pencil-square-o fa-lg"&gt;&lt;/i&gt;.bold[Homework:] Individual. They will consist in short data science problems aimed at fixing and applying all the contents included in the labs.
+
+--
+
+&lt;i class="fa fa-check-square fa-lg"&gt;&lt;/i&gt; .bold[Exams:] Individual, two  midterms. We will ask you to complete a number of small programming and or analysis tasks related to the material presented in the class.
+
+--
+
+&lt;i class="fa fa-question fa-lg"&gt;&lt;/i&gt; .bold[Office hours:] we strongly encourage that you &lt;u&gt;learn how to get help&lt;/u&gt; from the R community. You can also use the virtual campus forum tool. If some concepts are not fully understood by most of you, we can organize virtual "office hours".
+
+
+---
+
+# Grading
+
+&lt;table&gt;
+ &lt;thead&gt;
+  &lt;tr&gt;
+   &lt;th style="text-align:left;"&gt; Component &lt;/th&gt;
+   &lt;th style="text-align:left;"&gt; Weight &lt;/th&gt;
+  &lt;/tr&gt;
+ &lt;/thead&gt;
+&lt;tbody&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; Labs &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 20% &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; Homework &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 40% &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; Midterm 1 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 20% &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; Midterm 2 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 20% &lt;/td&gt;
+  &lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+
+
+---
+
+# How to get help
+
+- Course content, logistics, etc. are available at [datamanagement.netlify.com/](https://datamanagement.netlify.com/). 
+
+- As we said, one of the best things about R is its community. Some highly recommended resources are:
+
+  - [R bloggers](http://www.r-bloggers.com/): A website dedicated to R development of tutorials.
+  - [StackOverflow](http://stackoverflow.com/): Website devoted to questions-and-answers on programming languages among which is R also available.
+  - [Datacamp](https://www.datacamp.com/search?q=&amp;facets%5Btechnology%5D%5B%5D=R): Interactive data science tutorials covering many topics. Some are paid.
+  - [RStudio Online Learning](https://www.rstudio.com/online-learning/): A wealth of tutorials, articles, and examples developed by RStudio to help you learn R and its extensions.
+  - [R-Tutor](http://www.r-tutor.com/): A website devoted to teach statistics. An useful one if you are not much familiar with basic statistical methods.
+  
+It is &lt;u&gt;important to become familiar&lt;/u&gt; from the beginning with the various alternatives for &lt;b&gt;getting help&lt;/b&gt;. A key part of your success in using R lies in your ability to be self-relient and be able to get help and apply it to your own problems.
+
+---
+
+
+# But... a note on sharing/reusing code
+
+- A huge volume of code is available on the web to solve any number of problems.
+
+- Unless we explicitly tell you not to use something, the course's policy is that *you may make use of any online resources* (e.g. StackOverflow) but if you copy pieces of code from somewhere **you must cite** where you obtained it.
+
+- Except for the exams, you are welcome to discuss the problems together and ask for advice, but you may not directly send or make **use of code from another student** in this class 
+
+- On the exams all communication with classmates is explicitly forbidden.
+
 ---
 
 class: center, middle, inverse
@@ -291,175 +407,6 @@ And voila, your first data visualization!
 
 class: center, middle, inverse
 
-# Course structure and policies
-
----
-
-# Class meetings
-
-- As interactive as possible
-
-- There will be some lectures, lots of learn-by-doing
-
-- You can bring your laptop to class (but please refrain from texting or using your computer for anything other than coursework)
-&lt;/br&gt;&lt;/br&gt;&lt;/br&gt;&lt;/br&gt;&lt;/br&gt;
-.center[**All the info, links and materials will be posted at &lt;/br&gt;[datamanagement.netlify.com](https://datamanagement.netlify.com)**]
-
-
----
-
-# Course components
-
-&lt;i class="fa fa-laptop  fa-lg"&gt;&lt;/i&gt; .bold[Lectures:] we will try to keep them short, but some "theory" will be needed
-
---
-
-&lt;i class="fa fa-code  fa-lg"&gt;&lt;/i&gt; .bold[Labs:] hands-on application of concepts and tools seen in class. 
-- They're self paced tutorials with examples
-- There will be some questions/exercises you will need to answer, by creating a "lab report" (we'll see how). Try to finish in class, but can continue later. 
-- Some labs are expected to be done completely at home.
-
---
-
-
-&lt;i class="fa fa-book fa-lg"&gt;&lt;/i&gt; .bold[Readings:] In some lectures we will recommend some external readings to expand or consolidate concepts seen in class
-
---
-
-&lt;i class="fa fa-pencil-square-o fa-lg"&gt;&lt;/i&gt;.bold[Homework:] Individual. You are expected to work at home (but can ask doubts of course!)
-
---
-
-&lt;i class="fa fa-check-square fa-lg"&gt;&lt;/i&gt; .bold[Exams:] Individual, two  midterms. We will ask you to complete a number of small programming and or analysis tasks related to the material presented in the class.
-
---
-
-&lt;i class="fa fa-file-powerpoint fa-lg"&gt;&lt;/i&gt; .bold[Final project:] during the course each of you will design a data science project using your own dataset (ideally it will come from your master's thesis). You must present the results to your classmates. You must complete the final project and be in class to present it to pass this class.
-
----
-
-# Class meetings
-
-####&lt;i class="fa fa-university"&gt;&lt;/i&gt; &amp;nbsp; Building 4, Computer Room 4.2 &lt;br&gt;
-####&lt;i class="fa fa-calendar"&gt;&lt;/i&gt; &amp;nbsp; Mon 10:00 - 12:00  &lt;br&gt; 
-
-
---
-&lt;/br&gt;
-- We plan weekly meetings
-
---
-
-- We will introduce the concepts, start working in the lab together
-
---
-
-- At a point, you must continue with the lab on your own. You can do it here (we can assist) or at home. You are not forced to finish the lab in class.
-
---
-
-- But we expect you to have it done before next meeting.
-
---
-
-- Face-to face classes can also be used as office hours, to solve doubts
-
---
-
-- As mentioned, some lessons will be done completely at home
-
----
-
-
-# Grading
-
-&lt;table&gt;
- &lt;thead&gt;
-  &lt;tr&gt;
-   &lt;th style="text-align:left;"&gt; Component &lt;/th&gt;
-   &lt;th style="text-align:left;"&gt; Weight &lt;/th&gt;
-  &lt;/tr&gt;
- &lt;/thead&gt;
-&lt;tbody&gt;
-  &lt;tr&gt;
-   &lt;td style="text-align:left;"&gt; Labs &lt;/td&gt;
-   &lt;td style="text-align:left;"&gt; 15% &lt;/td&gt;
-  &lt;/tr&gt;
-  &lt;tr&gt;
-   &lt;td style="text-align:left;"&gt; Homework &lt;/td&gt;
-   &lt;td style="text-align:left;"&gt; 15% &lt;/td&gt;
-  &lt;/tr&gt;
-  &lt;tr&gt;
-   &lt;td style="text-align:left;"&gt; Midterm 1 &lt;/td&gt;
-   &lt;td style="text-align:left;"&gt; 10% &lt;/td&gt;
-  &lt;/tr&gt;
-  &lt;tr&gt;
-   &lt;td style="text-align:left;"&gt; Midterm 2 &lt;/td&gt;
-   &lt;td style="text-align:left;"&gt; 10% &lt;/td&gt;
-  &lt;/tr&gt;
-  &lt;tr&gt;
-   &lt;td style="text-align:left;"&gt; Final project &lt;/td&gt;
-   &lt;td style="text-align:left;"&gt; 40% &lt;/td&gt;
-  &lt;/tr&gt;
-  &lt;tr&gt;
-   &lt;td style="text-align:left;"&gt; Participation and Peer evaluation &lt;/td&gt;
-   &lt;td style="text-align:left;"&gt; 10%* &lt;/td&gt;
-  &lt;/tr&gt;
-&lt;/tbody&gt;
-&lt;/table&gt;
-
-
-
-&lt;/br&gt;
-- *Class attendance in lectures and labs is not mandatory, but is a firm expectation; frequent absences or tardiness will be considered a legitimate cause for grade reduction.
-
----
-
-# Late/missed work policy
-
-- Late work policy for homework assignments:
-    - late, but within 48 hours of due date/time: -20%
-    - any later: no credit
-
-- Late work will not be accepted for the final project.
-
-- You must ABSOLUTELY complete the final project and be in class to present it in order to pass this course.
-
-- Please talk to us in case of illness, or personal or family issues that interferes with your ability to attend or complete classes.
-
----
-
-# How to get help
-
-- Course content, logistics, etc. are available at [datamanagement.netlify.com/](https://datamanagement.netlify.com/). 
-
-- As we said, one of the best things about R is its community. Some highly recommended resources are:
-
-  - [R bloggers](http://www.r-bloggers.com/): A website dedicated to R development of tutorials.
-  - [StackOverflow](http://stackoverflow.com/): Website devoted to questions-and-answers on programming languages among which is R also available.
-  - [Datacamp](https://www.datacamp.com/search?q=&amp;facets%5Btechnology%5D%5B%5D=R): Interactive data science tutorials covering many topics. Some are paid.
-  - [RStudio Online Learning](https://www.rstudio.com/online-learning/): A wealth of tutorials, articles, and examples developed by RStudio to help you learn R and its extensions.
-  - [R-Tutor](http://www.r-tutor.com/): A website devoted to teach statistics. An useful one if you are not much familiar with basic statistical methods.
-  
-It is relatively important to become familiar from the beginning with the various alternatives for getting help. A key part of your success in using R lies in your ability to be self-relient and be able to get help and apply it to your own problems.
-
----
-
-
-# But... a note on sharing/reusing code
-
-- A huge volume of code is available on the web to solve any number of problems.
-
-- Unless we explicitly tell you not to use something, the course's policy is that *you may make use of any online resources* (e.g. StackOverflow) but if you copy pieces of code from somewhere **you must cite** where you obtained it.
-
-- Except for the exams, you are welcome to discuss the problems together and ask for advice, but you may not directly send or make **use of code from another student** in this class 
-
-- On the exams all communication with classmates is explicitly forbidden.
-
----
-
-class: center, middle, inverse
-
 # Questions?
     </textarea>
 <style data-target="print-only">@media screen {.remark-slide-container{display:block;}.remark-slide-scaler{box-shadow:none;}}</style>
@@ -507,9 +454,25 @@ if (window.HTMLWidgets) slideshow.on('afterShowSlide', function (slide) {
     }
     deleted = true;
   });
-})();</script>
-
-<script>
+})();
+(function() {
+  "use strict"
+  // Replace <script> tags in slides area to make them executable
+  var scripts = document.querySelectorAll(
+    '.remark-slides-area .remark-slide-container script'
+  );
+  if (!scripts.length) return;
+  for (var i = 0; i < scripts.length; i++) {
+    var s = document.createElement('script');
+    var code = document.createTextNode(scripts[i].textContent);
+    s.appendChild(code);
+    var scriptAttrs = scripts[i].attributes;
+    for (var j = 0; j < scriptAttrs.length; j++) {
+      s.setAttribute(scriptAttrs[j].name, scriptAttrs[j].value);
+    }
+    scripts[i].parentElement.replaceChild(s, scripts[i]);
+  }
+})();
 (function() {
   var links = document.getElementsByTagName('a');
   for (var i = 0; i < links.length; i++) {
@@ -518,7 +481,23 @@ if (window.HTMLWidgets) slideshow.on('afterShowSlide', function (slide) {
     }
   }
 })();
-</script>
+// adds .remark-code-has-line-highlighted class to <pre> parent elements
+// of code chunks containing highlighted lines with class .remark-code-line-highlighted
+(function(d) {
+  const hlines = d.querySelectorAll('.remark-code-line-highlighted');
+  const preParents = [];
+  const findPreParent = function(line, p = 0) {
+    if (p > 1) return null; // traverse up no further than grandparent
+    const el = line.parentElement;
+    return el.tagName === "PRE" ? el : findPreParent(el, ++p);
+  };
+
+  for (let line of hlines) {
+    let pre = findPreParent(line);
+    if (pre && !preParents.includes(pre)) preParents.push(pre);
+  }
+  preParents.forEach(p => p.classList.add("remark-code-has-line-highlighted"));
+})(document);</script>
 
 <script>
 slideshow._releaseMath = function(el) {

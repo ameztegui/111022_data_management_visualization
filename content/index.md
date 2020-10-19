@@ -9,9 +9,7 @@ markup: "mmark"
 
 #### Lectures and labs
 
-<font color="#6CA0DC"><i class="fas fa-university fa-lg"></i></font> &nbsp; Computer Room 4.2 (Building 4)
-
-<font color="#6CA0DC"><i class="fas fa-calendar-alt fa-lg"></i></font> &nbsp; Mondays, from 9.10 to 12
+The course has migrated to fully online for the 2020 fall season. All the materials and assignments will be uploaded in this website, and we will also use the various tools of the Virtual Campus of the University of Lleida (videoconference, forum, etc.)
 
 
 ### Teaching team and office hours 
@@ -19,8 +17,8 @@ markup: "mmark"
 {.table .table-condensed .table-striped .text-left}
 <span></span>     | <span></span>     | <span></span>    | <span></span>    |  <span></span>      
 ------------------|-------------------|------------------|------------------|------------------ 
- [Aitor Ameztegui](http://ameztegui.weebly.com/) | <a href="mailto:aitor.ameztegui@udl.cat" title="email"><i class="fa fa-envelope"></i></a> &nbsp; <a href="https://github.com/ameztegui" title="GitHub"><i class="fa fa-github"></i></a> &nbsp; <a href="https://twitter.com/multivac42" title="Twitter"><i class="fa fa-twitter"></i></a>  &nbsp;<a href="tel:973702540" title="Telephone"><i class="fa fa-phone"></i></a> | Thur 10:00 - 13:00 or upon request | Building 4 - Office 2.04.2
-[Marcos Rodrigues](http://www.eagrof.udl.cat/es/personal/PDI/rodrigues.html) | <a href="mailto:rmarcos@udl.cat" title="email"><i class="fa fa-envelope"></i></a>  &nbsp; &nbsp;&nbsp;&nbsp;&nbsp; &nbsp; <a href="tel:973702546" title="Telephone"><i class="fa fa-phone"></i></a> | Upon request | Building 4 - Office2.04.2
+ [Aitor Ameztegui](http://ameztegui.weebly.com/) | <a href="mailto:aitor.ameztegui@udl.cat" title="email"><i class="fa fa-envelope"></i></a> &nbsp; <a href="https://github.com/ameztegui" title="GitHub"><i class="fa fa-github"></i></a> &nbsp; <a href="https://twitter.com/multivac42" title="Twitter"><i class="fa fa-twitter"></i></a>  &nbsp;<a href="tel:973702540" title="Telephone"><i class="fa fa-phone"></i></a> | Tues 11:00 - 12:30 or upon request | Building 4 - Office 2.04.2
+[Marcos Rodrigues](http://www.eagrof.udl.cat/es/personal/PDI/rodrigues.html) | <a href="mailto:rmarcos@udl.cat" title="email"><i class="fa fa-envelope"></i></a>  &nbsp; &nbsp;&nbsp;&nbsp;&nbsp; &nbsp; <a href="tel:973702546" title="Telephone"><i class="fa fa-phone"></i></a> | Upon request | Building 4 - Office 2.04.2
                 
 
 ### Texts
@@ -37,12 +35,6 @@ These are the main texts used to prepare this course. All of them are either fre
 [The truthful Art: Data, Charts, and Maps for Communication](https://www.amazon.es/Truthful-Art-Data-Charts-Communication/dp/0321934075) | Cairo | New Riders Publishing, 2016
 [Making data visual: a practical guide to using visualization for insight](https://www.amazon.com/Making-Data-Visual-Practical-Visualization/dp/1491928468) | Fisher , Meyer |  O’Reilly, 2019
 [Good Enough Practices in Scientific Computing](https://journals.plos.org/ploscompbiol/article?id=10.1371/journal.pcbi.1005510) | Wilson et al. | PLoS Computational Biology 2016 
-
-
-
-### Materials
-
-You should have access to a laptop and bring it to every class, fully charged.
 
 
 
