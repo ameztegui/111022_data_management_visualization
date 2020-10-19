@@ -5,17 +5,20 @@ description: "Introductory course on data science, focused on the collection, ma
 markup: "mmark"
 ---
 
-## Course info
+### Course info
+
+#### Lectures and labs
+
+The course has migrated to fully online for the 2020 fall season. All the materials and assignments will be uploaded in this website, and we will also use the various tools of the Virtual Campus of the University of Lleida (videoconference, forum, etc.)
 
 
-
-### Teaching team and office hours
+### Teaching team and office hours 
 
 {.table .table-condensed .table-striped .text-left}
 <span></span>     | <span></span>     | <span></span>    | <span></span>    |  <span></span>      
 ------------------|-------------------|------------------|------------------|------------------ 
- [Aitor Ameztegui](http://ameztegui.weebly.com/) | <a href="mailto:aitor.ameztegui@udl.cat" title="email"><i class="fa fa-envelope"></i></a> &nbsp; <a href="https://github.com/ameztegui" title="GitHub"><i class="fa fa-github"></i></a> &nbsp; <a href="https://twitter.com/multivac42" title="Twitter"><i class="fa fa-twitter"></i></a>  &nbsp;<a href="tel:973702539" title="Telephone"><i class="fa fa-phone"></i></a> | Thur 11:30 - 13:30 or upon request | Building 4 - Office 2.04.2
-[Marcos Rodrigues](http://www.eagrof.udl.cat/es/personal/PDI/rodrigues.html) | <a href="mailto:rmarcos@eagrof.udl.cat" title="email"><i class="fa fa-envelope"></i></a>  &nbsp; &nbsp;&nbsp;&nbsp;&nbsp; &nbsp; <a href="tel:973702546" title="Telephone"><i class="fa fa-phone"></i></a> | Upon request | Building 4 - Office 2.04.2
+ [Aitor Ameztegui](http://ameztegui.weebly.com/) | <a href="mailto:aitor.ameztegui@udl.cat" title="email"><i class="fa fa-envelope"></i></a> &nbsp; <a href="https://github.com/ameztegui" title="GitHub"><i class="fa fa-github"></i></a> &nbsp; <a href="https://twitter.com/multivac42" title="Twitter"><i class="fa fa-twitter"></i></a>  &nbsp;<a href="tel:973702540" title="Telephone"><i class="fa fa-phone"></i></a> | Tues 11:00 - 12:30 or upon request | Building 4 - Office 2.04.2
+[Marcos Rodrigues](http://www.eagrof.udl.cat/es/personal/PDI/rodrigues.html) | <a href="mailto:rmarcos@udl.cat" title="email"><i class="fa fa-envelope"></i></a>  &nbsp; &nbsp;&nbsp;&nbsp;&nbsp; &nbsp; <a href="tel:973702546" title="Telephone"><i class="fa fa-phone"></i></a> | Upon request | Building 4 - Office 2.04.2
                 
 
 ### Texts
@@ -33,11 +36,5 @@ These are the main texts used to prepare this course. All of them are either fre
 [Making data visual: a practical guide to using visualization for insight](https://www.amazon.com/Making-Data-Visual-Practical-Visualization/dp/1491928468) | Fisher , Meyer |  O’Reilly, 2019
 [Good Enough Practices in Scientific Computing](https://journals.plos.org/ploscompbiol/article?id=10.1371/journal.pcbi.1005510) | Wilson et al. | PLoS Computational Biology 2016 
 
-
-
-### Materials
-
-The classes will be held in a computer room, but if you prefer, you can bring your own laptop to class, fully charged.
-Please refrain from texting or using your computer for anything other than coursework during class.
 
 
