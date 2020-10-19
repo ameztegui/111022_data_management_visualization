@@ -1,10 +1,11 @@
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<html lang="" xml:lang="">
   <head>
     <title>Data transformation (II)</title>
     <meta charset="utf-8" />
     <meta name="author" content="Aitor Ameztegui" />
     <meta name="author" content="Marcos Rodrigues" />
+    <script src="libs/header-attrs/header-attrs.js"></script>
     <link href="libs/font-awesome/css/all.css" rel="stylesheet" />
     <link href="libs/font-awesome/css/v4-shims.css" rel="stylesheet" />
     <link rel="stylesheet" href="slides.css" type="text/css" />
@@ -65,9 +66,9 @@ plots
 ```
 
 ```
-## # A tibble: 11,858 x 15
+## # A tibble: 11,858 x 17
 ##    Codi  Provincia Cla   Subclase FccTot FccArb FechaIni   HoraIni            
-##    &lt;fct&gt; &lt;chr&gt;     &lt;fct&gt; &lt;fct&gt;     &lt;int&gt;  &lt;int&gt; &lt;date&gt;     &lt;dttm&gt;             
+##    &lt;fct&gt; &lt;fct&gt;     &lt;fct&gt; &lt;fct&gt;     &lt;int&gt;  &lt;int&gt; &lt;date&gt;     &lt;dttm&gt;             
 ##  1 0800~ 08        A     1            80     70 2001-07-09 2017-11-26 09:44:00
 ##  2 0800~ 08        A     1            80     70 2001-08-06 2017-11-26 09:18:58
 ##  3 0800~ 08        A     1            90     80 2001-08-06 2017-11-26 12:08:09
@@ -78,8 +79,9 @@ plots
 ##  8 0800~ 08        A     1            70     60 2001-08-03 2017-11-26 12:12:03
 ##  9 0800~ 08        A     1            80     70 2001-08-02 2017-11-26 09:00:16
 ## 10 0800~ 08        A     1            80     80 2001-06-14 2017-11-26 12:34:21
-## # ... with 11,848 more rows, and 7 more variables: FechaFin &lt;date&gt;, HoraFin &lt;dttm&gt;,
-## #   Rocosid &lt;int&gt;, Textura &lt;int&gt;, MatOrg &lt;int&gt;, PhSuelo &lt;int&gt;, FechaPh &lt;date&gt;
+## # ... with 11,848 more rows, and 9 more variables: FechaFin &lt;date&gt;, HoraFin &lt;dttm&gt;,
+## #   Rocosid &lt;int&gt;, Textura &lt;int&gt;, MatOrg &lt;int&gt;, PhSuelo &lt;int&gt;, FechaPh &lt;date&gt;,
+## #   Dom_sp2 &lt;fct&gt;, Dom_sp3 &lt;fct&gt;
 ```
 
 ---
@@ -300,9 +302,25 @@ if (window.HTMLWidgets) slideshow.on('afterShowSlide', function (slide) {
     }
     deleted = true;
   });
-})();</script>
-
-<script>
+})();
+(function() {
+  "use strict"
+  // Replace <script> tags in slides area to make them executable
+  var scripts = document.querySelectorAll(
+    '.remark-slides-area .remark-slide-container script'
+  );
+  if (!scripts.length) return;
+  for (var i = 0; i < scripts.length; i++) {
+    var s = document.createElement('script');
+    var code = document.createTextNode(scripts[i].textContent);
+    s.appendChild(code);
+    var scriptAttrs = scripts[i].attributes;
+    for (var j = 0; j < scriptAttrs.length; j++) {
+      s.setAttribute(scriptAttrs[j].name, scriptAttrs[j].value);
+    }
+    scripts[i].parentElement.replaceChild(s, scripts[i]);
+  }
+})();
 (function() {
   var links = document.getElementsByTagName('a');
   for (var i = 0; i < links.length; i++) {
@@ -311,7 +329,23 @@ if (window.HTMLWidgets) slideshow.on('afterShowSlide', function (slide) {
     }
   }
 })();
-</script>
+// adds .remark-code-has-line-highlighted class to <pre> parent elements
+// of code chunks containing highlighted lines with class .remark-code-line-highlighted
+(function(d) {
+  const hlines = d.querySelectorAll('.remark-code-line-highlighted');
+  const preParents = [];
+  const findPreParent = function(line, p = 0) {
+    if (p > 1) return null; // traverse up no further than grandparent
+    const el = line.parentElement;
+    return el.tagName === "PRE" ? el : findPreParent(el, ++p);
+  };
+
+  for (let line of hlines) {
+    let pre = findPreParent(line);
+    if (pre && !preParents.includes(pre)) preParents.push(pre);
+  }
+  preParents.forEach(p => p.classList.add("remark-code-has-line-highlighted"));
+})(document);</script>
 
 <script>
 slideshow._releaseMath = function(el) {

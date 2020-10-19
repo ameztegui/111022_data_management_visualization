@@ -53,7 +53,7 @@ library(rvest)
 <i class="fa fa-envelope"></i> &nbsp; [aitor.ameztegui@udl.cat](mailto:aitor.ameztegui@udl.cat) <br>
 <i class="fa fa-university"></i> &nbsp; Building 4, Bureau 2.04.2 <br>
 <i class="fa fa-phone"></i> &nbsp; 973702539 <br> 
-<i class="fa fa-calendar"></i> &nbsp; Thur 11:30 - 13:30  <br> 
+<i class="fa fa-calendar"></i> &nbsp; Tue 11:00 - 12:30  <br> 
 or upon request
 <br><br>]
 
@@ -240,6 +240,108 @@ https://sibecol2019-twitter.netlify.com/
 
 (Originally published at [Forestalia blog](http://www.forestaliablog.com/2019/02/congresos-cientificos-y-twitter-iv-un-analisis-de-sibecol2019/) Code available in the course's RStudio cloud Site)
 
+
+
+---
+
+class: center, middle, inverse
+
+# Course structure and policies
+
+---
+
+# Class meetings
+
+- Fully online
+
+- There will be some lectures, introducing some basic concepts
+
+- Via symmetric meetings, using the VC
+
+- The course is based on a hands-on approach --> lots of learn-by-doing
+
+</br></br></br></br></br>
+.center[**All the info, links and materials will be posted at </br>[datamanagement.netlify.com](https://datamanagement.netlify.com)**]
+
+
+---
+
+# Course components
+
+<i class="fa fa-laptop  fa-lg"></i> .bold[Lectures:] only a few, but some "theory" will be needed. 
+
+--
+
+<i class="fa fa-code  fa-lg"></i> .bold[Labs:] 
+- They're self paced tutorials with examples
+- There will be some questions/exercises you will need to answer, by creating a "lab report" (we'll see how). 
+
+--
+
+
+<i class="fa fa-book fa-lg"></i> .bold[Readings:] In some lectures we will recommend some external readings to expand or consolidate concepts seen in class
+
+--
+
+<i class="fa fa-pencil-square-o fa-lg"></i>.bold[Homework:] Individual. They will consist in short data science problems aimed at fixing and applying all the contents included in the labs.
+
+--
+
+<i class="fa fa-check-square fa-lg"></i> .bold[Exams:] Individual, two  midterms. We will ask you to complete a number of small programming and or analysis tasks related to the material presented in the class.
+
+--
+
+<i class="fa fa-question fa-lg"></i> .bold[Office hours:] we strongly encourage that you <u>learn how to get help</u> from the R community. You can also use the virtual campus forum tool. If some concepts are not fully understood by most of you, we can organize virtual "office hours".
+
+
+---
+
+# Grading
+
+```{r echo=F}
+grading <- data.frame(Component = c("Labs",
+                                    "Homework",
+                                    "Midterm 1",
+                                    "Midterm 2"),
+                      Weight = c("20%",
+                                 "40%",
+                                 "20%",
+                                 "20%"))
+
+library(knitr)
+kable(grading, format='html')
+```
+
+
+---
+
+# How to get help
+
+- Course content, logistics, etc. are available at [datamanagement.netlify.com/](https://datamanagement.netlify.com/). 
+
+- As we said, one of the best things about R is its community. Some highly recommended resources are:
+
+  - [R bloggers](http://www.r-bloggers.com/): A website dedicated to R development of tutorials.
+  - [StackOverflow](http://stackoverflow.com/): Website devoted to questions-and-answers on programming languages among which is R also available.
+  - [Datacamp](https://www.datacamp.com/search?q=&facets%5Btechnology%5D%5B%5D=R): Interactive data science tutorials covering many topics. Some are paid.
+  - [RStudio Online Learning](https://www.rstudio.com/online-learning/): A wealth of tutorials, articles, and examples developed by RStudio to help you learn R and its extensions.
+  - [R-Tutor](http://www.r-tutor.com/): A website devoted to teach statistics. An useful one if you are not much familiar with basic statistical methods.
+  
+It is <u>important to become familiar</u> from the beginning with the various alternatives for <b>getting help</b>. A key part of your success in using R lies in your ability to be self-relient and be able to get help and apply it to your own problems.
+
+---
+
+
+# But... a note on sharing/reusing code
+
+- A huge volume of code is available on the web to solve any number of problems.
+
+- Unless we explicitly tell you not to use something, the course's policy is that *you may make use of any online resources* (e.g. StackOverflow) but if you copy pieces of code from somewhere **you must cite** where you obtained it.
+
+- Except for the exams, you are welcome to discuss the problems together and ask for advice, but you may not directly send or make **use of code from another student** in this class 
+
+- On the exams all communication with classmates is explicitly forbidden.
+
 ---
 
 class: center, middle, inverse
@@ -306,157 +408,6 @@ class: center, middle, inverse
 
 And voila, your first data visualization!
 
-
----
-
-class: center, middle, inverse
-
-# Course structure and policies
-
----
-
-# Class meetings
-
-- As interactive as possible
-
-- There will be some lectures, lots of learn-by-doing
-
-- You can bring your laptop to class (but please refrain from texting or using your computer for anything other than coursework)
-</br></br></br></br></br>
-.center[**All the info, links and materials will be posted at </br>[datamanagement.netlify.com](https://datamanagement.netlify.com)**]
-
-
----
-
-# Course components
-
-<i class="fa fa-laptop  fa-lg"></i> .bold[Lectures:] we will try to keep them short, but some "theory" will be needed
-
---
-
-<i class="fa fa-code  fa-lg"></i> .bold[Labs:] hands-on application of concepts and tools seen in class. 
-- They're self paced tutorials with examples
-- There will be some questions/exercises you will need to answer, by creating a "lab report" (we'll see how). Try to finish in class, but can continue later. 
-- Some labs are expected to be done completely at home.
-
---
-
-
-<i class="fa fa-book fa-lg"></i> .bold[Readings:] In some lectures we will recommend some external readings to expand or consolidate concepts seen in class
-
---
-
-<i class="fa fa-pencil-square-o fa-lg"></i>.bold[Homework:] Individual. You are expected to work at home (but can ask doubts of course!)
-
---
-
-<i class="fa fa-check-square fa-lg"></i> .bold[Exams:] Individual, two  midterms. We will ask you to complete a number of small programming and or analysis tasks related to the material presented in the class.
-
---
-
-<i class="fa fa-file-powerpoint fa-lg"></i> .bold[Final project:] during the course each of you will design a data science project using your own dataset (ideally it will come from your master's thesis). You must present the results to your classmates. You must complete the final project and be in class to present it to pass this class.
-
----
-
-# Class meetings
-
-####<i class="fa fa-university"></i> &nbsp; Building 4, Computer Room 4.2 <br>
-####<i class="fa fa-calendar"></i> &nbsp; Mon 10:00 - 12:00  <br> 
-
-
---
-</br>
-- We plan weekly meetings
-
---
-
-- We will introduce the concepts, start working in the lab together
-
---
-
-- At a point, you must continue with the lab on your own. You can do it here (we can assist) or at home. You are not forced to finish the lab in class.
-
---
-
-- But we expect you to have it done before next meeting.
-
---
-
-- Face-to face classes can also be used as office hours, to solve doubts
-
---
-
-- As mentioned, some lessons will be done completely at home
-
----
-
-
-# Grading
-
-```{r echo=F}
-grading <- data.frame(Component = c("Labs",
-                                    "Homework",
-                                    "Midterm 1",
-                                    "Midterm 2",
-                                    "Final project",                                                                        "Participation and Peer evaluation"),
-                      Weight = c("15%",
-                                 "15%",
-                                 "10%",
-                                 "10%",
-                                 "40%",                                 
-                                 "10%*"))
-
-library(knitr)
-kable(grading, format='html')
-```
-
-
-
-</br>
-- *Class attendance in lectures and labs is not mandatory, but is a firm expectation; frequent absences or tardiness will be considered a legitimate cause for grade reduction.
-
----
-
-# Late/missed work policy
-
-- Late work policy for homework assignments:
-    - late, but within 48 hours of due date/time: -20%
-    - any later: no credit
-
-- Late work will not be accepted for the final project.
-
-- You must ABSOLUTELY complete the final project and be in class to present it in order to pass this course.
-
-- Please talk to us in case of illness, or personal or family issues that interferes with your ability to attend or complete classes.
-
----
-
-# How to get help
-
-- Course content, logistics, etc. are available at [datamanagement.netlify.com/](https://datamanagement.netlify.com/). 
-
-- As we said, one of the best things about R is its community. Some highly recommended resources are:
-
-  - [R bloggers](http://www.r-bloggers.com/): A website dedicated to R development of tutorials.
-  - [StackOverflow](http://stackoverflow.com/): Website devoted to questions-and-answers on programming languages among which is R also available.
-  - [Datacamp](https://www.datacamp.com/search?q=&facets%5Btechnology%5D%5B%5D=R): Interactive data science tutorials covering many topics. Some are paid.
-  - [RStudio Online Learning](https://www.rstudio.com/online-learning/): A wealth of tutorials, articles, and examples developed by RStudio to help you learn R and its extensions.
-  - [R-Tutor](http://www.r-tutor.com/): A website devoted to teach statistics. An useful one if you are not much familiar with basic statistical methods.
-  
-It is relatively important to become familiar from the beginning with the various alternatives for getting help. A key part of your success in using R lies in your ability to be self-relient and be able to get help and apply it to your own problems.
-
----
-
-
-# But... a note on sharing/reusing code
-
-- A huge volume of code is available on the web to solve any number of problems.
-
-- Unless we explicitly tell you not to use something, the course's policy is that *you may make use of any online resources* (e.g. StackOverflow) but if you copy pieces of code from somewhere **you must cite** where you obtained it.
-
-- Except for the exams, you are welcome to discuss the problems together and ask for advice, but you may not directly send or make **use of code from another student** in this class 
-
-- On the exams all communication with classmates is explicitly forbidden.
 
 ---
 

@@ -1,0 +1,266 @@
+<!doctype html>
+<html lang="en">
+<head>
+	<meta charset="utf-8" />
+	<link rel="icon" sizes="76x76" href="../img/favicon.png">
+	<link rel="icon" type="image/png" href="../img/favicon.png">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+
+	<title>Data Management and Visualization with R</title>
+
+	<meta content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0' name='viewport' />
+
+	
+	<link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons" />
+  <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700" />
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/latest/css/font-awesome.min.css" />
+  <link rel="stylesheet" href="https://cdn.rawgit.com/gaborcsardi/r-font/master/rlogo.css">
+  <script defer src="https://use.fontawesome.com/releases/v5.0.0/js/all.js"></script>
+  <script defer src="https://use.fontawesome.com/releases/v5.0.0/js/v4-shims.js"></script>
+
+	
+    <link href="../css/bootstrap.min.css" rel="stylesheet" />
+    <link href="../css/material-kit.css" rel="stylesheet"/>
+</head>
+
+  
+<body class="profile-page">
+  	<nav class="navbar navbar-transparent navbar-fixed-top navbar-color-on-scroll">
+	    	<div class="container">
+        	
+        	<div class="navbar-header">
+        		<button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navigation-example">
+            		<span class="sr-only">Toggle navigation</span>
+		            <span class="icon-bar"></span>
+		            <span class="icon-bar"></span>
+		            <span class="icon-bar"></span>
+        		</button>
+        		<a class="navbar-brand" href="../">Data Management and Visualization with R</a>
+        	</div>
+
+        	<div class="collapse navbar-collapse" id="navigation-example">
+        		<ul class="nav navbar-nav navbar-right">
+      
+        
+
+        <li class="nav-item">
+          <a href="../">
+            <i class="sidebar-button-icon fa fa-lg fa-home"></i>
+            <span>Home</span>
+          </a>
+        </li>
+        
+      
+        
+
+        <li class="nav-item">
+          <a href="../syllabus">
+            <i class="material-icons">date_range</i>
+            <span>Syllabus</span>
+          </a>
+        </li>
+        
+      
+        
+
+        <li class="nav-item">
+          <a href="../policies">
+            <i class="material-icons">gavel</i>
+            <span>Policies</span>
+          </a>
+        </li>
+        
+      
+        
+
+        <li class="nav-item">
+          <a href="https://rstudio.cloud/spaces/27211/join?access_code=aHODPtNn5L3JspKWeCMOnmC94jEBRM%2FmVJfm4p4t">
+            <i class="material-icons">cloud_queue</i>
+            <span>RStudio Cloud</span>
+          </a>
+        </li>
+        
+      
+        		</ul>
+        	</div>
+    	</div>
+    </nav>
+  <div class="wrapper">
+    <div class="header header-filter" style="background-image: url('/img/background2.png');">
+    </div>
+		<div class="main main-raised">
+			<div class="container">
+		  	<div class="section text-left">
+		  	  <h2 class="title">Policies</h2>
+	            <h3 id="course-components">Course components:</h3>
+
+<h4 id="lectures">Lectures</h4>
+
+<p>Usually we will provide you with all the materials, readings and links to be able to learn by yourself. However, some &quot;theory&quot; will be needed, so we will organize a few symmetric videoconferences (live) where we will introduce some basic concepts on course organization nad data management.</p>
+
+<h4 id="readings">Readings</h4>
+
+<p>In some sessions we will recommend some external readings to expand or consolidate concepts. These are usually not mandatory, but highly recommended.</p>
+
+<h4 id="labs">Labs:</h4>
+
+<p>The objective of the labs is to give you hands-on experience with data analysis using modern statistical software. The labs are thoroughly documented, self-paced tutorials with examples. All the labs include some short exercises you will need to complete, by creating a &quot;lab report&quot; (we'll see how). You can do the lab report at any time, but always before the next unit is released.</p>
+
+<h4 id="homework">Homework:</h4>
+
+<p>Beyond the in class activities, you will be assigned larger data analysis tasks throughout the semester. These assignments will be completed individually, and we will define a deadline.</p>
+
+<h4 id="exams">Exams:</h4>
+
+<p>There will be two midterms that you have to complete individually. Each exam will ask you to complete a number of small programming and/or analysis tasks related to the material presented in the course. The exact structure and content of the exams will be discussed in more detail before they are assigned.</p>
+
+<h4 id="office-hours">Office hours:</h4>
+
+<p>We strongly encourage that you learn how to get help from the R community. You can also use the virtual campus forum tool. If some concepts are not fully understood by most of you, we can organize virtual &quot;office hours&quot;.</p>
+
+<h3 id="grading">Grading:</h3>
+
+<p>Your final grade will be comprised of the following:</p>
+
+<table class="table table-condensed table-striped text-left">
+<thead>
+<tr>
+<th><span></span></th>
+<th><span></span></th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+<td>Labs</td>
+<td>20%</td>
+</tr>
+
+<tr>
+<td>Homework</td>
+<td>40%</td>
+</tr>
+
+<tr>
+<td>Midterm 1</td>
+<td>20%</td>
+</tr>
+
+<tr>
+<td>Midterm 2</td>
+<td>20%</td>
+</tr>
+</tbody>
+</table>
+
+<h3 id="late--missed-work-policy">Late / missed work policy</h3>
+
+<ul>
+<li><p>Late work policy for homework assignments:</p>
+
+<ul>
+<li>late, but within 72 hours of due date/time: -20%</li>
+<li>any later: no credit
+<br></li>
+</ul></li>
+
+<li><p>Please talk to us in case of illness, or personal or family issues that interferes with your ability to attend or complete assignments.</p></li>
+</ul>
+
+<h3 id="academic-integrity">Academic integrity:</h3>
+
+<p>We expect each of you to behave in accordance to the principles of honesty, fairness, respect, and accountability that characterize the University community.</p>
+
+<p><strong>A note on sharing / reusing code:</strong> We are aware that a huge volume of code is available on the web to solve any number of problems. Unless we explicitly tell you not to use something, the course's policy is that you may make use of any online resources (e.g. StackOverflow) but you must explicitly cite where you obtained any code you directly use (or use as inspiration). Except for the exams, you are welcome to discuss the problems together and ask for advice, but you may not directly send or make use of code from another student in this class. On the exams, all communication with classmates will be explicitly forbidden.</p>
+
+<h3 id="diversity--inclusiveness">Diversity &amp; Inclusiveness:</h3>
+
+<p>It is our intent that students from all diverse backgrounds and perspectives be well-served by this course, that students' learning needs be addressed both in and out of class, and that the diversity that the students bring to this class be viewed as a resource, strength and benefit. It is our intent to present materials and activities that are respectful of diversity: gender identity, sexuality, disability, age, socioeconomic status, ethnicity, race, nationality, religion, and culture. Let us know ways to improve the effectiveness of the course for you personally, or for other students or student groups.</p>
+
+<ul>
+<li><p>If you feel like your performance in the class is being impacted by your experiences outside of class, please don't hesitate to come and talk with any of us. If you prefer to speak with someone outside of the course, the MSc coordinator is an excellent resource.</p></li>
+
+<li><p>We (like many people) are still in the process of learning about diverse perspectives and identities. If something was said in class (by anyone) that made you feel uncomfortable, please talk to us about it.</p></li>
+</ul>
+
+<h3 id="how-to-get-help">How to get help:</h3>
+
+<p>One of the best things about R is its community. Some highly recommended resources are:</p>
+
+<ul>
+<li><a href="http://www.r-bloggers.com/">R bloggers</a>: A website dedicated to R development of tutorials.</li>
+<li><a href="http://stackoverflow.com/">StackOverflow</a>: Website devoted to questions-and-answers on programming languages among which is R also available.</li>
+<li><a href="https://www.datacamp.com/search?q=&amp;facets%5Btechnology%5D%5B%5D=R">Datacamp</a>: Interactive data science tutorials covering many topics. Some are paid.</li>
+<li><a href="https://www.rstudio.com/online-learning/">RStudio Online Learning</a>: A wealth of tutorials, articles, and examples developed by RStudio to help you learn R and its extensions.</li>
+<li><a href="http://www.r-tutor.com/">R-Tutor</a>: A website devoted to teach statistics. An useful one if you are not much familiar with basic statistical methods.</li>
+</ul>
+
+<p>It is important to become familiar from the beginning with the various alternatives for getting help. A key part of your success in using R lies in your ability to be self-relient and be able to get help and apply it to your own problems.</p>
+
+<p>Often it's a lot more pleasant an experience to get your questions answered in person. Make use of the teaching team's office hours, we're here to help!</p>
+
+<p>For personal and grade related questions, or any issue not considered here, please contact us by email.</p>
+
+	      </div>
+      </div>
+		</div>
+    <footer class="footer">
+  <div class="container">
+	  <nav class="pull-left">
+	    <ul>
+	    
+        
+
+        <li>
+          <a href="http://udl.cat/"><i class='fa fa-university fa-lg'></i> University of Lleida</a>
+        </li>
+        
+      
+        
+
+        <li>
+          <a href="https://rstudio.cloud/spaces/27211/join?access_code=aHODPtNn5L3JspKWeCMOnmC94jEBRM%2FmVJfm4p4t"><i class="icon-rlogo" style="font-size:150%"></i> RStudio Cloud</a>
+        </li>
+        
+      
+        
+
+        <li>
+          <a href="https://github.com/ameztegui/111022_data_management_visualization"><i class="button-icon fa fa-2x fa-github"></i> GitHub</a>
+        </li>
+        
+      
+        
+
+        <li>
+          <a href="../"> </a>
+        </li>
+        
+      
+      </ul>
+    </nav>
+	  <div class="copyright pull-right">
+	    <img src="../img/cc-by.svg"/>
+	  </div>
+  </div>
+</footer>
+	</div>
+</body>
+
+			
+
+	
+	<script src="../js/jquery.min.js" type="text/javascript"></script>
+	<script src="../js/bootstrap.min.js" type="text/javascript"></script>
+	<script src="../js/material.min.js"></script>
+
+	
+	<script src="../js/nouislider.min.js" type="text/javascript"></script>
+
+	
+	<script src="../js/bootstrap-datepicker.js" type="text/javascript"></script>
+
+	
+	<script src="../js/material-kit.js" type="text/javascript"></script>
+
+</html>
