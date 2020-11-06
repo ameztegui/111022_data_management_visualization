@@ -1,0 +1,34 @@
+---
+title: "Series"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+It is very difficult to define our favorite series, there are so many good ones! 
+It may be easier if we separate into **drama** and **commedies**.
+
+### My favorite drama TV series
+
+1. Breaking bad
+2. The West Wing
+3. Northern Exposure
+4. Game of Thrones
+
+### My favorite TV commedy series
+
+In the case of commedies, I cannot possible rank them, but *among* my favorite commedies I can cite:
+
+- Monty Python Flying Circus
+- The Office
+    - The Office UK version
+    - The Office US version
+- Seinfeld
+
+### Finding new series
+To find new series to watch, I often check in [IMDB](https://www.imdb.com/chart/toptv/)
+Based on the ratings, this may be the next series I watch:
+    
+![](images/02-intro-rmarkdown/got.jpg)
