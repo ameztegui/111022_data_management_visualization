@@ -13,4 +13,7 @@ For this unit about the data pipeline and tidy data I highly recommend you to re
 
 - Wickham, H. (2014) [Tidy data. ](https://www.jstatsoft.org/index.php/jss/article/view/v059i10/v59i10.pdf) Journal of Statistical Software 59(10)
 
+You may also find interesting the following resource:
 
+- Broman, Woo (2018) [Data Organization in Spreadsheets](https://doi.org/10.1080/00031305.2017.1375989) The American Statiscian 72, 2-10.
+)

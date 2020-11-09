@@ -23,6 +23,8 @@ During this course we will always work with RStudio projects, but you won't actu
 
 - [Projects in RStudio](https://resources.rstudio.com/wistia-rstudio-essentials-2/rstudioessentialsmanagingpart1-2) A nice video by RStudio covering the main features of RStudio Projects [37 mins]
 
+- Broman, Woo (2018) [Data Organization in Spreadsheets](https://doi.org/10.1080/00031305.2017.1375989) The American Statiscian 72, 2-10.
+
 ## Complementary references
 
 - [Using Projects:](https://support.rstudio.com/hc/en-us/articles/200526207-Using-Projects). A description by RStudio on how to create RStudio projects.
