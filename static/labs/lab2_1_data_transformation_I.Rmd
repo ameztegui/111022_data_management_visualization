@@ -286,7 +286,7 @@ select(trees,-(Code:Dist))  # This will work
 >
 > -   `one_of ("x", "y", "z")`: selects variables provided in a character vector.
 >
-> We can check the list of special functions with `help(select)`.
+> You can check the list of special functions with `help(select)`, or checking the [tidyselect website](https://tidyselect.r-lib.org/reference/language.html).
 
 Let's try one of these special functions:
 
