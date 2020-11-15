@@ -1626,82 +1626,90 @@ $(document).ready(function () {
 </div>
 
 <div id="main">
+<p>In the last lab, we introduced some of the most common <code>dplyr</code> verbs: we saw how to create new variables with <code>mutate</code>, how to select the desired rows and columns with <code>filter</code>and <code>select</code>, how to sort our datasets with <code>arrange</code> or create summarised variables with <code>summarise</code> and <code>group_by</code>. Most often, however, we will want to apply several of these verbs to a data frame. For instance, we may want to first calculate the basal area of each tree, then get the total basal area per plot, and then determine the average basal area per plot and per species. We also saw how we can combine the <code>dplyr</code> operations to produce a data science workflow. However, this procedure is not so efficient, since we need to create intermediate objects. We will see how to improve it by using another of the <code>tidyverse</code> features: the pipe. But first, let’s load the data and the tidyverse package</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1"></a><span class="kw">library</span>(tidyverse)</span>
+<span id="cb1-2"><a href="#cb1-2"></a><span class="kw">load</span>(<span class="st">&quot;data/data_SNFI3.Rdata&quot;</span>)</span></code></pre></div>
 <div id="piping" class="section level1" number="1">
 <h1 number="1"><span class="header-section-number">1</span> Piping</h1>
-<p>In the last lab, we have seen how to create new variables with <code>mutate</code>, how to select the desired rows and columns with <code>filter</code>and <code>select</code>, how to sort our datasets with <code>arrange</code> or create summarised variables with <code>summarise</code>. Most often, however, we will want to apply several of this verbs to a dataframe. For instance, we may want to first calculate the basal area of each tree, then get the total basal area per plot, and then determine the average basal area per plot per dominant species.</p>
-<p>The typical way to concatenate different functions in R is to successively apply each verb to the result of the previous operation, using parentheses. This forces us to work “from inside to outside”, and the result gets reall hard to read or understand. For instance, let’s think what the following commands are doing:</p>
-<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1"></a>diam_especie &lt;-<span class="st"> </span><span class="kw">filter</span>(</span>
-<span id="cb1-2"><a href="#cb1-2"></a>  <span class="kw">summarise</span>(</span>
-<span id="cb1-3"><a href="#cb1-3"></a>    <span class="kw">group_by</span>(</span>
-<span id="cb1-4"><a href="#cb1-4"></a>      <span class="kw">filter</span>(</span>
-<span id="cb1-5"><a href="#cb1-5"></a>        trees, <span class="op">!</span><span class="kw">is.na</span>(DiamIf3)</span>
-<span id="cb1-6"><a href="#cb1-6"></a>      ),</span>
-<span id="cb1-7"><a href="#cb1-7"></a>      Codi, Especie</span>
-<span id="cb1-8"><a href="#cb1-8"></a>    ),</span>
-<span id="cb1-9"><a href="#cb1-9"></a>    <span class="dt">diam =</span> <span class="kw">mean</span>(DiamIf3),</span>
-<span id="cb1-10"><a href="#cb1-10"></a>    <span class="dt">n =</span> <span class="kw">n</span>()</span>
-<span id="cb1-11"><a href="#cb1-11"></a>  ),</span>
-<span id="cb1-12"><a href="#cb1-12"></a>  n <span class="op">&gt;</span><span class="st"> </span><span class="dv">5</span></span>
-<span id="cb1-13"><a href="#cb1-13"></a>)</span></code></pre></div>
-<p>With some effort, we could understand the code, but it is not easy to read. Another option is to create intermediate objects at each step, as follows:</p>
-<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1"></a>no_na_trees &lt;-<span class="st"> </span><span class="kw">filter</span>(</span>
-<span id="cb2-2"><a href="#cb2-2"></a>  trees, <span class="op">!</span><span class="kw">is.na</span>(DiamIf3)</span>
-<span id="cb2-3"><a href="#cb2-3"></a>)</span>
-<span id="cb2-4"><a href="#cb2-4"></a>no_na_trees_grouped &lt;-<span class="st"> </span><span class="kw">group_by</span>(</span>
-<span id="cb2-5"><a href="#cb2-5"></a>  no_na_trees, Codi, Especie</span>
-<span id="cb2-6"><a href="#cb2-6"></a>)</span>
-<span id="cb2-7"><a href="#cb2-7"></a>summarised_no_na_trees &lt;-<span class="st"> </span><span class="kw">summarise</span>(</span>
-<span id="cb2-8"><a href="#cb2-8"></a>  no_na_trees_grouped,</span>
-<span id="cb2-9"><a href="#cb2-9"></a>  <span class="dt">diam =</span> <span class="kw">mean</span>(DiamIf3), <span class="dt">n =</span> <span class="kw">n</span>()</span>
-<span id="cb2-10"><a href="#cb2-10"></a>)</span>
-<span id="cb2-11"><a href="#cb2-11"></a>final_data &lt;-<span class="st"> </span><span class="kw">filter</span>(</span>
-<span id="cb2-12"><a href="#cb2-12"></a>  summarised_no_na_trees, n <span class="op">&gt;</span><span class="st"> </span><span class="dv">5</span></span>
+<p>The typical way to concatenate different functions in R without creating intermediate objects is to successively apply each verb to the result of the previous operation, using parentheses. This forces us to work “from inside to outside”, and the result gets really hard to read or understand. For instance, let’s think what the following commands are doing:</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1"></a>diam_especie &lt;-<span class="st"> </span><span class="kw">filter</span>(</span>
+<span id="cb2-2"><a href="#cb2-2"></a>  <span class="kw">summarise</span>(</span>
+<span id="cb2-3"><a href="#cb2-3"></a>    <span class="kw">group_by</span>(</span>
+<span id="cb2-4"><a href="#cb2-4"></a>      <span class="kw">filter</span>(</span>
+<span id="cb2-5"><a href="#cb2-5"></a>        trees, <span class="op">!</span><span class="kw">is.na</span>(DBH_<span class="dv">3</span>)</span>
+<span id="cb2-6"><a href="#cb2-6"></a>      ),</span>
+<span id="cb2-7"><a href="#cb2-7"></a>      Code, Species</span>
+<span id="cb2-8"><a href="#cb2-8"></a>    ),</span>
+<span id="cb2-9"><a href="#cb2-9"></a>    <span class="dt">diam =</span> <span class="kw">mean</span>(DBH_<span class="dv">3</span>),</span>
+<span id="cb2-10"><a href="#cb2-10"></a>    <span class="dt">n =</span> <span class="kw">n</span>()</span>
+<span id="cb2-11"><a href="#cb2-11"></a>  ),</span>
+<span id="cb2-12"><a href="#cb2-12"></a>  n <span class="op">&gt;</span><span class="st"> </span><span class="dv">5</span></span>
 <span id="cb2-13"><a href="#cb2-13"></a>)</span></code></pre></div>
-<p>This approach is easier to understand, but has two main disadvantages:</p>
+<p>With some effort, we could understand the code, but it is not easy to read. Another option is to create intermediate objects at each step, as follows:</p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1"></a>no_na_trees &lt;-<span class="st"> </span><span class="kw">filter</span>(</span>
+<span id="cb3-2"><a href="#cb3-2"></a>  trees, <span class="op">!</span><span class="kw">is.na</span>(DBH_<span class="dv">3</span>)</span>
+<span id="cb3-3"><a href="#cb3-3"></a>)</span>
+<span id="cb3-4"><a href="#cb3-4"></a>no_na_trees_grouped &lt;-<span class="st"> </span><span class="kw">group_by</span>(</span>
+<span id="cb3-5"><a href="#cb3-5"></a>  no_na_trees, Code, Species</span>
+<span id="cb3-6"><a href="#cb3-6"></a>)</span>
+<span id="cb3-7"><a href="#cb3-7"></a>summarised_no_na_trees &lt;-<span class="st"> </span><span class="kw">summarise</span>(</span>
+<span id="cb3-8"><a href="#cb3-8"></a>  no_na_trees_grouped,</span>
+<span id="cb3-9"><a href="#cb3-9"></a>  <span class="dt">diam =</span> <span class="kw">mean</span>(DBH_<span class="dv">3</span>), <span class="dt">n =</span> <span class="kw">n</span>()</span>
+<span id="cb3-10"><a href="#cb3-10"></a>)</span>
+<span id="cb3-11"><a href="#cb3-11"></a>final_data &lt;-<span class="st"> </span><span class="kw">filter</span>(</span>
+<span id="cb3-12"><a href="#cb3-12"></a>  summarised_no_na_trees, n <span class="op">&gt;</span><span class="st"> </span><span class="dv">5</span></span>
+<span id="cb3-13"><a href="#cb3-13"></a>)</span></code></pre></div>
+<p>This approach is easier to understand, maybe we can see now what that piece of code is doing:</p>
 <ol style="list-style-type: decimal">
+<li>Filters the data to eliminate those observations with NA values for DBH_3</li>
+<li>Groups observations by Plot and species</li>
+<li>Calculates the mean tree diameter and the number of observations for each plot and species</li>
+<li>Filters only those cases for which there were more than 5 observations.</li>
+</ol>
+<p>As we said, this approach is much clearer, but has two main disadvantages:</p>
+<ul>
 <li>It forces us to create intermediate objects that occupy memory and are not longer used.</li>
 <li>Is prone to mistakes if some of the steps causes errors.</li>
-</ol>
-<p>The <code>tidyverse</code> has adopted a very clever approach, inherited from the <code>magrittr</code> package: the <em>pipe</em> operator. A <em>pipe</em> is just this symbol <code>%&gt;%</code>, and makes that the result of the left side is passed to the function in the right as first argument. So <code>x %&gt;% f(y)</code> is the same as <code>f(x,y)</code>, and <code>x %&gt;% f(y, z)</code>, would be the same as <code>f(x, y, z)</code>. We saw that, in the tidyverse, the first argument was always the data frame at which we apply the operations. This makes that, within the tidyverse <code>%&gt;%</code> makes each function to be applied to the data frame resulting from the previous step.</p>
+</ul>
+<p>The <code>tidyverse</code> has adopted a very clever approach, inherited from the <code>magrittr</code> package: the <em>pipe</em> operator. A <em>pipe</em> is just this symbol <code>%&gt;%</code>, and makes that the result of the left side is passed to the function in the right as first argument. So <code>x %&gt;% f(y)</code> is the same as <code>f(x,y)</code>, and <code>x %&gt;% f(y, z)</code>, would be the same as <code>f(x, y, z)</code>. We saw that, in the tidyverse, the first argument was always the data frame at which we apply the operations. Thus, it makes that, within the tidyverse <code>%&gt;%</code> makes each function to be applied to the data frame resulting from the previous step.</p>
 <p><code>filter(df, color == &#39;blue&#39;)</code> is the same as <code>df %&gt;% filter(color == &#39;blue&#39;)</code></p>
 <p>Tidyverse verbs can thus be applied consecutively to a data frame, in a more intuitive order. So for example, the previous example would be</p>
-<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1"></a>diam_especie &lt;-<span class="st"> </span>trees <span class="op">%&gt;%</span></span>
-<span id="cb3-2"><a href="#cb3-2"></a><span class="st">  </span><span class="kw">filter</span>(<span class="op">!</span><span class="kw">is.na</span>(DiamIf3)) <span class="op">%&gt;%</span></span>
-<span id="cb3-3"><a href="#cb3-3"></a><span class="st">  </span><span class="kw">group_by</span>(Codi, Especie) <span class="op">%&gt;%</span></span>
-<span id="cb3-4"><a href="#cb3-4"></a><span class="st">  </span><span class="kw">summarise</span>(</span>
-<span id="cb3-5"><a href="#cb3-5"></a>    <span class="dt">diam =</span> <span class="kw">mean</span>(DiamIf3),</span>
-<span id="cb3-6"><a href="#cb3-6"></a>    <span class="dt">n =</span> <span class="kw">n</span>()</span>
-<span id="cb3-7"><a href="#cb3-7"></a>  ) <span class="op">%&gt;%</span></span>
-<span id="cb3-8"><a href="#cb3-8"></a><span class="st">  </span><span class="kw">filter</span>(n <span class="op">&gt;</span><span class="st"> </span><span class="dv">5</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1"></a>diam_especie &lt;-<span class="st"> </span>trees <span class="op">%&gt;%</span></span>
+<span id="cb4-2"><a href="#cb4-2"></a><span class="st">  </span><span class="kw">filter</span>(<span class="op">!</span><span class="kw">is.na</span>(DBH_<span class="dv">3</span>)) <span class="op">%&gt;%</span></span>
+<span id="cb4-3"><a href="#cb4-3"></a><span class="st">  </span><span class="kw">group_by</span>(Code, Species) <span class="op">%&gt;%</span></span>
+<span id="cb4-4"><a href="#cb4-4"></a><span class="st">  </span><span class="kw">summarise</span>(</span>
+<span id="cb4-5"><a href="#cb4-5"></a>    <span class="dt">diam =</span> <span class="kw">mean</span>(DBH_<span class="dv">3</span>),</span>
+<span id="cb4-6"><a href="#cb4-6"></a>    <span class="dt">n =</span> <span class="kw">n</span>()</span>
+<span id="cb4-7"><a href="#cb4-7"></a>  ) <span class="op">%&gt;%</span></span>
+<span id="cb4-8"><a href="#cb4-8"></a><span class="st">  </span><span class="kw">filter</span>(n <span class="op">&gt;</span><span class="st"> </span><span class="dv">5</span>)</span></code></pre></div>
 <p>If we read the <code>%&gt;%</code>operator as <strong>THEN</strong>, it is easy to understand that piece of code:</p>
-<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1"></a>diam_especie &lt;-<span class="st"> </span>trees <span class="op">%&gt;%</span><span class="st">               </span><span class="co"># Get the data frame trees and THEN</span></span>
-<span id="cb4-2"><a href="#cb4-2"></a><span class="st">  </span><span class="kw">filter</span>(<span class="op">!</span><span class="kw">is.na</span>(DiamIf3)) <span class="op">%&gt;%</span><span class="st">           </span><span class="co"># filter those that have diameter value, and THEN</span></span>
-<span id="cb4-3"><a href="#cb4-3"></a><span class="st">  </span><span class="kw">group_by</span>(Codi, Especie) <span class="op">%&gt;%</span><span class="st">           </span><span class="co"># for each plot and species</span></span>
-<span id="cb4-4"><a href="#cb4-4"></a><span class="st">  </span><span class="kw">summarise</span>(                            <span class="co"># calculate </span></span>
-<span id="cb4-5"><a href="#cb4-5"></a>    <span class="dt">diam =</span> <span class="kw">mean</span>(DiamIf3),               <span class="co"># the mean diameter</span></span>
-<span id="cb4-6"><a href="#cb4-6"></a>    <span class="dt">n =</span> <span class="kw">n</span>()                             <span class="co"># and the number of trees in the plot</span></span>
-<span id="cb4-7"><a href="#cb4-7"></a>  ) <span class="op">%&gt;%</span><span class="st">                                 </span><span class="co"># AND THEN</span></span>
-<span id="cb4-8"><a href="#cb4-8"></a><span class="st">  </span><span class="kw">filter</span>(n <span class="op">&gt;</span><span class="st"> </span><span class="dv">5</span>)                         <span class="co"># keep only those plots with at leat 5 trees of a given species.</span></span></code></pre></div>
+<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1"></a>diam_especie &lt;-<span class="st"> </span>trees <span class="op">%&gt;%</span><span class="st">               </span><span class="co"># Get the data frame trees and THEN</span></span>
+<span id="cb5-2"><a href="#cb5-2"></a><span class="st">  </span><span class="kw">filter</span>(<span class="op">!</span><span class="kw">is.na</span>(DBH_<span class="dv">3</span>)) <span class="op">%&gt;%</span><span class="st">           </span><span class="co"># filter those that have diameter value (i.e. are not NA), and THEN</span></span>
+<span id="cb5-3"><a href="#cb5-3"></a><span class="st">  </span><span class="kw">group_by</span>(Code, Species) <span class="op">%&gt;%</span><span class="st">           </span><span class="co"># group per plot and species and THEN</span></span>
+<span id="cb5-4"><a href="#cb5-4"></a><span class="st">  </span><span class="kw">summarise</span>(                            <span class="co"># calculate </span></span>
+<span id="cb5-5"><a href="#cb5-5"></a>    <span class="dt">diam =</span> <span class="kw">mean</span>(DBH_<span class="dv">3</span>),               <span class="co"># the mean diameter</span></span>
+<span id="cb5-6"><a href="#cb5-6"></a>    <span class="dt">n =</span> <span class="kw">n</span>()                             <span class="co"># and the number of trees in the plot</span></span>
+<span id="cb5-7"><a href="#cb5-7"></a>  ) <span class="op">%&gt;%</span><span class="st">                                 </span><span class="co"># AND THEN</span></span>
+<span id="cb5-8"><a href="#cb5-8"></a><span class="st">  </span><span class="kw">filter</span>(n <span class="op">&gt;</span><span class="st"> </span><span class="dv">5</span>)                         <span class="co"># keep only those plots with at least 5 trees of a given species.</span></span></code></pre></div>
 <div class="exercise">
 <p><strong>EXERCISE 1:</strong> </br></p>
 <p>Create pipelines to answer the following questions:</p>
-<p>1.1 Which <strong>plots</strong> have the fastest average growth rate?</p>
-<p>1.2 Which is the plot with the <strong>most species</strong>?</p>
-<p>1.3 Is there any <strong>relationship</strong> between both variables? <br> <em>(Optional, some knowledge on <code>ggplot</code>is required)</em></p>
+<p>1.1 Which <strong>plots</strong> have the fastest <em>average</em> growth rate?</p>
+<p>1.2 Which is the plot with the <strong>most number of species</strong>?</p>
+<p>1.3 Which is the average height of <strong>each species in each province</strong>, if we only consider those trees with height &gt; 5 m?</p>
 </div>
 </div>
 <div id="operate-on-a-selection-of-variables" class="section level1" number="2">
 <h1 number="2"><span class="header-section-number">2</span> Operate on a selection of variables</h1>
 <p>When working with our data frames, we will often be in the need to apply a certain operation to several variables. For instance, we may be interested in calculating the mean tree diameter and mean tree height per species in each plot. We can do this by separating each variable within the tidyverse with commas, such as here:</p>
-<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1"></a>trees <span class="op">%&gt;%</span></span>
-<span id="cb5-2"><a href="#cb5-2"></a><span class="st">    </span><span class="kw">group_by</span>(Codi, Especie) <span class="op">%&gt;%</span></span>
-<span id="cb5-3"><a href="#cb5-3"></a><span class="st">    </span><span class="kw">summarise</span>(<span class="dt">mean_d2 =</span> <span class="kw">mean</span>(DiamIf2),</span>
-<span id="cb5-4"><a href="#cb5-4"></a>              <span class="dt">mean_d3 =</span> <span class="kw">mean</span>(DiamIf3),</span>
-<span id="cb5-5"><a href="#cb5-5"></a>              <span class="dt">mean_h =</span> <span class="kw">mean</span>(HeiIf3))</span></code></pre></div>
-<pre><code>## `summarise()` regrouping output by &#39;Codi&#39; (override with `.groups` argument)</code></pre>
+<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1"></a>trees <span class="op">%&gt;%</span></span>
+<span id="cb6-2"><a href="#cb6-2"></a><span class="st">    </span><span class="kw">group_by</span>(Code, Species) <span class="op">%&gt;%</span></span>
+<span id="cb6-3"><a href="#cb6-3"></a><span class="st">    </span><span class="kw">summarise</span>(<span class="dt">mean_d2 =</span> <span class="kw">mean</span>(DBH_<span class="dv">2</span>),</span>
+<span id="cb6-4"><a href="#cb6-4"></a>              <span class="dt">mean_d3 =</span> <span class="kw">mean</span>(DBH_<span class="dv">3</span>),</span>
+<span id="cb6-5"><a href="#cb6-5"></a>              <span class="dt">mean_h =</span> <span class="kw">mean</span>(Height_<span class="dv">3</span>))</span></code></pre></div>
 <pre><code>## # A tibble: 14,778 x 5
-## # Groups:   Codi [7,713]
-##    Codi   Especie mean_d2 mean_d3 mean_h
+## # Groups:   Code [7,713]
+##    Code   Species mean_d2 mean_d3 mean_h
 ##    &lt;fct&gt;  &lt;fct&gt;     &lt;dbl&gt;   &lt;dbl&gt;  &lt;dbl&gt;
 ##  1 080001 022        22.9    26.3   10.5
 ##  2 080002 021        35.5    39.5   14.6
@@ -1720,92 +1728,95 @@ $(document).ready(function () {
 <li><p><code>summarise_if</code> applies the selected function to those variables that meet a condition. For instance, we can get the <code>mean</code> of any variable (columnn) containting numerical data:</p></li>
 </ol>
 <div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1"></a>trees <span class="op">%&gt;%</span></span>
-<span id="cb8-2"><a href="#cb8-2"></a><span class="st">    </span><span class="kw">group_by</span>(Codi, Especie) <span class="op">%&gt;%</span></span>
+<span id="cb8-2"><a href="#cb8-2"></a><span class="st">    </span><span class="kw">group_by</span>(Code, Species) <span class="op">%&gt;%</span></span>
 <span id="cb8-3"><a href="#cb8-3"></a><span class="st">    </span><span class="kw">summarise_if</span>(is.numeric, mean)</span></code></pre></div>
-<pre><code>## # A tibble: 14,778 x 9
-## # Groups:   Codi [7,713]
-##    Codi   Especie Rumbo  Dist     N    CD DiamIf3 DiamIf2 HeiIf3
-##    &lt;fct&gt;  &lt;fct&gt;   &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt;  &lt;dbl&gt;
-##  1 080001 022     206   11.0   25.8  26.7    26.3    22.9   10.5
-##  2 080002 021     176.  10.4   20.8  38.8    39.5    35.5   14.6
-##  3 080002 022     193.   7.40  51.3  26.2    26.7    23.4   13.4
-##  4 080002 476      38    9.1   31.8  35      34      32.4    9  
-##  5 080003 021     151   14.3   18.5  37.5    37.9    32.2   12.5
-##  6 080003 022     253.   7.83  63.0  31      29.6    23.6   10.2
-##  7 080004 021      28.5  8.44  31.8  22.5    24.3    17.7   11.8
-##  8 080005 071     121   11.7   20.7  37.5    38.0    34.2   12.6
-##  9 080005 243     118.  13.0   11.1  30      29.3    28.2   10  
-## 10 080005 278     330.   5.25  70.0  20      20.1    18.8    8.4
+<pre><code>## # A tibble: 14,778 x 8
+## # Groups:   Code [7,713]
+##    Code   Species Direction  Dist     N DBH_3 DBH_2 Height_3
+##    &lt;fct&gt;  &lt;fct&gt;       &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;    &lt;dbl&gt;
+##  1 080001 022         206   11.0   25.8  26.3  22.9     10.5
+##  2 080002 021         176.  10.4   20.8  39.5  35.5     14.6
+##  3 080002 022         193.   7.40  51.3  26.7  23.4     13.4
+##  4 080002 476          38    9.1   31.8  34    32.4      9  
+##  5 080003 021         151   14.3   18.5  37.9  32.2     12.5
+##  6 080003 022         253.   7.83  63.0  29.6  23.6     10.2
+##  7 080004 021          28.5  8.44  31.8  24.3  17.7     11.8
+##  8 080005 071         121   11.7   20.7  38.0  34.2     12.6
+##  9 080005 243         118.  13.0   11.1  29.3  28.2     10  
+## 10 080005 278         330.   5.25  70.0  20.1  18.8      8.4
 ## # ... with 14,768 more rows</code></pre>
 <p>If we only apply a function (in this case, <code>mean</code>), dplyr will substitute the name of the original variables by the summary. We can calculate however several functions by providing them as a list, and dplyr will add a suffix to the variable name to identify them.</p>
 <div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1"></a>trees <span class="op">%&gt;%</span></span>
-<span id="cb10-2"><a href="#cb10-2"></a><span class="st">    </span><span class="kw">group_by</span>(Codi, Especie) <span class="op">%&gt;%</span></span>
+<span id="cb10-2"><a href="#cb10-2"></a><span class="st">    </span><span class="kw">group_by</span>(Code, Species) <span class="op">%&gt;%</span></span>
 <span id="cb10-3"><a href="#cb10-3"></a><span class="st">    </span><span class="kw">summarise_if</span>(is.numeric, <span class="dt">.funs=</span> <span class="kw">list</span>(mean, sd))</span></code></pre></div>
-<pre><code>## # A tibble: 14,778 x 16
-## # Groups:   Codi [7,713]
-##    Codi  Especie Rumbo_fn1 Dist_fn1 N_fn1 CD_fn1 DiamIf3_fn1 DiamIf2_fn1
-##    &lt;fct&gt; &lt;fct&gt;       &lt;dbl&gt;    &lt;dbl&gt; &lt;dbl&gt;  &lt;dbl&gt;       &lt;dbl&gt;       &lt;dbl&gt;
-##  1 0800~ 022         206      11.0   25.8   26.7        26.3        22.9
-##  2 0800~ 021         176.     10.4   20.8   38.8        39.5        35.5
-##  3 0800~ 022         193.      7.40  51.3   26.2        26.7        23.4
-##  4 0800~ 476          38       9.1   31.8   35          34          32.4
-##  5 0800~ 021         151      14.3   18.5   37.5        37.9        32.2
-##  6 0800~ 022         253.      7.83  63.0   31          29.6        23.6
-##  7 0800~ 021          28.5     8.44  31.8   22.5        24.3        17.7
-##  8 0800~ 071         121      11.7   20.7   37.5        38.0        34.2
-##  9 0800~ 243         118.     13.0   11.1   30          29.3        28.2
-## 10 0800~ 278         330.      5.25  70.0   20          20.1        18.8
-## # ... with 14,768 more rows, and 8 more variables: HeiIf3_fn1 &lt;dbl&gt;,
-## #   Rumbo_fn2 &lt;dbl&gt;, Dist_fn2 &lt;dbl&gt;, N_fn2 &lt;dbl&gt;, CD_fn2 &lt;dbl&gt;,
-## #   DiamIf3_fn2 &lt;dbl&gt;, DiamIf2_fn2 &lt;dbl&gt;, HeiIf3_fn2 &lt;dbl&gt;</code></pre>
+<pre><code>## # A tibble: 14,778 x 14
+## # Groups:   Code [7,713]
+##    Code  Species Direction_fn1 Dist_fn1 N_fn1 DBH_3_fn1 DBH_2_fn1 Height_3_fn1
+##    &lt;fct&gt; &lt;fct&gt;           &lt;dbl&gt;    &lt;dbl&gt; &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;        &lt;dbl&gt;
+##  1 0800~ 022             206      11.0   25.8      26.3      22.9         10.5
+##  2 0800~ 021             176.     10.4   20.8      39.5      35.5         14.6
+##  3 0800~ 022             193.      7.40  51.3      26.7      23.4         13.4
+##  4 0800~ 476              38       9.1   31.8      34        32.4          9  
+##  5 0800~ 021             151      14.3   18.5      37.9      32.2         12.5
+##  6 0800~ 022             253.      7.83  63.0      29.6      23.6         10.2
+##  7 0800~ 021              28.5     8.44  31.8      24.3      17.7         11.8
+##  8 0800~ 071             121      11.7   20.7      38.0      34.2         12.6
+##  9 0800~ 243             118.     13.0   11.1      29.3      28.2         10  
+## 10 0800~ 278             330.      5.25  70.0      20.1      18.8          8.4
+## # ... with 14,768 more rows, and 6 more variables: Direction_fn2 &lt;dbl&gt;,
+## #   Dist_fn2 &lt;dbl&gt;, N_fn2 &lt;dbl&gt;, DBH_3_fn2 &lt;dbl&gt;, DBH_2_fn2 &lt;dbl&gt;,
+## #   Height_3_fn2 &lt;dbl&gt;</code></pre>
 <p>If we want the suffix to be more informative, we can provide names to the functions:</p>
 <div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1"></a>trees <span class="op">%&gt;%</span></span>
-<span id="cb12-2"><a href="#cb12-2"></a><span class="st">    </span><span class="kw">group_by</span>(Codi, Especie) <span class="op">%&gt;%</span></span>
+<span id="cb12-2"><a href="#cb12-2"></a><span class="st">    </span><span class="kw">group_by</span>(Code, Species) <span class="op">%&gt;%</span></span>
 <span id="cb12-3"><a href="#cb12-3"></a><span class="st">    </span><span class="kw">summarise_if</span>(is.numeric, <span class="dt">.funs=</span> <span class="kw">list</span>(<span class="dt">avg =</span> mean, <span class="dt">sd =</span> sd))</span></code></pre></div>
-<pre><code>## # A tibble: 14,778 x 16
-## # Groups:   Codi [7,713]
-##    Codi  Especie Rumbo_avg Dist_avg N_avg CD_avg DiamIf3_avg DiamIf2_avg
-##    &lt;fct&gt; &lt;fct&gt;       &lt;dbl&gt;    &lt;dbl&gt; &lt;dbl&gt;  &lt;dbl&gt;       &lt;dbl&gt;       &lt;dbl&gt;
-##  1 0800~ 022         206      11.0   25.8   26.7        26.3        22.9
-##  2 0800~ 021         176.     10.4   20.8   38.8        39.5        35.5
-##  3 0800~ 022         193.      7.40  51.3   26.2        26.7        23.4
-##  4 0800~ 476          38       9.1   31.8   35          34          32.4
-##  5 0800~ 021         151      14.3   18.5   37.5        37.9        32.2
-##  6 0800~ 022         253.      7.83  63.0   31          29.6        23.6
-##  7 0800~ 021          28.5     8.44  31.8   22.5        24.3        17.7
-##  8 0800~ 071         121      11.7   20.7   37.5        38.0        34.2
-##  9 0800~ 243         118.     13.0   11.1   30          29.3        28.2
-## 10 0800~ 278         330.      5.25  70.0   20          20.1        18.8
-## # ... with 14,768 more rows, and 8 more variables: HeiIf3_avg &lt;dbl&gt;,
-## #   Rumbo_sd &lt;dbl&gt;, Dist_sd &lt;dbl&gt;, N_sd &lt;dbl&gt;, CD_sd &lt;dbl&gt;, DiamIf3_sd &lt;dbl&gt;,
-## #   DiamIf2_sd &lt;dbl&gt;, HeiIf3_sd &lt;dbl&gt;</code></pre>
+<pre><code>## # A tibble: 14,778 x 14
+## # Groups:   Code [7,713]
+##    Code  Species Direction_avg Dist_avg N_avg DBH_3_avg DBH_2_avg Height_3_avg
+##    &lt;fct&gt; &lt;fct&gt;           &lt;dbl&gt;    &lt;dbl&gt; &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;        &lt;dbl&gt;
+##  1 0800~ 022             206      11.0   25.8      26.3      22.9         10.5
+##  2 0800~ 021             176.     10.4   20.8      39.5      35.5         14.6
+##  3 0800~ 022             193.      7.40  51.3      26.7      23.4         13.4
+##  4 0800~ 476              38       9.1   31.8      34        32.4          9  
+##  5 0800~ 021             151      14.3   18.5      37.9      32.2         12.5
+##  6 0800~ 022             253.      7.83  63.0      29.6      23.6         10.2
+##  7 0800~ 021              28.5     8.44  31.8      24.3      17.7         11.8
+##  8 0800~ 071             121      11.7   20.7      38.0      34.2         12.6
+##  9 0800~ 243             118.     13.0   11.1      29.3      28.2         10  
+## 10 0800~ 278             330.      5.25  70.0      20.1      18.8          8.4
+## # ... with 14,768 more rows, and 6 more variables: Direction_sd &lt;dbl&gt;,
+## #   Dist_sd &lt;dbl&gt;, N_sd &lt;dbl&gt;, DBH_3_sd &lt;dbl&gt;, DBH_2_sd &lt;dbl&gt;,
+## #   Height_3_sd &lt;dbl&gt;</code></pre>
 <ol start="3" style="list-style-type: decimal">
 <li>With <code>summarise_at</code> we can limit the summary to certain variables, by name or using the select helpers (<code>starts_with</code>, <code>ends_with</code>, <code>one_of</code>).</li>
 </ol>
 <div class="sourceCode" id="cb14"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1"></a>trees <span class="op">%&gt;%</span></span>
-<span id="cb14-2"><a href="#cb14-2"></a><span class="st">    </span><span class="kw">group_by</span>(Codi, Especie) <span class="op">%&gt;%</span></span>
-<span id="cb14-3"><a href="#cb14-3"></a><span class="st">    </span><span class="kw">summarise_at</span>(<span class="kw">vars</span>(<span class="kw">starts_with</span>(<span class="st">&#39;Dia&#39;</span>)), mean)</span></code></pre></div>
+<span id="cb14-2"><a href="#cb14-2"></a><span class="st">    </span><span class="kw">group_by</span>(Code, Species) <span class="op">%&gt;%</span></span>
+<span id="cb14-3"><a href="#cb14-3"></a><span class="st">    </span><span class="kw">summarise_at</span>(<span class="kw">vars</span>(<span class="kw">starts_with</span>(<span class="st">&#39;DBH&#39;</span>)), mean)</span></code></pre></div>
 <pre><code>## # A tibble: 14,778 x 4
-## # Groups:   Codi [7,713]
-##    Codi   Especie DiamIf3 DiamIf2
-##    &lt;fct&gt;  &lt;fct&gt;     &lt;dbl&gt;   &lt;dbl&gt;
-##  1 080001 022        26.3    22.9
-##  2 080002 021        39.5    35.5
-##  3 080002 022        26.7    23.4
-##  4 080002 476        34      32.4
-##  5 080003 021        37.9    32.2
-##  6 080003 022        29.6    23.6
-##  7 080004 021        24.3    17.7
-##  8 080005 071        38.0    34.2
-##  9 080005 243        29.3    28.2
-## 10 080005 278        20.1    18.8
+## # Groups:   Code [7,713]
+##    Code   Species DBH_3 DBH_2
+##    &lt;fct&gt;  &lt;fct&gt;   &lt;dbl&gt; &lt;dbl&gt;
+##  1 080001 022      26.3  22.9
+##  2 080002 021      39.5  35.5
+##  3 080002 022      26.7  23.4
+##  4 080002 476      34    32.4
+##  5 080003 021      37.9  32.2
+##  6 080003 022      29.6  23.6
+##  7 080004 021      24.3  17.7
+##  8 080005 071      38.0  34.2
+##  9 080005 243      29.3  28.2
+## 10 080005 278      20.1  18.8
 ## # ... with 14,768 more rows</code></pre>
 <blockquote>
-<p>The variants <code>_at()</code>, <code>_if()</code>, and <code>_all()</code> can be applied to any of the main verbs of dplyr. So we have <code>mutate_at()</code>, <code>mutate-if()</code>, and <code>mutate_all()</code>, which can be also very useful and work similarly to the <code>summarise_*</code> family, but also <code>filter_at()</code>, <code>filter_if()</code>, <code>filter_all()</code>; <code>select_if()</code>, <code>select_at()</code>, and <code>select_all()</code>, or <code>arrange_if()</code>, <code>arrange_at()</code> and <code>arrange_all()</code>.We even have <code>group_by_at()</code> and <code>group_by_if()</code>. However, the behavior of these variants can be a little tricky, so check the <a href="https://dplyr.tidyverse.org/reference/scoped.html"><code>dplyr</code>website</a> to get a deeper understanding or their functioning.</p>
+<p>The variants <code>_at()</code>, <code>_if()</code>, and <code>_all()</code> can be applied to any of the main verbs of dplyr. So we have <code>mutate_at()</code>, <code>mutate_if()</code>, and <code>mutate_all()</code>, which can be also very useful and work similarly to the <code>summarise_*</code> family, but also <code>filter_at()</code>, <code>filter_if()</code>, <code>filter_all()</code>; <code>select_if()</code>, <code>select_at()</code>, and <code>select_all()</code>, or <code>arrange_if()</code>, <code>arrange_at()</code> and <code>arrange_all()</code>.We even have <code>group_by_at()</code> and <code>group_by_if()</code>. However, the behavior of these variants can be a little tricky, so check the <a href="https://dplyr.tidyverse.org/reference/scoped.html"><code>dplyr</code>website</a> to get a deeper understanding or their functioning.</p>
+</blockquote>
+<blockquote>
+<p><code>dplyr</code> has recently created a new adverb: <code>across</code>, that substtitutes all the scoped verbs (<code>_at()</code>, <code>_if()</code>, and <code>_all()</code>). We have not covered it here because it is very recent, and in most cases you will still find examples using those functions. However, you can check about it <a href="https://dplyr.tidyverse.org/reference/across.html">here</a>, and you are free to use it to solve the exercises/homework/exam if you find it more convenient.</p>
 </blockquote>
 <div class="exercise">
 <p><strong>EXERCISE 2:</strong> </br></p>
-<p>Use the scoped variants of <code>mutate</code> to:</p>
+<p>Use the scoped variants of <code>mutate</code> (or the <code>across</code> adverb) to:</p>
 <p>2.1. Log-transform those columns in trees containing numerical variables</p>
 <p>2.2. Calculate the maximum and minimum of all variables that represent a date in the <code>plots</code> data frame</p>
 </div>
@@ -1814,11 +1825,10 @@ $(document).ready(function () {
 <h1 number="3"><span class="header-section-number">3</span> Grouped <code>mutate</code>/<code>filter</code>: summary functions vs. window functions</h1>
 <p>We will commonly use groups (<code>group_by</code>) when summarising variables. These are called “summary functions”, because they reduce from <em>n</em> inputs to one input <img src="data:image/png;base64,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" width="500" /></p>
 <div class="sourceCode" id="cb16"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1"></a>trees <span class="op">%&gt;%</span><span class="st"> </span></span>
-<span id="cb16-2"><a href="#cb16-2"></a><span class="st">    </span><span class="kw">group_by</span>(Especie) <span class="op">%&gt;%</span><span class="st"> </span></span>
-<span id="cb16-3"><a href="#cb16-3"></a><span class="st">    </span><span class="kw">summarise</span>(<span class="dt">mean =</span> <span class="kw">mean</span>(DiamIf3))</span></code></pre></div>
-<pre><code>## `summarise()` ungrouping output (override with `.groups` argument)</code></pre>
+<span id="cb16-2"><a href="#cb16-2"></a><span class="st">    </span><span class="kw">group_by</span>(Species) <span class="op">%&gt;%</span><span class="st"> </span></span>
+<span id="cb16-3"><a href="#cb16-3"></a><span class="st">    </span><span class="kw">summarise</span>(<span class="dt">mean =</span> <span class="kw">mean</span>(DBH_<span class="dv">3</span>))</span></code></pre></div>
 <pre><code>## # A tibble: 91 x 2
-##    Especie  mean
+##    Species  mean
 ##    &lt;fct&gt;   &lt;dbl&gt;
 ##  1 004      9.22
 ##  2 008     11.7 
@@ -1834,60 +1844,60 @@ $(document).ready(function () {
 <p>Sometimes, however, we may be interested in calculating new variables by group, but without reducing the dimensions. These are called “window functions”, because the <em>n</em> inputs always give <em>n</em> outputs.</p>
 <p><img src="data:image/png;base64,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" width="500" /></p>
 <p>For example, we could add a new variable that is the mean diameter of each species:</p>
-<div class="sourceCode" id="cb19"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1"></a>trees <span class="op">%&gt;%</span></span>
-<span id="cb19-2"><a href="#cb19-2"></a><span class="st">  </span><span class="kw">group_by</span>(Especie) <span class="op">%&gt;%</span></span>
-<span id="cb19-3"><a href="#cb19-3"></a><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">avg_d =</span> <span class="kw">mean</span>(DiamIf3))</span></code></pre></div>
+<div class="sourceCode" id="cb18"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1"></a>trees <span class="op">%&gt;%</span></span>
+<span id="cb18-2"><a href="#cb18-2"></a><span class="st">  </span><span class="kw">group_by</span>(Species) <span class="op">%&gt;%</span></span>
+<span id="cb18-3"><a href="#cb18-3"></a><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">avg_d =</span> <span class="kw">mean</span>(DBH_<span class="dv">3</span>))</span></code></pre></div>
 <p>This function calculates the mean diameter per species but, instead of collapsing our dataframe, adds one column but keeps the number of rows. This can be interesting if we want to calculate, for example, the differences between individual observations and a given value (mean, sd, IQR), to detect outliers:</p>
-<div class="sourceCode" id="cb20"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1"></a>trees <span class="op">%&gt;%</span></span>
-<span id="cb20-2"><a href="#cb20-2"></a><span class="st">  </span><span class="kw">group_by</span>(Especie) <span class="op">%&gt;%</span></span>
-<span id="cb20-3"><a href="#cb20-3"></a><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">std_diam =</span> DiamIf3 <span class="op">-</span><span class="st"> </span><span class="kw">mean</span>(DiamIf3))</span></code></pre></div>
+<div class="sourceCode" id="cb19"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1"></a>trees <span class="op">%&gt;%</span></span>
+<span id="cb19-2"><a href="#cb19-2"></a><span class="st">  </span><span class="kw">group_by</span>(Species) <span class="op">%&gt;%</span></span>
+<span id="cb19-3"><a href="#cb19-3"></a><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">std_diam =</span> DBH_<span class="dv">3</span> <span class="op">-</span><span class="st"> </span><span class="kw">mean</span>(DBH_<span class="dv">3</span>))</span></code></pre></div>
 <div class="exercise">
 <p><strong>EXERCISE 3</strong></br></p>
-<p>3.1 Identify those trees that grew most as compared to the average in that plot <br> .font80[(Hint: calculate growth, <em>then</em> mean growth by plot, and <em>then</em> the difference)]</p>
+<p>3.1 Identify those trees that grew most as compared to the average in that plot <br>Hint: first calculate growth, <em>then</em> mean growth by plot, and <em>then</em> the difference)]</p>
 <p>3.2 Identify those plots where a species grows much more than the average for the species</p>
 <p><strong>Extra (in case you get bored):</strong></p>
-<p>3.3 Select IFN plots with pure Pinus nigra stands (Especie = 025). Note: we consider a forest to be monospecific when &gt; 80% in BA corresponds to a single species</p>
+<p>3.3 Select IFN plots with monospecific Pinus nigra stands (Especie = 025). Note: we consider a forest to be monospecific when &gt; 80% in BA corresponds to a single species</p>
 </div>
 <p>Similarly, <code>group_by()</code>can also be used combined with <code>filter()</code> to retain, for each group, only those observations that accomplish a certain condition:</p>
-<div class="sourceCode" id="cb21"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1"></a>trees <span class="op">%&gt;%</span></span>
-<span id="cb21-2"><a href="#cb21-2"></a><span class="st">    </span><span class="kw">group_by</span>(Codi) <span class="op">%&gt;%</span></span>
-<span id="cb21-3"><a href="#cb21-3"></a><span class="st">    </span><span class="kw">filter</span>(<span class="kw">n</span>() <span class="op">&gt;</span><span class="st"> </span><span class="dv">20</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb20"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1"></a>trees <span class="op">%&gt;%</span></span>
+<span id="cb20-2"><a href="#cb20-2"></a><span class="st">    </span><span class="kw">group_by</span>(Code) <span class="op">%&gt;%</span></span>
+<span id="cb20-3"><a href="#cb20-3"></a><span class="st">    </span><span class="kw">filter</span>(<span class="kw">n</span>() <span class="op">&gt;</span><span class="st"> </span><span class="dv">20</span>)</span></code></pre></div>
 <pre><code>## # A tibble: 54,093 x 10
-## # Groups:   Codi [1,873]
-##    Codi   Provincia Especie Rumbo  Dist      N    CD DiamIf3 DiamIf2 HeiIf3
-##    &lt;fct&gt;  &lt;chr&gt;     &lt;fct&gt;   &lt;dbl&gt; &lt;dbl&gt;  &lt;dbl&gt; &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt;  &lt;dbl&gt;
-##  1 080006 08        021        19 11.2   14.1     35    34.0    30.9  13   
-##  2 080007 08        021        32 12     14.1     35    33.1    28.2  10   
-##  3 080013 08        022        44  2.7  127.      15    15.1    12.6   9.5 
-##  4 080015 08        021         9  1    127.      30    28.1    25.1  15.2 
-##  5 080016 08        071         9 26.9    5.09    45    46.0    45    19   
-##  6 080018 08        243        25  7.09  31.8     20    20.3    19.6   9.5 
-##  7 080020 08        021         6  8.19  31.8     30    27.8    26.2  10.5 
-##  8 080021 08        021        43  4.59 127.      20    20.5    13.3   8.19
-##  9 080023 08        022        19  3.5  127.      25    24.4    24.0  15.5 
-## 10 080035 08        021        11  5.3   31.8     25    22.8    18.6  11   
+## # Groups:   Code [1,873]
+##    Code   Province Species Direction  Dist      N DC    DBH_3 DBH_2 Height_3
+##    &lt;fct&gt;  &lt;fct&gt;    &lt;fct&gt;       &lt;dbl&gt; &lt;dbl&gt;  &lt;dbl&gt; &lt;fct&gt; &lt;dbl&gt; &lt;dbl&gt;    &lt;dbl&gt;
+##  1 080006 08       021            19 11.2   14.1  35     34.0  30.9    13   
+##  2 080007 08       021            32 12     14.1  35     33.1  28.2    10   
+##  3 080013 08       022            44  2.7  127.   15     15.1  12.6     9.5 
+##  4 080015 08       021             9  1    127.   30     28.1  25.1    15.2 
+##  5 080016 08       071             9 26.9    5.09 45     46.0  45      19   
+##  6 080018 08       243            25  7.09  31.8  20     20.3  19.6     9.5 
+##  7 080020 08       021             6  8.19  31.8  30     27.8  26.2    10.5 
+##  8 080021 08       021            43  4.59 127.   20     20.5  13.3     8.19
+##  9 080023 08       022            19  3.5  127.   25     24.4  24.0    15.5 
+## 10 080035 08       021            11  5.3   31.8  25     22.8  18.6    11   
 ## # ... with 54,083 more rows</code></pre>
-<p>This will return all the observation from those plots where there are at least 20 trees measured.</p>
+<p>This will return all the observation from those plots where there are at least 20 trees measured, but without collapsing the data (this only happens when we ask <code>dplyr</code>to <code>summarise</code>).</p>
 <p>When doing grouped mutates, two functions that become interesting are <code>lead()</code> and <code>lag()</code>, which allow you to access the previous and next values in a vector, making it easy to compute differences and trends.</p>
 </div>
 <div id="conditional-transformations" class="section level1" number="4">
 <h1 number="4"><span class="header-section-number">4</span> Conditional transformations</h1>
 <p>Sometimes we may be interested in calculating new variables, but conditioned to certain criteria. We can do this with the <code>ìf_else()</code> operator. <code>if_else()</code>allows to implement a conditional structure in which we determine the output value when the condition is met, and the value otherwise. For instance, imagine we want to define the name of the species for those trees that are <em>Pinus sylvestris</em> (code 021) but we are not interested in the others</p>
-<div class="sourceCode" id="cb23"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1"></a>trees <span class="op">%&gt;%</span></span>
-<span id="cb23-2"><a href="#cb23-2"></a><span class="st">    </span><span class="kw">mutate</span>(<span class="dt">sp_name =</span> <span class="kw">if_else</span>(Especie <span class="op">==</span><span class="st"> &quot;021&quot;</span>, <span class="st">&quot;Pinus sylvestris&quot;</span>, <span class="st">&quot;Other&quot;</span>))</span></code></pre></div>
+<div class="sourceCode" id="cb22"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1"></a>trees <span class="op">%&gt;%</span></span>
+<span id="cb22-2"><a href="#cb22-2"></a><span class="st">    </span><span class="kw">mutate</span>(<span class="dt">sp_name =</span> <span class="kw">if_else</span>(Species <span class="op">==</span><span class="st"> &quot;021&quot;</span>, <span class="st">&quot;Pinus sylvestris&quot;</span>, <span class="st">&quot;Other&quot;</span>))</span></code></pre></div>
 <pre><code>## # A tibble: 111,756 x 11
-##    Codi  Provincia Especie Rumbo  Dist      N    CD DiamIf3 DiamIf2 HeiIf3
-##    &lt;fct&gt; &lt;chr&gt;     &lt;fct&gt;   &lt;dbl&gt; &lt;dbl&gt;  &lt;dbl&gt; &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt;  &lt;dbl&gt;
-##  1 0800~ 08        022         7  8.3   31.8     20    20.3    18.9    9  
-##  2 0800~ 08        476        38  9.1   31.8     35    34      32.4    9  
-##  3 0800~ 08        021        25  7     31.8     25    24.8    17.6   11  
-##  4 0800~ 08        021        28  8.89  31.8     15    16.8    12.6    9.5
-##  5 0800~ 08        021        19 11.2   14.1     35    34.0    30.9   13  
-##  6 0800~ 08        021        32 12     14.1     35    33.1    28.2   10  
-##  7 0800~ 08        243        40  7.8   31.8     15    15      13.2    6  
-##  8 0800~ 08        045        16  5.09  31.8     20    17.5    15.3    7  
-##  9 0800~ 08        243        47 26.9    5.09    65    67.4    66.8   16.5
-## 10 0800~ 08        022        44  2.7  127.      15    15.1    12.6    9.5
+##    Code  Province Species Direction  Dist      N DC    DBH_3 DBH_2 Height_3
+##    &lt;fct&gt; &lt;fct&gt;    &lt;fct&gt;       &lt;dbl&gt; &lt;dbl&gt;  &lt;dbl&gt; &lt;fct&gt; &lt;dbl&gt; &lt;dbl&gt;    &lt;dbl&gt;
+##  1 0800~ 08       022             7  8.3   31.8  20     20.3  18.9      9  
+##  2 0800~ 08       476            38  9.1   31.8  35     34    32.4      9  
+##  3 0800~ 08       021            25  7     31.8  25     24.8  17.6     11  
+##  4 0800~ 08       021            28  8.89  31.8  15     16.8  12.6      9.5
+##  5 0800~ 08       021            19 11.2   14.1  35     34.0  30.9     13  
+##  6 0800~ 08       021            32 12     14.1  35     33.1  28.2     10  
+##  7 0800~ 08       243            40  7.8   31.8  15     15    13.2      6  
+##  8 0800~ 08       045            16  5.09  31.8  20     17.5  15.3      7  
+##  9 0800~ 08       243            47 26.9    5.09 65     67.4  66.8     16.5
+## 10 0800~ 08       022            44  2.7  127.   15     15.1  12.6      9.5
 ## # ... with 111,746 more rows, and 1 more variable: sp_name &lt;chr&gt;</code></pre>
 <div class="exercise">
 <p><strong>EXERCISE 4</strong> </br></p>
@@ -1895,27 +1905,27 @@ $(document).ready(function () {
 </div>
 <p>If we want to create several different outputs, we could combine several <code>ìf_else()</code> statements, but the code can get difficult to read easily. An alternative is to use the function <code>case_when()</code>. This function allows you to vectorise multiple <code>if_else()</code> statements. It is an R equivalent of the SQL CASE WHEN statement. <code>case_when()</code> has a more particular notation, since it requires a sequence of two-sided formulas. The left hand side (LHS) determines which values match this case. The right hand side (RHS) provides the replacement value. If no cases match, NA is returned.</p>
 <p>For instance, following the previous example, let’s assign its name to <em>Pinus sylvestris</em> (021), <em>Pinus nigra</em> (025), <em>Pinus uncinata</em> (022), and <em>Pinus halepensis</em> (024)</p>
-<div class="sourceCode" id="cb25"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1"></a>trees <span class="op">%&gt;%</span></span>
-<span id="cb25-2"><a href="#cb25-2"></a><span class="st">    </span><span class="kw">mutate</span>(<span class="dt">sp_name =</span> <span class="kw">case_when</span>(</span>
-<span id="cb25-3"><a href="#cb25-3"></a>        Especie <span class="op">==</span><span class="st"> &quot;021&quot;</span> <span class="op">~</span><span class="st"> &quot;Pinus sylvestris&quot;</span>,</span>
-<span id="cb25-4"><a href="#cb25-4"></a>        Especie <span class="op">==</span><span class="st"> &quot;025&quot;</span> <span class="op">~</span><span class="st"> &quot;Pinus nigra&quot;</span>,</span>
-<span id="cb25-5"><a href="#cb25-5"></a>        Especie <span class="op">==</span><span class="st"> &quot;022&quot;</span> <span class="op">~</span><span class="st"> &quot;Pinus uncinata&quot;</span>,</span>
-<span id="cb25-6"><a href="#cb25-6"></a>        Especie <span class="op">==</span><span class="st"> &quot;024&quot;</span> <span class="op">~</span><span class="st"> &quot;Pinus halepensis&quot;</span>,</span>
-<span id="cb25-7"><a href="#cb25-7"></a>        <span class="ot">TRUE</span>             <span class="op">~</span><span class="st"> &quot;Other&quot;</span> )      <span class="co"># This last statement is needed to indicate what to do when none of the conditions is met</span></span>
-<span id="cb25-8"><a href="#cb25-8"></a>    )</span></code></pre></div>
+<div class="sourceCode" id="cb24"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1"></a>trees <span class="op">%&gt;%</span></span>
+<span id="cb24-2"><a href="#cb24-2"></a><span class="st">    </span><span class="kw">mutate</span>(<span class="dt">sp_name =</span> <span class="kw">case_when</span>(</span>
+<span id="cb24-3"><a href="#cb24-3"></a>        Species <span class="op">==</span><span class="st"> &quot;021&quot;</span> <span class="op">~</span><span class="st"> &quot;Pinus sylvestris&quot;</span>,</span>
+<span id="cb24-4"><a href="#cb24-4"></a>        Species <span class="op">==</span><span class="st"> &quot;025&quot;</span> <span class="op">~</span><span class="st"> &quot;Pinus nigra&quot;</span>,</span>
+<span id="cb24-5"><a href="#cb24-5"></a>        Species <span class="op">==</span><span class="st"> &quot;022&quot;</span> <span class="op">~</span><span class="st"> &quot;Pinus uncinata&quot;</span>,</span>
+<span id="cb24-6"><a href="#cb24-6"></a>        Species <span class="op">==</span><span class="st"> &quot;024&quot;</span> <span class="op">~</span><span class="st"> &quot;Pinus halepensis&quot;</span>,</span>
+<span id="cb24-7"><a href="#cb24-7"></a>        <span class="ot">TRUE</span>             <span class="op">~</span><span class="st"> &quot;Other&quot;</span> )      <span class="co"># This last statement is needed to indicate what to do when none of the conditions is met</span></span>
+<span id="cb24-8"><a href="#cb24-8"></a>    )</span></code></pre></div>
 <pre><code>## # A tibble: 111,756 x 11
-##    Codi  Provincia Especie Rumbo  Dist      N    CD DiamIf3 DiamIf2 HeiIf3
-##    &lt;fct&gt; &lt;chr&gt;     &lt;fct&gt;   &lt;dbl&gt; &lt;dbl&gt;  &lt;dbl&gt; &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt;  &lt;dbl&gt;
-##  1 0800~ 08        022         7  8.3   31.8     20    20.3    18.9    9  
-##  2 0800~ 08        476        38  9.1   31.8     35    34      32.4    9  
-##  3 0800~ 08        021        25  7     31.8     25    24.8    17.6   11  
-##  4 0800~ 08        021        28  8.89  31.8     15    16.8    12.6    9.5
-##  5 0800~ 08        021        19 11.2   14.1     35    34.0    30.9   13  
-##  6 0800~ 08        021        32 12     14.1     35    33.1    28.2   10  
-##  7 0800~ 08        243        40  7.8   31.8     15    15      13.2    6  
-##  8 0800~ 08        045        16  5.09  31.8     20    17.5    15.3    7  
-##  9 0800~ 08        243        47 26.9    5.09    65    67.4    66.8   16.5
-## 10 0800~ 08        022        44  2.7  127.      15    15.1    12.6    9.5
+##    Code  Province Species Direction  Dist      N DC    DBH_3 DBH_2 Height_3
+##    &lt;fct&gt; &lt;fct&gt;    &lt;fct&gt;       &lt;dbl&gt; &lt;dbl&gt;  &lt;dbl&gt; &lt;fct&gt; &lt;dbl&gt; &lt;dbl&gt;    &lt;dbl&gt;
+##  1 0800~ 08       022             7  8.3   31.8  20     20.3  18.9      9  
+##  2 0800~ 08       476            38  9.1   31.8  35     34    32.4      9  
+##  3 0800~ 08       021            25  7     31.8  25     24.8  17.6     11  
+##  4 0800~ 08       021            28  8.89  31.8  15     16.8  12.6      9.5
+##  5 0800~ 08       021            19 11.2   14.1  35     34.0  30.9     13  
+##  6 0800~ 08       021            32 12     14.1  35     33.1  28.2     10  
+##  7 0800~ 08       243            40  7.8   31.8  15     15    13.2      6  
+##  8 0800~ 08       045            16  5.09  31.8  20     17.5  15.3      7  
+##  9 0800~ 08       243            47 26.9    5.09 65     67.4  66.8     16.5
+## 10 0800~ 08       022            44  2.7  127.   15     15.1  12.6      9.5
 ## # ... with 111,746 more rows, and 1 more variable: sp_name &lt;chr&gt;</code></pre>
 <div class="exercise">
 <p><strong>EXERCISE 5</strong> </br></p>

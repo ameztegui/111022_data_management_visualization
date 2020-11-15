@@ -128,6 +128,11 @@ This data frame contains information on each of the plots measured in the Nation
 
 -   **`PhDate`** (date): date at which pH was measured
 
+-   **`Dom_sp_IFN2`** (Factor): dominant species in the plot in the SNFI2
+
+-   **`Dom_sp_IFN3`** (Factor):dominant species in the plot in the SNFI3
+
+
 **TREES**
 
 The `trees` data frame contains information on each of the trees measured in the National Forest Inventory. You can see that it has many more rows than `plots`. This are the variables it contains:

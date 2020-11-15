@@ -20,14 +20,13 @@ options(
   show.signif.stars = FALSE,     # for regression output
   digits = 2
   )
-#knitr::opts_chunk$set(eval = FALSE)
-load('data/data_IFN.Rdata')
+
 ```
 
 ```{r, echo=FALSE, message=FALSE, warning=FALSE}
 library(tidyverse)
-load('data/data_IFN.Rdata')
-options(width = 85)
+
+load("data/data_SNFI3.Rdata")
 ```
 
 # Introduction to factors
@@ -164,7 +163,7 @@ cut_interval(numeric_var, n = 4, labels = c("Small", "Medium", "Big", "Bigger"))
 
 **EXERCISE 2** </br>
 
-Using the `cut_*()`family of functions, create two new variables in the `trees` data frame: one that groups diameters into classes (as does the variable `CD`), and another one that groups heights into classes.
+Using the `cut_*()`family of functions, create two new variables in the `trees` data frame: one that groups diameters into classes (as does the variable `DC`), and another one that groups heights into classes. </br>
 Hint: of course you can use the `cut_*()` functions inside a `mutate()` order.
 
 </div>
@@ -173,29 +172,37 @@ Hint: of course you can use the `cut_*()` functions inside a `mutate()` order.
 
 It’s often useful to change the order of the factor levels in a visualisation. For example, imagine you want to explore the mean height of several tree species in Lleida:
 
-```{r}
+```{r, message = F}
 
 
 mean_height <- trees %>%
-    filter(Provincia == "25") %>%
-    group_by(Especie) %>%
-    summarise(height = mean(HeiIf3, na.rm = TRUE))
-
-ggplot(mean_height, aes(height, Especie)) + geom_point() 
+    filter(Province == "25") %>%
+    group_by(Species) %>%
+    summarise(height = mean(Height_3, na.rm = TRUE))
 ```
 
-It is difficult to interpret this plot because there’s no overall pattern. We can improve it by reordering the levels of `Especie` using `fct_reorder()`. `fct_reorder()` takes three arguments:
+We can plot this information using ggplot (don't worry, you will learn about ggplot in the second part of the course)
+```{r}
+
+ggplot(mean_height, aes(height, Species)) + 
+  geom_point() 
+```
+
+It is difficult to interpret this plot because there’s no overall pattern. We can improve it by reordering the levels of `Species` using `fct_reorder()`. Beware that, since we want to modify one of the variables in the data frame, we will use `fct_reorder()` within a `mutate` function. `fct_reorder()` takes two arguments:
 
 - `f`, the factor whose levels you want to modify.
 - `x`, a numeric vector that you want to use to reorder the levels.
-- Optionally, `fun`, a function that’s used if there are multiple values of `x` for each value of `f`. The default value is median.
+
 
 ```{r}
 
 mean_height_ordered <- mean_height %>%
-    mutate(Especie = fct_reorder(Especie, height)) 
+    mutate(Species = fct_reorder(Species, height))   # we will substitute Species with the new values, ordered based on height
+```
 
-ggplot(mean_height_ordered, aes(height, Especie)) +
+If we do the same plot now:
+````{r}
+ggplot(mean_height_ordered, aes(height, Species)) +
     geom_point()
 ```
 
@@ -203,16 +210,18 @@ It is now much easier to know that the species with the greatest mean height in 
 
 But we may also want to know the mean number of tree species acrosss diameter classes, for example (i.e. how many tree species are in Catalonia with diameter between 10 and 15 cm, between 15 and 20 cm, and so on)
 
-```{r}
+```{r, message = F}
 
 species_by_CD <- trees %>%
-    mutate(CD_class = as.factor(CD)) %>%           # Since CD is not a factor, we must convert it using as.factor()
+    mutate(CD_class = as.factor(DC)) %>%           # Since DC is not a factor, we must convert it using as.factor()
     group_by(CD_class) %>%                         # then, for each CD_class
-    summarise(n_species = n_distinct(Especie))     # we calculate the number of species
+    summarise(n_species = n_distinct(Species))  # we calculate the number of species
 
-ggplot(species_by_CD) +
-    geom_point(aes(fct_reorder(CD_class, n_species),
-                   n_species))
+
+species_by_CD %>%  # we calculate the number of species
+    mutate(CD_class = fct_reorder(CD_class, n_species)) %>%
+    ggplot() +
+    geom_point(aes(CD_class, n_species))
 
 ```
 
@@ -230,23 +239,23 @@ Finally, for bar plots, which represent the number of cases of a given factor, y
 ```{r}
 # Without ordering
 trees %>%
-    filter(Provincia == "25") %>%
+    filter(Province == "25") %>%
     ggplot() +
-    geom_bar(aes(Especie))
+    geom_bar(aes(Species))
 
 # In decreasing order
 trees %>%
-    filter(Provincia == "25") %>%
-    mutate(Especie = fct_infreq(Especie)) %>%
+    filter(Province == "25") %>%
+    mutate(Species = fct_infreq(Species)) %>%
     ggplot() +
-    geom_bar(aes(Especie))
+    geom_bar(aes(Species))
 
 # In increasing order
 trees %>%
-    filter(Provincia == "25") %>%
-    mutate(Especie = fct_rev(fct_infreq(Especie))) %>%
+    filter(Province == "25") %>%
+    mutate(Species = fct_rev(fct_infreq(Species))) %>%
     ggplot() +
-    geom_bar(aes(Especie))
+    geom_bar(aes(Species))
 
 ```
 
@@ -254,10 +263,9 @@ trees %>%
 
 **EXERCISE 3: **</br>
 
-Use the studied functions to produce two **nice** bar charts with the number of plots in which each species dominates in IFN2 and IFN3 **for the province of Lleida**. You can find the dominant species in each plot in the `plots` dataframe, under the variables `Dom_sp2` and `Dom_sp3`. Is there any change in the ranking within the 10 most common species?
+Use the studied functions to produce two nice bar charts with the number of plots in which each species dominates in IFN2 and IFN3 **for the province of Lleida**. You can find the dominant species in each plot in the `plots` dataframe, under the variables `Dom_sp_IFN2` and `Dom_sp_IFN3`. Is there any change in the ranking within the 10 most common species? </br>
+Note: you should be able to produce the charts by editing slightly the code we have used for the examples. If you don't succeed, you can try googling for "bar charts with ggplot", or ask us if you still have problems.
 </div>
-
-
 
 
 # Modifying factor levels
@@ -267,7 +275,7 @@ More powerful than changing the orders of the levels is changing their values. T
 ```{r}
 
 trees %>% 
-    mutate(Prov_name = fct_recode(Provincia,
+    mutate(Prov_name = fct_recode(Province,
                                  "Barcelona"  = "08",
                                  "Girona" = "17",
                                  "Lleida" = "25",
@@ -281,7 +289,7 @@ trees %>%
 ```{r}
 
 trees %>% 
-    mutate(Prov_name = fct_recode(Provincia,
+    mutate(Prov_name = fct_recode(Province,
                                  "Girona" = "17",
                                  "Lleida" = "25555")) %>%
     count(Prov_name)
@@ -295,7 +303,7 @@ To combine groups, you can assign multiple old levels to the same new level. Let
 ```{r}
 
 trees %>% 
-    mutate(Prov_name2 = fct_recode(Provincia,
+    mutate(Prov_name2 = fct_recode(Province,
                                  "Barcelona" = "08",
                                  "Lleida" = "25",
                                  "Other" = "17",
@@ -309,7 +317,7 @@ If you want to collapse a lot of levels, `fct_collapse()` is a useful variant of
 
 ```{r}
 trees %>%
-  mutate(Pinus_Quercus = fct_collapse(Especie,
+  mutate(Pinus_Quercus = fct_collapse(Species,
     Pinus =   c("021", "022", "023", "024", "025", "026", "027", "028", "029"),
     Quercus = c("041", "042", "043", "044", "045", "046", "047", "048", "049"),
     other_level = "Other_sps")) %>%      # We specify the name of the levels not specified with `other_level`
@@ -322,7 +330,7 @@ Sometimes you just want to lump together all the small groups to make a plot or 
 
 ```{r}
 trees %>% 
-    mutate(Main_sps = fct_lump_min(Especie, 10000))%>%
+    mutate(Main_sps = fct_lump_min(Species, 10000))%>%
     count(Main_sps)
                
 ```
@@ -331,7 +339,7 @@ trees %>%
 
 ```{r}
 trees %>%
-  mutate(Main_sps = fct_lump_n(Especie, 8)) %>%
+  mutate(Main_sps = fct_lump_n(Species, 8)) %>%
   count(Main_sps)
 ```
 
@@ -339,7 +347,7 @@ trees %>%
 
 **EXERCISE 4**</br>
 
-If we want to represent the number of plots in which each species dominates as we did in exercise 2, but for all Catalonia, there are so many species that the chart results unreadable. So use the functions we just learned to reduce the number of levels in the `Dom_sp2` and `Dom_sp3` variables. Then make a bar plot (use the code above) to show the 5 main dominant species in IFN2 and the 5 main dominant species in IFN3. Are there any differences between both inventories?
+If we want to represent the number of plots in which each species dominates as we did in exercise3, but for all Catalonia, there are so many species that the chart results unreadable. So use the functions we just learned to reduce the number of levels in the `Dom_sp_IFN2` and `Dom_sp_IFN3` variables. Then make a bar plot (use the code above) to show the 5 main dominant species in IFN2 and the 5 main dominant species in IFN3. Are there any differences between both inventories?
 
 </div>
 
