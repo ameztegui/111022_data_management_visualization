@@ -42,7 +42,7 @@ The variables used to connect each pair of tables are called **keys**. A key is 
 
 There are two types of keys:
 
--   A **primary key** uniquely identifies an observation in its own table. For example, `plots$Code` is a primary key because it uniquely identifies each IFN plot in the `plots` table.
+-   A **primary key** uniquely identifies an observation in its own table. For example, `plots$Code` is a primary key because it uniquely identifies each SNFI plot in the `plots` table.
 
 -   A **foreign key** uniquely identifies an observation in another table. For example, `trees$Code` is a foreign key because it appears in the `trees` table where it matches each tree to a unique plot.
 
@@ -151,7 +151,7 @@ In this specific case, since there is no observation in "coordinates" without a 
 
 1.1 It is very hard to remember the coding of each province, so it would be more convenient to have the real name in our `plots` data frame. Make a join to include the province name without losing any information, and then filter to retain only those plots in Girona
 
-1.2 In the `leaf` table we have the leaf biomass and leaf carbon of each plot according to IFN3, but to which dominant species does each plot correspond? Make a join to find out, and show the dominant species for the 5 plots with highest leaf biomass.
+1.2 In the `leaf` table we have the leaf biomass and leaf carbon of each plot according to SNFI3, but to which dominant species does each plot correspond? Make a join to find out, and show the dominant species for the 5 plots with highest leaf biomass.
 :::
 
 ## Duplicate keys
@@ -254,7 +254,7 @@ The list of species names includes 190 species, but not all of them are present 
 
 3.1 The species which are actually present in Catalonia
 
-3.2 Shorten the list of species names to include only those that are **dominant** in any of the plots (for IFN3). How many are there?
+3.2 Shorten the list of species names to include only those that are **dominant** in any of the plots (for SNFI33). How many are there?
 
 3.3 Combine the results of 3.1 and 3.2 to find those species that are present in the inventory (at least one tree has been measured), but are not dominant in any plot
 :::

@@ -1660,7 +1660,7 @@ $(document).ready(function () {
 <p>The variables used to connect each pair of tables are called <strong>keys</strong>. A key is a variable (or set of variables) that uniquely identifies an observation. In simple cases, a single variable is sufficient to identify an observation. For example, each plot is uniquely identified by its <code>Code</code>. In other cases, multiple variables may be needed. For example, to identify an observation in <code>trees</code> you need four variables: <code>Code</code>, <code>Species</code>, <code>Direction</code>, and <code>Dist</code> (i.e. the plot, species, direction from plot center and distance to plot center).</p>
 <p>There are two types of keys:</p>
 <ul>
-<li><p>A <strong>primary key</strong> uniquely identifies an observation in its own table. For example, <code>plots$Code</code> is a primary key because it uniquely identifies each IFN plot in the <code>plots</code> table.</p></li>
+<li><p>A <strong>primary key</strong> uniquely identifies an observation in its own table. For example, <code>plots$Code</code> is a primary key because it uniquely identifies each SNFI plot in the <code>plots</code> table.</p></li>
 <li><p>A <strong>foreign key</strong> uniquely identifies an observation in another table. For example, <code>trees$Code</code> is a foreign key because it appears in the <code>trees</code> table where it matches each tree to a unique plot.</p></li>
 </ul>
 <p>A variable can be both a primary key and a foreign key, as we have seen with <code>Code</code>. Once you’ve identified the primary keys in your tables, it’s good practice to verify that they do indeed uniquely identify each observation. One way to do that is to <code>count()</code> the primary keys and look for entries where <code>n</code> is greater than one:</p>
@@ -1841,7 +1841,7 @@ $(document).ready(function () {
 <div class="exercise">
 <p><strong>EXERCISE 1</strong> </br></p>
 <p>1.1 It is very hard to remember the coding of each province, so it would be more convenient to have the real name in our <code>plots</code> data frame. Make a join to include the province name without losing any information, and then filter to retain only those plots in Girona</p>
-<p>1.2 In the <code>leaf</code> table we have the leaf biomass and leaf carbon of each plot according to IFN3, but to which dominant species does each plot correspond? Make a join to find out, and show the dominant species for the 5 plots with highest leaf biomass.</p>
+<p>1.2 In the <code>leaf</code> table we have the leaf biomass and leaf carbon of each plot according to SNFI3, but to which dominant species does each plot correspond? Make a join to find out, and show the dominant species for the 5 plots with highest leaf biomass.</p>
 </div>
 </div>
 <div id="duplicate-keys" class="section level2">
@@ -1990,7 +1990,7 @@ $(document).ready(function () {
 <p><strong>EXERCISE 3</strong> </br></p>
 <p>The list of species names includes 190 species, but not all of them are present in Catalonia (i.e. at least one tree has been measured). Using filtering joins find:</p>
 <p>3.1 The species which are actually present in Catalonia</p>
-<p>3.2 Shorten the list of species names to include only those that are <strong>dominant</strong> in any of the plots (for IFN3). How many are there?</p>
+<p>3.2 Shorten the list of species names to include only those that are <strong>dominant</strong> in any of the plots (for SNFI33). How many are there?</p>
 <p>3.3 Combine the results of 3.1 and 3.2 to find those species that are present in the inventory (at least one tree has been measured), but are not dominant in any plot</p>
 </div>
 </div>
