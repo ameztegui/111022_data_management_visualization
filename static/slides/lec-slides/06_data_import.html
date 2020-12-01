@@ -5,6 +5,7 @@
     <meta charset="utf-8" />
     <meta name="author" content="Aitor Ameztegui" />
     <meta name="author" content="Marcos Rodrigues" />
+    <script src="libs/header-attrs/header-attrs.js"></script>
     <link href="libs/font-awesome/css/all.css" rel="stylesheet" />
     <link href="libs/font-awesome/css/v4-shims.css" rel="stylesheet" />
     <link rel="stylesheet" href="slides.css" type="text/css" />
@@ -193,16 +194,16 @@ cut_number(numeric_var, n = 5)
 ```
 
 ```
-##  [1] (35.7,48.9] (57.5,65.8] (48.9,57.5] [15,35.7]   (65.8,86.8] (57.5,65.8]
-##  [7] (65.8,86.8] (35.7,48.9] (48.9,57.5] (65.8,86.8] (48.9,57.5] (35.7,48.9]
-## [13] (57.5,65.8] (48.9,57.5] (35.7,48.9] (57.5,65.8] (48.9,57.5] (48.9,57.5]
-## [19] [15,35.7]   [15,35.7]   (65.8,86.8] (35.7,48.9] (65.8,86.8] (48.9,57.5]
-## [25] [15,35.7]   [15,35.7]   (48.9,57.5] [15,35.7]   (65.8,86.8] [15,35.7]  
-## [31] (65.8,86.8] (57.5,65.8] (48.9,57.5] (35.7,48.9] (57.5,65.8] (48.9,57.5]
-## [37] (35.7,48.9] (65.8,86.8] (35.7,48.9] (57.5,65.8] (65.8,86.8] (35.7,48.9]
-## [43] [15,35.7]   (57.5,65.8] (57.5,65.8] (57.5,65.8] (35.7,48.9] (65.8,86.8]
-## [49] [15,35.7]   [15,35.7]  
-## Levels: [15,35.7] (35.7,48.9] (48.9,57.5] (57.5,65.8] (65.8,86.8]
+##  [1] (39.1,47.2] (56.6,66.5] [2.33,39.1] (66.5,88.7] [2.33,39.1] (39.1,47.2]
+##  [7] (66.5,88.7] (56.6,66.5] (66.5,88.7] (66.5,88.7] (39.1,47.2] (39.1,47.2]
+## [13] (66.5,88.7] (39.1,47.2] [2.33,39.1] (56.6,66.5] (66.5,88.7] [2.33,39.1]
+## [19] (56.6,66.5] (47.2,56.6] (39.1,47.2] (56.6,66.5] (47.2,56.6] (39.1,47.2]
+## [25] (66.5,88.7] (56.6,66.5] (47.2,56.6] [2.33,39.1] (39.1,47.2] (56.6,66.5]
+## [31] (39.1,47.2] [2.33,39.1] (66.5,88.7] (47.2,56.6] (47.2,56.6] (56.6,66.5]
+## [37] [2.33,39.1] (56.6,66.5] (56.6,66.5] [2.33,39.1] (47.2,56.6] (39.1,47.2]
+## [43] (47.2,56.6] (47.2,56.6] (47.2,56.6] (47.2,56.6] [2.33,39.1] [2.33,39.1]
+## [49] (66.5,88.7] (66.5,88.7]
+## Levels: [2.33,39.1] (39.1,47.2] (47.2,56.6] (56.6,66.5] (66.5,88.7]
 ```
 
 
@@ -217,16 +218,16 @@ cut_width(numeric_var, width = 15)
 ```
 
 ```
-##  [1] (37.5,52.5] (52.5,67.5] (52.5,67.5] [7.5,22.5]  (67.5,82.5] (52.5,67.5]
-##  [7] (67.5,82.5] (22.5,37.5] (37.5,52.5] (67.5,82.5] (52.5,67.5] (37.5,52.5]
-## [13] (52.5,67.5] (52.5,67.5] (37.5,52.5] (52.5,67.5] (37.5,52.5] (37.5,52.5]
-## [19] (22.5,37.5] [7.5,22.5]  (67.5,82.5] (37.5,52.5] (52.5,67.5] (37.5,52.5]
-## [25] (22.5,37.5] [7.5,22.5]  (52.5,67.5] (22.5,37.5] (52.5,67.5] (22.5,37.5]
-## [31] (67.5,82.5] (52.5,67.5] (37.5,52.5] (37.5,52.5] (52.5,67.5] (37.5,52.5]
-## [37] (37.5,52.5] (82.5,97.5] (37.5,52.5] (52.5,67.5] (67.5,82.5] (37.5,52.5]
-## [43] (22.5,37.5] (52.5,67.5] (52.5,67.5] (52.5,67.5] (37.5,52.5] (67.5,82.5]
-## [49] [7.5,22.5]  [7.5,22.5] 
-## 6 Levels: [7.5,22.5] (22.5,37.5] (37.5,52.5] (52.5,67.5] ... (82.5,97.5]
+##  [1] (37.5,52.5] (52.5,67.5] (22.5,37.5] (67.5,82.5] (22.5,37.5] (37.5,52.5]
+##  [7] (67.5,82.5] (52.5,67.5] (82.5,97.5] (67.5,82.5] (37.5,52.5] (37.5,52.5]
+## [13] (67.5,82.5] (37.5,52.5] (22.5,37.5] (52.5,67.5] (67.5,82.5] (22.5,37.5]
+## [19] (52.5,67.5] (52.5,67.5] (37.5,52.5] (52.5,67.5] (52.5,67.5] (37.5,52.5]
+## [25] (82.5,97.5] (52.5,67.5] (37.5,52.5] (7.5,22.5]  (37.5,52.5] (52.5,67.5]
+## [31] (37.5,52.5] (22.5,37.5] (67.5,82.5] (37.5,52.5] (37.5,52.5] (52.5,67.5]
+## [37] [-7.5,7.5]  (52.5,67.5] (52.5,67.5] (22.5,37.5] (52.5,67.5] (37.5,52.5]
+## [43] (52.5,67.5] (37.5,52.5] (37.5,52.5] (37.5,52.5] (22.5,37.5] (7.5,22.5] 
+## [49] (67.5,82.5] (67.5,82.5]
+## 7 Levels: [-7.5,7.5] (7.5,22.5] (22.5,37.5] (37.5,52.5] ... (82.5,97.5]
 ```
 
 ---
@@ -239,16 +240,16 @@ cut_interval(numeric_var, n = 4)
 ```
 
 ```
-##  [1] (33,50.9]   (50.9,68.8] (50.9,68.8] [15,33]     (68.8,86.8] (50.9,68.8]
-##  [7] (68.8,86.8] (33,50.9]   (50.9,68.8] (68.8,86.8] (50.9,68.8] (33,50.9]  
-## [13] (50.9,68.8] (50.9,68.8] (33,50.9]   (50.9,68.8] (50.9,68.8] (50.9,68.8]
-## [19] (33,50.9]   [15,33]     (50.9,68.8] (33,50.9]   (50.9,68.8] (33,50.9]  
-## [25] [15,33]     [15,33]     (50.9,68.8] [15,33]     (50.9,68.8] (33,50.9]  
-## [31] (68.8,86.8] (50.9,68.8] (33,50.9]   (33,50.9]   (50.9,68.8] (50.9,68.8]
-## [37] (33,50.9]   (68.8,86.8] (33,50.9]   (50.9,68.8] (68.8,86.8] (33,50.9]  
-## [43] (33,50.9]   (50.9,68.8] (50.9,68.8] (50.9,68.8] (33,50.9]   (68.8,86.8]
-## [49] [15,33]     [15,33]    
-## Levels: [15,33] (33,50.9] (50.9,68.8] (68.8,86.8]
+##  [1] (23.9,45.5] (45.5,67.1] (23.9,45.5] (67.1,88.7] (23.9,45.5] (23.9,45.5]
+##  [7] (67.1,88.7] (45.5,67.1] (67.1,88.7] (67.1,88.7] (23.9,45.5] (23.9,45.5]
+## [13] (67.1,88.7] (23.9,45.5] (23.9,45.5] (45.5,67.1] (67.1,88.7] (23.9,45.5]
+## [19] (45.5,67.1] (45.5,67.1] (45.5,67.1] (45.5,67.1] (45.5,67.1] (23.9,45.5]
+## [25] (67.1,88.7] (45.5,67.1] (45.5,67.1] [2.33,23.9] (23.9,45.5] (45.5,67.1]
+## [31] (23.9,45.5] (23.9,45.5] (67.1,88.7] (45.5,67.1] (45.5,67.1] (45.5,67.1]
+## [37] [2.33,23.9] (45.5,67.1] (45.5,67.1] (23.9,45.5] (45.5,67.1] (23.9,45.5]
+## [43] (45.5,67.1] (45.5,67.1] (45.5,67.1] (45.5,67.1] (23.9,45.5] [2.33,23.9]
+## [49] (67.1,88.7] (67.1,88.7]
+## Levels: [2.33,23.9] (23.9,45.5] (45.5,67.1] (67.1,88.7]
 ```
 
 ---
@@ -261,13 +262,13 @@ cut_interval(numeric_var, length = 15)
 ```
 
 ```
-##  [1] (30,45] (45,60] (45,60] [15,30] (60,75] (60,75] (75,90] (30,45] (45,60]
-## [10] (75,90] (45,60] (30,45] (60,75] (45,60] (45,60] (60,75] (45,60] (45,60]
-## [19] (30,45] [15,30] (60,75] (30,45] (60,75] (45,60] (30,45] [15,30] (45,60]
-## [28] (30,45] (60,75] (30,45] (60,75] (45,60] (45,60] (45,60] (45,60] (45,60]
-## [37] (30,45] (75,90] (45,60] (60,75] (75,90] (45,60] (30,45] (60,75] (60,75]
-## [46] (60,75] (45,60] (60,75] [15,30] [15,30]
-## Levels: [15,30] (30,45] (45,60] (60,75] (75,90]
+##  [1] (45,60] (45,60] (30,45] (60,75] (15,30] (30,45] (60,75] (45,60] (75,90]
+## [10] (60,75] (45,60] (30,45] (75,90] (30,45] (30,45] (60,75] (75,90] (30,45]
+## [19] (45,60] (45,60] (45,60] (45,60] (45,60] (30,45] (75,90] (45,60] (45,60]
+## [28] (15,30] (30,45] (45,60] (30,45] (30,45] (60,75] (45,60] (45,60] (45,60]
+## [37] [0,15]  (60,75] (45,60] (15,30] (45,60] (45,60] (45,60] (45,60] (45,60]
+## [46] (45,60] (30,45] [0,15]  (60,75] (60,75]
+## Levels: [0,15] (15,30] (30,45] (45,60] (60,75] (75,90]
 ```
 
 ---
@@ -281,11 +282,11 @@ cut_interval(numeric_var, n = 4, labels = c("Small", "Medium", "Big", "Bigger"))
 ```
 
 ```
-##  [1] Medium Big    Big    Small  Bigger Big    Bigger Medium Big    Bigger
-## [11] Big    Medium Big    Big    Medium Big    Big    Big    Medium Small 
-## [21] Big    Medium Big    Medium Small  Small  Big    Small  Big    Medium
-## [31] Bigger Big    Medium Medium Big    Big    Medium Bigger Medium Big   
-## [41] Bigger Medium Medium Big    Big    Big    Medium Bigger Small  Small 
+##  [1] Medium Big    Medium Bigger Medium Medium Bigger Big    Bigger Bigger
+## [11] Medium Medium Bigger Medium Medium Big    Bigger Medium Big    Big   
+## [21] Big    Big    Big    Medium Bigger Big    Big    Small  Medium Big   
+## [31] Medium Medium Bigger Big    Big    Big    Small  Big    Big    Medium
+## [41] Big    Medium Big    Big    Big    Big    Medium Small  Bigger Bigger
 ## Levels: Small Medium Big Bigger
 ```
 
@@ -334,7 +335,13 @@ mean_height &lt;- trees %&gt;%
     filter(Provincia == "25") %&gt;%
     group_by(Especie) %&gt;%
     summarise(height = mean(HeiIf3, na.rm = TRUE))
+```
 
+```
+## `summarise()` ungrouping output (override with `.groups` argument)
+```
+
+```r
 # Plot mean height
 ggplot(mean_height, aes(height, Especie)) + 
     geom_point() 
@@ -372,6 +379,11 @@ mean_height %&gt;%
 ## `fct_reorder()`
 
 But we may also want to know the mean number of tree species acrosss diameter classes, for example:
+
+
+```
+## `summarise()` ungrouping output (override with `.groups` argument)
+```
 
 ![](06_data_import_files/figure-html/unnamed-chunk-18-1.png)&lt;!-- --&gt;
 
@@ -467,6 +479,12 @@ trees %&gt;%
       Quercus = c("041", "042", "043", "044", "045", "046", "047", "048", "049"),
       other_level = "Other_sps")) %&gt;%      
     count(Pinus_Quercus) 
+```
+
+```
+## Warning: Problem with `mutate()` input `Pinus_Quercus`.
+## i Unknown levels in `f`: 027, 048, 049
+## i Input `Pinus_Quercus` is `fct_collapse(...)`.
 ```
 
 ```
@@ -594,6 +612,32 @@ if (window.HTMLWidgets) slideshow.on('afterShowSlide', function (slide) {
     deleted = true;
   });
 })();
+(function() {
+  "use strict"
+  // Replace <script> tags in slides area to make them executable
+  var scripts = document.querySelectorAll(
+    '.remark-slides-area .remark-slide-container script'
+  );
+  if (!scripts.length) return;
+  for (var i = 0; i < scripts.length; i++) {
+    var s = document.createElement('script');
+    var code = document.createTextNode(scripts[i].textContent);
+    s.appendChild(code);
+    var scriptAttrs = scripts[i].attributes;
+    for (var j = 0; j < scriptAttrs.length; j++) {
+      s.setAttribute(scriptAttrs[j].name, scriptAttrs[j].value);
+    }
+    scripts[i].parentElement.replaceChild(s, scripts[i]);
+  }
+})();
+(function() {
+  var links = document.getElementsByTagName('a');
+  for (var i = 0; i < links.length; i++) {
+    if (/^(https?:)?\/\//.test(links[i].getAttribute('href'))) {
+      links[i].target = '_blank';
+    }
+  }
+})();
 // adds .remark-code-has-line-highlighted class to <pre> parent elements
 // of code chunks containing highlighted lines with class .remark-code-line-highlighted
 (function(d) {
@@ -611,17 +655,6 @@ if (window.HTMLWidgets) slideshow.on('afterShowSlide', function (slide) {
   }
   preParents.forEach(p => p.classList.add("remark-code-has-line-highlighted"));
 })(document);</script>
-
-<script>
-(function() {
-  var links = document.getElementsByTagName('a');
-  for (var i = 0; i < links.length; i++) {
-    if (/^(https?:)?\/\//.test(links[i].getAttribute('href'))) {
-      links[i].target = '_blank';
-    }
-  }
-})();
-</script>
 
 <script>
 slideshow._releaseMath = function(el) {
