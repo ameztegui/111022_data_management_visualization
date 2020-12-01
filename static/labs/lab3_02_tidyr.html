@@ -1656,19 +1656,19 @@ $(document).ready(function () {
 <h1 number="2"><span class="header-section-number">2</span> Wide versus long data</h1>
 <p>More generally, we often refer to <em>wide</em> and <em>long</em> data, as two general cases. In long vertical format, every row represents an observation belonging to a particular category. In wide format, however, observations are often spread across several columns. You can think of it as a summary of long data. Wide data is easier to read and interpret as compared to long format. However, long data is generally tidier, and easier to analyze. Illustrating the difference between <em>wide</em> and <em>long</em> datasets is easiest using an example:</p>
 <pre><code>##   country year avgtemp
-## 1  Sweden 1994       3
-## 2 Denmark 1994      10
-## 3  Norway 1994      11
-## 4  Sweden 1995      11
-## 5 Denmark 1995      10
-## 6  Norway 1995       8
-## 7  Sweden 1996       4
-## 8 Denmark 1996       8
-## 9  Norway 1996      11</code></pre>
+## 1  Sweden 1994      10
+## 2 Denmark 1994      12
+## 3  Norway 1994       6
+## 4  Sweden 1995      10
+## 5 Denmark 1995       8
+## 6  Norway 1995       4
+## 7  Sweden 1996       7
+## 8 Denmark 1996      12
+## 9  Norway 1996       9</code></pre>
 <pre><code>##   country avgtemp.1994 avgtemp.1995 avgtemp.1996
-## 1  Sweden            3           11            4
-## 2 Denmark           10           10            8
-## 3  Norway           11            8           11</code></pre>
+## 1  Sweden           10           10            7
+## 2 Denmark           12            8           12
+## 3  Norway            6            4            9</code></pre>
 <p>The long dataset separates the unit of analysis (country-year) into two separate variables while the wide dataset combines one of the keys (year) with the value variable (avgtemp).</p>
 <div id="a-case-for-long-data" class="section level2" number="2.1">
 <h2 number="2.1"><span class="header-section-number">2.1</span> A case for long data</h2>
@@ -1686,13 +1686,13 @@ $(document).ready(function () {
 <div id="from-wide-to-long" class="section level2" number="3.1">
 <h2 number="3.1"><span class="header-section-number">3.1</span> From <em>wide</em> to <em>long</em></h2>
 <p>The function <code>pivot_longer</code> enables the conversion from <em>wide</em> to <em>long</em> format. Let’s take as an example the dataframe <code>n_parcelas</code>, created with the following chunk of code, which stores information about the number of plots in each province. Each columns contains the number of plots per inventory, thus it is a clear example of <em>untidy</em> or <em>wide</em> data. Columns are not variables but data.</p>
-<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1"></a>n_parcelas &lt;-<span class="st"> </span><span class="kw">tibble</span>(</span>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1"></a>n_plots &lt;-<span class="st"> </span><span class="kw">tibble</span>(</span>
 <span id="cb3-2"><a href="#cb3-2"></a>  <span class="dt">Prov =</span> <span class="kw">c</span>(<span class="st">&#39;Lleida&#39;</span>, <span class="st">&#39;Girona&#39;</span>, <span class="st">&#39;Barcelona&#39;</span>, <span class="st">&#39;Tarragona&#39;</span>),</span>
 <span id="cb3-3"><a href="#cb3-3"></a>  <span class="dt">IFN_2 =</span> <span class="kw">c</span>(<span class="dv">16</span>, <span class="dv">78</span>, <span class="dv">60</span>, <span class="dv">34</span>),</span>
 <span id="cb3-4"><a href="#cb3-4"></a>  <span class="dt">IFN_3 =</span> <span class="kw">c</span>(<span class="dv">18</span>, <span class="dv">79</span>, <span class="dv">67</span>, <span class="dv">36</span>)</span>
 <span id="cb3-5"><a href="#cb3-5"></a>)</span>
 <span id="cb3-6"><a href="#cb3-6"></a></span>
-<span id="cb3-7"><a href="#cb3-7"></a>n_parcelas</span></code></pre></div>
+<span id="cb3-7"><a href="#cb3-7"></a>n_plots</span></code></pre></div>
 <pre><code>## # A tibble: 4 x 3
 ##   Prov      IFN_2 IFN_3
 ##   &lt;chr&gt;     &lt;dbl&gt; &lt;dbl&gt;
@@ -1701,11 +1701,11 @@ $(document).ready(function () {
 ## 3 Barcelona    60    67
 ## 4 Tarragona    34    36</code></pre>
 <p>Let’s create the <em>tidy</em>, i.e., <em>long</em> version of <code>n_parcelas</code> using <code>pivot_longer()</code>. Its syntax takes several arguments. The first one, as usual within the tidyverse, is the data frame. Then, we must define which columns we want to pivot into longer format (in this case, “IFN_2” and “IFN_3”) into the <code>cols</code>argument. Then, we must define <code>names_to</code>, the name of the column we will create to store the values of the names of the columns we are going to pivot. Let’s see an example:</p>
-<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1"></a>nparc_long &lt;-<span class="st"> </span><span class="kw">pivot_longer</span>(n_parcelas, </span>
-<span id="cb5-2"><a href="#cb5-2"></a>                           <span class="dt">cols =</span> <span class="kw">c</span>(IFN_<span class="dv">2</span>, IFN_<span class="dv">3</span>), </span>
-<span id="cb5-3"><a href="#cb5-3"></a>                           <span class="dt">names_to =</span> <span class="st">&quot;IFN&quot;</span>)</span>
+<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1"></a>n_plots_long &lt;-<span class="st"> </span><span class="kw">pivot_longer</span>(n_plots, </span>
+<span id="cb5-2"><a href="#cb5-2"></a>                             <span class="dt">cols =</span> <span class="kw">c</span>(IFN_<span class="dv">2</span>, IFN_<span class="dv">3</span>), </span>
+<span id="cb5-3"><a href="#cb5-3"></a>                             <span class="dt">names_to =</span> <span class="st">&quot;IFN&quot;</span>)</span>
 <span id="cb5-4"><a href="#cb5-4"></a></span>
-<span id="cb5-5"><a href="#cb5-5"></a>nparc_long</span></code></pre></div>
+<span id="cb5-5"><a href="#cb5-5"></a>n_plots_long</span></code></pre></div>
 <pre><code>## # A tibble: 8 x 3
 ##   Prov      IFN   value
 ##   &lt;chr&gt;     &lt;chr&gt; &lt;dbl&gt;
@@ -1720,12 +1720,12 @@ $(document).ready(function () {
 <div id="going-tidier" class="section level3" number="3.1.1">
 <h3 number="3.1.1"><span class="header-section-number">3.1.1</span> Going <em>tidier</em></h3>
 <p>Our current dataset is almost fully tidy but, if we want to be particulary meticulous, our IFN column can be further processed. As it is, it contains the number of the version (either 2^nd or 3^rd inventory). Also, imagine we want to add additional plots that do no belong to the National Forest Inventory program. To address this potential issue, we can split <code>IFN</code> into 2 columns, named <code>source</code> and <code>version</code>. To do so, we need to provide two names within the <code>names_to</code>argument, and we can use <code>names_sep</code>to specify where to separate the string int the two new values:</p>
-<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1"></a>nparc_long &lt;-<span class="st"> </span><span class="kw">pivot_longer</span>(n_parcelas, </span>
-<span id="cb7-2"><a href="#cb7-2"></a>                           <span class="dt">cols =</span> <span class="kw">c</span>(IFN_<span class="dv">2</span>, IFN_<span class="dv">3</span>), </span>
-<span id="cb7-3"><a href="#cb7-3"></a>                           <span class="dt">names_to =</span> <span class="kw">c</span>(<span class="st">&quot;source&quot;</span>, <span class="st">&quot;version&quot;</span>),</span>
-<span id="cb7-4"><a href="#cb7-4"></a>                           <span class="dt">names_sep =</span> <span class="st">&quot;_&quot;</span>)</span>
+<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1"></a>n_plots_long &lt;-<span class="st"> </span><span class="kw">pivot_longer</span>(n_plots, </span>
+<span id="cb7-2"><a href="#cb7-2"></a>                             <span class="dt">cols =</span> <span class="kw">c</span>(IFN_<span class="dv">2</span>, IFN_<span class="dv">3</span>), </span>
+<span id="cb7-3"><a href="#cb7-3"></a>                             <span class="dt">names_to =</span> <span class="kw">c</span>(<span class="st">&quot;source&quot;</span>, <span class="st">&quot;version&quot;</span>),</span>
+<span id="cb7-4"><a href="#cb7-4"></a>                             <span class="dt">names_sep =</span> <span class="st">&quot;_&quot;</span>)</span>
 <span id="cb7-5"><a href="#cb7-5"></a></span>
-<span id="cb7-6"><a href="#cb7-6"></a>nparc_long</span></code></pre></div>
+<span id="cb7-6"><a href="#cb7-6"></a>n_plots_long</span></code></pre></div>
 <pre><code>## # A tibble: 8 x 4
 ##   Prov      source version value
 ##   &lt;chr&gt;     &lt;chr&gt;  &lt;chr&gt;   &lt;dbl&gt;
@@ -1738,11 +1738,11 @@ $(document).ready(function () {
 ## 7 Tarragona IFN    2          34
 ## 8 Tarragona IFN    3          36</code></pre>
 <p>If we are not interested in saving the string “IFN” we can just specify what to remove from our categorical variable using <code>names_prefix</code>:</p>
-<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1"></a>nparc_long &lt;-<span class="st"> </span><span class="kw">pivot_longer</span>(n_parcelas, <span class="dt">cols =</span> <span class="kw">c</span>(IFN_<span class="dv">2</span>, IFN_<span class="dv">3</span>),</span>
-<span id="cb9-2"><a href="#cb9-2"></a>                           <span class="dt">names_to =</span> <span class="st">&quot;IFN&quot;</span>,</span>
-<span id="cb9-3"><a href="#cb9-3"></a>                           <span class="dt">names_prefix =</span> <span class="st">&quot;IFN_&quot;</span>)</span>
+<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1"></a>n_plots_long &lt;-<span class="st"> </span><span class="kw">pivot_longer</span>(n_plots, <span class="dt">cols =</span> <span class="kw">c</span>(IFN_<span class="dv">2</span>, IFN_<span class="dv">3</span>),</span>
+<span id="cb9-2"><a href="#cb9-2"></a>                             <span class="dt">names_to =</span> <span class="st">&quot;IFN&quot;</span>,</span>
+<span id="cb9-3"><a href="#cb9-3"></a>                             <span class="dt">names_prefix =</span> <span class="st">&quot;IFN_&quot;</span>)</span>
 <span id="cb9-4"><a href="#cb9-4"></a></span>
-<span id="cb9-5"><a href="#cb9-5"></a>nparc_long</span></code></pre></div>
+<span id="cb9-5"><a href="#cb9-5"></a>n_plots_long</span></code></pre></div>
 <pre><code>## # A tibble: 8 x 3
 ##   Prov      IFN   value
 ##   &lt;chr&gt;     &lt;chr&gt; &lt;dbl&gt;
@@ -1755,12 +1755,12 @@ $(document).ready(function () {
 ## 7 Tarragona 2        34
 ## 8 Tarragona 3        36</code></pre>
 <p>And we can also set the name of the new numeric variable using <code>values_to</code>:</p>
-<div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1"></a>nparc_long &lt;-<span class="st"> </span><span class="kw">pivot_longer</span>(n_parcelas, <span class="dt">cols =</span> <span class="kw">c</span>(IFN_<span class="dv">2</span>, IFN_<span class="dv">3</span>), </span>
-<span id="cb11-2"><a href="#cb11-2"></a>                           <span class="dt">names_to =</span> <span class="st">&quot;IFN&quot;</span>,</span>
-<span id="cb11-3"><a href="#cb11-3"></a>                           <span class="dt">names_prefix =</span> <span class="st">&quot;IFN_&quot;</span>,</span>
-<span id="cb11-4"><a href="#cb11-4"></a>                           <span class="dt">values_to =</span> <span class="st">&quot;n_plots&quot;</span>)</span>
+<div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1"></a>n_plots_long &lt;-<span class="st"> </span><span class="kw">pivot_longer</span>(n_plots, <span class="dt">cols =</span> <span class="kw">c</span>(IFN_<span class="dv">2</span>, IFN_<span class="dv">3</span>), </span>
+<span id="cb11-2"><a href="#cb11-2"></a>                             <span class="dt">names_to =</span> <span class="st">&quot;IFN&quot;</span>,</span>
+<span id="cb11-3"><a href="#cb11-3"></a>                             <span class="dt">names_prefix =</span> <span class="st">&quot;IFN_&quot;</span>,</span>
+<span id="cb11-4"><a href="#cb11-4"></a>                             <span class="dt">values_to =</span> <span class="st">&quot;n_plots&quot;</span>)</span>
 <span id="cb11-5"><a href="#cb11-5"></a></span>
-<span id="cb11-6"><a href="#cb11-6"></a>nparc_long</span></code></pre></div>
+<span id="cb11-6"><a href="#cb11-6"></a>n_plots_long</span></code></pre></div>
 <pre><code>## # A tibble: 8 x 3
 ##   Prov      IFN   n_plots
 ##   &lt;chr&gt;     &lt;chr&gt;   &lt;dbl&gt;
@@ -1774,10 +1774,10 @@ $(document).ready(function () {
 ## 8 Tarragona 3          36</code></pre>
 <div class="exercise">
 <p><strong>EXERCISE 1</strong> </br></p>
-<p>Use <code>pivot_longer()</code> and its options to transform the data frame <code>species</code> into a <strong>tidy</strong> format, where each column is a variable and each row an observation. Remember that <code>species</code> contains the number of trees per hectare per each species, plot, and diameter class:</p>
-<div class="sourceCode" id="cb13"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1"></a>species</span></code></pre></div>
+<p>Use <code>pivot_longer()</code> and its options to transform the data frame <code>size_distrib</code> into a <strong>tidy</strong> format, where each column is a variable and each row an observation. Remember that <code>size_dsitrib</code> contains the number of trees per hectare per each species, plot, and diameter class:</p>
+<div class="sourceCode" id="cb13"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1"></a>size_distrib</span></code></pre></div>
 <pre><code>## # A tibble: 14,778 x 15
-##    Codi  Especie CD_10 CD_15 CD_20 CD_25 CD_30 CD_35 CD_40 CD_45 CD_50 CD_55
+##    Code  Species CD_10 CD_15 CD_20 CD_25 CD_30 CD_35 CD_40 CD_45 CD_50 CD_55
 ##    &lt;fct&gt; &lt;fct&gt;   &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;
 ##  1 0800~ 022         0 159.   31.8 111.  60.1   19.2  5.09   0    0        0
 ##  2 0800~ 021         0   0     0     0    0     74.2 28.3   63.7  0        0
@@ -1803,11 +1803,11 @@ $(document).ready(function () {
 <li><code>values_from</code>: argument describing which column (or columns) to get the cell values from.</li>
 </ul>
 <p>Again, it is easier to see an example, so let’s try to bring balck our dataset into wide format:</p>
-<div class="sourceCode" id="cb15"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1"></a>nparc_wide &lt;-<span class="st"> </span><span class="kw">pivot_wider</span>(nparc_long,</span>
-<span id="cb15-2"><a href="#cb15-2"></a>                          <span class="dt">names_from =</span> IFN,</span>
-<span id="cb15-3"><a href="#cb15-3"></a>                          <span class="dt">values_from =</span> n_plots)</span>
+<div class="sourceCode" id="cb15"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1"></a>n_plots_wide &lt;-<span class="st"> </span><span class="kw">pivot_wider</span>(n_plots_long,</span>
+<span id="cb15-2"><a href="#cb15-2"></a>                            <span class="dt">names_from =</span> IFN,</span>
+<span id="cb15-3"><a href="#cb15-3"></a>                            <span class="dt">values_from =</span> n_plots)</span>
 <span id="cb15-4"><a href="#cb15-4"></a></span>
-<span id="cb15-5"><a href="#cb15-5"></a>nparc_wide</span></code></pre></div>
+<span id="cb15-5"><a href="#cb15-5"></a>n_plots_wide</span></code></pre></div>
 <pre><code>## # A tibble: 4 x 3
 ##   Prov        `2`   `3`
 ##   &lt;chr&gt;     &lt;dbl&gt; &lt;dbl&gt;
@@ -1816,12 +1816,12 @@ $(document).ready(function () {
 ## 3 Barcelona    60    67
 ## 4 Tarragona    34    36</code></pre>
 <p>We didn’t need to specify the argument <code>id_cols</code>, since it gets, by default, all variables not specified in <code>names_from</code> and <code>values_from</code>. We see it looks very similar to our original <code>n_parcelas</code> table, but we still need to fix a few details. For example, we can add a prefix to the start of each variable name:</p>
-<div class="sourceCode" id="cb17"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1"></a>nparc_wide &lt;-<span class="st"> </span><span class="kw">pivot_wider</span>(nparc_long,</span>
-<span id="cb17-2"><a href="#cb17-2"></a>                          <span class="dt">names_from =</span> IFN,</span>
-<span id="cb17-3"><a href="#cb17-3"></a>                          <span class="dt">values_from =</span> n_plots,</span>
-<span id="cb17-4"><a href="#cb17-4"></a>                          <span class="dt">names_prefix =</span> <span class="st">&quot;IFN_&quot;</span>)</span>
+<div class="sourceCode" id="cb17"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1"></a>n_plots_wide &lt;-<span class="st"> </span><span class="kw">pivot_wider</span>(n_plots_long,</span>
+<span id="cb17-2"><a href="#cb17-2"></a>                            <span class="dt">names_from =</span> IFN,</span>
+<span id="cb17-3"><a href="#cb17-3"></a>                            <span class="dt">values_from =</span> n_plots,</span>
+<span id="cb17-4"><a href="#cb17-4"></a>                            <span class="dt">names_prefix =</span> <span class="st">&quot;IFN_&quot;</span>)</span>
 <span id="cb17-5"><a href="#cb17-5"></a></span>
-<span id="cb17-6"><a href="#cb17-6"></a>nparc_wide</span></code></pre></div>
+<span id="cb17-6"><a href="#cb17-6"></a>n_plots_wide</span></code></pre></div>
 <pre><code>## # A tibble: 4 x 3
 ##   Prov      IFN_2 IFN_3
 ##   &lt;chr&gt;     &lt;dbl&gt; &lt;dbl&gt;
@@ -1831,14 +1831,24 @@ $(document).ready(function () {
 ## 4 Tarragona    34    36</code></pre>
 <p>And now it is identical to the original data frame.</p>
 <p>If there is any combination of variables that is missing (imagine we don’t have any data from IFN3 in Tarragona), it will assign <code>NA</code> by default:</p>
-<div class="sourceCode" id="cb19"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1"></a>nparc_long2 &lt;-<span class="st"> </span>nparc_long <span class="op">%&gt;%</span></span>
+<div class="sourceCode" id="cb19"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1"></a>n_plots_long2 &lt;-<span class="st"> </span>n_plots_long <span class="op">%&gt;%</span></span>
 <span id="cb19-2"><a href="#cb19-2"></a><span class="st">    </span><span class="kw">slice</span>(<span class="dv">1</span><span class="op">:</span><span class="dv">7</span>)                          <span class="co"># We create the new dataset without data in Tarragona for IFN3</span></span>
 <span id="cb19-3"><a href="#cb19-3"></a></span>
-<span id="cb19-4"><a href="#cb19-4"></a></span>
-<span id="cb19-5"><a href="#cb19-5"></a><span class="kw">pivot_wider</span>(nparc_long2,</span>
-<span id="cb19-6"><a href="#cb19-6"></a>            <span class="dt">names_from =</span> IFN,</span>
-<span id="cb19-7"><a href="#cb19-7"></a>            <span class="dt">values_from =</span> n_plots,</span>
-<span id="cb19-8"><a href="#cb19-8"></a>            <span class="dt">names_prefix =</span> <span class="st">&quot;IFN_&quot;</span>)</span></code></pre></div>
+<span id="cb19-4"><a href="#cb19-4"></a>n_plots_long2</span></code></pre></div>
+<pre><code>## # A tibble: 7 x 3
+##   Prov      IFN   n_plots
+##   &lt;chr&gt;     &lt;chr&gt;   &lt;dbl&gt;
+## 1 Lleida    2          16
+## 2 Lleida    3          18
+## 3 Girona    2          78
+## 4 Girona    3          79
+## 5 Barcelona 2          60
+## 6 Barcelona 3          67
+## 7 Tarragona 2          34</code></pre>
+<div class="sourceCode" id="cb21"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1"></a><span class="kw">pivot_wider</span>(n_plots_long2,</span>
+<span id="cb21-2"><a href="#cb21-2"></a>            <span class="dt">names_from =</span> IFN,</span>
+<span id="cb21-3"><a href="#cb21-3"></a>            <span class="dt">values_from =</span> n_plots,</span>
+<span id="cb21-4"><a href="#cb21-4"></a>            <span class="dt">names_prefix =</span> <span class="st">&quot;IFN_&quot;</span>)</span></code></pre></div>
 <pre><code>## # A tibble: 4 x 3
 ##   Prov      IFN_2 IFN_3
 ##   &lt;chr&gt;     &lt;dbl&gt; &lt;dbl&gt;
@@ -1847,11 +1857,11 @@ $(document).ready(function () {
 ## 3 Barcelona    60    67
 ## 4 Tarragona    34    NA</code></pre>
 <p>But we can specify what value to give using <code>values_fill</code>:</p>
-<div class="sourceCode" id="cb21"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1"></a><span class="kw">pivot_wider</span>(nparc_long2,</span>
-<span id="cb21-2"><a href="#cb21-2"></a>            <span class="dt">names_from =</span> IFN,</span>
-<span id="cb21-3"><a href="#cb21-3"></a>            <span class="dt">values_from =</span> n_plots,</span>
-<span id="cb21-4"><a href="#cb21-4"></a>            <span class="dt">names_prefix =</span> <span class="st">&quot;IFN_&quot;</span>,</span>
-<span id="cb21-5"><a href="#cb21-5"></a>            <span class="dt">values_fill =</span> <span class="kw">list</span>(<span class="dt">n_plots =</span> <span class="dv">0</span>))</span></code></pre></div>
+<div class="sourceCode" id="cb23"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1"></a><span class="kw">pivot_wider</span>(n_plots_long2,</span>
+<span id="cb23-2"><a href="#cb23-2"></a>            <span class="dt">names_from =</span> IFN,</span>
+<span id="cb23-3"><a href="#cb23-3"></a>            <span class="dt">values_from =</span> n_plots,</span>
+<span id="cb23-4"><a href="#cb23-4"></a>            <span class="dt">names_prefix =</span> <span class="st">&quot;IFN_&quot;</span>,</span>
+<span id="cb23-5"><a href="#cb23-5"></a>            <span class="dt">values_fill =</span> <span class="kw">list</span>(<span class="dt">n_plots =</span> <span class="dv">0</span>))</span></code></pre></div>
 <pre><code>## # A tibble: 4 x 3
 ##   Prov      IFN_2 IFN_3
 ##   &lt;chr&gt;     &lt;dbl&gt; &lt;dbl&gt;
@@ -1861,7 +1871,7 @@ $(document).ready(function () {
 ## 4 Tarragona    34     0</code></pre>
 <div class="exercise">
 <p><strong>EXERCISE 2</strong> </br></p>
-<p>Using the function <code>pivot_wider()</code> and its options, transform back the dataframe you created in exercise 1 into a dataframe similar to the original <code>species</code> data frame.</p>
+<p>Using the function <code>pivot_wider()</code> and its options, transform back the dataframe you created in exercise 1 into a dataframe similar to the original <code>size_distrib</code> data frame.</p>
 </div>
 </div>
 </div>
