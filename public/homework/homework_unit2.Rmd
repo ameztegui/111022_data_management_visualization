@@ -1,0 +1,71 @@
+---
+title: "Homework 01 - Exploratory analysis of forest fires in Spain"
+date: "Due: March 27"
+output: 
+  html_document: 
+    css: hw.css
+    theme: yeti
+    toc: true
+    toc_float: true
+    fig_caption: false
+---
+
+```{r setup, include=FALSE}
+library(tidyverse)
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+```{r include=FALSE}
+library(tidyverse)
+library(knitr)
+options(
+  htmltools.dir.version = FALSE, # for blogdown
+  show.signif.stars = FALSE,     # for regression output
+  digits = 2
+  )
+#knitr::opts_chunk$set(eval = FALSE)
+
+```
+
+## Homework - Unit 2
+
+In this exercise you will conduct a *guided* exploratory analysis of forest fire data in Spain. We will use the dataset `fires` which compiles fire records in the period 1974-2015, and is included in the `data` folder of the RStudio Cloud project.
+
+The dataset contains the following information:
+
+-   `CODCUAD`: Grid code. Associates fire occurrence to its spatial location.
+
+-   `IDPIF`: Fire identifire. Unique code to associate each fire event with the remaining information in the original database.
+
+-   `YEAR`: Year of occurrence.
+
+-   `MONTH`: Month of occurrence. Integer values from 1 to 12.
+
+-   `CAUSE`: Ignition source; 1-Natural; 2-Accident; 3-Negligence; 4-Arson; 5-Unknown; and 6-Restarted
+
+-   `BAREA`: burned area
+
+-   `CCAA`: Autonomous region where the fire started.
+
+```{r, echo=F, eval = F}
+fires <- read_csv('data/fires.csv', locale = locale(encoding = "latin1"))
+fires
+```
+
+## Instructions
+
+The exercise consists of a set of 5 questions, valued in 2 points apiece. Each of them must be answered, also including the code employed to address them, and some comments you may wish to include. We expect you to deliver an RMarkdown document showing both the answers and the code.
+
+## Question list
+
+1.  Calculate *yearly* totals of fire counts and burned area. Disregard CAUSE 6 (restarted fires).
+
+2.  Which MONTH endured the *largest amount of fires*? Which MONTH endured the *largest amount of burned area*?
+
+3.  What CAUSE has the highest *average* fire size?
+
+4.  Which CCAA has the highest *amount* of natural fires?
+
+5.  Which CCAA has the highest *proportion* of natural fires?
+
+> **NOTE:** Remember that the data needed to solve these questions is uploaded in the course's space in RStudio Cloud, under the "Homework - Unit 2" project.
