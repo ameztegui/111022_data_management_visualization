@@ -1,0 +1,47 @@
+---
+title: "Homework Unit 3 - Import and tidy data on seedlings growth and light"
+date: "Due: January 10"
+output: 
+  html_document: 
+    css: hw.css
+    theme: yeti
+    toc: true
+    toc_float: true
+    fig_caption: false
+---
+
+```{r setup, include=FALSE}
+library(tidyverse)
+library(readxl)
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## Homework - Unit 3
+
+During 2015 and 2017, I monitored seedlings of two tree species (Pinus uncinata and Abies alba) at two sites in the Pyrenees of Lleida. Montellà and Pallerols. The data was collected at different times and by different people, so I have now a few files containing different pieces of information.
+
+On one side, I have data on the diameter size of each plant in the `seedlings_growth.txt`file. This contains information on site, species, tree identifier, and diameter size for 2015, 2016 and 2017. Also, when a tree was found dead, we wrote down this in the field sheet.
+
+On the other hand, I have an excel containing this very same information, but also some light availability measurements that we obtained in 2016. Since I don't have light availability for 2015 and 2017, I wonder if it's better to just work with 2016 data, or assume that light levels were the same for the 3 years, and therefore use all the data.
+
+## Instructions
+
+In this exercise you will help me import the data and organize it so I can later check if there is any relationship between growth and light availability. To do so, you need to solve the following 5 questions, valued in 2 points apiece. Each of them must be answered, also including the code employed to address them, and some comments you may wish to include. I expect you to deliver an RMarkdown document showing both the answers and the code.
+
+## Questions
+
+1.  Import the data on seedling diameters from the `seedlings_growth.txt` file. Are all the columns correctly parsed as numeric? If not, look for the reason and correct it.
+
+2.  Repeat the operation, but now ensure that species and site are parsed as factors
+
+3.  It seems to me that these data may not be in a tidy format. Why? Modify the data to make it tidy. This will allow us to relate seedling size to light availability
+
+4.  Now we need to import light availability values from the Excel file `data_seedlings.xlsx.` Please verify, after importing, that the data is well read.
+
+5.  Ok, so now it's time to relate size and light availability. As I said before, I am not sure which approach to follow. Help me get both, and I will grant you an extra point in the exercise. So we need to join both tables you have imported, so that I can :
+
+    -   Have all the size data, and assign one light value for each size measurement, regardless the year
+
+    -   Join both tables, but keeping just those observations which have BOTH light and size measurement
+
+> **NOTE:** Remember that the data needed to solve these questions is uploaded in the course's space in RStudio Cloud, under the "Homework - Unit 3" project.
