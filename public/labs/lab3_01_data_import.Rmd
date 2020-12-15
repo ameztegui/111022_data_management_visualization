@@ -243,7 +243,7 @@ read_sheet(sheets_example("mini-gap"), sheet = "Oceania", n_max = 3)
 
 **EXERCISE 2** </br>
 
-The `googlesheets4`package also includes the data set `deaths`, that you can load using `sheets_example` and you can see in your browser by clicking [here](https://docs.google.com/spreadsheets/d/1tuYKzSbLukDLe5ymf_ZKdQA8SfOyeMM7rmf6D6NJpxg/edit#gid=1210215306). Using what you know about the `googlesheets` package and its options (which are the same as `readr` and `readxl`), read the "arts" sheet within "deaths" into R, and calculate the mean age at which actors and musicians died
+The `googlesheets4`package also includes the data set `deaths`, that you can load using `sheets_example` and you can see in your browser by clicking [here](https://docs.google.com/spreadsheets/d/1VTJjWoP1nshbyxmL9JqXgdVsimaYty21LGxxs018H2Y/edit#gid=1512440582). Using what you know about the `googlesheets` package and its options (which are the same as `readr` and `readxl`), read the "arts" sheet within "deaths" into R, and calculate the mean age at which actors and musicians died
 </div>
 
 # Saving files
