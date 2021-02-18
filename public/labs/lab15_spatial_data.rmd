@@ -251,7 +251,7 @@ Something that is worth mention now is that we cannot project a layer that lacks
 <div class= "exercise">
 **EXERCISE 1**</br>
 
-Map the following fire regime features using data from `exercise 1`:
+Map the following fire regime features using data from `fires.csv`:
 
 - Proportion of fires occurring during summer (June to September)
 - Proportion of natural fires

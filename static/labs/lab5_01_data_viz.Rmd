@@ -251,7 +251,7 @@ Error bars are meant to indicate the range of likely values for some estimate or
 
 <div class = "exercise">
 **EXERCISE 1:</br>**
-Go back to exercise 1 in the syllabus. Think about one or two approaches to convert the results for each questions into plots.
+Go back to *Homework from Unit 2*. Think about one or two approaches to convert the results for each questions into plots.
 
 Write an Rmd document explaining your choices.
 </div>

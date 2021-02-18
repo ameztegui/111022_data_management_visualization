@@ -102,7 +102,7 @@ In `facet_wrap` we can change the disposition of the plots in several ways. You 
 <div class = "exercise">
 
 **EXERCISE 1** </br>
-Take the following example and explore on you own how `ncol`, `nrow`, `as.table` and `dir` alter the arrangement of the elements of the plot.
+Use the `facet_wrap` example to explore on you own how `ncol`, `nrow`, `as.table` and `dir` alter the arrangement of the elements of the plot.
 </div>
 > The arrangement and labels of `facet`'s panels depends on the levels of the variable we use. To control or reorder how them we must change the actual levels of the variable as we saw when working with the `forcats` package.
 

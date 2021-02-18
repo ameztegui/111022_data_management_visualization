@@ -410,7 +410,7 @@ fires %>%
 
 <div class = "exercise">
 **EXERCISE 1**</br>
-Go back to exercise 1 from unit 5. Try to plot some of the visualization approaches you proposed that had to do with amounts, proportions or distributions.
+Go back to the first exercise from unit 5 (i.e., suggest plot representations for question in Homework from Unit 2). Try to plot some of the visualization approaches you proposed that had to do with amounts, proportions or distributions.
 
 Write an Rmd document explaining your choices.
 </div>
