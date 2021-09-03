@@ -1,0 +1,258 @@
+---
+title: "Lab 4.1 - Functional programming within the tidyverse"
+date: "111022 | Data management and visualization with R"
+author: 
+  - "Aitor Ameztegui"
+output:
+  rmdformats::readthedown
+number_sections: true
+css: lab.css
+# runtime: shiny_prerendered
+---
+
+```{r include=FALSE}
+library(tidyverse)
+library(sf)
+library(knitr)
+options(
+  htmltools.dir.version = FALSE, # for blogdown
+  show.signif.stars = FALSE,     # for regression output
+  digits = 2
+  )
+
+#knitr::opts_chunk$set(eval = FALSE)
+load('data/data_SNFI3.rdata')
+
+```
+
+# Introduction
+
+So far we have seen how to transform one or several data frames in order to get the information we need for our data science project. We have learned how to create new variables, filter observations, join several tables or calculate summary statistics, among many other tools. These are operations that we will apply very often, and sometimes you may be in the need to apply a given sequence of steps repeteadly. In those cases, you may consider writing a function.
+
+Writing good functions is a difficult task, and can be a lifetime journey. At the beginning, it will take you more time to create the function than to repeat the needed operation 3, 4 or even 10 times. But functions allow you to automate common tasks in a more powerful and general way than copy-and-pasting.
+
+Writing a function has three main big advantages over using copy-and-paste (Wickham & Grolemund, 2016):
+
+1.  You eliminate the chance of **making incidental mistakes** when you copy and paste (i.e. updating a variable name in one place, but not in another).
+
+2.  As requirements change, you only need to **update code in one place**, instead of many.
+
+3.  You can give a function an evocative name that makes your **code easier to understand**.
+
+# Functional sequences
+
+The `magrittr` package, where the pipe operator (`%>%`) was designed, allows for saving piped sequences of operations as pseudo-functions in a readable format. We just need to string functions together with pipes and replace the initial object (a data frame) with the dot placeholder (`.`) This creates a function in its own right, but a special case called *functional sequence*. The dot may be considered as the unique argument of the pseudo-function, and will pass the data frame to which the pseudo-function will be applied to.
+
+Let's see an example: imagine that we had the information about the trees in the National Forest Inventory separated by provinces. In fact, you don't have to imagine too much, because this is actually how the information is provided by the Ministry. Now, let's say we want to calculate the mean tree growth per plot for each of the 50 provinces in Spain. Of course, we can do it one by one, as in:
+
+```{r, eval = T}
+
+lleida_trees <- trees %>% filter(Province == "25")
+barcelona_trees <- trees %>% filter(Province == "08") 
+girona_trees <- trees %>% filter(Province == "17") 
+ tarragona_trees <- trees %>% filter(Province == "43")
+```
+
+```{r, eval = F}
+lleida_trees %>%
+    mutate(growth = DBH_3- DBH_2) %>%
+    group_by(Code) %>%
+    summarise(mean_growth = mean(growth, na.rm = T))
+
+barcelona_trees %>%
+    mutate(growth = DBH_3- DBH_2) %>%
+    group_by(Code) %>%
+    summarise(mean_growth = mean(growth, na.rm = T))
+
+# and so on
+```
+
+However, this is not too efficient for the 3 reasons mentioned above. Imagine if, after typing the code above for 50 times, we decide it is better to calculate the median growth besides the average growth. We would need to modify that line of code 50 times, with a high probability of missing one line or making a mistake. So instead, we can save the sequence of operations as this:
+
+```{r}
+ mean_plot_growth <- . %>%
+    mutate(growth = DBH_3- DBH_2) %>%
+    group_by(Code) %>%
+    summarise(mean_growth = mean(growth, na.rm = T))
+```
+
+The sequence has been stored as an R object, if we print it in the console we will see it has the class `functional sequence` and it will print the ordered sequence of operations it executes:
+
+```{r}
+mean_plot_growth
+```
+
+The point is a generic for any data frame. So we can now apply the pseudofunctions to any data frame, provided it contains the variables included in the *functional sequence*:
+
+```{r}
+mean_plot_growth(lleida_trees)
+mean_plot_growth(barcelona_trees)
+mean_plot_growth(tarragona_trees)
+girona_trees %>% mean_plot_growth()     # different flavour of the same operation, using pipes
+
+```
+
+We still need to call the function several times, but if we decide to change anything, we just need to modify it in the pseudo-function and rerun the code.
+
+We can even combine the functional sequence with any other `tidyverse` functions:
+
+```{r ejemplo functional sequence 3}
+
+# This will apply the operation only to Pinus sylvestris trees in Lleida
+    lleida_trees %>%
+        filter(Species == "021") %>%
+        mean_plot_growth()
+
+# This will apply the operation to all plots but will retain only those plots that grow in average more than 5 cm between both inventories.
+    lleida_trees %>%
+        mean_plot_growth() %>%
+        filter(mean_growth >= 5)
+```
+
+We can use this functionality to create functions that can then be applied with any of the variants of `mutate` such as `mutate_at` or `mutate_if`. Imagine we want to calculate (for some reason) the squared root of the log of the diameters measured in the inventory:
+
+```{r}
+
+# We create our function
+log_sqr <- . %>%
+    log() %>%
+    sqrt()
+
+# We apply it to diameter variables
+trees %>% 
+    mutate_at(.vars=c("DBH_3", "DBH_3"),
+              .funs = log_sqr)
+```
+
+::: {.exercise}
+**EXERCISE 1**
+
+Create a functional sequence that calculates the mean height per species and the standard deviation for any given data frame.
+
+:::
+
+# Functions
+
+Although `magrittr` functional sequences can act as functions and are an easy and efficient way of programming within the tidyverse, they are not "real" functions as it is commonly understood in R. A true R function should work in any environment, not only with piped operations, and typically has the following look:
+
+```{r, eval = FALSE}
+
+my_function <- function (argument1, argument2, ...) {
+    operation1
+    operation2
+    output
+}
+```
+
+Imagine, for example, that we want to rescale the diameters in the `trees` data frame.
+
+> Rescaling a variable means make it have a range from 0 to 1. We can achieve this by substracting each value from the minimum and dividing the result by the range:
+
+```{r}
+rescale <- function (x) {
+    (x-min(x, na.rm = T)) / (max(x, na.rm = T) - min(x, na.rm = T))
+}
+```
+
+And this could be applied in the same way as we did before:
+
+```{r}
+trees %>% 
+    mutate_at(.vars=c("DBH_2", "DBH_3"),
+              .funs = rescale) 
+```
+
+There are three key steps to creating a new function:
+
+1.  You need to pick a name for the function. Here we've used rescale because this function rescales a vector to lie between 0 and 1. Generally, functions should have a simple and evocative name that helps to understand what they do.
+
+2.  You list the inputs, or *arguments*, to the function. We must type `function ()`, and the arguments go inside the `()`, separated by commas. In our example, we have just one argument, the variable to rescale. If we had more the call would look like`function_name <- function(x, y, z)`.
+
+3.  You place the code you have developed in the body of the function, inside a `{ }` block that immediately follows `function(...)`.
+
+Converting a more complicated piece of code into a function can be more challenging. A good tip is to first analyze the code. How many inputs does it have?
+
+If we analyze the example above (`mean_plot_growth`), we could say it only has one input, the data frame (which was there represented by the dot placeholder). To make the inputs more clear, it's a good idea to rewrite the code using temporary variables with general names. Here this code only requires a single data frame, so we'll call it df:
+
+```{r}
+df <- lleida_trees
+df %>%
+    mutate(growth = DBH_3 - DBH_2) %>%
+    group_by(Code) %>%
+    summarise(mean_growth = mean(growth, na.rm = T))
+```
+
+So once we have identified the inputs, we convert them in arguments of the function, as in:
+
+```{r}
+ mean_plot_growth2 <- function (df) {
+    df %>%
+    mutate(growth = DBH_3 - DBH_2) %>%
+    group_by(Code) %>%
+    summarise(mean_growth = mean(growth, na.rm = T))
+}
+```
+
+and so we can now apply the function to any data frame that has the variables *Code*, *DBH\_3*, *DBH\_2*...
+
+```{r}
+mean_plot_growth2(lleida_trees)
+mean_plot_growth2(barcelona_trees)
+
+```
+
+::: {.exercise}
+**EXERCISE 2**
+
+Convert the pseudofunction that you created in exercise 1 into a proper function. Apply it to the provinces of Barcelona and Lleida. Which species has the greatest mean height in each province?
+:::
+
+# 
+
+## Tidy eval: Programming in the tidyverse
+
+What if we want to generalize a bit more the function for average growth? One option could be to convert the grouping variable (`Code`) in an argument of the function, so that we can define if we want the mean growth per plot, or per species, with only one function... Let's try this
+
+```{r}
+ mean_plot_growth3 <- function (df, grouping_var) {
+    
+     df %>%
+         mutate(growth = DBH_3 - DBH_2) %>%
+         group_by(grouping_var) %>%
+         summarise(mean_growth = mean(growth, na.rm = T))
+}
+```
+
+And now we could do:
+
+```{r, error = T}
+mean_plot_growth3(lleida_trees, Species)
+
+```
+
+But hey!, we get an error message saying that it cannot recognize which column is "grouping\_var". This is because most `dplyr`functions use non-standard evaluation (NSE). This is a catch-all term that means they don't follow the usual R rules of evaluation. This has the benefit that operations on data frames can be expressed succinctly because you don't need to repeat the name of the data frame. For example, you can write `filter(df, x == 1, y == 2, z == 3)` instead of `df[df$x == 1 & df$y ==2 & df$z == 3, ]`.
+
+As a consequence, dplyr will first look for the column `grouping_var` *in* the data frame, without noticing that `grouping_var` should in this case take the value specified in the function. That means that whenever we want to use a `dplyr` verb within a function, we must operate a bit differently. In this case, with the `{{` operator, you can *tunnel* data-variables (i.e. columns from the data frames) through arg-variables (function arguments):
+
+```{r}
+ mean_plot_growth3 <- function (df, grouping_var) {
+    df %>%
+    mutate(growth = DBH_3 - DBH_2) %>%
+    group_by({{grouping_var}}) %>%
+    summarise(mean_growth = mean(growth, na.rm = T))
+ }
+```
+
+The tunnel makes it possible to supply variables from the data frame to your wrapper function:
+
+```{r}
+mean_plot_growth3(lleida_trees, Species)
+mean_plot_growth3(lleida_trees, Code)
+mean_plot_growth3(lleida_trees, DC)
+```
+
+# To know more
+
+There's a lot more to know about tidy evaluation, and more operators in the `rlang` package, but these are only needed for advanced uses of R that go beyond the scope of this course. You can read more at <https://tidyeval.tidyverse.org>, and you can learn more on tidy eval and tunneling variables by reading this blog post in the [tidyverse blog](https://www.tidyverse.org/blog/2020/02/glue-strings-and-tidy-eval/), or checking the [programming vignette](https://cran.r-project.org/web/packages/dplyr/vignettes/programming.html) for `dplyr`. To get an even more advanced understanding on meta programming with tidy eval, I recommned the chapter on the second edition of the book ["Advanced R"](http://adv-r.hadley.nz/) or the 1-hour [webinar by RStudio](https://resources.rstudio.com/webinars/tidyeval).
+
+To know more about functions and programming in general, check the ["Functions" chapter](https://r4ds.had.co.nz/functions.html) in R for data Science, or the ["Advanced R"](http://adv-r.hadley.nz/) book.

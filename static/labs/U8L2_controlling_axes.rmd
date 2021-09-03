@@ -1,0 +1,130 @@
+---
+title: "Lab 8.2 - Controlling the axes"
+date: "111022 | Data management and visualization with R"
+author: 
+  - "Aitor Ameztegui"
+bibliography: "references/biblio.bib"
+output:
+  rmdformats::readthedown:
+  highlight: pygments
+number_sections: true
+css: lab.css
+# runtime: shiny_prerendered
+---
+  
+  
+```{r knitr_init, echo=FALSE, cache=FALSE, warning=FALSE}
+
+library(knitr)
+
+## Global options
+options(max.print="75")
+opts_chunk$set(echo=TRUE,
+               cache=FALSE,
+               prompt=FALSE,
+               tidy=TRUE,
+               comment=NA,
+               message=FALSE,
+               warning=FALSE)
+opts_knit$set(width=75)
+```
+
+
+```{r include=FALSE}
+library(tidyverse)
+
+options(
+  htmltools.dir.version = FALSE, # for blogdown
+  show.signif.stars = FALSE     # for regression output
+)
+fires <- read.csv('data/fires.csv')
+```
+
+
+In `ggplot` we can adapt any element of a plot. Very often we will like to modify the limits of the x and y axis, the labels or the markers and ticks. There are different functions to set axis limits :
+  
+- `xlim()` and `ylim()`
+- `expand_limits()` 
+- `scale_x_continuous()` and `scale_y_continuous()`
+
+# Setting the limits of an axis
+
+There are several ways in which we can redefine the limits of a plot. This will allow us to *zoom* into specific sections of a plot or just enhance the message. There are several ways to do so:
+
+We can pass a vector with the limits to either `xlim()` or `ylim()`:
+
+```{r}
+fires %>%
+  group_by(CAUSE,MONTH) %>%
+    ggplot(aes(x=BAREA)) +
+      geom_histogram() +
+      xlim(c(0,100))
+```
+> Note that we are not filtering out records outside the limits but rather not showing them
+
+The alternative is using `scale_x_continuous()` and `scale_y_continuous()`, and define the limits inside. But let's take a closer look into this functions and what functionalities they provide.
+
+# Use scale_xx() functions
+
+The `scale` functions (`scale_x_continous` and so on) are perhaps the most flexible way to manipulate axis since they bring in several utilities like:
+  
+- `name` : x or y axis labels
+- `breaks` : to control the breaks in the guide (axis ticks, grid lines, .). Among the possible values, there are:
+  + `NULL` : hide all breaks
++ `waiver()` : the default break computation
++ a *character or numeric vector* specifying the breaks to display
+- `labels` : labels of axis tick marks. Allowed values are :
+  + NULL for no labels
++ waiver() for the default labels
++ character vector to be used for break labels
+- limits: a numeric vector specifying x or y axis limits (min, max)
+- `trans` for axis transformations. Possible values are "log2", "log10", "sqrt2"...
+
+
+## Setting the limits
+
+```{r}
+fires %>%
+  group_by(CAUSE,MONTH) %>%
+    ggplot(aes(x=BAREA)) +
+      geom_histogram() +
+      scale_x_continuous(limits=c(0,100))
+```
+
+## Axis transformations
+
+We have seen how to transform a variable *on the fly* when applying `log()` to `BAREA`. That's an option, but we can apply the transformation on the axes instead with `trans`.
+
+We can transform and show transformed values on the axis:
+
+```{r}
+fires %>%
+  group_by(CAUSE,MONTH) %>%
+    ggplot(aes(x=BAREA)) +
+      geom_histogram() +
+      scale_x_continuous(trans='log')
+```
+
+Or transform and keep the original values:
+
+```{r}
+fires %>%
+  group_by(CAUSE,MONTH) %>%
+    ggplot(aes(x=BAREA)) +
+      geom_histogram() +
+      scale_x_continuous(trans='log2')
+```
+
+# Axis labels and ticks
+
+Something in what might be interseted is in changing the position or labels of axis ticks. The `breaks` and `labels` options let us change the position and text of axis ticks, respectively.
+
+```{r}
+fires %>%
+  group_by(CAUSE,MONTH) %>%
+    ggplot(aes(x=BAREA)) +
+      geom_histogram() +
+      scale_x_continuous(trans='log2',
+        breaks = c(1,10,100,500), 
+                         labels = c('small','medium', 'large','very large'))
+```
