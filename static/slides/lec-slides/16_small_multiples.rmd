@@ -2,9 +2,7 @@
 title: "Small multiples, working with facets"
 author: 
     - "Aitor Ameztegui"
-    - "Marcos Rodrigues"
-date: '`r format(Sys.Date(), "%B %Y")`'
-
+date: "Fall 2021"
 
 output:
   xaringan::moon_reader:

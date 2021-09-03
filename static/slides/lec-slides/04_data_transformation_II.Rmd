@@ -3,7 +3,7 @@ title: "Data transformation (II)"
 subtitle: "Piping and conditional transformations"
 author: 
     - "Aitor Ameztegui"
-    - "Marcos Rodrigues"
+date: "Fall 2021"
 output:
   xaringan::moon_reader:
     css: "slides.css"

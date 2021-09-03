@@ -4,7 +4,6 @@
     <title>Data wrangling with tidyr</title>
     <meta charset="utf-8" />
     <meta name="author" content="Aitor Ameztegui" />
-    <meta name="author" content="Marcos Rodrigues" />
     <script src="libs/header-attrs/header-attrs.js"></script>
     <link href="libs/font-awesome/css/all.css" rel="stylesheet" />
     <link href="libs/font-awesome/css/v4-shims.css" rel="stylesheet" />
@@ -17,7 +16,7 @@ class: center, middle, inverse, title-slide
 # Data wrangling with <code>tidyr</code>
 ## How to transform your dataset </br> into a tidy format
 ### Aitor Ameztegui
-### Marcos Rodrigues
+### Fall 2021
 
 ---
 
@@ -62,15 +61,15 @@ country_long
 
 ```
 ##   country year avgtemp
-## 1  Sweden 1994       4
+## 1  Sweden 1994      11
 ## 2 Denmark 1994       7
-## 3  Norway 1994       4
-## 4  Sweden 1995       8
-## 5 Denmark 1995      10
-## 6  Norway 1995       6
-## 7  Sweden 1996      10
-## 8 Denmark 1996      12
-## 9  Norway 1996      12
+## 3  Norway 1994       3
+## 4  Sweden 1995      11
+## 5 Denmark 1995       9
+## 6  Norway 1995       4
+## 7  Sweden 1996       8
+## 8 Denmark 1996       8
+## 9  Norway 1996       3
 ```
 --
 &lt;/br&gt;
@@ -92,9 +91,9 @@ country_wide
 
 ```
 ##   country avgtemp.1994 avgtemp.1995 avgtemp.1996
-## 1  Sweden            4            8           10
-## 2 Denmark            7           10           12
-## 3  Norway            4            6           12
+## 1  Sweden           11           11            8
+## 2 Denmark            7            9            8
+## 3  Norway            3            4            3
 ```
 &lt;/br&gt;
 &lt;/br&gt;

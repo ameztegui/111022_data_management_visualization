@@ -3,7 +3,7 @@ title: "Relational data"
 subtitle: "Working with several data tables"
 author: 
     - "Aitor Ameztegui"
-    - "Marcos Rodrigues"
+date: "Fall 2021"
 output:
   xaringan::moon_reader:
     css: "slides.css"

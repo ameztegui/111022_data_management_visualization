@@ -4,7 +4,7 @@
     <title>Functional programming within the tidyverse</title>
     <meta charset="utf-8" />
     <meta name="author" content="Aitor Ameztegui" />
-    <meta name="author" content="Marcos Rodrigues" />
+    <script src="libs/header-attrs/header-attrs.js"></script>
     <link rel="stylesheet" href="slides.css" type="text/css" />
   </head>
   <body>
@@ -14,7 +14,7 @@ class: center, middle, inverse, title-slide
 # Functional programming within the tidyverse
 ## Using functions to improve your code
 ### Aitor Ameztegui
-### Marcos Rodrigues
+### Fall 2021
 
 ---
 
@@ -139,7 +139,7 @@ mean_plot_growth(lleida_trees)
 ```
 ## # A tibble: 2,235 x 2
 ##    Codi   mean_growth
-##    &lt;fct&gt;        &lt;dbl&gt;
+##  * &lt;fct&gt;        &lt;dbl&gt;
 ##  1 250001        3.59
 ##  2 250002        3.73
 ##  3 250003        8.40
@@ -150,7 +150,7 @@ mean_plot_growth(lleida_trees)
 ##  8 250008        2.56
 ##  9 250010        2.05
 ## 10 250011        8.36
-## # … with 2,225 more rows
+## # ... with 2,225 more rows
 ```
 
 ---
@@ -166,7 +166,7 @@ mean_plot_growth(barcelona_trees)
 ```
 ## # A tibble: 2,429 x 2
 ##    Codi   mean_growth
-##    &lt;fct&gt;        &lt;dbl&gt;
+##  * &lt;fct&gt;        &lt;dbl&gt;
 ##  1 080001        3.33
 ##  2 080002        3.63
 ##  3 080003        5.93
@@ -177,7 +177,7 @@ mean_plot_growth(barcelona_trees)
 ##  8 080008        1.79
 ##  9 080009        1.86
 ## 10 080010        3.33
-## # … with 2,419 more rows
+## # ... with 2,419 more rows
 ```
 
 ---
@@ -193,7 +193,7 @@ girona_trees %&gt;% mean_plot_growth()     # different flavour of the same opera
 ```
 ## # A tibble: 2,113 x 2
 ##    Codi   mean_growth
-##    &lt;fct&gt;        &lt;dbl&gt;
+##  * &lt;fct&gt;        &lt;dbl&gt;
 ##  1 170004        2.99
 ##  2 170005        1.86
 ##  3 170006        1.75
@@ -204,7 +204,7 @@ girona_trees %&gt;% mean_plot_growth()     # different flavour of the same opera
 ##  8 170012        2.11
 ##  9 170013        1.55
 ## 10 170014        5.38
-## # … with 2,103 more rows
+## # ... with 2,103 more rows
 ```
 
 ---
@@ -223,7 +223,7 @@ lleida_trees %&gt;%
 ```
 ## # A tibble: 923 x 2
 ##    Codi   mean_growth
-##    &lt;fct&gt;        &lt;dbl&gt;
+##  * &lt;fct&gt;        &lt;dbl&gt;
 ##  1 250029        3.93
 ##  2 250034        4.48
 ##  3 250040        2.38
@@ -234,7 +234,7 @@ lleida_trees %&gt;%
 ##  8 250053        5.31
 ##  9 250054        3.6 
 ## 10 250058        3.13
-## # … with 913 more rows
+## # ... with 913 more rows
 ```
 ]
 ---
@@ -253,7 +253,7 @@ lleida_trees %&gt;%
 ```
 ## # A tibble: 923 x 2
 ##    Codi   mean_growth
-##    &lt;fct&gt;        &lt;dbl&gt;
+##  * &lt;fct&gt;        &lt;dbl&gt;
 ##  1 250029        3.93
 ##  2 250034        4.48
 ##  3 250040        2.38
@@ -264,7 +264,7 @@ lleida_trees %&gt;%
 ##  8 250053        5.31
 ##  9 250054        3.6 
 ## 10 250058        3.13
-## # … with 913 more rows
+## # ... with 913 more rows
 ```
 ]
 .pull-right[
@@ -293,7 +293,7 @@ lleida_trees %&gt;%
 ##  8 250043       12.0 
 ##  9 250049        7.75
 ## 10 250069        5.41
-## # … with 218 more rows
+## # ... with 218 more rows
 ```
 ]
 ---
@@ -362,14 +362,15 @@ rescale(x)
 ```
 
 ```
-##  [1] 0.5779915 0.7102939 1.0000000 0.4061992 0.5402809 0.4947868 0.4646067
-##  [8] 0.4656660 0.9162096 0.3268340 0.8188337 0.5750644 0.4290810 0.6358294
-## [15] 0.6123055 0.4053275 0.6414361 0.7647630 0.9341360 0.7772478 0.9061953
-## [22] 0.3842357 0.5699235 0.6587312 0.2787005 0.0000000 0.5883748 0.2989862
-## [29] 0.6002826 0.8235823 0.5944328 0.6766010 0.5935087 0.9191080 0.7643870
-## [36] 0.2452367 0.7360258 0.5997734 0.7570898 0.6048226 0.4455989 0.6234225
-## [43] 0.9488612 0.8420831 0.9210467 0.4904390 0.4094097 0.6828568 0.7868331
-## [50] 0.3879234
+##  [1] 0.73775351 0.08975015 0.33671986 0.50301456 0.61237597 0.39341110
+##  [7] 0.27795513 0.26043751 0.11732710 0.63004458 0.68217892 0.44285999
+## [13] 0.52987847 0.35261265 0.46927126 0.54055370 0.52017540 0.62314886
+## [19] 0.28979010 0.26415320 0.72853439 0.31202653 0.51723736 0.27499983
+## [25] 0.62289046 0.41378358 0.26129428 0.53638859 0.48489697 0.27981279
+## [31] 0.77442091 0.58827924 0.21212527 0.35235290 0.68449441 0.86767533
+## [37] 0.45623963 0.57853705 0.18708066 0.46369605 0.00000000 0.36375350
+## [43] 1.00000000 0.68048921 0.65241983 0.72125539 0.62561533 0.45966979
+## [49] 0.21902004 0.38281287
 ```
 
 ---
@@ -398,7 +399,7 @@ trees %&gt;%
 ##  8 080009 08        045        16  5.09  31.8     20  0.0508  0.0398    7  
 ##  9 080010 08        243        47 26.9    5.09    65  0.304   0.302    16.5
 ## 10 080013 08        022        44  2.7  127.      15  0.0386  0.0260    9.5
-## # … with 111,746 more rows
+## # ... with 111,746 more rows
 ```
 
 
@@ -439,7 +440,7 @@ mean_plot_growth(lleida_trees)
 ```
 ## # A tibble: 2,235 x 2
 ##    Codi   mean_growth
-##    &lt;fct&gt;        &lt;dbl&gt;
+##  * &lt;fct&gt;        &lt;dbl&gt;
 ##  1 250001        3.59
 ##  2 250002        3.73
 ##  3 250003        8.40
@@ -450,7 +451,7 @@ mean_plot_growth(lleida_trees)
 ##  8 250008        2.56
 ##  9 250010        2.05
 ## 10 250011        8.36
-## # … with 2,225 more rows
+## # ... with 2,225 more rows
 ```
 
 ---
@@ -486,7 +487,8 @@ mean_plot_growth(lleida_trees, Especie)
 ```
 
 ```
-## Error: Column `grouping_var` is unknown
+## Error: Must group by variables found in `.data`.
+## * Column `grouping_var` is not found.
 ```
 
 --
@@ -532,7 +534,7 @@ mean_plot_growth2(lleida_trees, Especie)
 ```
 ## # A tibble: 18 x 2
 ##    Especie mean_growth
-##    &lt;fct&gt;         &lt;dbl&gt;
+##  * &lt;fct&gt;         &lt;dbl&gt;
 ##  1 019            2.88
 ##  2 021            3.09
 ##  3 022            2.44
@@ -566,7 +568,7 @@ mean_plot_growth2(lleida_trees, Codi)
 ```
 ## # A tibble: 2,235 x 2
 ##    Codi   mean_growth
-##    &lt;fct&gt;        &lt;dbl&gt;
+##  * &lt;fct&gt;        &lt;dbl&gt;
 ##  1 250001        3.59
 ##  2 250002        3.73
 ##  3 250003        8.40
@@ -577,7 +579,7 @@ mean_plot_growth2(lleida_trees, Codi)
 ##  8 250008        2.56
 ##  9 250010        2.05
 ## 10 250011        8.36
-## # … with 2,225 more rows
+## # ... with 2,225 more rows
 ```
 
 ---
@@ -593,7 +595,7 @@ mean_plot_growth2(lleida_trees, CD)
 ```
 ## # A tibble: 13 x 2
 ##       CD mean_growth
-##    &lt;dbl&gt;       &lt;dbl&gt;
+##  * &lt;dbl&gt;       &lt;dbl&gt;
 ##  1    10        1.36
 ##  2    15        2.15
 ##  3    20        3.03
@@ -618,6 +620,7 @@ background-position: center
 background-size: 60%
 
 # Ok, now on your own!
+
     </textarea>
 <style data-target="print-only">@media screen {.remark-slide-container{display:block;}.remark-slide-scaler{box-shadow:none;}}</style>
 <script src="https://remarkjs.com/downloads/remark-latest.min.js"></script>
@@ -665,6 +668,32 @@ if (window.HTMLWidgets) slideshow.on('afterShowSlide', function (slide) {
     deleted = true;
   });
 })();
+(function() {
+  "use strict"
+  // Replace <script> tags in slides area to make them executable
+  var scripts = document.querySelectorAll(
+    '.remark-slides-area .remark-slide-container script'
+  );
+  if (!scripts.length) return;
+  for (var i = 0; i < scripts.length; i++) {
+    var s = document.createElement('script');
+    var code = document.createTextNode(scripts[i].textContent);
+    s.appendChild(code);
+    var scriptAttrs = scripts[i].attributes;
+    for (var j = 0; j < scriptAttrs.length; j++) {
+      s.setAttribute(scriptAttrs[j].name, scriptAttrs[j].value);
+    }
+    scripts[i].parentElement.replaceChild(s, scripts[i]);
+  }
+})();
+(function() {
+  var links = document.getElementsByTagName('a');
+  for (var i = 0; i < links.length; i++) {
+    if (/^(https?:)?\/\//.test(links[i].getAttribute('href'))) {
+      links[i].target = '_blank';
+    }
+  }
+})();
 // adds .remark-code-has-line-highlighted class to <pre> parent elements
 // of code chunks containing highlighted lines with class .remark-code-line-highlighted
 (function(d) {
@@ -682,17 +711,6 @@ if (window.HTMLWidgets) slideshow.on('afterShowSlide', function (slide) {
   }
   preParents.forEach(p => p.classList.add("remark-code-has-line-highlighted"));
 })(document);</script>
-
-<script>
-(function() {
-  var links = document.getElementsByTagName('a');
-  for (var i = 0; i < links.length; i++) {
-    if (/^(https?:)?\/\//.test(links[i].getAttribute('href'))) {
-      links[i].target = '_blank';
-    }
-  }
-})();
-</script>
 
 <script>
 slideshow._releaseMath = function(el) {

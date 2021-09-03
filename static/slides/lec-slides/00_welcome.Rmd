@@ -2,8 +2,7 @@
 title: "Welcome to </br>Data Management </br>and Visualization with R"
 author: 
     - "Aitor Ameztegui"
-    - "Marcos Rodrigues"
-date: '`r format(Sys.Date(), "%B %Y")`'
+date: "Fall 2021"
 
 
 output:
@@ -45,7 +44,7 @@ library(tidyverse)
 library(rvest)
 ```
 
-# Who are we?
+# Who am I?
 
 .pull-left[.bold[
  [Dr. Aitor Ameztegui](http://ameztegui.weebly.com/)<br>]
@@ -57,14 +56,7 @@ library(rvest)
 or upon request
 <br><br>]
 
-.pull-right[.bold[
-[Dr. Marcos Rodrigues](http://www.eagrof.udl.cat/es/personal/PDI/rodrigues.html) <br>]
 
-<i class="fa fa-envelope"></i> &nbsp; [rmarcos@udl.cat](mailto:rmarcos@udl.cat) <br>
-<i class="fa fa-university"></i> &nbsp; Building 4, Bureau 2.04.2 <br>
-<i class="fa fa-phone"></i> &nbsp; 973702539 <br> 
-<i class="fa fa-calendar"></i> &nbsp; Upon request
-<br><br>]
 
 ---
 

@@ -4,7 +4,7 @@
     <title>Iteration</title>
     <meta charset="utf-8" />
     <meta name="author" content="Aitor Ameztegui" />
-    <meta name="author" content="Marcos Rodrigues" />
+    <script src="libs/header-attrs/header-attrs.js"></script>
     <link rel="stylesheet" href="slides.css" type="text/css" />
   </head>
   <body>
@@ -13,7 +13,7 @@ class: center, middle, inverse, title-slide
 
 # Iteration
 ### Aitor Ameztegui
-### Marcos Rodrigues
+### Fall 2021
 
 ---
 
@@ -155,6 +155,13 @@ for (i in seq_along(provinces)) {
 }
 ```
 
+```
+## `summarise()` has grouped output by 'Provincia'. You can override using the `.groups` argument.
+## `summarise()` has grouped output by 'Provincia'. You can override using the `.groups` argument.
+## `summarise()` has grouped output by 'Provincia'. You can override using the `.groups` argument.
+## `summarise()` has grouped output by 'Provincia'. You can override using the `.groups` argument.
+```
+
 ---
 
 # `for` loops
@@ -166,29 +173,29 @@ glimpse(output)
 
 ```
 ## List of 4
-##  $ : tibble [18 × 3] (S3: grouped_df/tbl_df/tbl/data.frame)
+##  $ : grouped_df[,3] [18 x 3] (S3: grouped_df/tbl_df/tbl/data.frame)
 ##   ..$ Provincia  : chr [1:18] "25" "25" "25" "25" ...
 ##   ..$ Especie    : Factor w/ 91 levels "004","008","012",..: 9 10 11 13 14 18 26 28 29 32 ...
 ##   ..$ mean_growth: num [1:18] 2.88 3.09 2.44 2.99 2.93 ...
-##   ..- attr(*, "groups")= tibble [1 × 2] (S3: tbl_df/tbl/data.frame)
+##   ..- attr(*, "groups")= tibble[,2] [1 x 2] (S3: tbl_df/tbl/data.frame)
 ##   .. ..- attr(*, ".drop")= logi TRUE
-##  $ : tibble [66 × 3] (S3: grouped_df/tbl_df/tbl/data.frame)
+##  $ : grouped_df[,3] [66 x 3] (S3: grouped_df/tbl_df/tbl/data.frame)
 ##   ..$ Provincia  : chr [1:66] "08" "08" "08" "08" ...
 ##   ..$ Especie    : Factor w/ 91 levels "004","008","012",..: 1 2 3 4 7 8 10 11 12 13 ...
 ##   ..$ mean_growth: num [1:66] 2.25 1.37 1.25 3.95 3.02 ...
-##   ..- attr(*, "groups")= tibble [1 × 2] (S3: tbl_df/tbl/data.frame)
+##   ..- attr(*, "groups")= tibble[,2] [1 x 2] (S3: tbl_df/tbl/data.frame)
 ##   .. ..- attr(*, ".drop")= logi TRUE
-##  $ : tibble [78 × 3] (S3: grouped_df/tbl_df/tbl/data.frame)
+##  $ : grouped_df[,3] [78 x 3] (S3: grouped_df/tbl_df/tbl/data.frame)
 ##   ..$ Provincia  : chr [1:78] "17" "17" "17" "17" ...
 ##   ..$ Especie    : Factor w/ 91 levels "004","008","012",..: 2 3 4 5 6 7 8 10 11 12 ...
 ##   ..$ mean_growth: num [1:78] 1.32 3.27 5.4 0 3.12 ...
-##   ..- attr(*, "groups")= tibble [1 × 2] (S3: tbl_df/tbl/data.frame)
+##   ..- attr(*, "groups")= tibble[,2] [1 x 2] (S3: tbl_df/tbl/data.frame)
 ##   .. ..- attr(*, ".drop")= logi TRUE
-##  $ : tibble [36 × 3] (S3: grouped_df/tbl_df/tbl/data.frame)
+##  $ : grouped_df[,3] [36 x 3] (S3: grouped_df/tbl_df/tbl/data.frame)
 ##   ..$ Provincia  : chr [1:36] "43" "43" "43" "43" ...
 ##   ..$ Especie    : Factor w/ 91 levels "004","008","012",..: 1 2 3 4 5 10 12 13 14 15 ...
 ##   ..$ mean_growth: num [1:36] 0.6 1 5.175 1.51 0.983 ...
-##   ..- attr(*, "groups")= tibble [1 × 2] (S3: tbl_df/tbl/data.frame)
+##   ..- attr(*, "groups")= tibble[,2] [1 x 2] (S3: tbl_df/tbl/data.frame)
 ##   .. ..- attr(*, ".drop")= logi TRUE
 ```
 
@@ -205,16 +212,25 @@ for (i in seq_along(provinces)) {
     temp_output &lt;- mean_growth(provinces[[i]], Especie)
     output &lt;- bind_rows(output, temp_output)
 }
+```
 
+```
+## `summarise()` has grouped output by 'Provincia'. You can override using the `.groups` argument.
+## `summarise()` has grouped output by 'Provincia'. You can override using the `.groups` argument.
+## `summarise()` has grouped output by 'Provincia'. You can override using the `.groups` argument.
+## `summarise()` has grouped output by 'Provincia'. You can override using the `.groups` argument.
+```
+
+```r
 glimpse(output)
 ```
 
 ```
 ## Rows: 198
 ## Columns: 3
-## $ Provincia   &lt;chr&gt; "25", "25", "25", "25", "25", "25", "25", "25", "25", "25…
-## $ Especie     &lt;fct&gt; 019, 021, 022, 024, 025, 031, 042, 044, 045, 050, 070, 07…
-## $ mean_growth &lt;dbl&gt; 2.882647, 3.090275, 2.438845, 2.990442, 2.925836, 4.03572…
+## $ Provincia   &lt;chr&gt; "25", "25", "25", "25", "25", "25", "25", "25", "25", "25"~
+## $ Especie     &lt;fct&gt; 019, 021, 022, 024, 025, 031, 042, 044, 045, 050, 070, 071~
+## $ mean_growth &lt;dbl&gt; 2.882647, 3.090275, 2.438845, 2.990442, 2.925836, 4.035727~
 ```
 
 --
@@ -233,7 +249,16 @@ output &lt;- list()
 for (i in seq_along(provinces)) {
     output[[i]] &lt;- mean_growth(provinces[[i]], Especie)
 }
+```
 
+```
+## `summarise()` has grouped output by 'Provincia'. You can override using the `.groups` argument.
+## `summarise()` has grouped output by 'Provincia'. You can override using the `.groups` argument.
+## `summarise()` has grouped output by 'Provincia'. You can override using the `.groups` argument.
+## `summarise()` has grouped output by 'Provincia'. You can override using the `.groups` argument.
+```
+
+```r
 bind_rows(output) %&gt;% glimpse()
 ```
 
@@ -241,9 +266,9 @@ bind_rows(output) %&gt;% glimpse()
 ## Rows: 198
 ## Columns: 3
 ## Groups: Provincia [4]
-## $ Provincia   &lt;chr&gt; "25", "25", "25", "25", "25", "25", "25", "25", "25", "25…
-## $ Especie     &lt;fct&gt; 019, 021, 022, 024, 025, 031, 042, 044, 045, 050, 070, 07…
-## $ mean_growth &lt;dbl&gt; 2.882647, 3.090275, 2.438845, 2.990442, 2.925836, 4.03572…
+## $ Provincia   &lt;chr&gt; "25", "25", "25", "25", "25", "25", "25", "25", "25", "25"~
+## $ Especie     &lt;fct&gt; 019, 021, 022, 024, 025, 031, 042, 044, 045, 050, 070, 071~
+## $ mean_growth &lt;dbl&gt; 2.882647, 3.090275, 2.438845, 2.990442, 2.925836, 4.035727~
 ```
 
 
@@ -291,13 +316,13 @@ map(x, mean)
 
 ```
 ## $x1
-## [1] 10.00785
+## [1] 10.07534
 ## 
 ## $x2
-## [1] 19.18107
+## [1] 19.32811
 ## 
 ## $x3
-## [1] 49.90433
+## [1] 49.37365
 ```
 
 
@@ -320,17 +345,17 @@ map(y, rnorm)
 
 ```
 ## [[1]]
-## [1]  0.5524495 -0.8763153 -0.4927703  0.3860059  0.1834298
+## [1]  0.1408265  0.1813542  0.4590381  0.1434615 -0.8005494
 ## 
 ## [[2]]
-##  [1] -0.2299797  0.7593643  2.0179937  0.8358958  1.0181700  1.0051043
-##  [7] -0.8647452  2.3300535 -0.8542872 -0.1083361
+##  [1]  0.10367413  1.40408524  0.25215984  0.85208824 -1.28357937 -1.22243234
+##  [7] -0.80671041  0.76700427 -1.62416634  0.04734874
 ## 
 ## [[3]]
-##  [1]  1.0451441  1.6947714 -0.8353064  0.7961245  0.6217182 -0.1949800
-##  [7] -0.4225395 -1.8895566  0.2773033  1.5141308  1.7890871 -0.7165152
-## [13] -0.6147670 -0.9134849  0.7197409  0.9351860 -0.8406143 -0.7219492
-## [19]  0.8783049 -1.8295121
+##  [1]  1.19819635  0.03538874 -0.68140311  0.30319006 -0.32586495 -0.09258591
+##  [7] -1.95156636 -0.72062199  1.17326627 -0.18999907  0.68316033 -0.88640904
+## [13] -1.21709634  0.17582042  2.21925033 -0.31301974  2.21458440 -0.09984305
+## [19] -0.93927971 -0.66858571
 ```
 ---
 # The map functions
@@ -345,16 +370,16 @@ map(y, rnorm, 10, 1)
 
 ```
 ## [[1]]
-## [1]  9.143940 10.850779  9.077289  9.523715  8.719950
+## [1]  9.368357 10.779353 10.487239  9.961007 11.062130
 ## 
 ## [[2]]
-##  [1]  9.189871 10.085075 11.103338  9.878812 10.881820  8.574682  9.172652
-##  [8] 11.980586 10.561740  9.959678
+##  [1]  8.744355 10.725280 10.583800  9.238928 11.341686 10.149626 11.222199
+##  [8] 10.651454 10.431379  8.412633
 ## 
 ## [[3]]
-##  [1] 12.362135 10.690489  9.095923 10.761787  8.844683  9.812150  8.888964
-##  [8]  8.970596  9.986564  9.535356  9.783538 11.576999  9.041142 10.151853
-## [15] 10.521948  9.889638  9.526801 10.703266 11.230536 10.976777
+##  [1]  9.042295 12.346681  7.348484 12.080793  9.570155 11.072748  9.398947
+##  [8]  9.833151  9.057114 10.756022  9.659063 11.388081  9.934336  8.870625
+## [15]  9.406613  8.638941 11.145224  9.887775 10.180211  8.923928
 ```
 
 ---
@@ -368,30 +393,37 @@ map(provinces, mean_growth, Especie) %&gt;% glimpse()
 ```
 
 ```
+## `summarise()` has grouped output by 'Provincia'. You can override using the `.groups` argument.
+## `summarise()` has grouped output by 'Provincia'. You can override using the `.groups` argument.
+## `summarise()` has grouped output by 'Provincia'. You can override using the `.groups` argument.
+## `summarise()` has grouped output by 'Provincia'. You can override using the `.groups` argument.
+```
+
+```
 ## List of 4
-##  $ : tibble [18 × 3] (S3: grouped_df/tbl_df/tbl/data.frame)
+##  $ : grouped_df[,3] [18 x 3] (S3: grouped_df/tbl_df/tbl/data.frame)
 ##   ..$ Provincia  : chr [1:18] "25" "25" "25" "25" ...
 ##   ..$ Especie    : Factor w/ 91 levels "004","008","012",..: 9 10 11 13 14 18 26 28 29 32 ...
 ##   ..$ mean_growth: num [1:18] 2.88 3.09 2.44 2.99 2.93 ...
-##   ..- attr(*, "groups")= tibble [1 × 2] (S3: tbl_df/tbl/data.frame)
+##   ..- attr(*, "groups")= tibble[,2] [1 x 2] (S3: tbl_df/tbl/data.frame)
 ##   .. ..- attr(*, ".drop")= logi TRUE
-##  $ : tibble [66 × 3] (S3: grouped_df/tbl_df/tbl/data.frame)
+##  $ : grouped_df[,3] [66 x 3] (S3: grouped_df/tbl_df/tbl/data.frame)
 ##   ..$ Provincia  : chr [1:66] "08" "08" "08" "08" ...
 ##   ..$ Especie    : Factor w/ 91 levels "004","008","012",..: 1 2 3 4 7 8 10 11 12 13 ...
 ##   ..$ mean_growth: num [1:66] 2.25 1.37 1.25 3.95 3.02 ...
-##   ..- attr(*, "groups")= tibble [1 × 2] (S3: tbl_df/tbl/data.frame)
+##   ..- attr(*, "groups")= tibble[,2] [1 x 2] (S3: tbl_df/tbl/data.frame)
 ##   .. ..- attr(*, ".drop")= logi TRUE
-##  $ : tibble [78 × 3] (S3: grouped_df/tbl_df/tbl/data.frame)
+##  $ : grouped_df[,3] [78 x 3] (S3: grouped_df/tbl_df/tbl/data.frame)
 ##   ..$ Provincia  : chr [1:78] "17" "17" "17" "17" ...
 ##   ..$ Especie    : Factor w/ 91 levels "004","008","012",..: 2 3 4 5 6 7 8 10 11 12 ...
 ##   ..$ mean_growth: num [1:78] 1.32 3.27 5.4 0 3.12 ...
-##   ..- attr(*, "groups")= tibble [1 × 2] (S3: tbl_df/tbl/data.frame)
+##   ..- attr(*, "groups")= tibble[,2] [1 x 2] (S3: tbl_df/tbl/data.frame)
 ##   .. ..- attr(*, ".drop")= logi TRUE
-##  $ : tibble [36 × 3] (S3: grouped_df/tbl_df/tbl/data.frame)
+##  $ : grouped_df[,3] [36 x 3] (S3: grouped_df/tbl_df/tbl/data.frame)
 ##   ..$ Provincia  : chr [1:36] "43" "43" "43" "43" ...
 ##   ..$ Especie    : Factor w/ 91 levels "004","008","012",..: 1 2 3 4 5 10 12 13 14 15 ...
 ##   ..$ mean_growth: num [1:36] 0.6 1 5.175 1.51 0.983 ...
-##   ..- attr(*, "groups")= tibble [1 × 2] (S3: tbl_df/tbl/data.frame)
+##   ..- attr(*, "groups")= tibble[,2] [1 x 2] (S3: tbl_df/tbl/data.frame)
 ##   .. ..- attr(*, ".drop")= logi TRUE
 ```
 
@@ -405,6 +437,13 @@ If we want a data frame...
 ```r
 map(provinces, mean_growth, Especie) %&gt;%
     bind_rows()
+```
+
+```
+## `summarise()` has grouped output by 'Provincia'. You can override using the `.groups` argument.
+## `summarise()` has grouped output by 'Provincia'. You can override using the `.groups` argument.
+## `summarise()` has grouped output by 'Provincia'. You can override using the `.groups` argument.
+## `summarise()` has grouped output by 'Provincia'. You can override using the `.groups` argument.
 ```
 
 ```
@@ -422,7 +461,7 @@ map(provinces, mean_growth, Especie) %&gt;%
 ##  8 25        044            2.24
 ##  9 25        045            1.46
 ## 10 25        050            4.53
-## # … with 188 more rows
+## # ... with 188 more rows
 ```
 ---
 
@@ -447,13 +486,13 @@ map(x, mean)
 
 ```
 ## $x1
-## [1] 10.00785
+## [1] 10.07534
 ## 
 ## $x2
-## [1] 19.18107
+## [1] 19.32811
 ## 
 ## $x3
-## [1] 49.90433
+## [1] 49.37365
 ```
 
 ---
@@ -465,7 +504,7 @@ map_dbl(x, mean)
 
 ```
 ##       x1       x2       x3 
-## 10.00785 19.18107 49.90433
+## 10.07534 19.32811 49.37365
 ```
 
 
@@ -477,7 +516,7 @@ map_df(x, mean)
 ## # A tibble: 1 x 3
 ##      x1    x2    x3
 ##   &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;
-## 1  10.0  19.2  49.9
+## 1  10.1  19.3  49.4
 ```
 
 
@@ -487,7 +526,7 @@ map_chr(x, mean)
 
 ```
 ##          x1          x2          x3 
-## "10.007854" "19.181065" "49.904329"
+## "10.075336" "19.328108" "49.373650"
 ```
 
 
@@ -498,6 +537,13 @@ map_chr(x, mean)
 
 ```r
 map_df(provinces, mean_growth, Especie) 
+```
+
+```
+## `summarise()` has grouped output by 'Provincia'. You can override using the `.groups` argument.
+## `summarise()` has grouped output by 'Provincia'. You can override using the `.groups` argument.
+## `summarise()` has grouped output by 'Provincia'. You can override using the `.groups` argument.
+## `summarise()` has grouped output by 'Provincia'. You can override using the `.groups` argument.
 ```
 
 ```
@@ -515,7 +561,7 @@ map_df(provinces, mean_growth, Especie)
 ##  8 25        044            2.24
 ##  9 25        045            1.46
 ## 10 25        050            4.53
-## # … with 188 more rows
+## # ... with 188 more rows
 ```
 
 ---
@@ -544,16 +590,16 @@ map2(n, means, rnorm)
 
 ```
 ## [[1]]
-## [1]  9.428870 10.868095 12.074761  8.123598 10.187970
+## [1]  9.642409  9.615643  8.813353  8.126580 10.397914
 ## 
 ## [[2]]
-##  [1] 19.51645 19.65746 21.17519 19.50106 19.20842 22.11692 18.78171 19.16142
-##  [9] 17.70887 20.65318
+##  [1] 20.45440 19.63609 18.35852 20.29133 19.97399 19.60337 19.25136 18.37305
+##  [9] 18.42963 20.41418
 ## 
 ## [[3]]
-##  [1] 50.39054 51.44056 48.54556 49.89909 49.16401 49.62969 51.25937 50.29789
-##  [9] 51.05439 50.20078 50.21010 51.24496 51.61721 47.92436 49.31917 49.49065
-## [17] 50.48152 50.89630 50.27834 48.79020
+##  [1] 51.78636 49.26173 49.36265 49.76149 49.97204 50.01889 50.67137 50.39769
+##  [9] 49.44628 50.44923 50.94924 50.61498 48.45667 52.03133 49.39889 50.66123
+## [17] 49.37952 50.65083 51.29988 49.79465
 ```
 
 ---
@@ -568,16 +614,16 @@ map2(n, means, rnorm, sd = 10)
 
 ```
 ## [[1]]
-## [1]  5.940725 10.916959 -9.677783 10.985651 11.371187
+## [1]  4.892946  9.909908 35.184298 23.040665 25.830734
 ## 
 ## [[2]]
-##  [1] 17.837258 16.623239  8.949142 17.899695 13.972799 -3.303624 26.121500
-##  [8] 27.136877 24.771267 19.099933
+##  [1] 15.959734  5.551055 19.495252 13.686973 15.106108 25.522246 19.629072
+##  [8] 26.680452 30.891711 18.851663
 ## 
 ## [[3]]
-##  [1] 51.86153 63.24041 51.48435 46.29132 51.29357 44.62487 38.48410 67.29836
-##  [9] 54.85581 69.23022 49.03070 42.41028 45.16000 47.07487 48.92135 41.24633
-## [17] 57.33027 63.30097 43.98465 44.97289
+##  [1] 74.57492 42.19002 45.76312 53.34775 60.89637 42.76709 55.83719 46.78567
+##  [9] 54.16996 62.36688 49.92070 63.98578 64.11887 65.77101 45.35096 26.75595
+## [17] 55.80770 53.39668 60.39383 41.67516
 ```
 
 
@@ -591,6 +637,7 @@ background-position: center
 background-size: 60%
 
 # Ok, now on your own!
+
     </textarea>
 <style data-target="print-only">@media screen {.remark-slide-container{display:block;}.remark-slide-scaler{box-shadow:none;}}</style>
 <script src="https://remarkjs.com/downloads/remark-latest.min.js"></script>
@@ -638,6 +685,32 @@ if (window.HTMLWidgets) slideshow.on('afterShowSlide', function (slide) {
     deleted = true;
   });
 })();
+(function() {
+  "use strict"
+  // Replace <script> tags in slides area to make them executable
+  var scripts = document.querySelectorAll(
+    '.remark-slides-area .remark-slide-container script'
+  );
+  if (!scripts.length) return;
+  for (var i = 0; i < scripts.length; i++) {
+    var s = document.createElement('script');
+    var code = document.createTextNode(scripts[i].textContent);
+    s.appendChild(code);
+    var scriptAttrs = scripts[i].attributes;
+    for (var j = 0; j < scriptAttrs.length; j++) {
+      s.setAttribute(scriptAttrs[j].name, scriptAttrs[j].value);
+    }
+    scripts[i].parentElement.replaceChild(s, scripts[i]);
+  }
+})();
+(function() {
+  var links = document.getElementsByTagName('a');
+  for (var i = 0; i < links.length; i++) {
+    if (/^(https?:)?\/\//.test(links[i].getAttribute('href'))) {
+      links[i].target = '_blank';
+    }
+  }
+})();
 // adds .remark-code-has-line-highlighted class to <pre> parent elements
 // of code chunks containing highlighted lines with class .remark-code-line-highlighted
 (function(d) {
@@ -655,17 +728,6 @@ if (window.HTMLWidgets) slideshow.on('afterShowSlide', function (slide) {
   }
   preParents.forEach(p => p.classList.add("remark-code-has-line-highlighted"));
 })(document);</script>
-
-<script>
-(function() {
-  var links = document.getElementsByTagName('a');
-  for (var i = 0; i < links.length; i++) {
-    if (/^(https?:)?\/\//.test(links[i].getAttribute('href'))) {
-      links[i].target = '_blank';
-    }
-  }
-})();
-</script>
 
 <script>
 slideshow._releaseMath = function(el) {
