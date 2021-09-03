@@ -1,0 +1,313 @@
+---
+title: "Lab 6.2 - Directory of visualizations (II): Visualizing relationships, trends and uncertainty"
+date: "111022 | Data management and visualization with R"
+author: 
+  - "Aitor Ameztegui"
+bibliography: "references/biblio.bib"
+output:
+  rmdformats::readthedown:
+    highlight: pygments
+    number_sections: true
+    css: lab.css
+# runtime: shiny_prerendered
+---
+
+
+```{r knitr_init, echo=FALSE, cache=FALSE, warning=FALSE}
+
+library(knitr)
+
+## Global options
+options(max.print="75")
+opts_chunk$set(echo=TRUE,
+	             cache=FALSE,
+               prompt=FALSE,
+               tidy=TRUE,
+               comment=NA,
+               message=FALSE,
+               warning=FALSE)
+opts_knit$set(width=75)
+```
+
+
+```{r include=FALSE}
+library(tidyverse)
+options(
+  htmltools.dir.version = FALSE, # for blogdown
+  show.signif.stars = FALSE     # for regression output
+  )
+fires <- read.csv('data/fires.csv')
+```
+
+# Visualizing relationships and trends
+
+Up to this point, we have been focusing on visualizing just one quantitative variable (i.e, distributions) in relation to several qualitative parameters (amounts over years or month). However, it is usually the case we are interested in visualizing how two (or more) numerical/continuous variables relate one another. In other words, we may be interested in visualizing relationships.
+
+## Scatter plots
+
+The scatter plot is the most widespread way to represent the association between two variables. The concept is quite simple, we use the values of the two variables as coordinates to mark their position in a two-dimensional space. Then we analyze their disposition and try to unravel any potential pattern.
+
+Overall, when two variables are associated the point cloud is arranged showing a recognizable shape; like a line, curve or similar. If the point cloud seems to be randomly distribution, then no associaton exists between them.
+
+Building a scatter plot in `ggplot` is easy. In fact we have already used the kind of geom we need, the `geom_point`. Instead of passing a continuous variable and a discrete one, we now map two continuous variables instead into the `x` and `y` aesthetics. The following example shows the association between the monthly number of fires and burned area. We expect that, the more fires the larger the burned area.
+
+```{r}
+fires %>%
+    group_by(YEAR,MONTH) %>%
+    summarise(BA=sum(BAREA),N=n()) %>%
+    ggplot() +
+        geom_point(aes(x=BA,y=N))
+            
+```
+
+Of course, we can keep adding layers to the scatter plot in pursue of more complex relationships. For instace, we can map `CAUSE` into color to investigate differences between causes:
+
+```{r}
+fires %>%
+    group_by(YEAR,MONTH,CAUSE) %>%
+    summarise(BA=sum(BAREA),N=n()) %>%
+    ggplot() +
+        geom_point(aes(x=BA,y=N,color = factor(CAUSE)))
+            
+```
+
+We can leverage `shape` if we prefer it to `color` though this kind of representation tends work best when we have few observations. When facing thousands, `shape` is quit difficult to diferentiate.
+
+```{r}
+fires %>%
+    group_by(YEAR,MONTH,CAUSE) %>%
+    summarise(BA=sum(BAREA),N=n()) %>%
+    ggplot() +
+        geom_point(aes(x=BA,y=N,color = factor(CAUSE),shape=factor(CAUSE)), size=0.5)
+```
+
+We can map a third continuous variable into `size` (increasing the dimensionsal space) to inspect quantitave differences in the association pattern. This kind of representation is called *bubble plot*. In the next example we add the interaction with the 95th percentile of fire size, to see if burned are depends on number of fire or in the occurrence of very large fire events.
+
+```{r}
+fires %>%
+    group_by(YEAR,MONTH,CAUSE) %>%
+    summarise(BA=sum(BAREA),N=n(),P95=quantile(BAREA,.95)) %>%
+    ggplot() +
+        geom_point(aes(y=BA,x=N,color = factor(CAUSE),size=P95))
+```
+
+<div class = "exercise">
+**EXERCISE 1** </br>
+
+Describe the *bubble plot* discussing about the association between number of fires, burned area and fire size:
+
+- Which CAUSE seems to depend more on number of fires?
+- And which depends the least?
+</div>
+
+## Density plots
+
+Scatter plots are indeed quite useful but as you may have noticed, it's not easy to recognize a pattern using a point scheme when we have hundreds or thousands of observations. It is often the case point overlap and hide themselves, especially when using *bubble plots*. To overcome this issue we can visualize *densities* rather than *coordinates*. In fact, the concept is quite similar to the `histogram` (or even the *heatmap*) but in this case we  would construct two-dimensional bins, and then aggregate by counts or other stats. There are essentually three alternatives: 
+
+- Isolines: we display lines joining locations with equal densities `geom_density_2d`.
+- 2d-bins plots: we construct square bins and map counts into them.
+- hexbin plots: same as 2d-bins but using hexagons as binning shape.
+
+## Isoline density plot
+
+We use `geom_density_2d` to visualize densities. It is often recommended overlapping the original scatter plot to understand how it works:
+
+```{r}
+fires %>%
+    group_by(YEAR,MONTH) %>%
+    summarise(BA=sum(BAREA),N=n()) %>%
+    ggplot(aes(x=log(BA),y=log(N))) +
+        geom_point(size = 0.8) +
+        geom_density_2d() 
+```
+
+Or we can fill the inner polygons between lines. In this case, we must switch from `geom_density_2d` to `stat_density_2d` and pass `after_stat(level)` into the `fill` aesthetic:
+
+```{r}
+fires %>%
+    group_by(YEAR,MONTH) %>%
+    summarise(BA=sum(BAREA),N=n()) %>%
+    ggplot() +
+        # geom_density_2d() +
+        stat_density_2d(aes(x=log(BA),y=log(N),
+                            fill = after_stat(level)), 
+                        geom = "polygon")
+```
+
+Densities are a good way to understand the association pattern, though they are not that intuitive. The *density* value itself (`level`) is not easy to grasp. We can display more straighforward information using 2d-binned representations like `geom_bin2d` that builds square bins and adds up the number of observations within each one. We can control the size of the `bins` to improve the visualization.
+
+```{r}
+fires %>%
+    group_by(YEAR,MONTH) %>%
+    summarise(BA=sum(BAREA),N=n()) %>%
+    ggplot() +
+        geom_bin2d(aes(x=BA,y=N))
+```
+
+```{r}
+fires %>%
+    group_by(YEAR,MONTH) %>%
+    summarise(BA=sum(BAREA),N=n()) %>%
+    ggplot() +
+        geom_bin2d(aes(x=BA,y=N), bins=10) +
+        ggtitle('10 bins per axis')
+```
+
+An alternative that works exactly the same but tends to be more appealing are the `hexbin` plots. Instead of squares we use hexagons:
+
+```{r}
+fires %>%
+    group_by(YEAR,MONTH) %>%
+    summarise(BA=sum(BAREA),N=n()) %>%
+    ggplot() +
+        geom_hex(aes(x=BA,y=N))
+```
+
+`stat_summary_` functions allow to map other aggregation fuctions by adding a third dimension `z` with the values to be summarized. By default it is the `mean` what is calculated but we can pass any other function, even one built on our own.
+
+```{r}
+fires %>%
+    group_by(YEAR,MONTH) %>%
+    summarise(BA=sum(BAREA),N=n()) %>%
+    ggplot() +
+        stat_summary_hex(aes(x=BA,y=N,z=BA), bins=10) +
+        ggtitle('Mean BA per bin')
+```
+
+
+```{r}
+fires %>%
+    group_by(YEAR,MONTH) %>%
+    summarise(BA=sum(BAREA),N=n()) %>%
+    ggplot() +
+        stat_summary_hex(aes(x=BA,y=N,z=BA), bins=10, fun=IQR) +
+        ggtitle('IQR of BA')
+```
+
+```{r}
+p95 <- function(x){quantile(x,.05)}
+fires %>%
+    group_by(YEAR,MONTH) %>%
+    summarise(BA=sum(BAREA),N=n()) %>%
+    ggplot() +
+        stat_summary_hex(aes(x=BA,y=N,z=BA), bins=10, fun=sum) +
+        ggtitle('Sum of BA')
+```
+
+```{r}
+p95 <- function(x){quantile(x,.95)}
+fires %>%
+    group_by(YEAR,MONTH) %>%
+    summarise(BA=sum(BAREA),N=n()) %>%
+    ggplot() +
+        stat_summary_hex(aes(x=BA,y=N,z=BA), bins=10, fun=p95) +
+        ggtitle('Sum of BA')
+```
+
+# Visualizing trends
+
+When making scatter plots or time series, we are often more interested in the overarching trend of the data than in the specific detail of where each individual data point lies. By drawing the trend on top of or instead of the actual data points, usually in the form of a straight or curved line, we can create a visualization that helps the reader immediately see key features of the data. 
+
+Smoothing lines and fitter regression lines are the usual way to go. Note that the concept of *trend* is not restricted to time series analysis. The simplest way to display a trend is by fitting a linear profile to our data, either by `smoothing` or `regression`. The first can be understood as a kind of moving average calculated over the data while the second implies adjusting some sort of regression model (lm, glm or gam, mainly). Regardless of the approach, we use `geom_smooth` to do the trick. Let`s recover our first plot showing fire counts over the years and add a trend line over it:
+
+```{r}
+fires %>%
+    filter(YEAR>1900) %>%
+    group_by(YEAR) %>%
+    summarize(N=n()) %>%
+    ggplot(aes(x=YEAR,y=N)) +
+        geom_line() +
+        geom_smooth()
+```
+
+By default, `geom_smooth` fits a LOESS spline line that helps interpreting the evolution. We can change the `method` to `lm` (linear regression) or `gam` (Generalized Additive Models) to reproduce the fitting outcome of any of those modeling approaches:
+
+```{r}
+fires %>%
+    filter(YEAR>1900) %>%
+    group_by(YEAR) %>%
+    summarize(N=n()) %>%
+    ggplot(aes(x=YEAR,y=N)) +
+        geom_line() +
+        geom_smooth(method = 'lm')
+```
+
+Of course, smoothing is not restritec to time series of data, and a relationship linear profile can be fitted to any bivariate combination of data.
+
+```{r}
+fires %>%
+    group_by(YEAR,MONTH) %>%
+    summarise(BA=sum(BAREA),N=n()) %>%
+    ggplot(aes(x=BA,y=N)) +
+        geom_point() +
+        geom_smooth()
+```
+
+To dig in into the potential differences in the relationships by categories, we can map a class into color and `geom_smooth` will automatically fit a profile for each category:
+
+```{r}
+fires %>%
+    group_by(YEAR,MONTH,CAUSE) %>%
+    summarise(BA=sum(BAREA),N=n()) %>%
+    ggplot() +
+        geom_point(aes(x=BA,y=N,color = factor(CAUSE),shape=factor(CAUSE)), size=0.5) +
+    geom_smooth(aes(x=BA,y=N,color = factor(CAUSE)))
+```
+
+# Visualizing uncertainty
+
+One of the most challenging aspects of data visualization is the visualization of uncertainty. When we see a data point drawn in a specific location, we tend to interpret it as a precise representation of the true data value. It is difficult to conceive that a data point could actually lie somewhere it hasn't been drawn. Yet this scenario is ubiquitous in data visualization. Nearly every data set we work with has some uncertainty, and whether and how we choose to represent this uncertainty can make a major difference in how accurately our audience perceives the meaning of the data.
+
+The most common approach to indicate uncertainty are error bars. The basic idea is to complement any kind of central measure (mean, median...) with an indicator of dispersion (sd, IQR...). To do so, we represent the central measure with a bar or point and add the error bars by adding and substracting the dispersion measure. Reporting uncertainty is key to properly understand data. Compare what happens when we just plot the mean:
+
+```{r}
+fires %>%
+    filter(BAREA>500) %>%
+    group_by(MONTH) %>%
+    summarise(Mean=mean(BAREA), SD=sd(BAREA)) %>%
+    ggplot(aes(x=MONTH,y=Mean)) +
+        geom_col() 
+```
+
+And the result when we account for uncertainty:
+
+```{r}
+fires %>%
+    filter(BAREA>500) %>%
+    group_by(MONTH) %>%
+    summarise(Mean=mean(BAREA), SD=sd(BAREA)) %>%
+    ggplot(aes(x=MONTH,y=Mean)) +
+        geom_col() +
+        geom_errorbar(aes(ymin=Mean-SD, ymax=Mean+SD))
+```
+
+The same can be done using dot plots:
+
+```{r}
+fires %>%
+    filter(BAREA>500) %>%
+    group_by(MONTH) %>%
+    summarise(Mean=mean(BAREA), SD=sd(BAREA)) %>%
+    ggplot(aes(x=MONTH,y=Mean)) +
+        geom_point() +
+        geom_errorbar(aes(ymin=Mean-SD, ymax=Mean+SD))
+```
+
+Or even color:
+
+```{r}
+fires %>%
+    filter(BAREA>500) %>%
+    group_by(MONTH) %>%
+    summarise(Mean=mean(BAREA), SD=sd(BAREA)) %>%
+    ggplot(aes(x=MONTH, y=Mean,fill=SD)) +
+        geom_col() 
+```
+
+<div class= "exercise">
+**EXERCISE 2** </br>
+
+Represent the relationship between tree height and diameter using the `trees` dataset. Explore potential differences among provinces or the most representative species.
+
+</div>
+

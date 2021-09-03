@@ -1,9 +1,9 @@
 ---
 title: "Data transformation (I)"
-subtitle: "Organize, transform and summarise your data"
+subtitle: "Organize, transform and </br>summarise your data"
 author: 
     - "Aitor Ameztegui"
-    - "Marcos Rodrigues"
+date: "Fall 2021"
 output:
   xaringan::moon_reader:
     css: "slides.css"

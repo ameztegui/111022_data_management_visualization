@@ -3,7 +3,8 @@ title: "The data science pipeline:"
 subtitle: "The tidyverse and the </br>concept of tidy data"
 author: 
     - "Aitor Ameztegui"
-    - "Marcos Rodrigues"
+date: "Fall 2021"
+
 output:
   xaringan::moon_reader:
     css: "slides.css"

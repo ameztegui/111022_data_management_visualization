@@ -4,7 +4,7 @@
     <title>Relational data</title>
     <meta charset="utf-8" />
     <meta name="author" content="Aitor Ameztegui" />
-    <meta name="author" content="Marcos Rodrigues" />
+    <script src="libs/header-attrs/header-attrs.js"></script>
     <link rel="stylesheet" href="slides.css" type="text/css" />
   </head>
   <body>
@@ -14,7 +14,7 @@ class: center, middle, inverse, title-slide
 # Relational data
 ## Working with several data tables
 ### Aitor Ameztegui
-### Marcos Rodrigues
+### Fall 2021
 
 ---
 
@@ -68,7 +68,7 @@ plots %&gt;%
 
 ```
 ## # A tibble: 0 x 2
-## # … with 2 variables: Codi &lt;fct&gt;, n &lt;int&gt;
+## # ... with 2 variables: Codi &lt;fct&gt;, n &lt;int&gt;
 ```
 ---
 
@@ -89,19 +89,19 @@ plots
 
 ```
 ## # A tibble: 11,858 x 17
-##    Codi  Provincia Cla   Subclase FccTot FccArb FechaIni   HoraIni            
-##    &lt;fct&gt; &lt;fct&gt;     &lt;fct&gt; &lt;fct&gt;     &lt;int&gt;  &lt;int&gt; &lt;date&gt;     &lt;dttm&gt;             
-##  1 0800… 08        A     1            80     70 2001-07-09 2017-11-26 09:44:00
-##  2 0800… 08        A     1            80     70 2001-08-06 2017-11-26 09:18:58
-##  3 0800… 08        A     1            90     80 2001-08-06 2017-11-26 12:08:09
-##  4 0800… 08        A     1            90     50 2001-07-09 2017-11-26 13:23:23
-##  5 0800… 08        A     1            70     60 2001-08-03 2017-11-26 09:11:28
-##  6 0800… 08        A     1            90     90 2001-08-01 2017-11-26 13:00:33
-##  7 0800… 08        A     1            90     90 2001-08-07 2017-11-26 10:08:15
-##  8 0800… 08        A     1            70     60 2001-08-03 2017-11-26 12:12:03
-##  9 0800… 08        A     1            80     70 2001-08-02 2017-11-26 09:00:16
-## 10 0800… 08        A     1            80     80 2001-06-14 2017-11-26 12:34:21
-## # … with 11,848 more rows, and 9 more variables: FechaFin &lt;date&gt;,
+##    Codi   Provincia Cla   Subclase FccTot FccArb FechaIni   HoraIni            
+##    &lt;fct&gt;  &lt;fct&gt;     &lt;fct&gt; &lt;fct&gt;     &lt;int&gt;  &lt;int&gt; &lt;date&gt;     &lt;dttm&gt;             
+##  1 080001 08        A     1            80     70 2001-07-09 2017-11-26 09:44:00
+##  2 080002 08        A     1            80     70 2001-08-06 2017-11-26 09:18:58
+##  3 080003 08        A     1            90     80 2001-08-06 2017-11-26 12:08:09
+##  4 080004 08        A     1            90     50 2001-07-09 2017-11-26 13:23:23
+##  5 080005 08        A     1            70     60 2001-08-03 2017-11-26 09:11:28
+##  6 080006 08        A     1            90     90 2001-08-01 2017-11-26 13:00:33
+##  7 080007 08        A     1            90     90 2001-08-07 2017-11-26 10:08:15
+##  8 080008 08        A     1            70     60 2001-08-03 2017-11-26 12:12:03
+##  9 080009 08        A     1            80     70 2001-08-02 2017-11-26 09:00:16
+## 10 080010 08        A     1            80     80 2001-06-14 2017-11-26 12:34:21
+## # ... with 11,848 more rows, and 9 more variables: FechaFin &lt;date&gt;,
 ## #   HoraFin &lt;dttm&gt;, Rocosid &lt;int&gt;, Textura &lt;int&gt;, MatOrg &lt;int&gt;, PhSuelo &lt;int&gt;,
 ## #   FechaPh &lt;date&gt;, Dom_sp2 &lt;fct&gt;, Dom_sp3 &lt;fct&gt;
 ```
@@ -128,7 +128,7 @@ coordinates
 ##  8 080008 08        0008      A     401000 4681000
 ##  9 080009 08        0009      A     402000 4681000
 ## 10 080010 08        0010      A     394000 4680000
-## # … with 11,756 more rows
+## # ... with 11,756 more rows
 ```
 
 ---
@@ -178,17 +178,17 @@ left_join(plots, coordinates, by = "Codi")
 ## # A tibble: 11,858 x 22
 ##    Codi  Provincia.x Cla.x Subclase FccTot FccArb FechaIni   HoraIni            
 ##    &lt;fct&gt; &lt;fct&gt;       &lt;fct&gt; &lt;fct&gt;     &lt;int&gt;  &lt;int&gt; &lt;date&gt;     &lt;dttm&gt;             
-##  1 0800… 08          A     1            80     70 2001-07-09 2017-11-26 09:44:00
-##  2 0800… 08          A     1            80     70 2001-08-06 2017-11-26 09:18:58
-##  3 0800… 08          A     1            90     80 2001-08-06 2017-11-26 12:08:09
-##  4 0800… 08          A     1            90     50 2001-07-09 2017-11-26 13:23:23
-##  5 0800… 08          A     1            70     60 2001-08-03 2017-11-26 09:11:28
-##  6 0800… 08          A     1            90     90 2001-08-01 2017-11-26 13:00:33
-##  7 0800… 08          A     1            90     90 2001-08-07 2017-11-26 10:08:15
-##  8 0800… 08          A     1            70     60 2001-08-03 2017-11-26 12:12:03
-##  9 0800… 08          A     1            80     70 2001-08-02 2017-11-26 09:00:16
-## 10 0800… 08          A     1            80     80 2001-06-14 2017-11-26 12:34:21
-## # … with 11,848 more rows, and 14 more variables: FechaFin &lt;date&gt;,
+##  1 0800~ 08          A     1            80     70 2001-07-09 2017-11-26 09:44:00
+##  2 0800~ 08          A     1            80     70 2001-08-06 2017-11-26 09:18:58
+##  3 0800~ 08          A     1            90     80 2001-08-06 2017-11-26 12:08:09
+##  4 0800~ 08          A     1            90     50 2001-07-09 2017-11-26 13:23:23
+##  5 0800~ 08          A     1            70     60 2001-08-03 2017-11-26 09:11:28
+##  6 0800~ 08          A     1            90     90 2001-08-01 2017-11-26 13:00:33
+##  7 0800~ 08          A     1            90     90 2001-08-07 2017-11-26 10:08:15
+##  8 0800~ 08          A     1            70     60 2001-08-03 2017-11-26 12:12:03
+##  9 0800~ 08          A     1            80     70 2001-08-02 2017-11-26 09:00:16
+## 10 0800~ 08          A     1            80     80 2001-06-14 2017-11-26 12:34:21
+## # ... with 11,848 more rows, and 14 more variables: FechaFin &lt;date&gt;,
 ## #   HoraFin &lt;dttm&gt;, Rocosid &lt;int&gt;, Textura &lt;int&gt;, MatOrg &lt;int&gt;, PhSuelo &lt;int&gt;,
 ## #   FechaPh &lt;date&gt;, Dom_sp2 &lt;fct&gt;, Dom_sp3 &lt;fct&gt;, Provincia.y &lt;chr&gt;,
 ## #   Estadillo &lt;chr&gt;, Cla.y &lt;fct&gt;, CoorX &lt;int&gt;, CoorY &lt;int&gt;
@@ -210,17 +210,17 @@ right_join(plots, coordinates, by = "Codi")
 ## # A tibble: 11,766 x 22
 ##    Codi  Provincia.x Cla.x Subclase FccTot FccArb FechaIni   HoraIni            
 ##    &lt;fct&gt; &lt;fct&gt;       &lt;fct&gt; &lt;fct&gt;     &lt;int&gt;  &lt;int&gt; &lt;date&gt;     &lt;dttm&gt;             
-##  1 0800… 08          A     1            80     70 2001-07-09 2017-11-26 09:44:00
-##  2 0800… 08          A     1            80     70 2001-08-06 2017-11-26 09:18:58
-##  3 0800… 08          A     1            90     80 2001-08-06 2017-11-26 12:08:09
-##  4 0800… 08          A     1            90     50 2001-07-09 2017-11-26 13:23:23
-##  5 0800… 08          A     1            70     60 2001-08-03 2017-11-26 09:11:28
-##  6 0800… 08          A     1            90     90 2001-08-01 2017-11-26 13:00:33
-##  7 0800… 08          A     1            90     90 2001-08-07 2017-11-26 10:08:15
-##  8 0800… 08          A     1            70     60 2001-08-03 2017-11-26 12:12:03
-##  9 0800… 08          A     1            80     70 2001-08-02 2017-11-26 09:00:16
-## 10 0800… 08          A     1            80     80 2001-06-14 2017-11-26 12:34:21
-## # … with 11,756 more rows, and 14 more variables: FechaFin &lt;date&gt;,
+##  1 0800~ 08          A     1            80     70 2001-07-09 2017-11-26 09:44:00
+##  2 0800~ 08          A     1            80     70 2001-08-06 2017-11-26 09:18:58
+##  3 0800~ 08          A     1            90     80 2001-08-06 2017-11-26 12:08:09
+##  4 0800~ 08          A     1            90     50 2001-07-09 2017-11-26 13:23:23
+##  5 0800~ 08          A     1            70     60 2001-08-03 2017-11-26 09:11:28
+##  6 0800~ 08          A     1            90     90 2001-08-01 2017-11-26 13:00:33
+##  7 0800~ 08          A     1            90     90 2001-08-07 2017-11-26 10:08:15
+##  8 0800~ 08          A     1            70     60 2001-08-03 2017-11-26 12:12:03
+##  9 0800~ 08          A     1            80     70 2001-08-02 2017-11-26 09:00:16
+## 10 0800~ 08          A     1            80     80 2001-06-14 2017-11-26 12:34:21
+## # ... with 11,756 more rows, and 14 more variables: FechaFin &lt;date&gt;,
 ## #   HoraFin &lt;dttm&gt;, Rocosid &lt;int&gt;, Textura &lt;int&gt;, MatOrg &lt;int&gt;, PhSuelo &lt;int&gt;,
 ## #   FechaPh &lt;date&gt;, Dom_sp2 &lt;fct&gt;, Dom_sp3 &lt;fct&gt;, Provincia.y &lt;chr&gt;,
 ## #   Estadillo &lt;chr&gt;, Cla.y &lt;fct&gt;, CoorX &lt;int&gt;, CoorY &lt;int&gt;
@@ -267,17 +267,17 @@ full_join(plots, coordinates, by = "Codi")
 ## # A tibble: 11,858 x 22
 ##    Codi  Provincia.x Cla.x Subclase FccTot FccArb FechaIni   HoraIni            
 ##    &lt;fct&gt; &lt;fct&gt;       &lt;fct&gt; &lt;fct&gt;     &lt;int&gt;  &lt;int&gt; &lt;date&gt;     &lt;dttm&gt;             
-##  1 0800… 08          A     1            80     70 2001-07-09 2017-11-26 09:44:00
-##  2 0800… 08          A     1            80     70 2001-08-06 2017-11-26 09:18:58
-##  3 0800… 08          A     1            90     80 2001-08-06 2017-11-26 12:08:09
-##  4 0800… 08          A     1            90     50 2001-07-09 2017-11-26 13:23:23
-##  5 0800… 08          A     1            70     60 2001-08-03 2017-11-26 09:11:28
-##  6 0800… 08          A     1            90     90 2001-08-01 2017-11-26 13:00:33
-##  7 0800… 08          A     1            90     90 2001-08-07 2017-11-26 10:08:15
-##  8 0800… 08          A     1            70     60 2001-08-03 2017-11-26 12:12:03
-##  9 0800… 08          A     1            80     70 2001-08-02 2017-11-26 09:00:16
-## 10 0800… 08          A     1            80     80 2001-06-14 2017-11-26 12:34:21
-## # … with 11,848 more rows, and 14 more variables: FechaFin &lt;date&gt;,
+##  1 0800~ 08          A     1            80     70 2001-07-09 2017-11-26 09:44:00
+##  2 0800~ 08          A     1            80     70 2001-08-06 2017-11-26 09:18:58
+##  3 0800~ 08          A     1            90     80 2001-08-06 2017-11-26 12:08:09
+##  4 0800~ 08          A     1            90     50 2001-07-09 2017-11-26 13:23:23
+##  5 0800~ 08          A     1            70     60 2001-08-03 2017-11-26 09:11:28
+##  6 0800~ 08          A     1            90     90 2001-08-01 2017-11-26 13:00:33
+##  7 0800~ 08          A     1            90     90 2001-08-07 2017-11-26 10:08:15
+##  8 0800~ 08          A     1            70     60 2001-08-03 2017-11-26 12:12:03
+##  9 0800~ 08          A     1            80     70 2001-08-02 2017-11-26 09:00:16
+## 10 0800~ 08          A     1            80     80 2001-06-14 2017-11-26 12:34:21
+## # ... with 11,848 more rows, and 14 more variables: FechaFin &lt;date&gt;,
 ## #   HoraFin &lt;dttm&gt;, Rocosid &lt;int&gt;, Textura &lt;int&gt;, MatOrg &lt;int&gt;, PhSuelo &lt;int&gt;,
 ## #   FechaPh &lt;date&gt;, Dom_sp2 &lt;fct&gt;, Dom_sp3 &lt;fct&gt;, Provincia.y &lt;chr&gt;,
 ## #   Estadillo &lt;chr&gt;, Cla.y &lt;fct&gt;, CoorX &lt;int&gt;, CoorY &lt;int&gt;
@@ -298,17 +298,17 @@ inner_join(plots, coordinates, by = "Codi")
 ## # A tibble: 11,766 x 22
 ##    Codi  Provincia.x Cla.x Subclase FccTot FccArb FechaIni   HoraIni            
 ##    &lt;fct&gt; &lt;fct&gt;       &lt;fct&gt; &lt;fct&gt;     &lt;int&gt;  &lt;int&gt; &lt;date&gt;     &lt;dttm&gt;             
-##  1 0800… 08          A     1            80     70 2001-07-09 2017-11-26 09:44:00
-##  2 0800… 08          A     1            80     70 2001-08-06 2017-11-26 09:18:58
-##  3 0800… 08          A     1            90     80 2001-08-06 2017-11-26 12:08:09
-##  4 0800… 08          A     1            90     50 2001-07-09 2017-11-26 13:23:23
-##  5 0800… 08          A     1            70     60 2001-08-03 2017-11-26 09:11:28
-##  6 0800… 08          A     1            90     90 2001-08-01 2017-11-26 13:00:33
-##  7 0800… 08          A     1            90     90 2001-08-07 2017-11-26 10:08:15
-##  8 0800… 08          A     1            70     60 2001-08-03 2017-11-26 12:12:03
-##  9 0800… 08          A     1            80     70 2001-08-02 2017-11-26 09:00:16
-## 10 0800… 08          A     1            80     80 2001-06-14 2017-11-26 12:34:21
-## # … with 11,756 more rows, and 14 more variables: FechaFin &lt;date&gt;,
+##  1 0800~ 08          A     1            80     70 2001-07-09 2017-11-26 09:44:00
+##  2 0800~ 08          A     1            80     70 2001-08-06 2017-11-26 09:18:58
+##  3 0800~ 08          A     1            90     80 2001-08-06 2017-11-26 12:08:09
+##  4 0800~ 08          A     1            90     50 2001-07-09 2017-11-26 13:23:23
+##  5 0800~ 08          A     1            70     60 2001-08-03 2017-11-26 09:11:28
+##  6 0800~ 08          A     1            90     90 2001-08-01 2017-11-26 13:00:33
+##  7 0800~ 08          A     1            90     90 2001-08-07 2017-11-26 10:08:15
+##  8 0800~ 08          A     1            70     60 2001-08-03 2017-11-26 12:12:03
+##  9 0800~ 08          A     1            80     70 2001-08-02 2017-11-26 09:00:16
+## 10 0800~ 08          A     1            80     80 2001-06-14 2017-11-26 12:34:21
+## # ... with 11,756 more rows, and 14 more variables: FechaFin &lt;date&gt;,
 ## #   HoraFin &lt;dttm&gt;, Rocosid &lt;int&gt;, Textura &lt;int&gt;, MatOrg &lt;int&gt;, PhSuelo &lt;int&gt;,
 ## #   FechaPh &lt;date&gt;, Dom_sp2 &lt;fct&gt;, Dom_sp3 &lt;fct&gt;, Provincia.y &lt;chr&gt;,
 ## #   Estadillo &lt;chr&gt;, Cla.y &lt;fct&gt;, CoorX &lt;int&gt;, CoorY &lt;int&gt;
@@ -364,19 +364,19 @@ semi_join(plots, coordinates, by = "Codi")
 
 ```
 ## # A tibble: 11,766 x 17
-##    Codi  Provincia Cla   Subclase FccTot FccArb FechaIni   HoraIni            
-##    &lt;fct&gt; &lt;fct&gt;     &lt;fct&gt; &lt;fct&gt;     &lt;int&gt;  &lt;int&gt; &lt;date&gt;     &lt;dttm&gt;             
-##  1 0800… 08        A     1            80     70 2001-07-09 2017-11-26 09:44:00
-##  2 0800… 08        A     1            80     70 2001-08-06 2017-11-26 09:18:58
-##  3 0800… 08        A     1            90     80 2001-08-06 2017-11-26 12:08:09
-##  4 0800… 08        A     1            90     50 2001-07-09 2017-11-26 13:23:23
-##  5 0800… 08        A     1            70     60 2001-08-03 2017-11-26 09:11:28
-##  6 0800… 08        A     1            90     90 2001-08-01 2017-11-26 13:00:33
-##  7 0800… 08        A     1            90     90 2001-08-07 2017-11-26 10:08:15
-##  8 0800… 08        A     1            70     60 2001-08-03 2017-11-26 12:12:03
-##  9 0800… 08        A     1            80     70 2001-08-02 2017-11-26 09:00:16
-## 10 0800… 08        A     1            80     80 2001-06-14 2017-11-26 12:34:21
-## # … with 11,756 more rows, and 9 more variables: FechaFin &lt;date&gt;,
+##    Codi   Provincia Cla   Subclase FccTot FccArb FechaIni   HoraIni            
+##    &lt;fct&gt;  &lt;fct&gt;     &lt;fct&gt; &lt;fct&gt;     &lt;int&gt;  &lt;int&gt; &lt;date&gt;     &lt;dttm&gt;             
+##  1 080001 08        A     1            80     70 2001-07-09 2017-11-26 09:44:00
+##  2 080002 08        A     1            80     70 2001-08-06 2017-11-26 09:18:58
+##  3 080003 08        A     1            90     80 2001-08-06 2017-11-26 12:08:09
+##  4 080004 08        A     1            90     50 2001-07-09 2017-11-26 13:23:23
+##  5 080005 08        A     1            70     60 2001-08-03 2017-11-26 09:11:28
+##  6 080006 08        A     1            90     90 2001-08-01 2017-11-26 13:00:33
+##  7 080007 08        A     1            90     90 2001-08-07 2017-11-26 10:08:15
+##  8 080008 08        A     1            70     60 2001-08-03 2017-11-26 12:12:03
+##  9 080009 08        A     1            80     70 2001-08-02 2017-11-26 09:00:16
+## 10 080010 08        A     1            80     80 2001-06-14 2017-11-26 12:34:21
+## # ... with 11,756 more rows, and 9 more variables: FechaFin &lt;date&gt;,
 ## #   HoraFin &lt;dttm&gt;, Rocosid &lt;int&gt;, Textura &lt;int&gt;, MatOrg &lt;int&gt;, PhSuelo &lt;int&gt;,
 ## #   FechaPh &lt;date&gt;, Dom_sp2 &lt;fct&gt;, Dom_sp3 &lt;fct&gt;
 ```
@@ -395,19 +395,19 @@ anti_join(plots, coordinates, by = "Codi")
 
 ```
 ## # A tibble: 92 x 17
-##    Codi  Provincia Cla   Subclase FccTot FccArb FechaIni   HoraIni            
-##    &lt;fct&gt; &lt;fct&gt;     &lt;fct&gt; &lt;fct&gt;     &lt;int&gt;  &lt;int&gt; &lt;date&gt;     &lt;dttm&gt;             
-##  1 0802… 08        A     1            95     70 2001-02-14 2017-11-26 09:34:12
-##  2 0802… 08        A     1            80     75 2001-04-25 2017-11-26 09:59:06
-##  3 0805… 08        A     1            90     50 2001-02-14 2017-11-26 13:26:40
-##  4 0808… 08        A     1           100     65 2000-08-28 2017-11-26 11:13:11
-##  5 0809… 08        A     1           100     90 2000-10-24 2017-11-26 10:25:01
-##  6 0811… 08        A     1           100     60 2000-12-01 2017-11-26 09:49:35
-##  7 0814… 08        A     1            70     60 2001-04-18 2017-11-26 10:00:40
-##  8 0815… 08        A     1           100     60 2000-11-30 2017-11-26 10:30:34
-##  9 0817… 08        A     1            90     55 2000-08-10 2017-11-26 09:59:31
-## 10 0817… 08        A     1            50     30 2000-11-14 2017-11-26 14:32:57
-## # … with 82 more rows, and 9 more variables: FechaFin &lt;date&gt;, HoraFin &lt;dttm&gt;,
+##    Codi   Provincia Cla   Subclase FccTot FccArb FechaIni   HoraIni            
+##    &lt;fct&gt;  &lt;fct&gt;     &lt;fct&gt; &lt;fct&gt;     &lt;int&gt;  &lt;int&gt; &lt;date&gt;     &lt;dttm&gt;             
+##  1 080232 08        A     1            95     70 2001-02-14 2017-11-26 09:34:12
+##  2 080281 08        A     1            80     75 2001-04-25 2017-11-26 09:59:06
+##  3 080531 08        A     1            90     50 2001-02-14 2017-11-26 13:26:40
+##  4 080866 08        A     1           100     65 2000-08-28 2017-11-26 11:13:11
+##  5 080956 08        A     1           100     90 2000-10-24 2017-11-26 10:25:01
+##  6 081122 08        A     1           100     60 2000-12-01 2017-11-26 09:49:35
+##  7 081411 08        A     1            70     60 2001-04-18 2017-11-26 10:00:40
+##  8 081519 08        A     1           100     60 2000-11-30 2017-11-26 10:30:34
+##  9 081784 08        A     1            90     55 2000-08-10 2017-11-26 09:59:31
+## 10 081793 08        A     1            50     30 2000-11-14 2017-11-26 14:32:57
+## # ... with 82 more rows, and 9 more variables: FechaFin &lt;date&gt;, HoraFin &lt;dttm&gt;,
 ## #   Rocosid &lt;int&gt;, Textura &lt;int&gt;, MatOrg &lt;int&gt;, PhSuelo &lt;int&gt;, FechaPh &lt;date&gt;,
 ## #   Dom_sp2 &lt;fct&gt;, Dom_sp3 &lt;fct&gt;
 ```
@@ -468,6 +468,32 @@ if (window.HTMLWidgets) slideshow.on('afterShowSlide', function (slide) {
     deleted = true;
   });
 })();
+(function() {
+  "use strict"
+  // Replace <script> tags in slides area to make them executable
+  var scripts = document.querySelectorAll(
+    '.remark-slides-area .remark-slide-container script'
+  );
+  if (!scripts.length) return;
+  for (var i = 0; i < scripts.length; i++) {
+    var s = document.createElement('script');
+    var code = document.createTextNode(scripts[i].textContent);
+    s.appendChild(code);
+    var scriptAttrs = scripts[i].attributes;
+    for (var j = 0; j < scriptAttrs.length; j++) {
+      s.setAttribute(scriptAttrs[j].name, scriptAttrs[j].value);
+    }
+    scripts[i].parentElement.replaceChild(s, scripts[i]);
+  }
+})();
+(function() {
+  var links = document.getElementsByTagName('a');
+  for (var i = 0; i < links.length; i++) {
+    if (/^(https?:)?\/\//.test(links[i].getAttribute('href'))) {
+      links[i].target = '_blank';
+    }
+  }
+})();
 // adds .remark-code-has-line-highlighted class to <pre> parent elements
 // of code chunks containing highlighted lines with class .remark-code-line-highlighted
 (function(d) {
@@ -485,17 +511,6 @@ if (window.HTMLWidgets) slideshow.on('afterShowSlide', function (slide) {
   }
   preParents.forEach(p => p.classList.add("remark-code-has-line-highlighted"));
 })(document);</script>
-
-<script>
-(function() {
-  var links = document.getElementsByTagName('a');
-  for (var i = 0; i < links.length; i++) {
-    if (/^(https?:)?\/\//.test(links[i].getAttribute('href'))) {
-      links[i].target = '_blank';
-    }
-  }
-})();
-</script>
 
 <script>
 slideshow._releaseMath = function(el) {

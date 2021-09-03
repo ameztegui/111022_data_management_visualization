@@ -3,7 +3,7 @@ title: "Data wrangling with `tidyr`"
 subtitle: "How to transform your dataset </br> into a tidy format"
 author: 
     - "Aitor Ameztegui"
-    - "Marcos Rodrigues"
+date: "Fall 2021"
 output:
   xaringan::moon_reader:
     css: "slides.css"
