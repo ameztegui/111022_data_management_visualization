@@ -298,8 +298,8 @@ grading <- data.frame(Component = c("Labs",
                                     "Midterm 2"),
                       Weight = c("25%",
                                  "35%",
-                                 "15%",
-                                 "15%"))
+                                 "20%",
+                                 "20%"))
 
 library(knitr)
 kable(grading, format='html')
