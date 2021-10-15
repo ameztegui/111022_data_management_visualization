@@ -52,8 +52,8 @@ library(rvest)
 <i class="fa fa-envelope"></i> &nbsp; [aitor.ameztegui@udl.cat](mailto:aitor.ameztegui@udl.cat) <br>
 <i class="fa fa-university"></i> &nbsp; Building 4, Bureau 2.04.2 <br>
 <i class="fa fa-phone"></i> &nbsp; 973702539 <br> 
-<i class="fa fa-calendar"></i> &nbsp; Tue 11:00 - 12:30  <br> 
-or upon request
+<i class="fa fa-calendar"></i> &nbsp; Mon 11:00 - 12:30  <br> 
+or upon request (better!)
 <br><br>]
 
 
@@ -78,15 +78,14 @@ or upon request
 
 - <i class="fa fa-bar-chart fa-10px"></i> Data visualization
 
---
-
-- <i class="fa fa-flask fa-10px"></i> Modelling and statistics
 
 --
+
 
 - <i class="fa fa-user fa-10px"></i> Interpretation
 
 --
+
 - <i class="fa fa-users fa-10px"></i> Communication
 
 --
@@ -113,7 +112,7 @@ or upon request
 
 .font120[This course is *NOT* about: ]
 
-- <i class="fab fa-r-project fa-10px"></i> R language
+- <i class="fas fa-subscript"></i> Modelling
 
 --
 
@@ -121,7 +120,7 @@ or upon request
 
 --
 
-- <i class="fas fa-subscript"></i> Modelling
+- <i class="fab fa-r-project fa-10px"></i> R language
 --
 
 - <i class="fa fa-database"></i>
@@ -170,7 +169,7 @@ Big data
 
 --
 
-- Come for the stats, stay for the huuuge support community
+- Come for the stats, stay for the huuuuuge support community
 
 --
 
@@ -190,8 +189,10 @@ Big data
 --
   - Autocomplete instructions
   - Object management
-  - Data display and visualization.
-  - Exporting plots and figures.
+  - Data display and visualization
+  - Data import
+  - Exporting plots and figures
+  - Many more, increasing every day
 
 ---
 class: center, middle, inverse
@@ -246,9 +247,9 @@ class: center, middle, inverse
 
 - Fully online
 
-- There will be some lectures, introducing some basic concepts
+- Asynchronous
 
-- Via symmetric meetings, using the VC
+- There will be some lectures, introducing some basic concepts (via short videos) 
 
 - The course is based on a hands-on approach --> lots of learn-by-doing
 
@@ -279,7 +280,7 @@ class: center, middle, inverse
 
 --
 
-<i class="fa fa-check-square fa-lg"></i> .bold[Exams:] Individual, two  midterms. We will ask you to complete a number of small programming and or analysis tasks related to the material presented in the class.
+<i class="fa fa-check-square fa-lg"></i> .bold[Exams:] Individual, two  midterms. We will ask you to complete a number of small programming and or analysis tasks related to the material presented in the class. We have to set some time during the course to do them.
 
 --
 
@@ -295,10 +296,10 @@ grading <- data.frame(Component = c("Labs",
                                     "Homework",
                                     "Midterm 1",
                                     "Midterm 2"),
-                      Weight = c("20%",
-                                 "40%",
-                                 "20%",
-                                 "20%"))
+                      Weight = c("25%",
+                                 "35%",
+                                 "15%",
+                                 "15%"))
 
 library(knitr)
 kable(grading, format='html')
@@ -385,13 +386,13 @@ class: center, middle, inverse
 
 - In the case of assignments, when you click "Start assignment", it automatically creates the copy in your space.
 
-- We can access your own copies of projects, and even edit them or make comments. This is the first time we use this, but seems a very convenient way of working with no file exchange.
+- We can access your own copies of projects, and even edit them or make comments. We have used this tool in previous editions of the course, and we got a very good feedback from students, it is a very convenient way of working with no file exchange.
 
 ---
 
 # Create your first data visualization
 
-- In the Files pane in the bottom right corner, spot the file called `UN_votes.Rmd`. Open it, and then click on the "Knit" button.
+- In the `Files` pane in the bottom right corner, spot the file called `UN_votes.Rmd`. Open it, and then click on the "Knit" button.
 
 - Go back to the file and change your name on top (in the `yaml` -- we'll talk about what this means later) and knit again.
 
