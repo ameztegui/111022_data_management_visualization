@@ -21,30 +21,22 @@ knitr::opts_chunk$set(echo = FALSE, eval = FALSE)
 
 ## 
 
-[TidyTuesday](https://github.com/rfordatascience/tidytuesday#readme) is a weekly data project aimed at the R ecosystem. As this
-project was borne out of the R4DS Online Learning Community, an emphasis
+[TidyTuesday](https://github.com/rfordatascience/tidytuesday#readme) is a weekly data project aimed at the **R ecosystem**. As this
+project was borne out of the **R4DS Online Learning Community**, an emphasis
 was placed on understanding how to summarize and arrange data to make
 meaningful charts with `ggplot2`, `tidyr`, `dplyr`, and other tools in
 the `tidyverse` ecosystem.
 
-Every week they post a raw dataset, a chart or article related to that
-dataset, and ask the community to explore the data. While the dataset
-will be "tamed", it will not always be tidy! As such you might need to
-apply various `tidyverse` techniques to wrangle the data into a true
-tidy format. The goal of `TidyTuesday` is to apply your R skills, get
+Every week they post a *raw dataset*, a chart or article related to that
+dataset, and ask the community to explore the data. The intent of Tidy Tuesday is to provide a **safe and supportive forum** for
+individuals to practice their wrangling and data visualization skills, get
 feedback, explore other's work, and connect with the greater `#RStats`
-community! As such they encourage everyone of all skills to participate!
+community! As such I encourage you to join the \`TidyTuesday' community and participate in
+one of the events, everyone of all skills is welcome!
 
-The intent of Tidy Tuesday is to provide a safe and supportive forum for
-individuals to practice their wrangling and data visualization skills
-independent of drawing conclusions. While we understand that the two are
-related, the focus of this practice is purely on building skills with
-real-world data.
-
-I encourage you to join the \`TidyTuesday' community and participate in
-one of the events. For today's practice, we are going to use one of the
-datasets released by this initiative, and we are going to use the skills
-learned in Unit 6 to produce nice visualizations.
+For today's practice, we are going to use **one of the
+datasets** released by this initiative, and we are going to use the skills
+learned in Unit 6 to explore the data **through visualizations.**
 
 ## Instructions
 
