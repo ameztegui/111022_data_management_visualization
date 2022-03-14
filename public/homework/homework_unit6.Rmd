@@ -21,7 +21,7 @@ knitr::opts_chunk$set(echo = FALSE, eval = FALSE)
 
 ## 
 
-TidyTuesday is a weekly data project aimed at the R ecosystem. As this
+[TidyTuesday](https://github.com/rfordatascience/tidytuesday#readme) is a weekly data project aimed at the R ecosystem. As this
 project was borne out of the R4DS Online Learning Community, an emphasis
 was placed on understanding how to summarize and arrange data to make
 meaningful charts with `ggplot2`, `tidyr`, `dplyr`, and other tools in
