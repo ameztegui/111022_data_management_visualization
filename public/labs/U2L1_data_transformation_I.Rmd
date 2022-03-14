@@ -478,6 +478,8 @@ Let's calculate some statistics to characterize the diameter values of the trees
 
 5.1 Let's try to calculate the mean, minimum and maximum values, the 90th percentile and the interquartile range of tree diameter (DBH\_3) *for each plot* (remember, you can and *SHOULD* look for help to know how to calculate these values).
 
+**NOTE:** Whenever there are missing values in your dataset (`NA`), you will find the result of the mean, minimu, or maximum functions is always `NA`. To avoid this, you can use the argument `na.rm = TRUE` to exclude missing values. More info here: https://www.statology.org/na-rm/
+
 5.2 Compute (i) the number of trees measured per plot and (ii) the number of different species per plot, using respectively the functions `n()` and `n_distinct(x)`.
 :::
 

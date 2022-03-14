@@ -210,6 +210,7 @@ The most common approach to visualizing amounts (i.e., numerical values shown fo
 If there are two or more sets of categories for which we want to show amounts, we can group or stack the bars. We can also map the categories onto the *x* and *y* axis and show amounts by color, via a heatmap. 
 
 ![](images/0X-ggplot/amounts_multi-1.png)
+
 ## Distributions
 
 Histograms and density plots provide the most intuitive visualizations of a distribution, but both require arbitrary parameter choices and can be misleading. Cumulative densities and quantile-quantile (q-q) plots (Chapter \@ref(ecdf-qq)) always represent the data faithfully but can be more difficult to interpret.

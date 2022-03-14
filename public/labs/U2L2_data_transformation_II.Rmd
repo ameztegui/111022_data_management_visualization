@@ -182,7 +182,7 @@ trees %>%
 ::: {.exercise}
 **EXERCISE 2:** </br>
 
-Use the scoped variants of `mutate` (or the `across` adverb) to:
+Use the scoped variants of `mutate` and `summarise` (or the `across` adverb) to:
 
 2.1. Log-transform those columns in trees containing numerical variables
 
