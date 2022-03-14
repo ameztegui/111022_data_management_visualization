@@ -255,6 +255,9 @@ div.tocify {
 <div id="instructions" class="section level2">
 <h2>Instructions</h2>
 <p>For this homework you will use the dataset called <a href="https://github.com/rfordatascience/tidytuesday/blob/master/data/2022/2022-02-22/readme.md"><code>World freedom index</code></a>, which was published the 22/2/22 and contains data on the political rights and civil liberties of 105 countries and 15 disputed territories. The data comes from <a href="https://freedomhouse.org/reports/publication-archives"><strong>Freedom in the world</strong></a><strong>,</strong> a publication of the <a href="https://freedomhouse.org/">Freedom House</a> organization, which has been <a href="https://freedomhouse.org/reports/publication-archives">published annually since 1972</a>, and is the standard-setting comparative assessment of global political rights and civil liberties. You can download the data using this code:</p>
+<pre class="r"><code>library(tidyverse)
+
+freedom &lt;- readr::read_csv(&#39;https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2022/2022-02-22/freedom.csv&#39;)</code></pre>
 <p>You need to answer the following questions using charts built with <code>ggplot</code>based on the examples we have seen in Unit 6. There will be several ways of visualizing the data to help answer the questions, so there will be no unique solution. I will value the suitability of the chart to get insight on the question, the quality of the chart, and the originality. Remember that you can check any source of data and code, but you are not allowed to share code with your colleagues (but you can ask them in the forum if you have a specific problem). You can find a thorough description of the data and the variables in the <a href="https://github.com/rfordatascience/tidytuesday/blob/master/data/2022/2022-02-22/readme.md#data-dictionary">TidyTuesday website</a>.</p>
 </div>
 <div id="questions" class="section level2">

@@ -60,7 +60,7 @@ organization, which has been [published annually since
 standard-setting comparative assessment of global political rights and
 civil liberties. You can download the data using this code:
 
-```{r}
+```{r echo = T}
 
 library(tidyverse)
 
