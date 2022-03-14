@@ -1,0 +1,168 @@
+---
+title: "Homework Unit 6 - Directory of visualizations"
+# date: "Due: December 22"
+output: 
+  html_document: 
+    css: hw.css
+    theme: yeti
+    toc: true
+    toc_float: true
+    fig_caption: false
+editor_options: 
+  markdown: 
+    wrap: 72
+---
+
+```{r setup, include=FALSE}
+library(tidyverse)
+library(readxl)
+knitr::opts_chunk$set(echo = FALSE, eval = FALSE)
+```
+
+## 
+
+TidyTuesday is a weekly data project aimed at the R ecosystem. As this
+project was borne out of the R4DS Online Learning Community, an emphasis
+was placed on understanding how to summarize and arrange data to make
+meaningful charts with `ggplot2`, `tidyr`, `dplyr`, and other tools in
+the `tidyverse` ecosystem.
+
+Every week they post a raw dataset, a chart or article related to that
+dataset, and ask the community to explore the data. While the dataset
+will be "tamed", it will not always be tidy! As such you might need to
+apply various `tidyverse` techniques to wrangle the data into a true
+tidy format. The goal of `TidyTuesday` is to apply your R skills, get
+feedback, explore other's work, and connect with the greater `#RStats`
+community! As such they encourage everyone of all skills to participate!
+
+The intent of Tidy Tuesday is to provide a safe and supportive forum for
+individuals to practice their wrangling and data visualization skills
+independent of drawing conclusions. While we understand that the two are
+related, the focus of this practice is purely on building skills with
+real-world data.
+
+I encourage you to join the \`TidyTuesday' community and participate in
+one of the events. For today's practice, we are going to use one of the
+datasets released by this initiative, and we are going to use the skills
+learned in Unit 6 to produce nice visualizations.
+
+## Instructions
+
+For this homework you will use the dataset called
+[`World freedom index`](https://github.com/rfordatascience/tidytuesday/blob/master/data/2022/2022-02-22/readme.md),
+which was published the 22/2/22 and contains data on the political
+rights and civil liberties of 105 countries and 15 disputed territories.
+The data comes from [**Freedom in the
+world**](https://freedomhouse.org/reports/publication-archives)**,** a
+publication of the [Freedom House](https://freedomhouse.org/)
+organization, which has been [published annually since
+1972](https://freedomhouse.org/reports/publication-archives), and is the
+standard-setting comparative assessment of global political rights and
+civil liberties. You can download the data using this code:
+
+```{r}
+
+library(tidyverse)
+
+freedom <- readr::read_csv('https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2022/2022-02-22/freedom.csv')
+
+```
+
+You need to answer the following questions using charts built with
+`ggplot`based on the examples we have seen in Unit 6. There will be
+several ways of visualizing the data to help answer the questions, so
+there will be no unique solution. I will value the suitability of the
+chart to get insight on the question, the quality of the chart, and the
+originality. Remember that you can check any source of data and code,
+but you are not allowed to share code with your colleagues (but you can
+ask them in the forum if you have a specific problem). You can find a
+thorough description of the data and the variables in the [TidyTuesday
+website](https://github.com/rfordatascience/tidytuesday/blob/master/data/2022/2022-02-22/readme.md#data-dictionary).
+
+## Questions
+
+1.  Which continent had the greatest change in civil liberties (CL) and
+    political rights (PR) through time? Is it the trend the same for
+    both variables?
+
+    *Hint: since the data are at the country level, you will first need
+    to summarise it at the continent level\
+    Please note that lower values of `CL`* *and* `PR` *mean higher
+    standards of liberties and freedom.*
+
+    ```{r}
+    freedom %>% 
+      group_by(Region_Name, year)%>% 
+      summarise(PR = mean(PR)) %>% 
+      ggplot() + 
+      geom_line(aes(x= year,y = PR, color = Region_Name))
+
+    freedom %>% 
+      group_by(Region_Name, year)%>% 
+      summarise(CL = mean(CL)) %>% 
+      ggplot() + 
+      geom_line(aes(x= year,y = CL, color = Region_Name))
+    ```
+
+2.  There is a variable called `Status` which determines if a country is
+    Free `F`, Not Free `NF`, or Partially Free `PF`. Make a chart to
+    show how the number of free countries has varied in the world
+    since 1995. \
+
+    ```{r}
+    freedom %>%
+      filter(Status == "F") %>%
+      group_by(year, Region_Name) %>%
+      summarise(n_free=n()) %>%
+      ggplot() +
+      geom_col(aes(x= year, y = n_free, fill = Region_Name))
+    ```
+
+3.  Maybe the total number of free countries is not informative, because
+    some new countries have been created since 1995. We can get better
+    insights if we plot the **proportion** of free, not free and partial
+    free countries for **each year**.
+
+    ```{r}
+    freedom %>%
+      # filter(Region_Name == "Europe") %>%
+      group_by(year, Status) %>%
+      summarise(n= n()) %>%
+      mutate(n_prop = n/sum(n)) %>%
+      ggplot() +
+        geom_bar(aes(x= year, y = n_prop, fill = Status),
+                 stat = "identity")
+    ```
+
+4.  Probably, by analyzing all the world at once, we are missing the
+    picture. Let's analyze the data by continent, seeing how the values
+    of `CL` and `PR` are distributed across each of the continents.
+    Which continent has lower values? And which one has more dispersion
+    (i.e. more variability within the continent?
+
+    ```{r}
+    freedom %>% 
+      group_by(Region_Name, country) %>% 
+      summarise(PR = mean(PR)) %>% 
+      ggplot()+ 
+      geom_boxplot(aes(x=Region_Name, y = PR, group = Region_Name, fill = Region_Name))
+
+
+    freedom %>% group_by(Region_Name, country) %>% summarise(PR = mean(PR)) %>% ggplot()+ ggridges::geom_density_ridges(aes(x=PR,y=Region_Name,fill=factor(Region_Name)))
+    ```
+
+5.  Last, analyze if there is any relationship between the scores
+    obtained in CL and in PR, and asses if this relationship depends on
+    whether the country is a least developed country or not (variable
+    `is_ldc` )
+
+    ```{r}
+    freedom %>% 
+      group_by(is_ldc, country) %>%
+      summarise(PR = mean(PR), CL = mean(CL)) %>% 
+      ggplot() + 
+      geom_point(aes(x = PR, y = CL, color = factor(is_ldc))) +
+      geom_smooth(aes(x = PR, y = CL, color = factor(is_ldc), fill = factor(is_ldc)))
+    ```
+
+# 
