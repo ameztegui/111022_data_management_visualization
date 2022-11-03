@@ -12,6 +12,9 @@ output:
 # runtime: shiny_prerendered
 ---
 
+The purpose of this lab is to introduce the philosophy behind the **Grammar of graphics**, which governs transformation of data into visual elements. We will present the different layers that constitute a figure conceived under these principles, and how this way of conceptualizing visualizations presents a huge versatility.
+
+
 # From data into visualization: the grammar of graphics {.unnumbered}
 
 ```{r knitr_init, include = FALSE, echo=FALSE, cache=FALSE, warning=FALSE}
@@ -40,9 +43,9 @@ options(
   digits = 2
   )
 ```
-When we visualize data, we take data values and convert them in a systematic and logical way into the visual elements that make up the final graphic. On first glance a scatter plot, a pie chart, and a heatmap don't seem to have much in common, but all these visualizations can be described with a common language that captures how data values are turned into ink on paper or colored pixels on screen. This is the so called *grammar of graphics*, in which the different elements of a graph can be seen as a series of layers that can be combined to constitute the final visualization [@grammargraphics]. Basically, a grammar of graphics is a framework which follows a layered approach to describe and construct visualizations or graphics in a structured manner.
+When we visualize data, we **take data values** and >*convert* them in a systematic and logical way into the **visual elements** that make up the final graphic. On first glance a scatter plot, a pie chart, and a heatmap don't seem to have much in common, but all these visualizations can be described with a common language that captures how data values are turned into ink on paper or colored pixels on screen. This is the so called *grammar of graphics*, in which the different elements of a graph can be seen as a series of layers that can be combined to constitute the final visualization [@grammargraphics]. 
 
-Typically, to build or describe any visualization with one or more dimensions, we can use the components as follows: [@layered-grammar]
+Basically, a grammar of graphics is a framework which follows a layered approach to describe and construct visualizations or graphics in a structured manner. Typically, to build or describe any visualization with one or more dimensions, we can use the components as follows: [@layered-grammar]
 
 1.  **Data:** Always start with the data, identify the dimensions you want to visualize.
 2.  **Aesthetics:** Confirm the axes based on the data dimensions, positions of various data points in the plot. Also check if any form of encoding is needed including size, shape, color and so on which are useful for plotting multiple data dimensions.
@@ -58,14 +61,12 @@ Typically, to build or describe any visualization with one or more dimensions, w
 ![We can also illustrate the elements of the grammar of graphics through a pyramid architecture to show an inherent layered hierarchy of components [@introR]](images/fundamentals_vis/grammar_graphics.png)
 
 
-
-
-During this unit we will be looking at how to leverage this layered framework to build effective data visualizations for multi-dimensional data with some hands-on examples. But for now, in this lesson we will focus on one of the most important components of a visualization: the *aesthetics*
+During this unit we will be looking at how to leverage this layered framework to build effective data visualizations for multi-dimensional data with some hands-on examples. But for now, in this lesson we will focus on one of the most important components of a visualization: the **aesthetics**
 
 
 # Aesthetics and types of data {-}
 
-Aesthetics describe every aspect of a given graphical element. A critical component of every graphical element is of course its *position,* which describes where the element is located. In standard 2d graphics, we describe positions by an *x* and *y* value, but other coordinate systems and one- or three-dimensional visualizations are possible. Next, all graphical elements have a *shape*, a *size*, and a *color.* Even if we are preparing a black-and-white drawing, graphical elements need to have a color to be visible, for example black if the background is white or white if the background is black. Finally, to the extent we are using lines to visualize data, these lines may have different widths or dash--dot patterns. Beyond this handful of examples, there are many other aesthetics we may encounter in a data visualization. For example, if we want to display text, we may have to specify font family, font face, and font size, and if graphical objects overlap, we may have to specify whether they are partially transparent.
+Aesthetics describe every aspect of a given graphical element. A critical component of every graphical element is of course its **position** which describes where the element is located. In standard 2d graphics, we describe positions by an *x* and *y* value, but other coordinate systems and one- or three-dimensional visualizations are possible. Next, all graphical elements have a **shape**, a **size**, and a **color**. Even if we are preparing a black-and-white drawing, graphical elements need to have a color to be visible, for example black if the background is white or white if the background is black. Finally, to the extent we are using lines to visualize data, these lines may have different **widths** or **dash--dot** patterns. Beyond this handful of examples, there are many other *aesthetics* we may encounter in a data visualization. For example, if we want to display text, we may have to specify **font family**, **font face**, and **font size*, and if graphical objects overlap, we may have to specify whether they are partially transparent (**alpha**).
 
 ```{r common-aesthetics, fig.width = 6, fig.asp = 0.45, fig.cap ="Commonly used aesthetics in data visualization [@wilke2019fundamentals]",echo=FALSE,message=FALSE,warning=FALSE}
 aes_pos <- ggdraw() + 
@@ -119,14 +120,14 @@ plot_grid(aes_pos, aes_shape, aes_size,
           label_x = 0.05, label_y = 0.95, hjust = 0, vjust = 1)
 ```
 
-Some of these aesthetics can represent both continuous and discrete data (position, size, line width, color) while others can usually only represent discrete data (shape, line type). Continuous data values are values for which arbitrarily fine intermediates exist. For example, time duration is a continuous value. Between any two durations, say 50 seconds and 51 seconds, there are arbitrarily many intermediates, such as 50.5 seconds, 50.51 seconds, 50.50001 seconds, and so on. By contrast, number of persons in a room is a discrete value. A room can hold 5 persons or 6, but not 5.5. For the examples in Figure \@ref(fig:common-aesthetics), position, size, color, and line width can represent continuous data, but shape and line type can usually only represent discrete data.
+Some of these aesthetics can represent both **continuous** and **discrete** data (*position, size, line width, color...*) while others can usually only represent discrete data (*shape, line type...*). Continuous data values are values for which arbitrarily fine intermediates exist. For example, diameter is a continuous value, because it can take any possible value: 10.2, 10.25, 10.2547865856, and so on. By contrast, number of plants in a plot is a discrete value. A plot can hold 5 plants or 6, but not 5.5. For the examples in the figure above, position, size, color, and line width can represent continuous data, but shape and line type can usually only represent discrete data.
 
-Next we'll consider the types of data we may want to represent in our visualization. You may think of data as numbers, but numerical values are only two out of several types of data we may encounter. In addition to continuous and discrete numerical values, data can come in the form of discrete categories, in the form of dates or times, and as tex). When data is numerical we also call it *quantitative* and when it is categorical we call it *qualitative*. Variables holding qualitative data are *factors*, and the different categories are called *levels*. The levels of a factor are most commonly without order (as in the example of "dog", "cat", "fish"), but factors can also be ordered, when there is an intrinsic order among the levels of the factor (as in the example of "good", "fair", "poor"). We have seen how to work with factors in Unit 2.3.
+Next we'll consider the types of data we may want to represent in our visualization. You may think of data as numbers, but numerical values are only two out of several types of data we may encounter. In addition to continuous and discrete numerical values, data can come in the form of **discrete categories**, in the form of dates or times, and as tex). When data is numerical we also call it *quantitative* and when it is categorical we call it *qualitative*. Variables holding qualitative data are *factors*, and the different categories are called *levels*. The levels of a factor are most commonly without order (as in the example of "pine", "oak", "spruce"), but factors can also be ordered, when there is an intrinsic order among the levels of the factor (as in the example of "small", "mid-size", "large"). We have seen how to work with factors in Unit 2.3.
 
 
 # Mapping data into aesthetics {.unnumbered}
 
-To map data values onto aesthetics, we need to specify which data values correspond to which specific aesthetics values. For example, if our graphic has an x axis, then we need to specify which data values fall onto particular positions along this axis. Similarly, we may need to specify which data values are represented by particular shapes or colors. This mapping between data values and aesthetics values is created via scales. A scale defines a unique mapping between data and aesthetics. Importantly, a scale must be one-to-one, such that for each specific data value there is exactly one aesthetics value and vice versa. If a scale isn’t one-to-one, then the data visualization becomes ambiguous.
+To **map** data values onto aesthetics, we need to specify **which data** values correspond to **which specific aesthetics** values. For example, if our graphic has an *x* axis, then we need to specify which data values fall onto particular positions along this axis. Similarly, we may need to specify which data values are represented by particular *shapes or colors*. This mapping between data values and aesthetics values is created via **scales**. A scale defines a unique mapping between data and aesthetics. Importantly, a scale must be one-to-one, such that for each specific data value there is exactly one aesthetics value and viceversa. If a scale isn’t one-to-one, then the data visualization becomes ambiguous.
 
 ![Scales link data values to aesthetics. Here, the numbers 1 through 4 have been mapped onto a position scale, a shape scale, and a color scale. For each scale, each number corresponds to a unique position, shape, or color and vice versa [@wilke2019fundamentals]](images/fundamentals_vis/basic-scales-example-1.png)
 
@@ -160,7 +161,7 @@ glimpse(fires)
   - Restarted
 
 
-Let’s put things into practice. We can take the dataset `fires`, and map burnt area onto the y axis, year onto the x axis, and cause onto color, and visualize these aesthetics with solid lines. The result is a standard line plot showing the trend in burnt area for the different causes throughout time (for now, don't worry about how to produce this chart, we will learn this later on)
+Let’s put things into practice. We can take the dataset `fires`, and map **burnt area** onto the y axis, **year** onto the x axis, and **cause** onto color, and visualize these aesthetics with solid lines. However, we will first need to do some summary operations to calculate the burnt area per year and cause. The result is a **standard line plot** showing the trend in burnt area for the different causes throughout time (for now, don't worry about how to produce this chart, we will learn this later on)
 
 ```{r, echo = FALSE, warning = FALSE, message = FALSE}
 summary_fires <- fires %>% 
@@ -201,7 +202,6 @@ summary_fires %>%
 Note that here we have used two position scales (year along the x axis and cause along the y axis)  but neither is a continuous scale. Therefore, the two position scales are both discrete. This can be done with no problem, we will generally place the different levels at an equal spacing along the axis.
 
 In the following units we will learn how to leverage the many aesthetics that a visualization can include to produce informative, aesthetically pleasing, and scientifically-rigorous visualizations.
-
 
 ::: exercise
 **EXERCISE 1:**</br> 

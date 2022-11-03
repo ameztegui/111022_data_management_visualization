@@ -34,6 +34,59 @@ options(
 ```
 
 
+# Directory of visualizations
+
+
+## Visualizing amounts
+
+The most common approach to visualizing amounts (i.e., numerical values shown for some set of categories) is using bars, either vertically or horizontally arranged. However, instead of using bars, we can also place dots at the location where the corresponding bar would end.
+
+![](images/0X-ggplot/amounts-1.png)
+
+If there are two or more sets of categories for which we want to show amounts, we can group or stack the bars. We can also map the categories onto the *x* and *y* axis and show amounts by color, via a heatmap.
+
+![](images/0X-ggplot/amounts_multi-1.png)
+
+## Distributions
+
+Histograms and density plots provide the most intuitive visualizations of a distribution, but both require arbitrary parameter choices and can be misleading. Cumulative densities and quantile-quantile (q-q) plots (Chapter \@ref(ecdf-qq)) always represent the data faithfully but can be more difficult to interpret.
+
+![](images/0X-ggplot//single-distributions-1.png)
+
+Boxplots, violins, strip charts, and sina plots are useful when we want to visualize many distributions at once and/or if we are primarily interested in overall shifts among the distributions . Stacked histograms and overlapping densities allow a more in-depth comparison of a smaller number of distributions, though stacked histograms can be difficult to interpret and are best avoided. Ridgeline plots can be a useful alternative to violin plots and are often useful when visualizing very large numbers of distributions or changes in distributions over time.
+
+![](images/0X-ggplot//multiple-distributions-1.png)
+
+## Proportions
+
+Proportions can be visualized as pie charts, side-by-side bars, or stacked bars, and as in the case for amounts, bars can be arranged either vertically or horizontally. Pie charts emphasize that the individual parts add up to a whole and highlight simple fractions. However, the individual pieces are more easily compared in side-by-side bars. Stacked bars look awkward for a single set of proportions, but can be useful when comparing multiple sets of proportions (see below).
+
+![](images/0X-ggplot//proportions-1.png)
+
+When visualizing multiple sets of proportions or changes in proportions across conditions, pie charts tend to be space-inefficient and often obscure relationships. Grouped bars work well as long as the number of conditions compared is moderate, and stacked bars can work for large numbers of conditions. Stacked densitiesare appropriate when the proportions change along a continuous variable.
+
+![](images/0X-ggplot//proportions-comp-1.png)
+
+## *x*--*y* relationships
+
+Scatterplots represent the archetypical visualization when we want to show one quantitative variable relative to another. If we have three quantitative variables, we can map one onto the dot size, creating a variant of the scatterplot called bubble chart. For paired data, where the variables along the *x* and the *y* axes are measured in the same units, it is generally helpful to add a line indicating *x* = *y*. Paired data can also be shown as a slope graph of paired points connected by straight lines.
+
+![](images/0X-ggplot//basic-scatter-1.png)
+
+For large numbers of points, regular scatterplots can become uninformative due to overplotting. In this case, contour lines, 2D bins, or hex bins may provide an alternative. When we want to visualize more than two quantities, on the other hand, we may choose to plot correlation coefficients in the form of a correlogram instead of the underlying raw data.
+
+![](images/0X-ggplot//xy-binning-1.png)
+
+## Uncertainty {#directory-uncertainty}
+
+Error bars are meant to indicate the range of likely values for some estimate or measurement. They extend horizontally and/or vertically from some reference point representing the estimate or measurement. Reference points can be shown in various ways, such as by dots or by bars. Graded error bars show multiple ranges at the same time, where each range corresponds to a different degree of confidence. They are in effect multiple error bars with different line thicknesses plotted on top of each other.
+
+![](images/0X-ggplot//errorbars-1.png)
+
+
+
+
+
 ```{r include=FALSE}
 
 fires <- read.csv('data/fires.csv')

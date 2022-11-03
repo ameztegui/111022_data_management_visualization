@@ -65,7 +65,7 @@ The main goal of this lab is to introduce you to the `ggplot2` R package, and to
 `ggplot2` is a package belonging to the tidyverse suite that provides a **complete set of tools to visualize tidy data**. As most of the packages of the tidyverse, `ggplot2` is designed to work with **tidy data**, so that it integrats into the data science pipeline. Alongside, it can be integrated within a pipeline, so that it will take as input any output coming from `dplyr` and/or `tidyr`. 
 ![ggplot integrates smoothly into the data science pipeline. Adapted from @r4ds](images/fundamentals_vis/tidyverse_schema_2.png)
 
-`ggplot2` syntax can seem complex at first, with a somewhat steep learning curve. That being said, learning `ggplot2` is worth the effort for a couple of reasons. First, the graphs are beautiful. Second, the solid underlying model of `ggplot2`, based on the Grammar of Graphics [@grammargraphics], makes it easy to produce a wide range of graphics with a compact syntax, since each chart is made up of a set of independent components that can be composed in many different ways. In fact, its carefully chosen defaults mean that you can produce publication-quality graphics in seconds. However, if you do have special formatting requirements, it's comprehensive theming system makes it easy to do what you want. Ultimately, this means that rather than spending your time making your graph look pretty, you can instead focus on creating the graph that best reveal the message in your data. This makes `ggplot2` very powerful because you are not limited to a set of pre-specified graphics, but you can create new graphics that are precisely tailored for your problem.
+`ggplot2` syntax can seem complex at first, with a somewhat steep learning curve. That being said, learning `ggplot2` is **worth the effort** for a couple of reasons. First, the graphs are **beautiful**. Second, the solid underlying model of `ggplot2`, based on the Grammar of Graphics [@grammargraphics], makes it easy to produce a **wide range of graphic**s with a compact syntax, since each chart is made up of a set of independent components that can be composed in many different ways. This makes `ggplot2` very powerful because you are not limited to a set of pre-specified graphics, but you can create new graphics that are precisely tailored for your problem. Moreover, its carefully chosen defaults mean that you can produce publication-quality graphics in seconds. This means that rather than spending your time making your graph look pretty, you can instead focus on creating the graph that best reveal the message in your data. However, if you do have **special formatting** requirements, it's comprehensive theming system makes it easy to do what you want. 
 
 ![`ggplot2` provides beautiful, hassle-free plots that take care of fiddly details like drawing legends. ](images/fundamentals_vis/ggplot_examples.png)
 
@@ -90,17 +90,17 @@ There are a number of other graphics systems available in R: base graphics, grid
 
 # How to use ggplot2 {-}
 
-`ggplot2` is designed to work iteratively. You can start with a layer showing the raw data then add layers of annotations, define color schemes, modify the axes, the legend, or the general aspect of the plot. It allows you to produce graphics using the same structured thinking that you use to design an analysis, reducing the distance between a plot in your head and one on the page..
+`ggplot2` is designed to work **iteratively**. You can start with a layer showing the raw data and then add layers of annotations, define color schemes, modify the axes, the legend, or the general aspect of the plot. It allows you to produce graphics using the same structured thinking that you use to design an analysis, reducing the distance between a plot in your head and one on the page.
 
-There are 3 essential elements to any `ggplot()` call:
+Overall, there are 3 essential elements to any `ggplot()` call:
 
-1. A `data` object including the information we want to represent/deliver/communicate. As `ggplot2` is part of the tidyverse, the dataset parsed to `data` must be in a *tidy format*
+1. A `data` object including the information we want to represent/deliver/communicate. As `ggplot2` is part of the tidyverse, the dataset assigned to `data` must be in a *tidy format*
 
 2. A `geom` or geometry that tells `ggplot2` about the basic structure of the graph. Intuitively, the geom can be thought of as the type of chart you are graphing (bar plot, scatterplot, histogram...)
 
 3. `aesthetics` that tell `ggplot()` which variables are being mapped onto the *x* axis, the *y* axis, (and often other attributes of the graph, such as the color, line type, etc.). Intuitively, the aesthetic can be thought of as what you are graphing.
 
-In addition to these three components, we can add elements to define the coordinate system, tje scale, the theme, configure the fonts, the legend, graph title, axes, colour palettes... But these are not mandatory, if we don't define them `ggplot2` will assign them default values.
+In addition to these three components, we can add elements to define the **coordinate system**,  **scale**, the **theme**, configure the fonts, the **legend**, graph title, axes, colour palettes... But these are not mandatory, if we don't define them `ggplot2` will assign them default values. So for now we are going to keep things simple, and make a basic plot.
 
 
 The basic syntax and elements of a ggplot call is thus something close to this:
@@ -113,7 +113,7 @@ The basic syntax and elements of a ggplot call is thus something close to this:
 
 ## Working through the `ggplot()`layers {-}
 
-As seen above, a graphic is made of different layers, combined together to visually communicate information in our data. Let us build a `ggplot` graphic step by step by adding one layer at a time. `ggplot2` code is easier to read if each line represents a new element. This style is generally favoured for `ggplot2` code in the R community. This means that as you add each layer, you should start a new line.
+As seen above, a graphic is made of different layers, combined together to visually communicate information in our data. Let's build a `ggplot` graphic step by step by adding one layer at a time. `ggplot2` code is easier to read if each line represents a new element. This style is generally favoured for `ggplot2` code in the R community. This means that as you add each layer, you should start a new line.
 
 ### Data layer {-}
 
@@ -125,10 +125,6 @@ ggplot(data = fires)
 
 In `ggplot2`, aesthetics are a group of parameters that specify what and how data is displayed. Here, we are telling R to plot month on the x axis and burnt area on the y axis. We have not yet told R how we want to represent the data though, so our data will not yet be plotted.
 
-
-```{r, fig.asp = 3/4, message=FALSE,warning=FALSE}
-
-```
 
 ```{r fig.asp = 3/4, fig.cap = 'Our variables are now assigned to the x and y axes but nothing is plotted yet', message=FALSE,warning=FALSE}
 
@@ -146,6 +142,7 @@ ggplot(data = fires,
        aes(x = MONTH, y = BAREA)) +
     geom_point()
 ```
+
 > Note that you can add several `geoms` in one plot. For example, we could add a line on this plot to show a threshold value, or add a linear regression. But for now, let us keep it simple! 
 
 > Also note that we can pass the `aes()` arguments inside the `ggplot()` call, just beside the `data`. In this case, those aesthetics will apply to all the `geoms` that are included in that visualization. But we can also pass it within the `geom` function. In this case, each `geom` will have its own aesthetics, which will need to be explicitely defined for each of them.  
@@ -153,23 +150,19 @@ ggplot(data = fires,
  
 ## Basic plots with `ggplot2` {-}
 
-The `geoms` are the fundamental building blocks of ggplot2. The allow us to decide in which way we want to picture out our data. As you can see, most of these geoms are associated with a named plot: when that geom is used by itself in a plot, that plot has a special name.
+The `geoms` are the fundamental building blocks of ggplot2. They allow us decide in which way we want to picture out our data. As you can see, most of these `geoms` are associated with a named plot. These are the main ones:
 
-*   `geom_area()` draws an __area plot__, which is a line plot filled to the y-axis (filled lines). Multiple groups will be stacked on top of each other. 
+* `geom_point()` produces a __scatterplot__. `geom_point()` understands the `shape`, `color`, and `size` aesthetic, among other.
+
+* `geom_line()` makes a __line plot__.  The `group` aesthetic determines which observations are connected. `geom_line()` connects points from left to right; `geom_path()` is similar but connects points in the order they appear in the data. Both `geom_line()` and `geom_path()` also understand the aesthetic `linetype`, which maps a categorical variable to solid, dotted and dashed lines.
+
+* `geom_area()` draws an __area plot__, which is a line plot filled to the y-axis (filled lines). Multiple groups will be stacked on top of each other. 
   
-*   `geom_bar(stat = "identity")` makes a __bar chart__. We need `stat = "identity"` because the default stat automatically counts values (so is essentially a 1d geom). 
-    The identity stat leaves the data unchanged. Multiple bars in the same location will be stacked on top of one another.
+*  `geom_bar()` and `geom_col()` make a __bar chart__. By default, `geom_bar()` will automatically represent, for each level of x, the number of observations that exist in the dataset. It is essentially a 1d geom, and does not require, therefore, the *aesthetic* `y`. If instead of a case count we want to represent a given y-value in bars, ggplot2 provides `geom_col()`, which does require us to explicitly define an *x* and a *y*. Multiple bars in the same location will be stacked on top of one another, but we will see how to change that behavior.
   
-*   `geom_line()` makes a __line plot__.  The `group` aesthetic determines which observations are connected. `geom_line()` connects points from left to right; `geom_path()` is similar but connects points in the order they appear in the data.
-    Both `geom_line()` and `geom_path()` also understand the aesthetic `linetype`, which maps a categorical variable to solid, dotted and dashed lines.
-    
-*   `geom_point()` produces a __scatterplot__. `geom_point()` also understands the `shape` aesthetic.
+*   `geom_histogram()` visualises the distribution of a single continuous variable by dividing the x axis into bins and counting the number of observations in each bin. Similarly, `geom_density()` computes and draws kernel density estimates, which is a smoothed version of the histogram.
 
-*   `geom_polygon()` draws polygons, which are filled paths. Each vertex of the polygon requires a separate row in the data.  It is often useful to merge a data frame of polygon coordinates with the data just prior to plotting.
-
-*   `geom_rect()`, `geom_tile()` and `geom_raster()` draw rectangles. `geom_rect()` is parameterised by the four corners of the rectangle, `xmin`, `ymin`, `xmax` and `ymax`. `geom_tile()` is exactly the same, but parameterised by the center of the rect and its size, `x`, `y`, `width` and `height`. `geom_raster()` is a fast special case of `geom_tile()` used when all the tiles are the same size.
-
-The most common `geoms` are shown in the code below.
+The most common `geoms` are shown in the code below. Throughout the next lessons we are going to work with the main ones, showing how they can help us visualize certain types of data, and how we can get the most of them by modifying their aesthetics. But you can also find a comprehensive directory of geoms - and the aesthetics they require - in the [ggplot website](https://ggplot2.tidyverse.org/reference/#geoms)
 
 ```{r}
 
@@ -194,21 +187,12 @@ p1 + p2 + p3 + p4 + p5 + p6 + plot_layout(ncol = 2)
 
 ```
 
-
-
-
-```{r echo=FALSE}
-
-
-```
-
-
-Each of these geoms is two dimensional and requires both `x` and `y` aesthetics. That means we must `map` two variables at least, one to each dimension. Nonetheless, we coudl have included additional aesthetics such as `color`/`fill` (or `color`) and `size`. We will cover all of them in the next sections.
+Each of these geoms is two dimensional and requires both `x` and `y` aesthetics. That means we must `map` two variables at least, one to each dimension. Nonetheless, we could have included additional aesthetics such as `color`/`fill` (or `color`) and `size`. We will cover all of them in the next section.
 
 
 ## Adding dimensions to a figure through aesthetics {-}
 
-Once we know what we want to plot, we must define the chosen geom, and define the aesthetics. Some of these aesthetics will be mandatory, whereas others can be optional. The number and type of aesthetics wull also be different for each `geom`. For instance, `geom_point()`requires, at minimum, a variables parsed into the `x` and another one into the `y`. It can hold additional aesthetics though, such as the `shape`, `size` and `color` of the points.
+Once we have decided which `geom` fits our data, we must define the **aesthetics**. Some of these aesthetics will be mandatory, whereas others can be optional. The number and type of aesthetics will also be different for each `geom`. For instance, `geom_point()`requires, at minimum, a variable assigned into the `x` and another one into the `y`. It can hold additional aesthetics though, such as the `shape`, `size` and `color` of the points.
 
 Let's make color to vary with fire cause:
 
@@ -221,27 +205,26 @@ ggplot(data = fires,
 
 We could further add new aesthetics to the figure, such as shape or size:
 
-```{r fig.asp = 3/4, fig.cap = 'ggplot automatically adds each aesthetic to the legend (except from x and y)', message=FALSE,warning=FALSE}
-
+```{r, fig.asp = 3/4, fig.cap = 'ggplot automatically adds each aesthetic to the legend (except from x and y)', message=FALSE,warning=FALSE}
 ggplot(data = fires,
        aes(x = MONTH, y = BAREA, color = CCAA, shape = CAUSE)) +
     geom_point()
 ```
 
-However, the fact that we *can* add as many aesthetics as we wish, does not mean we *should* do it. The example above is quite clear: the overlapping between the points and the huge amount of colors prevents getting any insight from that chart.
+However, the fact that we *can* add as many aesthetics as we wish, does not mean we *should* do it. The example above is a good example of a bad figure: the overlapping between the points and the huge amount of colors prevents getting any insight from that chart.
 
 ::: exercise
 **EXERCISE 1:**</br> 
 1.1 Make a figure showing the annual variation in the number of fires. What do you observe? </br>
-1.2 Correct some of the problems you have found in the graph above, and use some *aesthetic* to identify the cause of the fire.
+*Hint: you will need to use some `dplyr` processing to solve this exercise* </br>
+1.2 Correct some of the problems you have found in the graph above, and use some *aesthetics* to identify the cause of the fire.
 :::
-
 
 
 
 ## Fixed aesthetics {-}
 
-What if we want to change point shape or size, but we don't want to make them depend on any variable? We can do it quite easily. Aesthetics such as color, alpha (transparency), shape, and size  can be set outside of `aes()` values, and will be static, not data-dependent. However, we must define their value. Here, for example `color`, `size` and `alpha`are not conveying any information in the data - they are just choices we have made to make a prettier plot. Obviously, these *fixed* aesthetics must be parsed into each of the geoms.
+What if we want to change point shape or size, but we don't want to make them depend on any variable? We can do it quite easily. Aesthetics such as color, alpha (transparency), shape, and size  can be set outside of `aes()` values, and will be static, not data-dependent. However, we must define their value. Here, for example `color`, `size` and `alpha`are not conveying any information in the data - they are just choices we have made to make a prettier plot. Obviously, these *fixed* aesthetics must be assigned into each of the geoms.
 
 ```{r fig.asp = 3/4, fig.cap = "Note how the fixed aesthetics are not plotted into the legend", message=FALSE,warning=FALSE}
 
@@ -250,17 +233,20 @@ ggplot(data = fires,
     geom_point(color = "blue", size = 0.8, alpha = 0.5)
 ```
 
+> If we want any aesthetic to vary along the values of a variable, we must define it within the `aes()` statement. however, if we just want to specify a certain value for that aesthetic, we need to define it outside the `aes()`. In the latter case, it will not be shown in the legend.
+
+
 You can learn more on the available aesthetics (and their possibe values) in the [`ggplot2 website`](https://ggplot2.tidyverse.org/articles/ggplot2-specs.html)
 
 ::: exercise
 **EXERCISE 2:**</br> 
-Modify the appearance of any of the figures generated in exercise 1 by setting a fixed *aesthetic*.
+Modify the appearance of the last figure generated in exercise 1 by setting at least a couple of fixed *aesthetic*. Remember you can check about the possible aesthetics and their scales [here](https://ggplot2.tidyverse.org/articles/ggplot2-specs.html)
 :::
 
 
 # ggplot2 and the tidyverse {-}
 
-As already mentioned, `ggplot2` is a member of the tidyverse, thus it has being designed to be operable from `dplyr` pipelines. That means we can use any number of verbs to manipulate a data frame and then pass it to `ggplot()` using `%>%`. Pbviously, if we proceed in this way, there is no need to specify the `data` argument within the `ggplot()` call. After that we keep using the regular `+` operator to concatenate plot instructions:
+As already mentioned, `ggplot2` is a member of the tidyverse, and thus it has being designed to be operable from `dplyr` and `tidyr` pipelines. That means we can use any number of verbs to manipulate a data frame and then pass it to `ggplot()` using `%>%`. Obviously, if we proceed in this way, there is no need to specify the `data` argument within the `ggplot()` call. After that we keep using the regular `+` operator to concatenate plot instructions:
 
 ```{r, eval=FALSE}
 data.frame %>%
@@ -270,9 +256,8 @@ data.frame %>%
 
 ::: exercise
 **EXERCISE 3:**</br> 
-Combine `dplyr` and `ggplot` functions into a pipeline to generate a figure showing the number of fires in each Autonomous Region since 1990.
+Combine `dplyr` and `ggplot` functions into a pipeline to generate a figure showing the number of fires in each Autonomous Region since 1990. Use aesthetics as you need them to produce the nicest chart possible.
 :::
-
 
 
 # A breakdown of common layers {-}
@@ -283,7 +268,7 @@ Here is a breakdown of each Grammar of Graphics layer and common arguments for e
     * your data, in tidy format, will provide ingredients for your plot
     * use `dplyr` techniques to prepare data for optimal plotting format
     * usually, this means you should have one row for every observation that you want to plot
-* **Aesthetics** (aes), to make data visible
+* **[Aesthetics](https://ggplot2.tidyverse.org/articles/ggplot2-specs.html)** (aes), to make data visible.
     * `x`, `y`: variable along the x and y axis
     * `color`: color of geoms according to data
     * `fill`: the inside color of the geom
@@ -292,7 +277,7 @@ Here is a breakdown of each Grammar of Graphics layer and common arguments for e
     * `linetype`: the type of line used (solid, dashed, etc)
     * `size`: size scaling for an extra dimension
     * `alpha`: the transparency of the geom
-* **Geometric objects** (geoms - determines the type of plot)
+* **[Geometric objects](https://ggplot2.tidyverse.org/reference/#geoms)** (geoms - determines the type of plot).
     * `geom_point()`: scatterplot
     * `geom_line()`: lines connecting points by increasing value of x
     * `geom_path()`: lines connecting points in sequence of appearance
@@ -301,16 +286,16 @@ Here is a breakdown of each Grammar of Graphics layer and common arguments for e
     * `geom_histogram()`: histogram for continuous x axis
     * `geom_violin()`: distribution kernel of data dispersion
     * `geom_smooth()`: function line based on data
-* **Facets**
+* **[Facets]()https://ggplot2.tidyverse.org/reference/facet_grid.html**
     * `facet_wrap()` or `facet_grid()` for small multiples
-* **Statistics**
+* **[Statistics](https://ggplot2.tidyverse.org/reference/#stats)**
     * similar to geoms, but computed
     * show means, counts, and other statistical summaries of data
-* **Coordinates** - fitting data onto a page
+* **[Coordinate systems](https://ggplot2.tidyverse.org/reference/#coordinate-systems)** - fitting data onto a page
     * `coord_cartesian` to set limits
     * `coord_polar` for circular plots
     * `coord_map` for different map projections
-* **Themes**
+* **[Themes](https://ggplot2.tidyverse.org/reference/#themes)**
     * overall visual defaults
     * fonts, colors, shapes, outlines
 
