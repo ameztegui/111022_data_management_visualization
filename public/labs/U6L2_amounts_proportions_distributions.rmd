@@ -34,6 +34,8 @@ options(
 ```
 
 
+
+
 ```{r include=FALSE}
 
 fires <- read.csv('data/fires.csv')

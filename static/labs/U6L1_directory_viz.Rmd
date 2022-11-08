@@ -1,0 +1,119 @@
+---
+title: "Lab 6.1 - Directory of visualizations"
+date: "111022 | Data management and visualization with R"
+author: 
+  - "Aitor Ameztegui"
+output:
+  rmdformats::readthedown:
+    highlight: pygments
+    number_sections: true
+    css: lab.css
+# runtime: shiny_prerendered
+---
+
+```{r knitr_init, echo=FALSE, cache=FALSE, warning=FALSE, include = F}
+library(tidyverse)
+library(cowplot)
+library(knitr)
+
+## Global options
+
+options(max.print="75")
+options(
+  htmltools.dir.version = FALSE, # for blogdown
+  show.signif.stars = FALSE     # for regression output
+  )
+# opts_chunk$set(echo=TRUE,
+# 	             cache=FALSE,
+#                prompt=FALSE,
+#                tidy=F,
+#                comment=NA,
+#                message=FALSE,
+#                warning=FALSE)
+#opts_knit$set(width=75)
+```
+
+# Directory of visualizations
+
+TThe aim of this lab is to introduce some of the main types of visualizations we can use to convey our data and produce informatice, easthetically pleasant and scientifically sound figures. The type of visualization to use will ultimately depend on the type of data we want to visualize: one, two or more variables; continuous or discrete...
+
+This is not a complete list, and there are more visualisations than the ones shown here (you can see a very complete catalogue [here](https://datavizcatalogue.com/)). However, with the ones we show you will be able to face most of the visualisation challenges you will face, and only in exceptional cases it will be justified to try some more risky visualisations.
+
+Each of these visualizations has its corresponding `geom`, and some asociated aesthetics. But for now we will focus on the types of data they can convey, and we will see the details of each type on further lessons.
+
+# Amounts
+
+In many scenarios, we are interested in the **magnitude** of some set of numbers. For example, we might want to visualize the total basal area of different species in a forest, or the total number of burnt area per cause of fire In all these cases, we have a set of **categories** (e.g., species, fire causes) and a **quantitative value** for each category (basal area, burnt area).
+
+The most common approach to visualizing amounts (i.e., numerical values shown for some set of categories) is using **bars**, either vertically or horizontally arranged. However, instead of using bars, we can also place **dots** at the location where the corresponding bar would end.
+
+![](images/0X-ggplot/amounts-1.png)
+
+If there are two or more sets of categories for which we want to show amounts - for instance, species per province - we can **group or stack** the bars. In some cases, we can also map the categories onto the *x* and *y* axis and show amounts by color, via a **heatmap**. Heatmaps can be very convenient, but are somewhat harder to interpret, and must be used after careful thinking about the message we want to transfer and the target public of the visualization.
+
+![](images/0X-ggplot/amounts_multi-1.png)
+
+# Distributions
+
+We frequently encounter the situation where we want to understand how a particular variable is **distributed** in a dataset. For example, we may want to know how many trees of different diameters have been measured in a certain area, or how many fires of what sizes have occurred. We call the relative proportions of different sizes among the fires the *size distribution* of the forest fires.
+
+**Histograms** and **density plots** provide the most intuitive visualizations of a distribution, but both require arbitrary parameter choices and can be misleading. **Cumulative densities** and **quantile-quantile** (q-q) plots always represent the data faithfully but can be more difficult to interpret.
+
+![](images/0X-ggplot//single-distributions-1.png)
+
+In many scenarios we have **multiple distributions** we would like to
+visualize simultaneously to compare them. For example, we may want to compare size distribution *across diferent tree species*, or assess if the size distribution of fires is consistent *across diferent causes.*
+
+One commonly employed visualization strategy in this case is a **stacked histogram,** where we draw the histogram bars for each species on top of the bars for other species, in a different color. However, this visualization presents some problems that we will see in later units, and should rarely be the preferred option. **Boxplots**, **violins**, **strip charts,** and **sina plots** are useful when we want to visualize many distributions at once and/or if we are primarily interested in overall shifts among the distributions . **Ridgeline plots** can be a useful alternative to violin plots and are often useful when visualizing very large numbers of distributions or changes in distributions over time.
+
+![](images/0X-ggplot//multiple-distributions-1.png)
+
+# Proportions
+
+We often want to show how some group, entity, or amount breaks down into individual pieces that each represent a *proportion* of the whole. Common examples include the proportions of species in a certain forest, the percentages of fires for different causes, etc. The archetypal such visualization is the **pie chart,** omnipresent in any business presentation and much maligned among data scientists. But as we will see, visualizing proportions can be challenging, and there is no single ideal visualization that always works. For instance, the heavily criticized pie chart can be the best option to represent the number of seats gained for each party at a Parliament, as it is easy to assess if any combination of parties attains more than 50% of the seats.
+
+Besides pie charts, proportions can be visualized as **side-by-side bars**, or **stacked bars**, and as in the case for amounts, bars can be arranged either vertically or horizontally. Pie charts emphasize that the individual parts add up to a whole and highlight simple fractions. However, the individual pieces are more easily compared in side-by-side bars. Stacked bars look awkward for a single set of proportions, but can be useful when comparing multiple sets of proportions (see below).
+
+![](images/0X-ggplot//proportions-1.png)
+
+When visualizing multiple sets of proportions or changes in proportions across conditions, **pie charts** tend to be space-inefficient and often obscure relationships. **Grouped bars** work well as long as the number of conditions compared is moderate, and stacked bars can work for large numbers of conditions. **Stacked densities** are appropriate when the proportions change along a continuous variable.
+
+![](images/0X-ggplot//proportions-comp-1.png)
+
+# *x*--*y* relationships
+
+Many datasets contain two or more quantitative variables, and we may be interested in how these variables relate to each other. For example, we have tree diameter, height and crown height in the `trees` dataset. To plot the relationship of just two such variables, e.g. the height and diameter, we will normally use a **scatter plot**. If we want to show more
+than two variables at once, we can map one onto the dot size, creating a variant of the scatterplot called **bubble chart**. For paired data, where the variables along the *x* and the *y* axes are measured in the same units, it is generally helpful to add a line indicating *x* = *y*. Paired data can also be shown as a **slope graph** of paired points connected by straight lines, aklso called **parallel coordinates** plots.
+
+![](images/0X-ggplot//basic-scatter-1.png)
+
+For large numbers of points, regular scatterplots can become uninformative due to overplotting. In this case, **contour lines**, **2D bins, or hex bins** may provide an alternative. When we want to visualize more than two quantities, on the other hand, we may choose to plot correlation coefficients in the form of a **correlogram** instead of the underlying raw data.
+
+![](images/0X-ggplot//xy-binning-1.png)
+
+When the x axis represents time or a strictly increasing quantity such as a treatment dose, we commonly draw line graphs. If we have a temporal sequence of two response variables, we can draw a connected scatterplot where we first plot the two response variables in a scatterplot and then connect dots corresponding to adjacent time points. We can use smooth lines to represent trends in a larger dataset.
+
+![](images/0X-ggplot//xy-lines-1.png)
+
+# Geospatial data
+
+Many datasets contain information linked to locations in the physical world. For example, in an ecological study, a dataset may list where specific plants or animals have been found. In all these cases, it can be helpful to visualize the data in their proper geospatial context, i.e., to show the data on a realistic map or alternatively as a map-like diagram.
+
+The primary mode of showing geospatial data is in the form of a map. A map takes coordinates on the globe and projects them onto a flat surface, such that shapes and distances on the globe are approximately represented by shapes and distances in the 2D representation. Maps tend to be intuitive to readers but they can be challenging to design. We need to think about concepts such as map projections and whether for our specific application the accurate representation of angles or areas is more critical. A common mapping technique, the choropleth map, consists of representing data values as differently colored spatial areas. **Choropleth maps** can at times be very useful and at other times highly misleading. As an alternative, we can construct map-like diagrams called **cartograms**, which may purposefully distort map areas or represent them in stylized form, for example as equal-sized squares.
+
+![](images/0X-ggplot/geospatial-1.png)
+
+
+# Uncertainty {#directory-uncertainty}
+
+One of the most challenging aspects of data visualization is the visualization of uncertainty. When we see a data point drawn in a specific location, we tend to interpret it as a precise representation of the true data value. It is difficult to conceive that a data point could actually lie somewhere it hasn’t been drawn. Yet this scenario is ubiquitous in data visualization. Nearly every data set we work with has some uncertainty, and whether and how we choose to represent this uncertainty can make a major difference in how accurately our audience perceives the meaning of the data.
+
+Two commonly used approaches to indicate uncertainty are **error bars** and **confidence bands**. These approaches were developed in the context of scientific publications, and they require some amount of expert knowledge to be interpreted correctly. Yet they are precise and space efficient. Error bars are meant to indicate the range of likely values for some estimate or measurement. They extend horizontally and/or vertically from some reference point representing the estimate or measurement. 
+
+![](images/0X-ggplot/errorbars-1.png)
+
+For smooth line graphs, the equivalent of an error bar is a confidence band. It shows a range of values the line might pass through at a given confidence level. As in the case of error bars, we can draw graded confidence bands that show multiple confidence levels at once. We can also show individual fitted draws in lieu of or in addition to the confidence bands.
+
+![](images/0X-ggplot/confidence-bands-1.png)
+
+

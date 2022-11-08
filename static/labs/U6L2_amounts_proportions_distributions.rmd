@@ -1,0 +1,418 @@
+---
+title: "Lab 6.1 - Directory of visualizations (I): Visualizing amounts, proportions and distributions"
+date: "111022 | Data management and visualization with R"
+author: 
+  - "Aitor Ameztegui"
+output:
+  rmdformats::readthedown:
+    highlight: pygments
+    number_sections: true
+    css: lab.css
+# runtime: shiny_prerendered
+---
+
+```{r knitr_init, echo=FALSE, cache=FALSE, warning=FALSE, include = F}
+library(tidyverse)
+library(cowplot)
+library(knitr)
+
+## Global options
+
+options(max.print="75")
+options(
+  htmltools.dir.version = FALSE, # for blogdown
+  show.signif.stars = FALSE     # for regression output
+  )
+# opts_chunk$set(echo=TRUE,
+# 	             cache=FALSE,
+#                prompt=FALSE,
+#                tidy=F,
+#                comment=NA,
+#                message=FALSE,
+#                warning=FALSE)
+#opts_knit$set(width=75)
+```
+
+
+
+
+```{r include=FALSE}
+
+fires <- read.csv('data/fires.csv')
+```
+
+Let's get back our `fires` dataset from exercise 1 to see some plot examples. We are going to leverage `dplyr` functions to manipulate our data and visualize it using different types of plots. Rather than building separate datasets, we will handle the `fires` dataset to construct the desired output to be plotted.
+
+The idea is to leverage the exploratory analysis of the `fires` dataset to introduce and learn the different types of plots we saw in the previous unit.
+
+# Visualizing amounts
+
+There are several ways (`geoms`) to visualize quantities or amounts. We are going to plot the annual evolution of number of fires in Spain using different approaches. The idea is to explore the temporal evolution and to determine which were the most fire-affected years.
+
+## Line plots - time series
+
+Let's begin with some of the most basic plots we can build, the *line plot*. In the following example we **map the `YEAR` into the x-axis**  and the **amount of fires into the y-axis**. We use lines (`geom_line`) as constructor element.
+
+```{r}
+fires %>%
+    group_by(YEAR) %>%
+    summarise(n=n())%>%
+    ggplot(aes(x=YEAR,y=n)) +
+    geom_line()
+
+```
+
+What we just did is to group fire events (rows) by the reported `YEAR` in which each of them took place, and then `summarize the` as counts (`n()`). As we have been stressing out during this course, data visualization is a key part of data management. In this case we are conducting a quick exploratory of the annual distribution. As you can see, something weird is going on since the starting year seems to be 1900, but no fires *occurred* until 1974. This is clearly a mistake. Fortunately, we can easily `filter` out any fires prior to 1974, 
+
+```{r}
+fires %>%
+    filter(YEAR>=1974) %>%
+    group_by(YEAR) %>%
+    summarise(n=n())%>%
+    ggplot(aes(x=YEAR,y=n)) +
+    geom_line()
+
+```
+
+## Barplots
+
+We can swicth to barplots if we prefer so. We just need to replace `geom_line` with `geom_bar` or `geom_col`. 
+
+`geom_bar` has been the most common way to create a barpot so far. It requires passing a `stat` parameter to inform about the kind of information with want to display. The most common stats we will use in combination with `geom_bar' are:
+
+- `identity`: passes the exact value to be mapped into the y-axis.
+
+- `count`: computes de frequency of observations per group.
+
+Let's try both and take the change to introduce the `ggtitle` function:
+
+```{r}
+fires %>%
+    filter(YEAR>=1974) %>%
+    group_by(YEAR) %>%
+    summarise(n=n())%>%
+ggplot(aes(x=YEAR,y=n)) +
+    geom_bar(stat = 'identity') +
+    ggtitle('Barplot with identity')
+```
+
+```{r}
+fires %>%
+    filter(YEAR>=1974) %>%
+    ggplot(aes(x=YEAR)) +
+    geom_bar(stat = 'count') +
+    ggtitle('Barplot with count')
+```
+
+As you can see, when using 'identity' we still have to do the grouping and counting with `dplyr` but when using `count` that procedure is conducted within the plotting environment.
+
+```{r}
+fires %>%
+    filter(YEAR>=1974) %>%
+    ggplot(aes(x=YEAR)) +
+    geom_bar(aes(y = stat(count / max(count)))) +
+    ggtitle('Barplot with count')
+```
+
+> `stats` are a very powerful feature that can be leveraged to compute new variables during the plotting procedure.
+
+Recent developments of the `ggplot2` package introduced the `geom_col` alternative, a way more straightforward of barplotting:
+
+```{r}
+fires %>%
+    filter(YEAR>=1974) %>%
+    group_by(YEAR) %>%
+    summarise(n=n())%>%
+    ggplot(aes(x=YEAR,y=n)) +
+    geom_col() +
+    ggtitle('Barplot with geom_col')
+```
+
+> Remember that aesthetics can be either passed in the *global* plot call or inside any `geom`.
+
+> When using barplots to visualize ammounts we **must always show the entire range starinting in 0**.
+
+### Grouped barplots
+
+A common approach we woudl want ot use is grouping categories to compare amounts. In `ggplot` grouping into classes can be easly done by mapping a `factor` like variable into an aesthetic. Usually, we will pass a variable into a color-based aesthetic, either `color` or `fill`. When using one or another depends on the type of `geom` but generally speaking, `color` applies to lines and borders while `fill` refers to the inner or filling color of an object.
+
+In this example we are grouping by `MONTH` and `CAUSE` displaying the number of fire per month but spliting them by cause:
+
+```{r}
+fires %>%
+    filter(YEAR>=1974) %>%
+    group_by(MONTH,CAUSE) %>%
+    summarise(n=n())%>%
+    ggplot(aes(x=MONTH,y=n,fill=CAUSE)) +
+    geom_col() +
+    ggtitle('Fire counts by cause')
+```
+
+Since we were passing a `numeric` variable to map `fill` the default strategy of `ggplot` is assuming we want to visualize a continuous variable, hence it uses a *sequential* color ramp (we will discuss color ramps in following units). However, if we convert numbers into factors `ggplot` changes the coloring pattern into a*`categoric* one.
+
+```{r}
+fires %>%
+    filter(YEAR>=1974) %>%
+    group_by(MONTH,CAUSE) %>%
+    summarise(n=n())%>%
+    ggplot(aes(x=MONTH,y=n,fill=factor(CAUSE))) +
+    geom_col() +
+    ggtitle('Fire counts by cause')
+```
+
+By default, mapping categories into barplots follows the `stack` approach. We can switch to `dodge` postion by specifying it in the `geom_col` statement. Note that the `position` argument is also available in when using `geom_bar`.
+
+```{r}
+fires %>%
+    filter(YEAR>=1974) %>%
+    group_by(MONTH,CAUSE) %>%
+    summarise(n=n())%>%
+    ggplot(aes(x=MONTH,y=n,fill=factor(CAUSE))) +
+    geom_col(position="dodge2") +
+    ggtitle('Fire counts by cause')
+```
+
+## Dot plots
+
+Another alternative that is frequently quite helpful and clear is using points to mark the position of the amount. However, the main goal of this kind of plot shouldn't be displaying the temporal evolution of a phenomena but an ordered sequence of values, so that we highlight the highest amounts. To arrange axis according we use the `reorder` function inside the `ggplot` call:
+
+```{r, eval=FALSE}
+
+reorder(variable to arrange, ordering value)
+
+```
+
+`reorder`, `fct_reorder` or any other kind of sorting function can be call either within the `dplyr` statament or when mapping an aesthetic in `ggplot`. 
+
+```{r}
+fires %>%
+    filter(YEAR>=1974) %>%
+    group_by(YEAR) %>%
+    summarise(n=n())%>%
+    ggplot(aes(y=reorder(YEAR,n),x=n)) +
+    geom_point() +
+    ggtitle('Reordered points')
+```
+
+> We can't `arrange` counts in the `dplyr` because the ggplot call overrides the ordering. We must order data inside the plot call. **To do so we have to use tools from the `forcats` package**.
+
+## Heatmaps
+
+As we saw in unit 5, there is a *special* type of approach to visualiza amounts, the *heatmaps*. The rationale behind heatmaps is using color to visualize quantities instead of position or size, as we did in barplots and dotplots. Color must be used carefully, since humans are prone to misinterpret value or hue. As a rule of thumb, we can use color when applied into objects with equal size. That is the case of the `geom_tile` family, in which we create a *mosaic* of regular square-like objects, being able to fill them with color ramps. When using this kind of representation we often map 2 variables into position, leaving a third to use color. The following examples represents the monthly evolution of number of fires over the period 1979-2014.
+
+```{r}
+fires %>%
+    filter(YEAR>=1974) %>%
+    group_by(YEAR,MONTH) %>%
+    summarise(n=n())%>%
+    ggplot() +
+    geom_tile(aes(x=MONTH,y=YEAR,fill=n))
+```
+
+# Visualizing proportions
+
+We often want to show how some group, entity, or amount breaks down into individual pieces that each represent a proportion of the whole. Visualizing proportions can be challenging, in particular when the whole is broken into many different pieces or when we want to see changes in proportions over time or across conditions.
+
+The archetypal such visualization is the pie chart. Unfortunately, to best of our recollection there is no *geom_pie* or such and creating a pie chart using `ggplot` is actually done by *distording* the representation space from a cartesian into a polar coordinate space. Basically, we build a barplot and the *rotate* it into the polar space. Likewise, since we represent proportions instead of raw values, we must express the desired variables as such, which often involves some previous data management. Next we can see a simple example, later on we will come back to it and finish the deal by adding text to help interpret the plot:
+
+```{r}
+fires %>%
+    filter(CAUSE!=6)%>%
+    group_by(CAUSE) %>%
+    summarise(n=n(),BA=sum(BAREA)) %>%
+    mutate(f=round(n/sum(n)*100,1)) %>%
+    arrange(desc(f)) %>%
+    ggplot(aes(x=2 ,y=f, fill=CAUSE))+
+    geom_bar(width = 1, stat = "identity", color = "white") +
+    coord_polar("y", start = 0)
+```
+
+Actually, sometimes is just better to use regular bars and leverage color to display the actual proportion. To do the trick we just must organize data in way that fits the purpose. Let's say we want to see how the proportion of large fires (those burning more then 500ha) evolved over time (year). To so we must (i) identify which records belong to a so-called large fire, (ii) group by year and fire type (large or regular) and then (iii) calculate the proportion each one represents from the total amount. In the following example we can see an example, using representing the proportion of burned area from each type of fire over the years:
+
+```{r}
+fires %>%
+    filter(YEAR>1974) %>%
+    mutate(LARGE = ifelse(BAREA>500,"Large Fire","Regular")) %>% #Large vs Regular
+    group_by(YEAR,LARGE) %>%
+    summarise(BA=sum(BAREA)) %>%
+    mutate(fracc = BA / sum(BA)) %>% #Fraction of burned area
+    ggplot(aes(x=YEAR,y=fracc,group=LARGE,fill=LARGE)) +
+    geom_bar(stat = 'identity')
+```
+
+Of course, we can express the same using an area plot by just changing the `geom_bar` o `geom_area`:
+
+```{r}
+fires %>%
+    filter(YEAR>1974) %>%
+    mutate(LARGE = ifelse(BAREA>500,"Large Fire","Regular")) %>%
+    group_by(YEAR,LARGE) %>%
+    summarise(n=n(),BA=sum(BAREA)) %>%
+    mutate(fracc = BA / sum(BA)) %>%
+    ggplot(aes(x=YEAR,y=fracc,group=LARGE,fill=LARGE)) +
+    geom_area()
+```
+
+
+# Visualizing distributions
+
+We frequently encounter the situation where we would like to understand how a particular variable is distributed in a dataset.
+
+## Single distributions
+
+### Histograms
+
+We can obtain a sense of the distribution a variable by grouping all observations into bins with comparable ranges and then counting the number of observatins in each bin. That, might gave us an idea of how that particular variable is distributed. But we can also display that count distribution using a barplot, keeping the ordered sequence of ranges in the x axis. That is a histogram representation. Lucky for us, we don't have to do that manually since ggplot already offers the `geom_histogram` which does that automatically. The following example shows the distribution of fire sizes:
+
+```{r}
+fires %>%
+    ggplot(aes(x=BAREA)) +
+    geom_histogram()
+```
+
+To enhance the visualization we can zoom into a particular subset by filter for instance large fires:
+
+```{r}
+fires %>%
+    filter(BAREA>500) %>%
+    ggplot(aes(x=BAREA)) +
+    geom_histogram()
+```
+
+Or we can apply a transformation to our variable, e.g., log-transform the data:
+
+```{r}
+fires %>%
+    mutate(BA = log(BAREA)) %>%
+    ggplot(aes(x=BA)) +
+    geom_histogram()
+```
+
+We will see how to do this in other ways in future labs. For now, what we want to ilustrate is that histograms strongly depend on the actual distribution of data but also in the size of the intervals used to group the variable into counts. That means we must explore using different numbers of bins (e.g., `bins = 50`) until we find something that conveys the message:
+
+```{r}
+fires %>%
+    mutate(BA = log(BAREA)) %>%
+    ggplot(aes(x=BA)) +
+    geom_histogram(bins = 50)
+```
+
+Of course we can change the dimensions of the bins in the plot (not the range) to adjust it until it satisfies us:
+
+```{r}
+fires %>%
+    mutate(BA = log(BAREA)) %>%
+    ggplot(aes(x=BA)) +
+    geom_histogram(bins = 50,binwidth = 0.1)
+```
+
+### Density plots
+
+An alternative to histograms are density plots. The idea is the same but rather than split data into bins we build a continuous function that summarizes the percent distribution of data. You can think of this as a proportional distribution of the frequency distribution:
+
+```{r}
+fires %>%
+    mutate(BA = log(BAREA)) %>%
+    ggplot(aes(x=BA)) +
+    geom_density(fill='blue')
+```
+
+### Cumulative distributions
+
+To overcomen the limitation imposed by the choice of bins size and range, we can leverage *empirical cumulative distributions*. A cumulative distribution just shows the sum of all counts of the current bin and the previous ones, marking the position of the acumulated counts in the y-axis. This kind of representation is actually useful to identify breakpoints in a distribution (frequency histogram, time series...). The `stat_ecdf` allows us to display that kind of representation:
+
+```{r}
+fires %>%
+    mutate(BA = log(BAREA)) %>%
+    ggplot(aes(x=BA)) + 
+    stat_ecdf(geom = "step")
+```
+
+
+## Multiple distributions
+
+In many scenarios we have multiple distributions we would like to visualize simultaneously. Sticking to the `fires` data set, we may want to explore the distribution between CAUSE or MONTH. Doing so in ggplot is easy. We just have to map a categorical variable into the `group`, `color`or `fill`aesthetics to enable it as *group*. The *group* aesthetic acts in the same way as the `group_by` from `dplyr`.
+
+```{r}
+fires %>%
+    mutate(BA = log(BAREA)) %>%
+    ggplot(aes(x=BA,group=CAUSE,fill=factor(CAUSE))) +
+    geom_histogram()
+```
+
+```{r}
+fires %>%
+    mutate(BA = log(BAREA)) %>%
+    ggplot(aes(x=BA,group=MONTH,fill=factor(MONTH))) +
+    geom_density(alpha=0.7)
+```
+
+## Boxplots
+
+A  boxplot is a method for graphically depicting groups of numerical data through their quartiles.
+
+![](images/boxplot.png)
+
+```{r}
+fires %>%
+    filter(YEAR>1900) %>%
+    group_by(YEAR,MONTH) %>%
+    summarise(BA = sum(BAREA)) %>%
+    ggplot() +
+    geom_boxplot(aes(y=BA,x=MONTH,group=MONTH,fill=factor(MONTH)))
+``` 
+
+```{r}
+fires %>%
+    filter(YEAR>1900) %>%
+    group_by(YEAR,MONTH) %>%
+    summarise(BA = sum(BAREA)) %>%
+    ggplot() +
+    geom_boxplot(aes(x=BA,y=MONTH,group=MONTH,fill=factor(MONTH)))
+``` 
+
+## Violin plots
+
+Violin plots are somewhat similar to boxplot but instead the show *actual* density plots mirrored over one axis:
+
+```{r}
+fires %>%
+    filter(YEAR>1900) %>%
+    group_by(YEAR,MONTH,CAUSE) %>%
+    summarise(BA = sum(BAREA)) %>%
+    ggplot() +
+    geom_violin(aes(y=log(BA),x=CAUSE,fill=factor(CAUSE)))
+``` 
+
+This might be a personal preference but usually, violin and boxplots work best together. We can blend them just adding two different layers of `geom`, first the violin and then the boxplot:
+
+```{r}
+fires %>%
+    filter(YEAR>1900) %>%
+    group_by(YEAR,MONTH,CAUSE) %>%
+    summarise(BA = sum(BAREA)) %>%
+    ggplot() +
+    geom_violin(aes(y=log(BA),x=CAUSE,fill=factor(CAUSE))) +
+    geom_boxplot(aes(y=log(BA),x=CAUSE,group=CAUSE), width = 0.3)
+``` 
+
+## Ridge line plots
+
+These are fancy but not common. Ridge line plots are an alternative to multiple group density plots. The are not always a good choice but when fit the purpose are quite stylish way to represent data. Here we show an example displaying monthly distribution of burned area.
+
+```{r}
+fires %>%
+    filter(YEAR>1900) %>%
+    group_by(YEAR,MONTH) %>%
+    summarise(BA = sum(BAREA)) %>%
+    ggplot() +
+    ggridges::geom_density_ridges(aes(x=BA,y=factor(MONTH),fill=factor(MONTH))) 
+``` 
+
+<div class = "exercise">
+**EXERCISE 1**</br>
+Go back to the first exercise from unit 5 (i.e., suggest plot representations for question in Homework from Unit 2). Try to plot some of the visualization approaches you proposed that had to do with amounts, proportions or distributions.
+
+Write an Rmd document explaining your choices.
+</div>
+
