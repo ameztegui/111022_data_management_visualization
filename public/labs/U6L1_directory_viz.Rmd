@@ -33,7 +33,7 @@ options(
 #opts_knit$set(width=75)
 ```
 
-# Directory of visualizations
+# Directory of visualizations {-}
 
 TThe aim of this lab is to introduce some of the main types of visualizations we can use to convey our data and produce informatice, easthetically pleasant and scientifically sound figures. The type of visualization to use will ultimately depend on the type of data we want to visualize: one, two or more variables; continuous or discrete...
 
@@ -41,7 +41,7 @@ This is not a complete list, and there are more visualisations than the ones sho
 
 Each of these visualizations has its corresponding `geom`, and some asociated aesthetics. But for now we will focus on the types of data they can convey, and we will see the details of each type on further lessons.
 
-# Amounts
+# Amounts {-}
 
 In many scenarios, we are interested in the **magnitude** of some set of numbers. For example, we might want to visualize the total basal area of different species in a forest, or the total number of burnt area per cause of fire In all these cases, we have a set of **categories** (e.g., species, fire causes) and a **quantitative value** for each category (basal area, burnt area).
 
@@ -53,7 +53,7 @@ If there are two or more sets of categories for which we want to show amounts - 
 
 ![](images/0X-ggplot/amounts_multi-1.png)
 
-# Distributions
+# Distributions {-}
 
 We frequently encounter the situation where we want to understand how a particular variable is **distributed** in a dataset. For example, we may want to know how many trees of different diameters have been measured in a certain area, or how many fires of what sizes have occurred. We call the relative proportions of different sizes among the fires the *size distribution* of the forest fires.
 
@@ -67,7 +67,7 @@ One commonly employed visualization strategy in this case is a **stacked histogr
 
 ![](images/0X-ggplot//multiple-distributions-1.png)
 
-# Proportions
+# Proportions {-}
 
 We often want to show how some group, entity, or amount breaks down into individual pieces that each represent a *proportion* of the whole. Common examples include the proportions of species in a certain forest, the percentages of fires for different causes, etc. The archetypal such visualization is the **pie chart,** omnipresent in any business presentation and much maligned among data scientists. But as we will see, visualizing proportions can be challenging, and there is no single ideal visualization that always works. For instance, the heavily criticized pie chart can be the best option to represent the number of seats gained for each party at a Parliament, as it is easy to assess if any combination of parties attains more than 50% of the seats.
 
@@ -79,7 +79,7 @@ When visualizing multiple sets of proportions or changes in proportions across c
 
 ![](images/0X-ggplot//proportions-comp-1.png)
 
-# *x*--*y* relationships
+# *x*--*y* relationships {-}
 
 Many datasets contain two or more quantitative variables, and we may be interested in how these variables relate to each other. For example, we have tree diameter, height and crown height in the `trees` dataset. To plot the relationship of just two such variables, e.g. the height and diameter, we will normally use a **scatter plot**. If we want to show more than two variables at once, we can map one onto the dot size, creating a variant of the scatterplot called **bubble chart**. For paired data, where the variables along the *x* and the *y* axes are measured in the same units, it is generally helpful to add a line indicating *x* = *y*. Paired data can also be shown as a **slope graph** of paired points connected by straight lines, aklso called **parallel coordinates** plots.
 
@@ -93,7 +93,7 @@ When the x axis represents time or a strictly increasing quantity such as a trea
 
 ![](images/0X-ggplot//xy-lines-1.png)
 
-# Geospatial data
+# Geospatial data {-}
 
 Many datasets contain information linked to locations in the physical world. For example, in an ecological study, a dataset may list where specific plants or animals have been found. In all these cases, it can be helpful to visualize the data in their proper geospatial context, i.e., to show the data on a realistic map or alternatively as a map-like diagram.
 
@@ -101,7 +101,7 @@ The primary mode of showing geospatial data is in the form of a map. A map takes
 
 ![](images/0X-ggplot/geospatial-1.png)
 
-# Uncertainty {#directory-uncertainty}
+# Uncertainty {-}
 
 One of the most challenging aspects of data visualization is the visualization of uncertainty. When we see a data point drawn in a specific location, we tend to interpret it as a precise representation of the true data value. It is difficult to conceive that a data point could actually lie somewhere it hasn't been drawn. Yet this scenario is ubiquitous in data visualization. Nearly every data set we work with has some uncertainty, and whether and how we choose to represent this uncertainty can make a major difference in how accurately our audience perceives the meaning of the data.
 
