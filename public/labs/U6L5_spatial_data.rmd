@@ -219,6 +219,33 @@ Note that in the raster example we retrieved the CRS from an existing layer rath
 
 > We cannot project a layer that lacks CRS, first we have to assign it one.
 
+
+# Adding map elements {-}
+
+All maps should contain three elements, asides from the geographical units:
+
+- **Legend:** symbology key to understand the elements and data in a map (or plot)
+- **Scale**: representation of the unit ratio map-reality
+- **North:** indication of the geographical norht position to understand the arrangment of the map.
+
+R takes care of the egnd for us, but we need to add the scale and the north arrow 
+
+```{r}
+
+library(ggspatial)
+
+gplot(dem) +
+    geom_tile(aes(fill=value)) +
+    annotation_scale(location = "bl", width_hint = 0.2, 
+                     pad_x = unit(0.55, "in"),
+                     pad_y = unit(0.3, "in")) +           #scale
+    annotation_north_arrow(location = "bl", which_north = "true",   #north
+                           pad_x = unit(4.8, "in"), 
+                           pad_y = unit(3.5, "in"),
+                           style = north_arrow_fancy_orienteering) 
+```
+
+
 ::: exercise :::
 
 **EXERCISE 1**</br>
