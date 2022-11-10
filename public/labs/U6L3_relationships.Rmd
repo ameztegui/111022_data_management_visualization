@@ -1,0 +1,339 @@
+---
+title: "Lab 6.3 - Visualizing relationships, trends and uncertainty"
+date: "111022 | Data management and visualization with R"
+author: 
+  - "Aitor Ameztegui"
+bibliography: "references/biblio.bib"
+output:
+  rmdformats::readthedown:
+    highlight: pygments
+    number_sections: true
+    css: lab.css
+# runtime: shiny_prerendered
+---
+
+
+```{r knitr_init, echo=FALSE, cache=FALSE, warning=FALSE}
+
+library(knitr)
+
+## Global options
+options(max.print="75")
+opts_chunk$set(echo=TRUE,
+	             cache=FALSE,
+               prompt=FALSE,
+               tidy=TRUE,
+               comment=NA,
+               message=FALSE,
+               warning=FALSE)
+opts_knit$set(width=75)
+```
+
+
+```{r include=FALSE}
+library(tidyverse)
+options(
+  htmltools.dir.version = FALSE, # for blogdown
+  show.signif.stars = FALSE     # for regression output
+  )
+load('data/data_SNFI3.Rdata')
+```
+
+
+# Visualizing associations between two or more quantitative variables {-}
+
+Up to this point, we have been focusing on visualizing just one quantitative variable (i.e, distributions) in relation to several qualitative parameters (amounts over years or month). However, it is usually the case we are interested in visualizing how two (or more) numerical/continuous variables relate one another. In other words, we may be interested in visualizing relationships or associations.
+
+## Scatter plots {-}
+
+The scatter plot is the most widespread way to represent the association between two variables. The concept is quite simple, we use the values of the two variables as coordinates to mark their position in a two-dimensional space. Then we analyze their disposition and try to unravel any potential pattern.
+
+Overall, when two variables are associated, the point cloud is arranged showing a recognizable shape; like a line, curve or similar. If the point cloud seems to be randomly distribution, then no association exists between them.
+
+Building a scatter plot in `ggplot` is easy. In fact we have already used the kind of geom we need, the `geom_point()`. Instead of passing a continuous variable and a discrete one, we now map two continuous variables into the `x` and `y` aesthetics. Let's see an example, the relationship between tree diameter and tree height for pine species. We expect both variables to be positively related. To make sample a bit smaller, we will only select trees from the province of Lleida (25) and with DBH < 60 cm.
+
+```{r}
+pines %>%
+    filter(Province == "25",
+           DBH_3 <= 60) %>%
+    ggplot() +
+    geom_point(aes(x = DBH_3, y = Height_3))
+```
+
+There are so many points that it's hard to see anything. Of course, we can keep adding layers to the scatter plot in pursue of more complex relationships. For instace, we can map `Species` into color to investigate differences between causes:
+
+```{r}
+pines %>%
+    filter(Province == "25",
+           DBH_3 <= 60) %>%
+    ggplot() +
+    geom_point(aes(x = DBH_3, y = Height_3, color = Species))
+```
+
+We can leverage `shape` if we prefer it to `color`, or in addition to it, though this kind of representation tends to work best when we have few observations. When facing thousands, `shape` is quit difficult to diferentiate.
+
+```{r}
+pines %>%
+    filter(Province == "25",
+           DBH_3 <= 60) %>%
+    ggplot() +
+    geom_point(aes(x = DBH_3, y = Height_3, color = Species, shape = Species))
+```
+
+We can map a third continuous variable into `size` (increasing the dimensionsal space) to inspect quantitave differences in the association pattern. This kind of representation is called *bubble plot*. In the next example we add the interaction with the variable `N`, which means the number of trees per hectare that each tree represents.
+
+```{r}
+pines %>%
+    filter(Province == "25",
+           DBH_3 <= 60) %>%
+    ggplot() +
+    geom_point(aes(x = DBH_3, y = Height_3, color = Species, size = N))
+```
+Bubble charts have the disadvantage that they show the same types of variables, quantitative variables, with two different types of scales, position and size. This makes it difficult to visually ascertain the strengths of associations between the various variables. Moreover, differences between data values encoded as bubble size are harder to perceive than differences between data values encoded as position. Because even the largest bubbles need to be somewhat small compared to the total figure size, the size differences between even the largest and the smallest bubbles are necessarily small. Consequently, smaller differences in data values will correspond to very small size differences that can be virtually impossible to see. 
+
+
+When we have many points, either a scatter plot or a bubble plot can get easily too clustered. We can try to attenuate the overlapping by reducing point size and adding some transparency. In some cases, though, this may not be enough.
+
+```{r}
+pines %>%
+    filter(Province == "25",
+           DBH_3 <= 60) %>%
+    ggplot() +
+    geom_point(aes(x = DBH_3, y = Height_3, color = Species), size = 1, alpha = 0.3)
+```
+
+::: exercise
+**EXERCISE 1** </br>
+
+Is there a relationship between the number of fires occurring each year and the total area burnt? Make a visualization to check this, and see if the relationship is true for all causes
+
+:::
+
+
+## Density plots {-}
+
+Scatter plots are indeed quite useful but as you may have noticed, it's not easy to recognize a pattern using a point scheme when we have hundreds or thousands of observations. It is often the case that points overlap and hide themselves, especially when using *bubble plots*. To overcome this issue we can visualize *densities* rather than *coordinates*. In fact, the concept is quite similar to the `histogram` (or even the *heatmap*) but in this case we  would construct two-dimensional bins, and then aggregate by counts - the number of points on each bin - or other stats. There are essentually three alternatives: 
+
+- **Isolines**: we display lines joining locations with equal densities `geom_density_2d()`.
+- **2d-bins plots**: we construct square bins and map counts into them `geom_bin_2d()`
+- **hexbin plots**: same as 2d-bins but using hexagons as binning shape `geom_hex()`
+
+We use `geom_density_2d` to visualize densities. It is often recommended overlapping the original scatter plot to understand how it works:
+
+```{r}
+pines %>%
+    ggplot(aes(x = DBH_3, y = Height_3)) +
+    geom_point(alpha = 0.3) +
+    geom_density_2d()
+```
+
+Or we can fill the inner polygons between lines. In this case, we must switch from `geom_density_2d()` to `stat_density_2d()` and pass `after_stat(level)` into the `fill` aesthetic:
+
+```{r}
+pines %>%
+    ggplot(aes(x = DBH_3, y = Height_3)) +
+    geom_point(alpha = 0.3) +
+    stat_density_2d(aes(fill = after_stat(level)),
+                    geom = "polygon")
+```
+
+Densities are a good way to understand the association pattern, though they are not that intuitive. The *density* value itself (`level`) is not easy to grasp. We can display more straighforward information using 2d-binned representations like `geom_bin2d` that builds square bins and adds up the number of observations within each one. We can control the size of the `bins` to improve the visualization.
+
+```{r}
+pines %>%
+    ggplot(aes(x = DBH_3, y = Height_3)) +
+    geom_bin_2d(bins = 50)
+```
+
+```{r}
+pines %>%
+    ggplot(aes(x = DBH_3, y = Height_3)) +
+    geom_bin_2d(bins = 70)
+```
+
+An alternative that works exactly the same but tends to be more appealing are the `hexbin` plots. Instead of squares we use hexagons:
+
+```{r}
+pines %>%
+    ggplot(aes(x = DBH_3, y = Height_3)) +
+    geom_hex(bins = 50)
+```
+
+## Paired data
+
+A special case of multivariate quantitative data is paired data: Data where there are two or more measurements of the same quantity under slightly different conditions. Examples include two comparable measurements on each subject (e.g., the length of the right and the left arm of a person), repeat measurements on the same subject at different time points (e.g., tree size at two inventories). For paired data, it is reasonable to assume that the two measurements belonging to a pair are more similar to each other than to the measurements belonging to other pairs. Therefore, for paired data, we need to choose visualizations that highlight any differences between the paired measurements.
+
+An excellent choice in this case is a simple scatter plot on top of a diagonal line marking x = y. In such a plot, if the only difference between the two measurements of each pair is random noise, then all points in the sample will be scattered symmetrically around this line. Any systematic differences between the paired measurements, by contrast, will be visible in a systematic shift of the data points up or down relative to the diagonal. 
+
+Let's visualize tree diameter at second and third forest inventory, and here most points should be above the 1:1 line, which we can construct with `geom_abline()`:
+
+```{r}
+pines %>%
+    ggplot(aes(DBH_2, DBH_3)) +
+    geom_point(alpha = 0.2) +
+    geom_abline()
+```
+
+# Visualizing trends
+
+When making scatter plots or time series, we are often more interested in the overarching trend of the data than in the specific detail of where each individual data point lies. By drawing the trend on top of or instead of the actual data points, usually in the form of a straight or curved line, we can create a visualization that helps the reader immediately see key features of the data. 
+
+## Smoothing
+
+Smoothing lines and fitted regression lines are the usual way to go. Note that the concept of *trend* is not restricted to time series analysis. The simplest way to display a trend is by fitting a linear profile to our data, either by `smoothing` or `regression`. The first can be understood as a kind of moving average calculated over the data while the second implies adjusting some sort of regression model (lm, glm or gam, mainly). Regardless of the approach, we use `geom_smooth()` to do the trick. Let`s recover our first plot showing the relationship between tree diameter and height, add a trend line over it:
+
+```{r}
+pines %>%
+    filter(Province == "25",
+           DBH_3 <= 60) %>%
+    ggplot(aes(x = DBH_3, y = Height_3)) +
+    geom_point() +
+    geom_smooth()
+```
+
+By default, `geom_smooth` fits a LOESS spline line that helps interpreting the evolution. Statisticians have developed numerous approaches to smoothing that alleviate the downsides of moving averages. One widely used method is LOESS (locally estimated scatterplot smoothing), which fits low-degree polynomials to subsets of the data. Importantly, the points in the center of each subset are weighted more heavily than points at the boundaries, and this weighting scheme yields a much smoother result. 
+
+We can change the `method` to `lm` (linear regression) or `gam` (Generalized Additive Models) to reproduce the fitting outcome of any of those modeling approaches:
+
+```{r}
+pines %>%
+    filter(Province == "25",
+           DBH_3 <= 60) %>%
+    ggplot(aes(x = DBH_3, y = Height_3)) +
+    geom_point() +
+    geom_smooth(method = 'lm')
+```
+
+```{r}
+pines %>%
+    filter(Province == "25",
+           DBH_3 <= 60) %>%
+    ggplot(aes(x = DBH_3, y = Height_3)) +
+    geom_point() +
+    geom_smooth(method = 'gam')
+```
+
+> **Be careful when interpreting the results from a smoothing function. The same dataset can be smoothed in many different ways. **
+
+To dig in into the potential differences in the relationships by categories, we can map a class into color and `geom_smooth()` will automatically fit a profile for each category:
+
+```{r}
+pines %>%
+    filter(Province == "25",
+           DBH_3 <= 60) %>%
+    ggplot(aes(x = DBH_3, y = Height_3, color = Species)) +
+    geom_point(alpha = 0.5, size = 0.3) +
+    geom_smooth(aes(color = Species), method = "gam")
+```
+
+We can also visualize or devisualize the confidence interval of the smoothed line by changing the parameter `se`. If we want this confidence intervals to vary along a variable we must use the aesthetics `fill`. And in some cases, it may even be better to avoid showing the points at all.
+
+```{r}
+pines %>%
+    filter(Province == "25",
+           DBH_3 <= 60) %>%
+    ggplot(aes(x = DBH_3, y = Height_3)) +
+    # geom_point(alpha = 0.5) +
+    geom_smooth(aes(color = Species, fill = Species), lwd = 2, se = T)
+```
+
+The behavior of general-purpose smoothers can be somewhat unpredictable for any given dataset. These smoothers also do not provide parameter estimates that have a meaningful interpretation. Therefore, whenever possible, it is preferable to fit a curve with a specific functional form that is appropriate for the data and that uses parameters with clear meaning. However, this topic is beyond the scope of this course, and is treated in depth in any modelling and statistics course.
+
+
+::: exercise
+**EXERCISE 2** </br>
+
+Modify the visualization created in exercise 1 to add some kind of trend line for each fire cause. For which cause there is a stronger relationship between number of fires and area burnt? Is this relationship positive for all causes?
+
+::: 
+
+
+# Visualizing uncertainty
+
+One of the most challenging aspects of data visualization is the visualization of uncertainty. When we see a data point drawn in a specific location, we tend to interpret it as a precise representation of the true data value. It is difficult to conceive that a data point could actually lie somewhere it hasn't been drawn. Yet this scenario is ubiquitous in data visualization. Nearly every data set we work with has some uncertainty, and whether and how we choose to represent this uncertainty can make a major difference in how accurately our audience perceives the meaning of the data.
+
+The most common approach to indicate uncertainty are error bars and cofidence intervals. The basic idea is to complement any kind of central measure (mean, median...) with an indicator of dispersion (sd, IQR...). 
+
+## Uncertainty of point estimates: error bars 
+
+Statisticians most commonly visualize uncertainty with error bars. While error bars can be useful as a visualization of uncertainty, they are not without problems. It is easy for readers to be confused about what an error bar represents. To highlight this problem, we can show five different uses of error bars for the same dataset. They show (i) the sample mean plus/minus the standard deviation of the sample, (ii) the sample mean plus/minus the standard error, and (iii) 80%, (iv) 95%, and (v) 99% confidence intervals. All five error bars are derived from the variation in the sample, and they are all mathematically related, but they have different meanings. And they are also visually quite distinct.
+
+![Relationship between sample, sample mean, standard deviation, standard error, and confidence intervals, in an example of chocolate bar ratings. The large orange dot represents the mean of the ratings. Error bars indicate, from top to bottom, twice the standard deviation, twice the standard error (standard deviation of the mean), and 80%, 95%, and 99% confidence intervals of the mean. Data source: @wilke2019fundamentals](images/0X-ggplot/cocoa-data-vs-CI-1.png)
+
+The standard error is approximately given by the sample standard deviation divided by the square root of the sample size, and confidence intervals are calculated by multiplying the standard error with small, constant values. For example, a 95% confidence interval extends approximately two times the standard error in either direction from the mean. Therefore, larger samples tend to have narrower standard errors and confidence intervals, even if their standard deviation is the same. 
+
+>  Whenever you visualize uncertainty with error bars, you must specify what quantity and/or confidence level the error bars represent.
+
+
+To do so, we represent the central measure with a bar or point and add the error bars by adding and substracting the dispersion measure. Reporting uncertainty is key to properly understand data. Compare what happens when we just plot the mean:
+
+```{r}
+pines %>%
+    group_by(Species) %>%
+    summarise(Mean = mean(DBH_3), Sd = sd(DBH_3)) %>%
+    ggplot(aes(x = Species, y = Mean)) +
+    geom_col()
+    
+```
+
+And the result when we account for uncertainty:
+
+```{r}
+pines %>%
+    group_by(Species) %>%
+    summarise(Mean = mean(DBH_3), Sd = sd(DBH_3)) %>%
+    ggplot(aes(x = Species, y = Mean)) +
+    geom_col() +
+    geom_errorbar(aes(ymin = Mean - Sd, ymax = Mean + Sd))
+```
+
+The same can be done using dot plots:
+
+```{r}
+pines %>%
+    group_by(Species) %>%
+    summarise(Mean = mean(DBH_3), Sd = sd(DBH_3)) %>%
+    ggplot(aes(x = Species, y = Mean)) +
+        geom_point(size = 3) +
+        geom_errorbar(aes(ymin = Mean-Sd, ymax = Mean+Sd), width = 0.5)
+```
+
+## Uncertainty of curve fits: confidence intervals
+
+We discussed above how to show a trend in a dataset by fitting a straight line or curve to the data. These trend estimates also have uncertainty, and it is customary to show the uncertainty in a trend line with a confidence band. `geom_smooth()` does this for us, although we can deactivate the confidence intervals by setting `se` to `FALSE`.
+
+```{r}
+pines %>%
+    filter(Province == "25",
+           DBH_3 <= 60) %>%
+    ggplot(aes(x = DBH_3, y = Height_3)) +
+    geom_point(alpha = 0.5, size = 0.3) +
+    geom_smooth(aes(color = Species, fill = Species), method = "gam")
+```
+
+We can also define which confidence interval we want to show by changing the aethetic `level`, which takes a value of 0.95 by default:
+
+```{r}
+pines %>%
+    filter(Province == "25",
+           DBH_3 <= 60) %>%
+    ggplot(aes(x = DBH_3, y = Height_3)) +
+    geom_point(alpha = 0.5, size = 0.3) +
+    geom_smooth(aes(color = Species, fill = Species), level = 0.99)
+```
+```{r}
+pines %>%
+    filter(Province == "25",
+           DBH_3 <= 60) %>%
+    ggplot(aes(x = DBH_3, y = Height_3)) +
+    geom_point(alpha = 0.5, size = 0.3) +
+    geom_smooth(aes(color = Species, fill = Species), level = 0.75)
+```
+
+<div class= "exercise">
+**EXERCISE 3** </br>
+
+Add uncertainty to the plot that you generated in the previous exercise, Which of the methods of the `geom_smooth()` provides a better fit for all species? Produce a chart with a linear smooth and assess how the confidence interval changes from 50 to 99%.
+
+</div>
+

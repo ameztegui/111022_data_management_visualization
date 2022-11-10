@@ -1,0 +1,130 @@
+---
+title: "Lab 6.4 - Visualizing time series and other functions of an independent variable"
+date: "111022 | Data management and visualization with R"
+author: 
+  - "Aitor Ameztegui"
+bibliography: "references/biblio.bib"
+output:
+  rmdformats::readthedown:
+    highlight: pygments
+    number_sections: true
+    css: lab.css
+# runtime: shiny_prerendered
+---
+
+
+```{r knitr_init, echo=FALSE, cache=FALSE, warning=FALSE, message=FALSE}
+
+library(knitr)
+library(tidyverse)
+
+## Global options
+options(max.print="75")
+opts_chunk$set(echo=TRUE,
+	             cache=FALSE,
+               prompt=FALSE,
+               tidy=TRUE,
+               comment=NA,
+               message=FALSE,
+               warning=FALSE)
+opts_knit$set(width=75)
+
+load('data/data_SNFI3.Rdata')
+pines <- trees %>% filter(Species %in% c("021","022","023","024","025","026","027","028")) 
+
+
+```
+
+
+```{r include=FALSE}
+options(
+  htmltools.dir.version = FALSE, # for blogdown
+  show.signif.stars = FALSE     # for regression output
+  )
+```
+
+# Visualizing time series {-}
+
+The preceding chapter discussed scatter plots, where we plot one quantitative variable against another. A special case arises when one of the two variables can be thought of as time, because time imposes additional structure on the data. Now the data points have an inherent order; we can arrange the points in order of increasing time and define a predecessor and successor for each data point. We frequently want to visualize this temporal order and we do so with line graphs. Line graphs are not limited to time series, however. They are appropriate whenever one variable imposes an ordering on the data. This scenario arises also, for example, in a controlled experiment where a treatment variable is purposefully set to a range of different values. If we have multiple variables that depend on time, we can either draw separate line plots or we can draw a regular scatter plot and then draw lines to connect the neighboring points in time.
+
+
+## Individual time series {-}
+
+Imagine we want to represent the number of trees per diameter class. We saw in lesson 2 that we can attain this through a dot plot.
+
+```{r}
+pines %>%
+    group_by(DC) %>%
+    summarise(n=n()) %>%
+    ggplot(aes(x = DC, y = n)) +
+    geom_point(size = 2)
+
+```
+But there is an important difference between this figure and the scatter plots discussed in previous lessons. Here, the dots are spaced evenly along the x axis, and there is a defined order among them. Each dot has exactly one left and one right neighbor (except the leftmost and rightmost points which have only one neighbor each). We can visually emphasize this order by connecting neighboring points with lines. Such a plot is called a line graph.
+
+```{r, fig.cap = "Lines can be an adequate way of representing amounts that vary through time or along a vector of logical order. Attention must be paid to the missing values, which will be connected, giving the impression there actually is data in that part."}
+pines %>%
+    group_by(DC) %>%
+    summarise(n=n()) %>%
+    ggplot(aes(x = DC, y = n)) +
+    geom_point(size =2) +
+    geom_line(group = 1)
+
+```
+Some people object to drawing lines between points because the lines do not represent observed data. In particular, if there are only a few observations spaced far apart, had observations been made at intermediate times they would probably not have fallen exactly onto the lines shown. Thus, in a sense, the lines correspond to made-up data. Yet they may help with perception when the points are spaced far apart or are unevenly spaced.
+
+Without dots, the figure places more emphasis on the overall trend in the data and less on individual observations. A figure without dots is also visually less busy. In general, the denser the time series, the less important it is to show individual obserations with dots. 
+
+```{r}
+pines %>%
+    group_by(DC) %>%
+    summarise(n=n()) %>%
+    ggplot(aes(x = DC, y = n)) +
+    geom_line(group = 1)
+```
+We can also fill the area under the curve with a solid color. This choice further emphasizes the overarching trend in the data, because it visually separates the area above the curve from the area below. However, this visualization is only valid if the y axis starts at zero, so that the height of the shaded area at each time point represents the data value at that time point:
+
+```{r}
+pines %>%
+    group_by(DC) %>%
+    summarise(n=n()) %>%
+    ggplot(aes(x = DC, y = n)) +
+    geom_line(group = 1) +
+    geom_area(group = 1, fill = "dark blue", alpha = 0.5)
+```
+
+## Multiple time series {-}
+
+We often have multiple time courses that we want to show at once. In this case, we have to be more careful in how we plot the data, because the figure can become confusing or difficult to read. For example, if we want to show number of trees per diameter class for each species we can try a dot plot:
+
+
+```{r}
+pines %>%
+    group_by(DC, Species) %>%
+    summarise(n=n()) %>%
+    ggplot(aes(x = DC, y = n, color = Species)) +
+    geom_point(aes(group = Species))
+```
+
+Connecting the dots with lines alleviates this issue 
+
+```{r,echo = FALSE, fig.cap="The problem with line plots is that they connect the different values, regardless there is data or not"}
+pines %>%
+    group_by(DC, Species) %>%
+    summarise(n=n()) %>%
+    ggplot(aes(x = DC, y = n, color = Species, group = Species)) +
+    geom_point(size = 1.5) +
+    geom_line()
+
+```
+
+Line plots have their own advantages and problems. They are very good to convey the temporal dimension of data. Moreover, they are also very adequate to compare different lines, since these can overlap. However, they will connect any two consecutive values, even if there are missing values between them, so they can produce misleading information. 
+
+::: exercise
+
+**EXERCISE 1:** </br>
+
+Produce a line chart to show the mean burnt area per cause along the whole series. What problems does it present if we include all the data? How can we solve it?
+
+
+:::
