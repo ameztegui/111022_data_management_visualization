@@ -2,7 +2,7 @@
 title: "Welcome to </br>Data Management </br>and Visualization with R"
 author: 
     - "Aitor Ameztegui"
-date: "Fall 2021"
+date: "Fall 2022"
 
 
 output:
@@ -296,8 +296,8 @@ grading <- data.frame(Component = c("Labs",
                                     "Homework",
                                     "Midterm 1",
                                     "Midterm 2"),
-                      Weight = c("25%",
-                                 "35%",
+                      Weight = c("30%",
+                                 "30%",
                                  "20%",
                                  "20%"))
 

@@ -37,6 +37,9 @@ options(
   show.signif.stars = FALSE     # for regression output
   )
 load('data/data_SNFI3.Rdata')
+
+pines <- trees %>% filter(Species %in% c("021","022","023","024","025","026","027","028")) 
+
 ```
 
 
@@ -174,11 +177,11 @@ pines %>%
     geom_abline()
 ```
 
-# Visualizing trends
+# Visualizing trends {-}
 
 When making scatter plots or time series, we are often more interested in the overarching trend of the data than in the specific detail of where each individual data point lies. By drawing the trend on top of or instead of the actual data points, usually in the form of a straight or curved line, we can create a visualization that helps the reader immediately see key features of the data. 
 
-## Smoothing
+## Smoothing {-}
 
 Smoothing lines and fitted regression lines are the usual way to go. Note that the concept of *trend* is not restricted to time series analysis. The simplest way to display a trend is by fitting a linear profile to our data, either by `smoothing` or `regression`. The first can be understood as a kind of moving average calculated over the data while the second implies adjusting some sort of regression model (lm, glm or gam, mainly). Regardless of the approach, we use `geom_smooth()` to do the trick. Let`s recover our first plot showing the relationship between tree diameter and height, add a trend line over it:
 
@@ -232,9 +235,8 @@ We can also visualize or devisualize the confidence interval of the smoothed lin
 pines %>%
     filter(Province == "25",
            DBH_3 <= 60) %>%
-    ggplot(aes(x = DBH_3, y = Height_3)) +
-    # geom_point(alpha = 0.5) +
-    geom_smooth(aes(color = Species, fill = Species), lwd = 2, se = T)
+    ggplot() +
+    geom_smooth(aes(x = DBH_3, y = Height_3,  color = Species, fill = Species), lwd = 2, se = T)
 ```
 
 The behavior of general-purpose smoothers can be somewhat unpredictable for any given dataset. These smoothers also do not provide parameter estimates that have a meaningful interpretation. Therefore, whenever possible, it is preferable to fit a curve with a specific functional form that is appropriate for the data and that uses parameters with clear meaning. However, this topic is beyond the scope of this course, and is treated in depth in any modelling and statistics course.
@@ -248,13 +250,13 @@ Modify the visualization created in exercise 1 to add some kind of trend line fo
 ::: 
 
 
-# Visualizing uncertainty
+# Visualizing uncertainty {-}
 
 One of the most challenging aspects of data visualization is the visualization of uncertainty. When we see a data point drawn in a specific location, we tend to interpret it as a precise representation of the true data value. It is difficult to conceive that a data point could actually lie somewhere it hasn't been drawn. Yet this scenario is ubiquitous in data visualization. Nearly every data set we work with has some uncertainty, and whether and how we choose to represent this uncertainty can make a major difference in how accurately our audience perceives the meaning of the data.
 
 The most common approach to indicate uncertainty are error bars and cofidence intervals. The basic idea is to complement any kind of central measure (mean, median...) with an indicator of dispersion (sd, IQR...). 
 
-## Uncertainty of point estimates: error bars 
+## Uncertainty of point estimates: error bars  {-}
 
 Statisticians most commonly visualize uncertainty with error bars. While error bars can be useful as a visualization of uncertainty, they are not without problems. It is easy for readers to be confused about what an error bar represents. To highlight this problem, we can show five different uses of error bars for the same dataset. They show (i) the sample mean plus/minus the standard deviation of the sample, (ii) the sample mean plus/minus the standard error, and (iii) 80%, (iv) 95%, and (v) 99% confidence intervals. All five error bars are derived from the variation in the sample, and they are all mathematically related, but they have different meanings. And they are also visually quite distinct.
 
@@ -298,7 +300,7 @@ pines %>%
         geom_errorbar(aes(ymin = Mean-Sd, ymax = Mean+Sd), width = 0.5)
 ```
 
-## Uncertainty of curve fits: confidence intervals
+## Uncertainty of curve fits: confidence intervals {-}
 
 We discussed above how to show a trend in a dataset by fitting a straight line or curve to the data. These trend estimates also have uncertainty, and it is customary to show the uncertainty in a trend line with a confidence band. `geom_smooth()` does this for us, although we can deactivate the confidence intervals by setting `se` to `FALSE`.
 
