@@ -1,0 +1,120 @@
+---
+title: "Lab 7.5 - Combining and Saving plots into image files"
+date: "111022 | Data management and visualization with R"
+author: 
+- "Aitor Ameztegui"
+bibliography: "references/biblio.bib"
+output:
+  rmdformats::readthedown:
+  use_bookdown: true
+  highlight: pygments
+number_sections: true
+css: lab.css
+# runtime: shiny_prerendered
+---
+  
+  
+```{r knitr_init, echo=FALSE, cache=FALSE, warning=FALSE}
+
+library(knitr)
+
+## Global options
+options(max.print="75")
+opts_chunk$set(echo=TRUE,
+               cache=FALSE,
+               prompt=FALSE,
+               tidy=TRUE,
+               comment=NA,
+               message=FALSE,
+               warning=FALSE)
+opts_knit$set(width=75)
+```
+
+
+```{r include=FALSE}
+library(tidyverse)
+
+options(
+  htmltools.dir.version = FALSE, # for blogdown
+  show.signif.stars = FALSE     # for regression output
+)
+fires <- read.csv('data/fires.csv')
+```
+
+# Saving single plots
+
+We finally have the necessary tools and knowledge to create nice visualizations. However, we need to be able to export them into image files. Otherwise we cannot embed them into any document. `ggplot2` includes a function (`ggsave()`) to save the generated plots. `ggsave()` is optimised for interactive use: you can use it after you've drawn a plot. It has the following important arguments: 
+
+
+- `path`: specifies the path where the plot will be saved, the name, and the extension (.eps, .pdf, .svg, .png, .jpg, .tiff...)
+- `width` and `height` control the size of the output, in inches. This is optional. If left blank, they'll use the size of the on-screen graphics device.
+- For raster graphics (i.e. `.png`, `.jpg`), the `dpi` argument controls the resolution of the plot.  It defaults to 300, which is appropriate for most printers, but you may want to use 600 for particularly high-resolution output, 
+  or 96 for on-screen (e.g., web) display.
+
+
+```R
+ggplot(pines) +
+    geom_bar(aes(x= DC, fill = Species)) +
+    scale_fill_brewer(type = "qual", palette = "Dark2") +
+    theme_grey()
+ggsave("output.pdf")
+
+```
+
+When saving a plot to use in another program, you have two basic choices of  output: raster or vector: 
+
+* **Vector graphics** describe a plot as sequence of operations: draw a line from $(x_1, y_1)$ to $(x_2, y_2)$, draw a circle at $(x_3, x_4)$ with radius $r$. This means that they are effectively 'infinitely' zoomable; there is no loss of detail. The most useful vector graphic formats are `pdf` and `svg`.
+ 
+* **Raster graphics** are stored as an array of pixel colours and have a fixed optimal viewing size. The most useful raster graphic format is `png`.
+
+Unless there is a compelling reason not to, use vector graphics: they look better in more places. There are two main reasons to use raster graphics: (i) You have a plot (e.g. a scatterplot) with thousands of graphical objects (i.e. points). A vector version will be large and slow to render; or (ii) you want to embed the graphic in MS Office. MS has poor support for vector graphics (except for their own DrawingXML format which is not currently easy to make from R), so raster graphics are easier.
+  
+
+# Arrange multiple plots
+
+It might be the case we want to merge together several plots into a single plot object or image file. There are several packages able to do so in `ggplot`. In this course we are going to focus on `patchwork`, which, to my understanding, is one the most straighforward packages.
+
+The goal of `patchwork` is to make it ridiculously simple to combine separate ggplots into the same graphic. To combine plots, we need to save them as an R object, and then simply combine both objects as in
+
+`object1 + object2`
+
+## Basic example
+
+The usage of `patchwork` is simple: just add plots together!
+
+```{r example}
+library(ggplot2)
+library(patchwork)
+p1 <- ggplot(mtcars) + geom_point(aes(mpg, disp))
+p2 <- ggplot(mtcars) + geom_boxplot(aes(gear, disp, group = gear))
+p1 + p2
+```
+
+`patchwork` provides rich support for arbitrarily complex layouts with full alignment. As an example, check out this very readable code for nesting three plots on top of a third:
+
+```{r, message=FALSE}
+p3 <- ggplot(mtcars) + geom_smooth(aes(disp, qsec))
+p4 <- ggplot(mtcars) + geom_bar(aes(carb))
+(p1 | p2 | p3) /
+      p4
+```
+
+## Learn more
+`patchwork` can do so much more. Check out the guides for learning everything there is to know about all the different features:
+
+- [Getting Started](https://patchwork.data-imaginist.com/articles/patchwork.html)
+- [Assembling Plots](https://patchwork.data-imaginist.com/articles/guides/assembly.html)
+- [Defining Layouts](https://patchwork.data-imaginist.com/articles/guides/layout.html)
+- [Adding Annotation](https://patchwork.data-imaginist.com/articles/guides/annotation.html)
+- [Aligning across pages](https://patchwork.data-imaginist.com/articles/guides/multipage.html)
+
+::: exercise :::
+
+**EXERCISE 1**</br>
+
+Create (or retrieve) the following plots - some of them have been created in previous units - and combine them using `patchwork`:
+- Number of fires by cause for each Autonomous Region
+- Burnt area per month
+- Relationship between number of fires and burnt area per fire cause
+
+:::

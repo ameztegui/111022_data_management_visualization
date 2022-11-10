@@ -37,7 +37,8 @@ options(
   htmltools.dir.version = FALSE, # for blogdown
   show.signif.stars = FALSE     # for regression output
 )
-fires <- read.csv('data/fires.csv')
+load('data/data_SNFI3.Rdata')
+pines <- trees %>% filter(Species %in% c("021","022","023","024","025","026","027","028")) 
 ```
 
 So far we have covered most of the basic tools we need to produce a nice plot. We are just lacking some final touches. 
