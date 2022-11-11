@@ -4,8 +4,10 @@
 .Ruserdata
 .DS_Store
 *key.R
-gss2016.csv
-gss2010.csv
 *.key
-lab-02-intro-r---copia.html
-**/exam
+*exam*
+.httr-oauth
+*solved*
+*resolution*
+*public/exam/*
+*static/exam/*
