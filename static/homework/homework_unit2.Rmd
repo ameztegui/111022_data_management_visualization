@@ -1,6 +1,6 @@
 ---
-title: "Homework 01 - Exploratory analysis of forest fires in Spain"
-date: "Due: March 27"
+title: "Homework Unit2 - Exploratory analysis of forest fires in Spain"
+date: "-"
 output: 
   html_document: 
     css: hw.css

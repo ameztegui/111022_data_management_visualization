@@ -16,7 +16,7 @@ editor_options:
 ```{r setup, include=FALSE}
 library(tidyverse)
 library(readxl)
-knitr::opts_chunk$set(echo = FALSE, eval = FALSE)
+knitr::opts_chunk$set(echo = T, eval = T)
 ```
 
 ## 
@@ -155,6 +155,14 @@ website](https://github.com/rfordatascience/tidytuesday/blob/master/data/2022/20
       ggplot() + 
       geom_point(aes(x = PR, y = CL, color = factor(is_ldc))) +
       geom_smooth(aes(x = PR, y = CL, color = factor(is_ldc), fill = factor(is_ldc)))
+    
+    
+    
+    freedom %>%  
+        ggplot() + 
+        geom_point(aes(x = CL, y = PR, color = factor(is_ldc), 
+                       shape = factor(is_ldc)), size = 1.5) + 
+        geom_smooth(aes(x = CL, y = PR, color = factor(is_ldc)),method="loess") 
     ```
 
 # 
