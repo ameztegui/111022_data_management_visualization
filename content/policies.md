@@ -40,8 +40,8 @@ Your final grade will be comprised of the following:
 {.table .table-condensed .table-striped .text-left}
  <span></span>        | <span></span>
 ----------------------|----------------
-Labs                  | 20%
-Homework              | 40%
+Labs                  | 30%
+Homework              | 30%
 Midterm 1             | 20%
 Midterm 2             | 20%
 
@@ -59,13 +59,13 @@ Midterm 2             | 20%
 
 ### Academic integrity:
 
-We expect each of you to behave in accordance to the principles of honesty, fairness, respect, and accountability that characterize the University community. 
+I expect each of you to behave in accordance to the principles of honesty, fairness, respect, and accountability that characterize the University community. 
 
 - Please **refrain from texting** or using your computer for anything other than coursework during class.
 
 - Use of disallowed materials during the exams will not be tolerated.
 
-**A note on sharing / reusing code:** We are aware that a huge volume of code is available on the web to solve any number of problems. Unless we explicitly tell you not to use something, the course's policy is that you may make use of any online resources (e.g. StackOverflow) but you must explicitly cite where you obtained any code you directly use (or use as inspiration), and that is not coming from the materials we provide. Except for the exams, you are welcome to discuss the problems together and ask for advice, but you may not directly send or make use of code from another student in this class. On the  exams all communication with classmates is explicitly forbidden.
+**A note on sharing / reusing code:** I am aware that a huge volume of code is available on the web to solve any number of problems. Unless I explicitly tell you not to use something, the course's policy is that you may make use of any online resources (e.g. StackOverflow) but you must explicitly cite where you obtained any code you directly use (or use as inspiration), and that is not coming from the materials I provide. Except for the exams, you are welcome to discuss the problems together and ask for advice, but you may not directly send or make use of code from another student in this class. On the  exams all communication with classmates is explicitly forbidden.
 
 
 ### Diversity & Inclusiveness:
@@ -76,7 +76,7 @@ It is our intent that students from all diverse backgrounds and perspectives be 
 
 - If you feel like your performance in the class is being impacted by your experiences outside of class, please don't hesitate to come and talk with any of us. If you prefer to speak with someone outside the course, the MSc Coordinator is an excellent resource.
 
-- We (like many people) are still in the process of learning about diverse perspectives and identities. If something was said in class (by anyone) that made you feel uncomfortable, please talk to us about it.
+- I (like many people) am still in the process of learning about diverse perspectives and identities. If something was said in class (by anyone) that made you feel uncomfortable, please talk to us about it.
 
 
 ### How to get help:
