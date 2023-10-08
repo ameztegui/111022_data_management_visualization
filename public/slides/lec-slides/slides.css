@@ -30,10 +30,10 @@ a {
   padding: 1em 2em 1em 2em
 }
 
+
 .title-slide .inverse .remark-slide-content {
   background-color: #FAFAFA;
     vertical-align: middle;
-
 }
 
 .inverse {
@@ -74,6 +74,7 @@ a {
   height: 47px;
   border-bottom: 1px solid black;
   position: absolute;
+
 }
 
 /* Removes colored bar from top of the slide resulting in a clear slide */
@@ -84,9 +85,9 @@ a {
 .remark-slide-content > h2, h3, h4 {
   padding-top: -15px;
   padding-bottom: 00px;
-  color: #1A292C;
+  color: #ffffff;
   text-shadow: none;
-  text-align: left;
+  text-align: center;
   margin-left: 00px;
   margin-bottom: -10px;
 }
@@ -118,6 +119,7 @@ a {
 .title-slide {
   background-color: #23373B;
   border-top: 0 solid #23373B;
+  color: #ffffff;
   background-image: url("resources/images/hex_stickers.png");
   background-position: right center;
   background-size:cover;
@@ -125,7 +127,7 @@ a {
 }
 
 .title-slide > h1  {
-  color: #FAFAFA;
+  color: #ffffff;
   font-size: 45px;
   text-shadow: none;
   font-weight: 600;
@@ -136,7 +138,7 @@ a {
 .title-slide > h2  {
   margin-top: -25px;
   padding-bottom: -20px;
-  color: #FAFAFA;
+  color: #ffffff;
   text-shadow: none;
   font-weight: 300;
   font-size: 40px;
@@ -145,7 +147,7 @@ a {
   margin-bottom: 60px;
 }
 .title-slide > h3  {
-  color: #FAFAFA;
+  color: #ffffff;
   text-shadow: none;
   font-weight: 300;
   font-size: 35px;
@@ -167,7 +169,7 @@ a {
 }
 
 .title-slide > p {
-  color: #FAFAFA;
+  color: #ffffff;
   margin-left: 15px;
 }
 
