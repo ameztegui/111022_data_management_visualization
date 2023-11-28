@@ -1,0 +1,176 @@
+---
+title: "Lab 8.5 - Annotations and text"
+date: "111022 | Data management and visualization with R"
+author: 
+- "Aitor Ameztegui"
+bibliography: "references/biblio.bib"
+output:
+  rmdformats::readthedown:
+  highlight: pygments
+number_sections: true
+css: lab.css
+# runtime: shiny_prerendered
+---
+  
+  
+```{r knitr_init, echo=FALSE, cache=FALSE, warning=FALSE}
+
+library(knitr)
+
+## Global options
+options(max.print="75")
+opts_chunk$set(echo=TRUE,
+               cache=FALSE,
+               prompt=FALSE,
+               tidy=TRUE,
+               comment=NA,
+               message=FALSE,
+               warning=FALSE)
+opts_knit$set(width=75)
+```
+
+
+```{r include=FALSE}
+library(tidyverse)
+
+options(
+  htmltools.dir.version = FALSE, # for blogdown
+  show.signif.stars = FALSE     # for regression output
+)
+load('data/data_SNFI3.Rdata')
+pines <- trees %>% filter(Species %in% c("021","022","023","024","025","026","027","028")) 
+```
+
+So far we have covered most of the basic tools we need to produce a nice plot. We are just lacking some final touches. 
+
+# Annotations with `geoms`
+
+Perhaps you noticed that, even though we mentioned it at the begining of the visualization block, the `geom_text` (and similar geoms) weren't used so far.
+
+There is a good reason for that. The main one is that normally we add annotations and labels once we have a version of the plot close to be final.
+
+Adding labels as geoms works no different from any other geom. Actually, we may think of `geom_text` as  `geom_point` to which we add a label instead of color or shape. Take a look on how we add two text layers with the year of the top four BA and N:
+
+```{r}
+
+ba <- fires %>%
+    group_by(MONTH,YEAR) %>%
+    summarise(BA=mean(BAREA),N=n()) %>%
+    ungroup() %>%
+    arrange(desc(BA)) %>%
+    head(4)
+
+n <- fires %>%
+    group_by(MONTH,YEAR) %>%
+    summarise(BA=mean(BAREA),N=n()) %>%
+    ungroup() %>%
+    arrange(desc(N)) %>%
+    head(4)
+
+fires %>%
+    group_by(MONTH,YEAR) %>%
+    summarise(BA=mean(BAREA),N=n()) %>%
+    ggplot() +
+        geom_point(aes(x=N,y=log(BA),color = BA)) +
+        geom_text(data = ba, aes(x=N,y=log(BA),label=YEAR),
+                  color = 'red') +
+        geom_text(data = n, aes(x=N,y=log(BA),label=YEAR),
+                  color = 'green') +
+        theme_bw()
+```
+
+## Preventing overlapping
+
+That was easy but there are obvious problems. Labels overlap points and can potentially overlap each other. There are several ways to prevent these issues. For instance, we can use `nudge_x` and `nudge_y` to reposition the label keeping points as reference. Note how red labels move to a location next to the points.
+
+```{r}
+
+ba <- fires %>%
+    group_by(MONTH,YEAR) %>%
+    summarise(BA=mean(BAREA),N=n()) %>%
+    ungroup() %>%
+    arrange(desc(BA)) %>%
+    head(4)
+
+n <- fires %>%
+    group_by(MONTH,YEAR) %>%
+    summarise(BA=mean(BAREA),N=n()) %>%
+    ungroup() %>%
+    arrange(desc(N)) %>%
+    head(4)
+
+fires %>%
+    group_by(MONTH,YEAR) %>%
+    summarise(BA=mean(BAREA),N=n()) %>%
+    ggplot() +
+        geom_point(aes(x=N,y=log(BA),color = BA)) +
+        geom_text(data = ba, aes(x=N,y=log(BA),label=YEAR),
+                  color = 'red',nudge_x = 0.5, nudge_y = 0.5) +
+        geom_text(data = n, aes(x=N,y=log(BA),label=YEAR),
+                  color = 'green') +
+        theme_bw()
+```
+ 
+But perhaps the best way to prevent overlapping is by means of package `ggrepel` built to provide funtionalitys that automatically place and style annotations. `ggrepel` extends the basic functionality of `ggplot` by adding **specific geoms**, `geom_text_repel` or `geom_label_repel`.
+ 
+```{r}
+
+library(ggrepel)
+
+ba <- fires %>%
+    group_by(MONTH,YEAR) %>%
+    summarise(BA=mean(BAREA),N=n()) %>%
+    ungroup() %>%
+    arrange(desc(BA)) %>%
+    head(4)
+
+n <- fires %>%
+    group_by(MONTH,YEAR) %>%
+    summarise(BA=mean(BAREA),N=n()) %>%
+    ungroup() %>%
+    arrange(desc(N)) %>%
+    head(4)
+
+fires %>%
+    group_by(MONTH,YEAR) %>%
+    summarise(BA=mean(BAREA),N=n()) %>%
+    ggplot() +
+        geom_point(aes(x=N,y=log(BA),color = BA)) +
+        geom_text_repel(data = ba, aes(x=N,y=log(BA),label=YEAR),
+                  color = 'red') +
+        geom_text_repel(data = n, aes(x=N,y=log(BA),label=YEAR),
+                  color = 'green') +
+        theme_bw()
+```
+
+An the same works for `geom_label_repel`, but notice that in this case a line/arrow is automatically drawn, linking points and labels:
+
+```{r}
+
+library(ggrepel)
+
+ba <- fires %>%
+    group_by(MONTH,YEAR) %>%
+    summarise(BA=mean(BAREA),N=n()) %>%
+    ungroup() %>%
+    arrange(desc(BA)) %>%
+    head(4)
+
+n <- fires %>%
+    group_by(MONTH,YEAR) %>%
+    summarise(BA=mean(BAREA),N=n()) %>%
+    ungroup() %>%
+    arrange(desc(N)) %>%
+    head(4)
+
+fires %>%
+    group_by(MONTH,YEAR) %>%
+    summarise(BA=mean(BAREA),N=n()) %>%
+    ggplot() +
+        geom_point(aes(x=N,y=log(BA),color = BA)) +
+        geom_label_repel(data = ba, aes(x=N,y=log(BA),label=YEAR),
+                  color = 'red') +
+        geom_label_repel(data = n, aes(x=N,y=log(BA),label=YEAR),
+                  color = 'green') +
+        theme_bw()
+```
