@@ -16,7 +16,7 @@ editor_options:
 ```{r setup, include=FALSE}
 library(tidyverse)
 library(readxl)
-knitr::opts_chunk$set(echo = T, eval = T)
+knitr::opts_chunk$set(echo = F, eval = F)
 ```
 
 ## 
