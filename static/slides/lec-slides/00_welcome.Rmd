@@ -2,7 +2,7 @@
 title: "Welcome to </br>Data Management </br>and Visualization with R"
 author: 
     - "Aitor Ameztegui"
-date: "Fall 2023"
+date: "Fall 2024"
 
 
 output:
@@ -47,13 +47,12 @@ library(rvest)
 # Who am I?
 
 .pull-left[.bold[
- [Dr. Aitor Ameztegui](http://ameztegui.weebly.com/)<br>]
+ [Dr. Aitor Ameztegui](http://amezteguilab.wordpress.com/)<br>]
 
 <i class="fa fa-envelope"></i> &nbsp; [aitor.ameztegui@udl.cat](mailto:aitor.ameztegui@udl.cat) <br>
 <i class="fa fa-university"></i> &nbsp; Building 4, Bureau 2.04.2 <br>
 <i class="fa fa-phone"></i> &nbsp; 973702539 <br> 
-<i class="fa fa-calendar"></i> &nbsp; Mon 11:00 - 12:30  <br> 
-or upon request (better!)
+<i class="fa fa-calendar"></i> &nbsp; Upon request (better send me an email!)
 <br><br>]
 
 
@@ -228,7 +227,8 @@ http://varianceexplained.org/r/trump-tweets/
 
 ### by Aitor Ameztegui (Universitat de Lleida)
 
-https://sibecol2019-twitter.netlify.com/
+https://sibecol2019-twitter.netlify.app/
+
 
 (Originally published at [Forestalia blog](http://www.forestaliablog.com/2019/02/congresos-cientificos-y-twitter-iv-un-analisis-de-sibecol2019/) Code available in the course's RStudio cloud Site)
 
@@ -253,7 +253,7 @@ class: center, middle, inverse
 - The course is based on a hands-on approach --> lots of learn-by-doing
 
 </br></br></br></br></br>
-.center[**All the info, links and materials will be posted at </br>[datamanagement.netlify.com](https://datamanagement.netlify.com)**]
+.center[**All the info, links and materials will be posted at </br>[datamanagement.netlify.app](https://datamanagement.netlify.app)**]
 
 
 ---
@@ -309,7 +309,7 @@ kable(grading, format='html')
 
 # How to get help
 
-- Course content, logistics, etc. are available at [datamanagement.netlify.com/](https://datamanagement.netlify.com/). 
+- Course content, logistics, etc. are available at [datamanagement.netlify.app/](https://datamanagement.netlify.app/). 
 
 - As we said, one of the best things about R is its community. Some highly recommended resources are:
 
@@ -385,7 +385,7 @@ class: center, middle, inverse
 
 - In the case of assignments, when you click "Start assignment", it automatically creates the copy in your space.
 
-- We can access your own copies of projects, and even edit them or make comments. We have used this tool in previous editions of the course, and we got a very good feedback from students, it is a very convenient way of working with no file exchange.
+- I can access your own copies of projects, and even edit them or make comments. I have used this tool in previous editions of the course, and I got a very good feedback from students, it is a very convenient way of working with no file exchange.
 
 ---
 
@@ -393,7 +393,7 @@ class: center, middle, inverse
 
 - In the `Files` pane in the bottom right corner, spot the file called `UN_votes.Rmd`. Open it, and then click on the "Knit" button.
 
-- Go back to the file and change your name on top (in the `yaml` -- we'll talk about what this means later) and knit again.
+- Go back to the file and change your name on top (in the `yaml` -- I'll talk about what this means later) and knit again.
 
 - Then change the country names to those you're interested in. Your spelling and capitalization should match the data so take a peek at the Appendix to see how the country names are spelled. Knit again. 
 
